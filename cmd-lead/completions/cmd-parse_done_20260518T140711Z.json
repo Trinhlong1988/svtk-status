@@ -1,0 +1,34 @@
+{
+  "cmd": "cmd-parse",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T140711Z",
+  "task": "Tuần 1 — split tooling",
+  "scope": ["cmd-parse", "cmd-network", "cmd-qa-core"],
+  "status": "DONE",
+  "delivered": {
+    "cmd-parse/output/anti_bot": 7,
+    "cmd-parse/output/auth": 5,
+    "cmd-parse/output/ts_parsers": 32,
+    "cmd-network/cmd.md": "NEW spec drafted",
+    "cmd-network/output/combat_adapter": 2,
+    "cmd-network/output/legacy": "placeholder (src/network/ empty at v2.8.0)",
+    "cmd-network/output/r69": "ready for Tuần 2 implementation",
+    "cmd-qa-core/output/anti_cheat": 1,
+    "cmd-qa-core/output/audit": 5,
+    "cmd-qa-core/docs/mutation_94pct.md": "R10-R18 hardening notes (94.33-96.06%)"
+  },
+  "old_source_paths": [
+    "D:/DỰ ÁN AI/FINAL TSONLINE/src/server/anti_bot/",
+    "D:/DỰ ÁN AI/FINAL TSONLINE/src/server/auth/",
+    "D:/DỰ ÁN AI/FINAL TSONLINE/src/server/anti_cheat/",
+    "D:/DỰ ÁN AI/FINAL TSONLINE/src/tools/",
+    "D:/DỰ ÁN AI/FINAL TSONLINE/src/logic/combat_network_adapter.ts",
+    "D:/DỰ ÁN AI/FINAL TSONLINE/src/logic/websocket_transport_runtime.ts"
+  ],
+  "old_unchanged": true,
+  "foundation_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+  "foundation_verified": true,
+  "next_milestone": "Tuần 2 — R69 packet envelope + replay cache + reconnect token (R66 prep)"
+}

@@ -1,0 +1,12 @@
+{
+  "cmd": "cmd-network",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T140650Z",
+  "status": "alive",
+  "current_task": "Tuần 1 — split tooling DONE",
+  "foundation_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+  "foundation_verified": true,
+  "next": "Tuần 2 — R69 packet ordering (cmd-network) + R66 session token prep (cmd-parse/auth)"
+}
