@@ -1,0 +1,15 @@
+{
+  "issue_id": "cmd_db_w1_broken_imports",
+  "description": "Apply Option A vendor + path patch per cmd-db/output/MIGRATION_INTEGRITY_AUDIT.md § 6. (1 day, Week 2 Day 1). Vendor 5 missing peer files (_schema_helpers, inventory_snapshot_schema, economy_serialization_contract, modifier_ordering_audit, economy_forensic_telemetry) + patch 4 cross-repo-shared (codepoint_compare, types.ts Element, soft_cap, rng). Target: NEW tree compiles standalone via tsc.",
+  "evidence": {
+    "broken_imports": { "cmd-db": 6, "cmd-item": 7, "cmd-engine_economy": 5 },
+    "missing_peer_files": 5,
+    "cross_repo_shared_unowned": 4,
+    "blocker": false,
+    "workaround": "OLD frozen workspace 1095/1095 PASS (NEW tree informational only)"
+  },
+  "severity": "MED",
+  "priority": 2,
+  "assigned_by": "LEAD_verify",
+  "ts": "20260518-214058"
+}

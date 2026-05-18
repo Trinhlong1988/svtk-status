@@ -1,0 +1,12 @@
+{
+  "severity": "MED",
+  "issue_id": "cmd_qa_core_stale_foundation_hash",
+  "evidence": {
+    "qa_verdict_files": ["QA_VERDICT_20260518T142904Z.json", "QA_VERDICT_20260518T143035Z.json"],
+    "qa_declared_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+    "foundation_actual_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+    "implication": "cmd-qa-core GATE 1 verifier hardcodes old hash literal — gate1_verify.ps1 needs update to compute sha256 from foundation file."
+  },
+  "cmd_origin": "LEAD_self_detect",
+  "timestamp": "20260518-214058"
+}

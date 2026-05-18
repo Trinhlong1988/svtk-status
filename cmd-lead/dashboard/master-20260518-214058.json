@@ -1,0 +1,111 @@
+{
+  "timestamp": "20260518-214058",
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "cycle": 5,
+  "mode": "NORMAL",
+  "foundation_update_log": [
+    {
+      "from": "2e6e8c23...266e467",
+      "to": "631c00af...fdb966",
+      "cause": "foundation file re-write same day",
+      "resolved_by": "spec update OPTION_A"
+    },
+    {
+      "from": "631c00af...fdb966",
+      "to": "4e9a6d7a...b364b",
+      "cause": "commit c220446 LEAD ship — Mr.Long fixed v2.6.0 body → v2.8.0 + INDEX.sha256 recompute",
+      "resolved_by": "spec auto-update precedent from cycle 1"
+    }
+  ],
+  "teams": {
+    "TEAM_CORE": {
+      "engine": {
+        "status": "ACTIVE",
+        "latest_ts": "2026-05-18T14:34:33Z"
+      },
+      "place": {
+        "status": "NO_REPORT"
+      },
+      "parse": {
+        "status": "ACTIVE"
+      },
+      "db": {
+        "status": "ACTIVE",
+        "latest_ts": "2026-05-18T14:31:44Z"
+      }
+    },
+    "TEAM_CONTENT": {
+      "npc": {
+        "status": "NO_REPORT"
+      },
+      "quest": {
+        "status": "ACTIVE",
+        "latest_ts": "2026-05-18T14:12:29Z"
+      },
+      "dialog": {
+        "status": "ACTIVE",
+        "latest_ts": "2026-05-18T14:02:13Z"
+      },
+      "item": {
+        "status": "ACTIVE",
+        "latest_ts": "2026-05-18T14:31:44Z"
+      },
+      "boss": {
+        "status": "ACTIVE",
+        "latest_ts": "2026-05-18T14:34:33Z"
+      },
+      "skill": {
+        "status": "NO_REPORT"
+      },
+      "event": {
+        "status": "NO_REPORT"
+      }
+    },
+    "TEAM_ART": {
+      "sprite": {
+        "status": "NO_REPORT"
+      },
+      "map": {
+        "status": "NO_REPORT"
+      },
+      "icon": {
+        "status": "NO_REPORT"
+      },
+      "audio": {
+        "status": "NO_REPORT"
+      }
+    },
+    "TEAM_QA": {
+      "qa-content": {
+        "status": "NO_REPORT"
+      },
+      "qa-art": {
+        "status": "NO_REPORT"
+      },
+      "qa-core": {
+        "status": "ACTIVE"
+      },
+      "qa-full": {
+        "status": "NO_REPORT"
+      }
+    }
+  },
+  "active_workers": [
+    "cmd-db",
+    "cmd-item",
+    "cmd-engine(economy)",
+    "cmd-dialog",
+    "cmd-engine",
+    "cmd-boss",
+    "cmd-network",
+    "cmd-parse",
+    "cmd-qa-core",
+    "cmd-quest"
+  ],
+  "completions_count": 15,
+  "pending_fixes": {
+    "cmd_parse_stale_foundation_hash": 2,
+    "cmd_db_w1_broken_imports": 1,
+    "cmd_qa_core_stale_foundation_hash": 1
+  }
+}
