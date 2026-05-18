@@ -1,0 +1,166 @@
+{
+    "cmd":  "cmd-qa-core",
+    "parent":  "CMD4",
+    "phase":  "14",
+    "version":  "v2.8.0",
+    "week":  "Tuan 3 â€” GATE 1 verify",
+    "ts_utc":  "20260518T150234Z",
+    "foundation_hash":  "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+    "foundation_verified":  true,
+    "pass_count":  25,
+    "total":  25,
+    "pct":  100,
+    "verdict":  "PASS",
+    "criteria":  [
+                     {
+                         "id":  "G1.01",
+                         "desc":  "cmd-parse folder exists",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.02",
+                         "desc":  "cmd-network folder exists (NEW)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.03",
+                         "desc":  "cmd-qa-core folder exists",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.04",
+                         "desc":  "cmd-parse/cmd.md present",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.05",
+                         "desc":  "cmd-network/cmd.md present (NEW spec)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.06",
+                         "desc":  "cmd-qa-core/cmd.md present",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.07",
+                         "desc":  "cmd-parse/output/anti_bot/ has \u003e=7 .ts",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.08",
+                         "desc":  "cmd-parse/output/auth/ has \u003e=5 .ts (legacy)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.09",
+                         "desc":  "R66 cmd-parse/output/auth/r66_session_token.ts (Tuan 2)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.10",
+                         "desc":  "R69 cmd-network/output/r69/packet_envelope.ts",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.11",
+                         "desc":  "R69 cmd-network/output/r69/replay_cache.ts",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.12",
+                         "desc":  "combat_network_adapter.ts ported",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.13",
+                         "desc":  "cmd-qa-core/output/anti_cheat/ \u003e=1 .ts",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.14",
+                         "desc":  "cmd-qa-core/output/audit/ \u003e=5 audit hooks",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.15",
+                         "desc":  "cmd-qa-core/docs/mutation_94pct.md (R10-R18)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.16",
+                         "desc":  "Foundation v2.8.0 on-disk hash match INDEX.sha256",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.17",
+                         "desc":  "Heartbeat schtask SVTK_CMD4_HEARTBEAT registered",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.18",
+                         "desc":  "packet_envelope.ts NO Math.random usage (R6 determinism)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.19",
+                         "desc":  "replay_cache.ts NO Math.random usage",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.20",
+                         "desc":  "r66_session_token.ts NO Math.random usage",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.21",
+                         "desc":  "R66 sub-rule 4/5/8/9 deferral documented in file header",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.22",
+                         "desc":  "R69 5 categories present with correct maxAgeMs",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.23",
+                         "desc":  "timing-safe sig compare (no string ===)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.24",
+                         "desc":  "JSDoc on exported functions (3 files)",
+                         "pass":  true,
+                         "detail":  ""
+                     },
+                     {
+                         "id":  "G1.25",
+                         "desc":  "Heartbeat schtask FIRED at least once after register (\u003e=3 hb JSON per CMD)",
+                         "pass":  true,
+                         "detail":  ""
+                     }
+                 ]
+}

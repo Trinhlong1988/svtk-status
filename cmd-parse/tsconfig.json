@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": ["output/auth/r66_session_token.ts", "tests/**/*.ts"]
+}

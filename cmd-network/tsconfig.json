@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": ["output/r69/**/*.ts", "tests/**/*.ts"],
+  "exclude": [
+    "output/legacy/**",
+    "output/combat_adapter/**"
+  ]
+}
