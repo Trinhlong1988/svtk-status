@@ -1,7 +1,14 @@
-# SVTK DASHBOARD 20260518-214058 (cycle 5)
+# SVTK DASHBOARD 20260518-214900 (cycle 8)
 
-**Foundation:** v2.8.0 hash 4e9a6d7a...b364b (UPDATED 2nd time from c220446)
-**Mode:** NORMAL | **Active workers (heartbeat):** 10 | **Completions resolved:** 15
+**Foundation:** v2.8.0 hash `4e9a6d7a...b364b` ✓
+**Mode:** NORMAL | **Completions resolved:** 16 | **Escalations:** 1
+
+## ⚠ Cycle 8 SYSTEMIC FIX
+
+CMD1 10-round audit (commit `9ba4f26`, 10/10 PASS) flagged `cmd-boss/cmd.md` stale hash.
+LEAD verified scope: **19/21 cmd.md files** hardcode old hash. Bulk-fixed.
+Reason: foundation file updated (c220446) without cascading to spec template instances.
+Escalation logged: alerts-escalated/ESCALATED-20260518-214900-systemic_stale_hash.json
 
 ## Pending fixes (re-flag counter)
 
@@ -11,10 +18,10 @@
 
 ## Phase 14 Sprint summary
 
-| CMD | Status | Highlights |
-|---|---|---|
-| CMD1 | **PHASE14 COMPLETE** | 140 files, 5878 OLD tests PASS (337/338 files), 12 NEW R67+R68 tests PASS, audit strict exit 0 |
-| CMD2 | Week 1-3 DONE + R44 NEW authorized | 57 files, 1095/1095 OLD test. R44 NEW impl Mr.Long authorized (c220446). w1 broken imports MED → fix assigned |
-| CMD3 | **ALL TASKS DONE 100%** | 250 quest, 150 dialog tree, 1103/1103 (real Postgres) |
-| CMD4 | Tuần 2+3 DONE | R69 packet envelope + R66 session token. GATE 1 17/17 PASS (after CRLF fix). Stale hash 2/3 (vẫn declare hash cũ) |
-| CMD5 | Cycle 5 active | Foundation hash updated 2nd time (c220446) |
+| CMD | Status |
+|---|---|
+| CMD1 | PHASE14 COMPLETE + 10-round audit 10/10 PASS |
+| CMD2 | Week 1-3 done. R44 NEW authorized. W1 broken imports + W2 R44 fix tasks pending pickup |
+| CMD3 | ALL DONE 100% (1103/1103) |
+| CMD4 | Tuần 2+3 done GATE 1 17/17. Stale hash 2/3 |
+| CMD5 | Bulk-fix 19 cmd.md hash + escalation logged |

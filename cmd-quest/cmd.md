@@ -4,7 +4,7 @@
 
 **Team:** TEAM CONTENT — Quest tree + objectives + chains
 **Version:** 1.1.0 — 2026-05-18
-**Foundation:** v2.8.0 hash `2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467`
+**Foundation:** v2.8.0 hash `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b`
 
 ---
 
@@ -97,7 +97,7 @@ except ImportError:
 
 CMD_NAME = "cmd-quest"
 CMD_VERSION = "1.0.0"
-EXPECTED_FOUNDATION_HASH = "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467"
+EXPECTED_FOUNDATION_HASH = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
 REPO_URL = "https://github.com/Trinhlong1988/svtk-status.git"
 REPO_DIR = Path("./svtk-status")
 

@@ -8,7 +8,7 @@
 **Foundation v2.8.0:** SVTK_FOUNDATION_v2.6.0 (R1-R70)
 **Runtime:** svtk_runtime v2.6.5 (15 modules)
 **Inherits:** CMD_TEMPLATE_v2.0
-**Hash bắt buộc verify:** `2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467`
+**Hash bắt buộc verify:** `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b`
 
 ---
 
@@ -113,7 +113,7 @@ CMD_NAME = "cmd-engine"
 CMD_ID = "ENGINE"
 CMD_VERSION = "1.0.0"
 EXPECTED_FOUNDATION = "v2.6.0"
-EXPECTED_FOUNDATION_HASH = "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467"
+EXPECTED_FOUNDATION_HASH = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
 REPO_URL = "https://github.com/Trinhlong1988/svtk-status.git"
 REPO_DIR = Path("./svtk-status")
 

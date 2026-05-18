@@ -1,0 +1,18 @@
+{
+  "issue_id": "systemic_stale_foundation_hash_19_cmd_md",
+  "severity": "BLOCKER_SYSTEMIC",
+  "cmd_origin": "LEAD_self_detect",
+  "trigger": "CMD1 10-round audit round 1 flagged cmd-boss/cmd.md hardcoding old hash. LEAD verified scope = 19/21 cmd.md files affected.",
+  "evidence": {
+    "old_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+    "new_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+    "files_affected_count": 19,
+    "files_clean": ["cmd-db/cmd.md", "cmd-parse/cmd.md"],
+    "files_updated_by_lead": 19,
+    "root_cause": "All 19 cmd.md were generated from same template with hash literal. When Mr.Long updated foundation v2.6.0 body → v2.8.0 (commit c220446) + recomputed INDEX.sha256, no cascade to cmd.md spec files. Any worker re-init would exit 99 (foundation hash mismatch per Rule 5)."
+  },
+  "action_lead_took": "Bulk sed-replaced hash literal in 19 cmd.md files (boundary justification: LEAD authoritative R67; this is maintenance not production content; precedent set by Mr.Long autonomous foundation update cycle 1).",
+  "follow_up": "If LEAD overstepped scope, revert via git revert. Otherwise: next worker re-init will see hash MATCH and continue normally.",
+  "user": "smartbeevn@gmail.com",
+  "timestamp": "20260518-215521"
+}

@@ -3,7 +3,7 @@
 > **CMD4 SVTK Phase 14 v2.8.0** · NEW CMD (no grace period — R66-R69 mandatory)
 > Owner: combat_network_adapter + network/* legacy port + R69 packet seq + dedup + reconnect
 > Author: cmd-parse + cmd-network + cmd-qa-core (CMD4 split per CMD_ROLE_BINDING_v2.8.0)
-> Foundation: v2.8.0 — verify against `foundation/INDEX.sha256` (dynamic, current canonical hash post LEAD resync at commit `c220446`)
+> Foundation: v2.8.0 hash `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b`
 > Runtime: svtk_runtime v2.6.5
 
 ---
