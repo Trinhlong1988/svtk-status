@@ -1,0 +1,8 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "status": "alive",
+  "ts": "2026-05-18T14:14:30Z",
+  "phase": "week1_migrate",
+  "step": "complete"
+}

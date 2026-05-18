@@ -1,0 +1,27 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "status": "week1_migrate_done",
+  "ts": "2026-05-18T14:14:30Z",
+  "phase": "week1",
+  "files_migrated": {
+    "cmd_engine_total": 130,
+    "cmd_engine_legacy_ts": 127,
+    "cmd_engine_server_ts": 3,
+    "cmd_engine_data_json": 4,
+    "cmd_boss_legacy_ts": 6
+  },
+  "verification": {
+    "tsc_typecheck": "PASS",
+    "tsc_exit_code": 0,
+    "strict_mode": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "notes": [
+    "Copy OLD src/logic/ + 3 src/server/ deps + 4 data/ JSON.",
+    "Boss 6 file split sang cmd-boss/output/legacy/.",
+    "Cross-package import rewritten: server/ → ../legacy/, boss → ../../../cmd-boss/output/legacy/.",
+    "tsconfig root-level include cmd-engine + cmd-boss output.",
+    "TSC strict --noEmit PASS 138 file."
+  ]
+}
