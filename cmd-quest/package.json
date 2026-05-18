@@ -1,0 +1,10 @@
+{
+  "name": "cmd-quest",
+  "type": "module",
+  "scripts": { "test": "vitest run" },
+  "devDependencies": {
+    "vitest": "^1.6.0",
+    "typescript": "^5.5.0",
+    "zod": "^3.23.0"
+  }
+}

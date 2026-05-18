@@ -1,0 +1,58 @@
+{
+  "cmd-quest/output/registry/quest_full.jsonl": {
+    "sha256": "cd6bb0f0a2482b1631d49d4da00710bb73793e80a479f9c3f38d71d0c4629dce",
+    "bytes": 92711
+  },
+  "cmd-quest/output/registry/quest_main.jsonl": {
+    "sha256": "891b34a45f5384b94580fd2e63872d39e602df49e6ba0c37f256c4a099d6e19c",
+    "bytes": 54616
+  },
+  "cmd-quest/output/registry/quest_side.jsonl": {
+    "sha256": "79d427f2c8839c0ba5716966d650196fb3f18d844396d252df233869de1f96cd",
+    "bytes": 22640
+  },
+  "cmd-quest/output/registry/quest_lore.jsonl": {
+    "sha256": "d568d14c57320234b8f2fb5a1dcda241a98d588488f792b1b621e8ca7989f9d5",
+    "bytes": 15455
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_HONG_BANG.jsonl": {
+    "sha256": "81c35ff0bc5ba7afc5231142b71341aab2e52a2b642c287e078bd1dc373f91ce",
+    "bytes": 11137
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_AU_LAC.jsonl": {
+    "sha256": "024f103091017b946a9368b22638505cdcb0c97fc880daf41406c2d04b8c707c",
+    "bytes": 11154
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_BAC_THUOC.jsonl": {
+    "sha256": "e3668e87e887b2c5502a57c3f08b6e33dd41ab78cd274708bdb3ddf404287e20",
+    "bytes": 11591
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_NGO_DINH_LE.jsonl": {
+    "sha256": "43627694b182ceff07718345d39f7152a82945cd9ad8096244237bc54b9aad2f",
+    "bytes": 11856
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_LY.jsonl": {
+    "sha256": "8e7f1fb8a9198d53e3b6f75f01be5b6513351be59723aeda65a137bf34f2c499",
+    "bytes": 11508
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_TRAN.jsonl": {
+    "sha256": "79682becf125205a6dd0ed6818ed647ae273f170052965e92824457d72bcc345",
+    "bytes": 11763
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_LE_SO.jsonl": {
+    "sha256": "6c2ebdf33166d29b9a37df53750588758dd8492ccc341949e4bd1ab860d8aba0",
+    "bytes": 11588
+  },
+  "cmd-quest/output/chains/SVTK_CHAIN_TAY_SON.jsonl": {
+    "sha256": "101df9a83f6151c09c8a40147d59da070f7a3dcd70a8e02f1fb78ca11e67bbf3",
+    "bytes": 12114
+  },
+  "cmd-quest/data/quest_constants.json": {
+    "sha256": "24aca23e6324e6027d57b0535aa9d8cce99206c5abc1fcfb34507eeef542c79b",
+    "bytes": 1657
+  },
+  "cmd-dialog/output/registry/dialog_tree.jsonl": {
+    "sha256": "fcc2a1ac87d8a9da341285f5aa2b7e4b020ec285ec13d7ae8d9a098629652952",
+    "bytes": 110285
+  }
+}
