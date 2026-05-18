@@ -1,3 +1,12 @@
 {
-  "cmd_db_r44_wire_coverage_0pct": 1
+  "cmd_db_r44_wire_coverage_0pct": 1,
+  "foundation_hash_three_way_mismatch": 1,
+  "dialog_count_below_target": 1,
+  "quest_count_below_target": 1,
+  "qa_boss_missing": 1,
+  "qa_event_missing": 1,
+  "qa_item_missing": 1,
+  "npc_existing_scene_id_orphan_R75": 1,
+  "npc_existing_systemic_hp_anomaly_R78": 1,
+  "npc_existing_uuid_null_R74A": 1
 }
