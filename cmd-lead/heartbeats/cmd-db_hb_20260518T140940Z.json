@@ -1,0 +1,10 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "phase": "14-week1",
+  "status": "migrating",
+  "ts": "2026-05-18T14:09:40Z",
+  "owner": "Trinhlong1988",
+  "host": "Mr.Long workstation",
+  "next_heartbeat_due": "2026-05-18T14:39:40Z"
+}

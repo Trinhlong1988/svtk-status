@@ -1,0 +1,63 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "Phase14_Week1_Migration",
+  "status": "week1_done",
+  "ts": "2026-05-18T14:09:40Z",
+  "phương_án": "A (port+extend)",
+  "foundation_hash_verified": true,
+  "old_source_workspace": "D:/DỰ ÁN AI/FINAL TSONLINE",
+  "new_target_repo": "Trinhlong1988/svtk-status",
+  "migration_breakdown": {
+    "cmd-db": {
+      "legacy": ["connection.ts", "inventory_snapshot_persist.ts"],
+      "legacy_repositories": [
+        "character_repository.ts",
+        "economy_repository.ts",
+        "inventory_repository.ts",
+        "player_repository.ts",
+        "quest_repository.ts"
+      ],
+      "migrations": [
+        "001_init.sql",
+        "001_init.down.sql",
+        "002_progression_snapshots.sql",
+        "002_progression_snapshots.down.sql"
+      ],
+      "persistence": ["persistence_adapter.ts", "persistence_adapter_bridge.ts"],
+      "integrity": ["cross_region_integrity_runtime.ts"],
+      "anti_dupe": ["economy_integrity_verification_runtime.ts"]
+    },
+    "cmd-item": {
+      "legacy_ts_count": 27,
+      "data_json_count": 7,
+      "data_files": [
+        "itemization_constants.json",
+        "items.json",
+        "loot_tables.json",
+        "affix_pool.json",
+        "sets.json",
+        "stat_budget.json",
+        "slot_cap.json"
+      ]
+    },
+    "cmd-engine": {
+      "economy_foundation_ts": ["economy_foundation_runtime.ts", "economy_foundation_runtime_impl.ts"],
+      "economy_loot_ts": ["loot_generation_runtime.ts", "loot_generation_runtime_impl.ts"],
+      "economy_pvp_ts": ["pvp_equipment_normalizer.ts", "pvp_equipment_normalizer_impl.ts"],
+      "economy_data": ["economy_constants.json", "pvp_normalization.json"]
+    }
+  },
+  "total_files_migrated": 57,
+  "ts_sql_count": 48,
+  "json_count": 9,
+  "ts_compile_status": "SKIP (svtk-status is content-only repo, no tsconfig at root — defer compile to Week 2 when integration wire)",
+  "notes": [
+    "OLD code = FROZEN P11B (DO NOT modify in place — copy only).",
+    "Per memory project_svtk_v28_migration_audit.md, OLD reusable 70%, port+extend Phương án A.",
+    "Per memory project_svtk_phase11b_economy_freeze.md, economy locked 2026-05-14 with 12 invariants.",
+    "Week 2 next: R44 5 wrapper verify (cmd-db).",
+    "Week 3 next: P11B test 198 + Phase 13 53 in new structure."
+  ],
+  "ack_role_binding": "CMD_ROLE_BINDING_v2.8.0.md § II CMD2 (Economy) → cmd-db + cmd-item + cmd-engine(economy split)"
+}

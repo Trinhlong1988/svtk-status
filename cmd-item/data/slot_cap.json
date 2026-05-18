@@ -1,0 +1,17 @@
+{
+  "_doc": "Per-slot stat caps. Source: spec/08 Mục III Bạo Kích phân bổ. BP scale ×10000.",
+  "_locked_by": "Mr.Long 2026-05-14",
+  "_bao_kich_total_check": "1000+800+500+300+300+400+500+500+700 = 5000 BP = 50% — match global cap.",
+
+  "caps_per_slot": {
+    "vu_khi":      { "crit_rate_bp": 1000, "penetration_bp": 3000, "crit_dmg_bp": 5000 },
+    "gang_tay":    { "crit_rate_bp": 800,  "crit_dmg_bp": 4000, "penetration_bp": 2000 },
+    "mu":          { "crit_rate_bp": 500,  "phap_luc": 200 },
+    "ao":          { "crit_rate_bp": 300,  "defense": 200, "threat_coef_bp": 3000 },
+    "quan":        { "crit_rate_bp": 300,  "defense": 150, "dodge_bp": 800 },
+    "giay":        { "crit_rate_bp": 400,  "agility": 100, "dodge_bp": 1000 },
+    "nhan":        { "crit_rate_bp": 500,  "lifesteal_bp": 1500 },
+    "day_chuyen":  { "crit_rate_bp": 500,  "hp_regen_per_turn": 30 },
+    "ngoc":        { "crit_rate_bp": 700,  "crit_dmg_bp": 3000 }
+  }
+}

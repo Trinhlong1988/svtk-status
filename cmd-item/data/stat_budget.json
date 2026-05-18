@@ -1,0 +1,15 @@
+{
+  "_doc": "Stat budget per rarity + companion ratio. Source: spec/08 Mục IV + CMD2.docx FIX #3.",
+  "_locked_by": "Mr.Long 2026-05-14",
+
+  "rarity_budget": [
+    { "rarity": "common",    "max_stat_power": 100,  "max_affix_count": 1, "max_affix_power": 20 },
+    { "rarity": "rare",      "max_stat_power": 200,  "max_affix_count": 2, "max_affix_power": 40 },
+    { "rarity": "epic",      "max_stat_power": 350,  "max_affix_count": 3, "max_affix_power": 60 },
+    { "rarity": "legendary", "max_stat_power": 550,  "max_affix_count": 4, "max_affix_power": 80 },
+    { "rarity": "mythic",    "max_stat_power": 800,  "max_affix_count": 5, "max_affix_power": 100 }
+  ],
+
+  "companion_budget_ratio_bp": 6000,
+  "_companion_ratio_doc": "Companion item budget = owner ratio (60% per spec). 6000 BP = ×0.60."
+}
