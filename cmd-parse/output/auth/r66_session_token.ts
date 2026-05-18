@@ -67,13 +67,20 @@ export interface DeviceFingerprintInput {
  * R66.5 re-auth path (deferred — see file header).
  */
 export function computeDeviceFingerprint(d: DeviceFingerprintInput): string {
+  // Audit bug#18: guard against undefined/null fields (previously crashed).
+  const norm = (s: unknown) => (typeof s === 'string' ? s : '').trim();
+  // Audit consideration: '|' separator could collide if any field contains '|'
+  // and an adjacent field is empty. Encode each field via JSON.stringify so
+  // separators inside content cannot align with the join.
   const canonical = [
-    d.userAgent.trim().toLowerCase(),
-    d.screenResolution.trim(),
-    d.timezone.trim(),
-    d.language.trim().toLowerCase(),
-    d.platform.trim(),
-  ].join('|');
+    norm(d.userAgent).toLowerCase(),
+    norm(d.screenResolution),
+    norm(d.timezone),
+    norm(d.language).toLowerCase(),
+    norm(d.platform),
+  ]
+    .map((s) => JSON.stringify(s))
+    .join('|');
   return createHash('sha256').update(canonical).digest('hex');
 }
 
@@ -91,10 +98,28 @@ export interface IssueSessionParams {
  * production defaults to `node:crypto.randomBytes`.
  */
 export function issueSessionToken(p: IssueSessionParams): SessionToken {
+  // Audit bug#30/#31/#32/#33: validate inputs before producing token that
+  // would otherwise be impossible to expire (NaN/Infinity) or born-expired
+  // (negative ttl). Bug#34: reject empty playerId/fingerprint.
+  if (typeof p.playerId !== 'string' || p.playerId.length === 0) {
+    throw new TypeError('issueSessionToken: playerId must be non-empty string');
+  }
+  if (typeof p.deviceFingerprint !== 'string' || p.deviceFingerprint.length === 0) {
+    throw new TypeError('issueSessionToken: deviceFingerprint must be non-empty string');
+  }
+  if (typeof p.nowMs !== 'number' || !Number.isFinite(p.nowMs)) {
+    throw new TypeError(`issueSessionToken: nowMs must be finite number (got ${p.nowMs})`);
+  }
+  const ttl = p.ttlMs ?? SESSION_TTL_MS;
+  if (!Number.isFinite(ttl) || ttl <= 0) {
+    throw new RangeError(`issueSessionToken: ttlMs must be positive finite (got ${p.ttlMs})`);
+  }
   const rng = p.rngBytes ?? randomBytes;
   const tokenBuf = rng(TOKEN_BYTES);
+  if (!Buffer.isBuffer(tokenBuf) || tokenBuf.length !== TOKEN_BYTES) {
+    throw new Error(`issueSessionToken: rngBytes must return Buffer of ${TOKEN_BYTES} bytes`);
+  }
   const sessionId = createHash('sha256').update(tokenBuf).digest('hex').slice(0, 32);
-  const ttl = p.ttlMs ?? SESSION_TTL_MS;
   return {
     raw: tokenBuf.toString('hex'),
     payload: {
@@ -119,8 +144,20 @@ export interface IssueReconnectParams {
  * Caller MUST invalidate on first successful use to enforce single-use.
  */
 export function issueReconnectToken(p: IssueReconnectParams): ReconnectToken {
+  if (typeof p.sessionId !== 'string' || p.sessionId.length === 0) {
+    throw new TypeError('issueReconnectToken: sessionId must be non-empty string');
+  }
+  if (typeof p.playerId !== 'string' || p.playerId.length === 0) {
+    throw new TypeError('issueReconnectToken: playerId must be non-empty string');
+  }
+  if (typeof p.nowMs !== 'number' || !Number.isFinite(p.nowMs)) {
+    throw new TypeError('issueReconnectToken: nowMs must be finite number');
+  }
   const rng = p.rngBytes ?? randomBytes;
   const tokenBuf = rng(TOKEN_BYTES);
+  if (!Buffer.isBuffer(tokenBuf) || tokenBuf.length !== TOKEN_BYTES) {
+    throw new Error(`issueReconnectToken: rngBytes must return Buffer of ${TOKEN_BYTES} bytes`);
+  }
   return {
     raw: tokenBuf.toString('hex'),
     sessionId: p.sessionId,
@@ -146,20 +183,56 @@ export interface VerifyParams {
 /**
  * R66.1 verify — timing-safe token compare + expiry + device fingerprint match.
  * Returns structured reason on failure for auth_log (R66.9 — deferred).
+ *
+ * Hardened against (audit 2026-05-18):
+ *   - bug#15 timing-oracle: check expiry FIRST so attacker probing wrong
+ *     tokens on expired sessions does not learn whether the guess matched.
+ *   - bug#16 undefined presentedTokenHex previously crashed; now graceful.
+ *   - bug#19 empty token both sides authenticated; now empty inputs reject.
  */
 export function verifySessionToken(p: VerifyParams): VerifyResult {
   if (!p.storedPayload) return { ok: false, reason: 'unknown_session' };
 
-  const a = Buffer.from(p.presentedTokenHex, 'hex');
-  const b = Buffer.from(p.storedTokenHex, 'hex');
-  if (a.length !== b.length || !timingSafeEqual(a, b)) {
+  // 1. Expiry check FIRST — fail closed and identically regardless of token,
+  //    so the response doesn't reveal whether the presented token was correct
+  //    on an expired session (R66.9 audit-log differentiates if needed).
+  if (typeof p.nowMs !== 'number' || !Number.isFinite(p.nowMs)) {
     return { ok: false, reason: 'token_mismatch' };
   }
-
   if (p.nowMs >= p.storedPayload.expiresAtMs) {
     return { ok: false, reason: 'expired' };
   }
 
+  // 2. Input validation — reject malformed presented token without crashing.
+  if (typeof p.presentedTokenHex !== 'string' || p.presentedTokenHex.length === 0) {
+    return { ok: false, reason: 'token_mismatch' };
+  }
+  if (typeof p.storedTokenHex !== 'string' || p.storedTokenHex.length === 0) {
+    return { ok: false, reason: 'token_mismatch' };
+  }
+  // Enforce 256-bit (64-hex) token length to prevent empty/zero-length bypass
+  // and reject obvious format violations early.
+  if (p.storedTokenHex.length !== TOKEN_BYTES * 2 || p.presentedTokenHex.length !== TOKEN_BYTES * 2) {
+    return { ok: false, reason: 'token_mismatch' };
+  }
+
+  let a: Buffer;
+  let b: Buffer;
+  try {
+    a = Buffer.from(p.presentedTokenHex, 'hex');
+    b = Buffer.from(p.storedTokenHex, 'hex');
+  } catch {
+    return { ok: false, reason: 'token_mismatch' };
+  }
+  // After hex parse, both must still be full 32 bytes (non-hex chars truncate silently).
+  if (a.length !== TOKEN_BYTES || b.length !== TOKEN_BYTES) {
+    return { ok: false, reason: 'token_mismatch' };
+  }
+  if (!timingSafeEqual(a, b)) {
+    return { ok: false, reason: 'token_mismatch' };
+  }
+
+  // 3. Fingerprint match (cheap string compare AFTER constant-time token compare).
   if (p.presentedFingerprint !== p.storedPayload.deviceFingerprint) {
     return { ok: false, reason: 'fingerprint_mismatch' };
   }

@@ -18,7 +18,23 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/seedrandom": "^3.0.0",
+    "@vitest/coverage-v8": "^2.1.9",
     "typescript": "^5.5.0",
     "vitest": "^2.0.0"
-  }
+  },
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trinhlong1988/svtk-status.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trinhlong1988/svtk-status/issues"
+  },
+  "homepage": "https://github.com/Trinhlong1988/svtk-status#readme"
 }

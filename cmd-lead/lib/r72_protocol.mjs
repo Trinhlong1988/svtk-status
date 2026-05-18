@@ -22,24 +22,56 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(HERE, '..', '..');
 const LEAD_DIR = join(REPO_ROOT, 'cmd-lead');
 
+// Audit bug#36: 1-second granularity caused same-second pushes to overwrite.
+// Monotonic counter ensures within-second uniqueness even if Date precision
+// truncates milliseconds (some OS clocks have ~16ms granularity).
+let __tsCounter = 0;
+let __tsLast = '';
 function nowTs() {
-  // ISO compact UTC: 20260518T143125Z
+  // ISO compact UTC with millis preserved: 20260518T143125-487Z
   const d = new Date();
-  return d
+  const base = d
     .toISOString()
     .replace(/[-:]/g, '')
-    .replace(/\.\d+/, '');
+    .replace('.', '-');
+  if (base === __tsLast) {
+    __tsCounter += 1;
+    return base.replace('Z', `n${__tsCounter}Z`);
+  }
+  __tsLast = base;
+  __tsCounter = 0;
+  return base;
 }
 
-function readFoundationHash() {
-  const indexPath = join(REPO_ROOT, 'foundation', 'INDEX.sha256');
-  const content = readFileSync(indexPath, 'utf8');
-  for (const line of content.split('\n')) {
-    if (line.includes('SVTK_FOUNDATION_v2.8.0.md')) {
-      return line.trim().split(/\s+/)[0].toLowerCase();
-    }
+// Audit bug#35: path-traversal guard for any interpolated filename component.
+function safeName(s) {
+  if (typeof s !== 'string') throw new TypeError('safeName: must be string');
+  // Reject path separators, parent traversal, control chars.
+  const cleaned = s.replace(/[^A-Za-z0-9_-]/g, '_');
+  if (cleaned.length === 0 || cleaned.length > 80) {
+    throw new RangeError('safeName: empty or too long after sanitization');
   }
-  throw new Error('R72: foundation/INDEX.sha256 missing SVTK_FOUNDATION_v2.8.0.md');
+  return cleaned;
+}
+
+/**
+ * Audit bug#23: previously threw when INDEX.sha256 missed the foundation line —
+ * heartbeat schtask would crash next fire. Now returns 'UNKNOWN' so heartbeats
+ * keep flowing; cmd-lead can detect the missing-hash signal in the payload.
+ */
+function readFoundationHash() {
+  try {
+    const indexPath = join(REPO_ROOT, 'foundation', 'INDEX.sha256');
+    const content = readFileSync(indexPath, 'utf8');
+    for (const line of content.split('\n')) {
+      if (line.includes('SVTK_FOUNDATION_v2.8.0.md')) {
+        return line.trim().split(/\s+/)[0].toLowerCase();
+      }
+    }
+    return 'UNKNOWN_INDEX_MISSING_FOUNDATION_LINE';
+  } catch {
+    return 'UNKNOWN_INDEX_READ_FAILED';
+  }
 }
 
 function writeJson(path, obj) {
@@ -66,17 +98,36 @@ export function pushHeartbeat(p) {
     next: p.next ?? '',
     via: 'R72_protocol',
   };
-  return writeJson(join(LEAD_DIR, 'heartbeats', `${p.cmd}_hb_${ts}.json`), payload);
+  return writeJson(join(LEAD_DIR, 'heartbeats', `${safeName(p.cmd)}_hb_${ts}.json`), payload);
 }
 
 /**
  * R72.B — push completion JSON after a task finishes (cmd-lead poll 1h).
- * @param {{cmd:string, parent:string, phase?:string, version?:string, task:string, delivered:object, status?:string, next?:string, extra?:object}} p
+ *
+ * Schema alignment (audit bug#22): cmd-lead/cmd.md L599-607 expects
+ * `{fix_id, fixed_by, result, evidence, timestamp}` with filename
+ * `${result}-${fix_id}-${ts}.json`. We now emit BOTH formats — the
+ * canonical cmd-lead schema AND the legacy verbose schema — so the
+ * orchestrator picks up PASS/FAIL/PARTIAL correctly while existing
+ * dashboard JS that reads cmd/task/delivered still works.
+ *
+ * @param {{cmd:string, parent:string, phase?:string, version?:string,
+ *           task:string, delivered:object, status?:string, next?:string,
+ *           extra?:object, fixId?:string, result?:'PASS'|'FAIL'|'PARTIAL'}} p
  * @returns {string} written file path
  */
 export function pushCompletion(p) {
   const ts = nowTs();
+  const fixId = p.fixId ?? p.task.replace(/[^a-z0-9-]/gi, '_').slice(0, 60);
+  const result = p.result ?? (p.status === 'DONE' || p.status == null ? 'PASS' : 'FAIL');
   const payload = {
+    // cmd-lead/cmd.md canonical schema
+    fix_id: fixId,
+    fixed_by: p.cmd,
+    result,
+    evidence: { task: p.task, delivered: p.delivered, ...(p.extra ?? {}) },
+    timestamp: ts,
+    // Verbose/legacy fields kept for dashboard compatibility
     cmd: p.cmd,
     parent: p.parent,
     phase: p.phase ?? '14',
@@ -90,8 +141,11 @@ export function pushCompletion(p) {
     ...(p.extra ?? {}),
     via: 'R72_protocol',
   };
-  const slug = p.cmd.replace(/[^a-z0-9-]/gi, '');
-  return writeJson(join(LEAD_DIR, 'completions', `${slug}_done_${ts}.json`), payload);
+  // Filename per cmd-lead/cmd.md spec: <result>-<fix_id>-<ts>.json
+  return writeJson(
+    join(LEAD_DIR, 'completions', `${safeName(result)}-${safeName(fixId)}-${ts}.json`),
+    payload,
+  );
 }
 
 /**
@@ -111,7 +165,7 @@ export function pushAck(p) {
     via: 'R72_protocol',
   };
   return writeJson(
-    join(LEAD_DIR, 'inbox-recheck', `ack-${p.issueId}-${ts}.json`),
+    join(LEAD_DIR, 'inbox-recheck', `ack-${safeName(p.issueId)}-${ts}.json`),
     payload,
   );
 }

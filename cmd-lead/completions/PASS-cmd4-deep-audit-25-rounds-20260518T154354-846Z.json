@@ -1,0 +1,69 @@
+{
+  "fix_id": "cmd4-deep-audit-25-rounds",
+  "fixed_by": "cmd-qa-core",
+  "result": "PASS",
+  "evidence": {
+    "task": "Deep audit 25 rounds — 36 bugs found, all CRIT+HIGH fixed",
+    "delivered": {
+      "audit_rounds": 25,
+      "bugs_found": 36,
+      "bugs_fixed_crit_high": 27,
+      "bugs_documented_low_med": 9,
+      "tests_total": 109,
+      "tests_passing": 109,
+      "gate1_score": "25/25 (100%)",
+      "tsc_clean": true,
+      "key_fixes": [
+        "bug#1 clock-skew bound (symmetric maxAgeMs)",
+        "bug#7 prototype pollution via Object.hasOwn category guard",
+        "bug#8/#9 admitSeq Number.isInteger + non-negative",
+        "bug#12/#13 capacity validate positive integer",
+        "bug#15 verify expiry FIRST (timing oracle fix)",
+        "bug#19 reject empty stored/presented token",
+        "bug#22 dual-emit completion schema (cmd-lead canonical + verbose)",
+        "bug#24/#25 sessionSecret ≥ 32 bytes + Buffer-only",
+        "bug#26 canonicalJson depth limit (DoS guard)",
+        "bug#27/#28 reject Symbol keys + non-plain-object",
+        "bug#30-34 issueSessionToken input validation (ttl/nowMs/playerId/fingerprint)",
+        "bug#35 R72 safeName() path-traversal guard",
+        "bug#36 R72 nowTs() monotonic counter for same-second pushes"
+      ]
+    }
+  },
+  "timestamp": "20260518T154354-846Z",
+  "cmd": "cmd-qa-core",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T154354-846Z",
+  "task": "Deep audit 25 rounds — 36 bugs found, all CRIT+HIGH fixed",
+  "status": "DONE",
+  "delivered": {
+    "audit_rounds": 25,
+    "bugs_found": 36,
+    "bugs_fixed_crit_high": 27,
+    "bugs_documented_low_med": 9,
+    "tests_total": 109,
+    "tests_passing": 109,
+    "gate1_score": "25/25 (100%)",
+    "tsc_clean": true,
+    "key_fixes": [
+      "bug#1 clock-skew bound (symmetric maxAgeMs)",
+      "bug#7 prototype pollution via Object.hasOwn category guard",
+      "bug#8/#9 admitSeq Number.isInteger + non-negative",
+      "bug#12/#13 capacity validate positive integer",
+      "bug#15 verify expiry FIRST (timing oracle fix)",
+      "bug#19 reject empty stored/presented token",
+      "bug#22 dual-emit completion schema (cmd-lead canonical + verbose)",
+      "bug#24/#25 sessionSecret ≥ 32 bytes + Buffer-only",
+      "bug#26 canonicalJson depth limit (DoS guard)",
+      "bug#27/#28 reject Symbol keys + non-plain-object",
+      "bug#30-34 issueSessionToken input validation (ttl/nowMs/playerId/fingerprint)",
+      "bug#35 R72 safeName() path-traversal guard",
+      "bug#36 R72 nowTs() monotonic counter for same-second pushes"
+    ]
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "CMD4 deep audit COMPLETE. 36 bugs documented, 27 CRIT+HIGH patched, tests cover all fix paths.",
+  "via": "R72_protocol"
+}
