@@ -1,0 +1,96 @@
+{
+  "timestamp": "20260518-213324",
+  "foundation_hash": "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966",
+  "cycle": 4,
+  "mode": "NORMAL",
+  "teams": {
+    "TEAM_CORE": {
+      "engine": {
+        "status": "COMPLETED"
+      },
+      "place": {
+        "status": "NO_REPORT"
+      },
+      "parse": {
+        "status": "ACTIVE_alive",
+        "task": "14"
+      },
+      "db": {
+        "status": "COMPLETED"
+      }
+    },
+    "TEAM_CONTENT": {
+      "npc": {
+        "status": "NO_REPORT"
+      },
+      "quest": {
+        "status": "ACTIVE_standby",
+        "task": "validation-complete"
+      },
+      "dialog": {
+        "status": "ACTIVE_alive",
+        "task": "split-dialog-module"
+      },
+      "item": {
+        "status": "COMPLETED"
+      },
+      "boss": {
+        "status": "COMPLETED"
+      },
+      "skill": {
+        "status": "NO_REPORT"
+      },
+      "event": {
+        "status": "NO_REPORT"
+      }
+    },
+    "TEAM_ART": {
+      "sprite": {
+        "status": "NO_REPORT"
+      },
+      "map": {
+        "status": "NO_REPORT"
+      },
+      "icon": {
+        "status": "NO_REPORT"
+      },
+      "audio": {
+        "status": "NO_REPORT"
+      }
+    },
+    "TEAM_QA": {
+      "qa-content": {
+        "status": "NO_REPORT"
+      },
+      "qa-art": {
+        "status": "NO_REPORT"
+      },
+      "qa-core": {
+        "status": "ACTIVE_alive",
+        "task": "14"
+      },
+      "qa-full": {
+        "status": "NO_REPORT"
+      }
+    }
+  },
+  "active_workers": [
+    "cmd-db+cmd-item+cmd-engine(economy)",
+    "cmd-dialog",
+    "cmd-engine+cmd-boss",
+    "cmd-network",
+    "cmd-parse",
+    "cmd-qa-core",
+    "cmd-quest"
+  ],
+  "completions_count": 10,
+  "pending_fixes": {
+    "cmd_parse_stale_foundation_hash": 1,
+    "cmd_db_w2_r44_below_threshold": 1
+  },
+  "summary": {
+    "active": 7,
+    "total_completions": 10,
+    "total_pending": 2
+  }
+}

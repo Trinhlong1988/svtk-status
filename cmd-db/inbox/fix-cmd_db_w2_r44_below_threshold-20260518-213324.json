@@ -1,0 +1,14 @@
+{
+  "issue_id": "cmd_db_w2_r44_below_threshold",
+  "description": "Implement R44 5-wrapper (T1 SERIALIZABLE / T2 REPEATABLE READ / W3 optimistic / W4 R68 snapshot / W5 executeWithIdempotency + AD1-AD12) per cmd-db/cmd.md § P1.1-P1.5. Target ≥99% compliance. Ship 003_anti_dupe_schema.sql + stale_pending cron + AD12 rollback. Coordinate W1 battle txn API surface with cmd-engine and W2 quest-reward grant adapter signature with cmd-quest.",
+  "evidence": {
+    "current_compliance": "~30%",
+    "spec_threshold": "≥99% (DB critical per CMD_DB v2.4.2)",
+    "doc_ref": "cmd-db/output/r44_compliance.md",
+    "estimated_loc": 600
+  },
+  "severity": "MED",
+  "priority": 2,
+  "assigned_by": "LEAD_verify",
+  "ts": "20260518-213324"
+}

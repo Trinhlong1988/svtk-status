@@ -1,0 +1,26 @@
+{
+  "cmd": "LEAD",
+  "version": "2.1",
+  "cycle": 4,
+  "timestamp": "20260518-213324",
+  "alerts_processed": 1,
+  "alerts_self_generated_prev": 1,
+  "fix_tasks_assigned_this_cycle": 1,
+  "completions_resolved_this_cycle": 4,
+  "has_high_alert": false,
+  "active_workers": [
+    "cmd-db+cmd-item+cmd-engine(economy)",
+    "cmd-dialog",
+    "cmd-engine+cmd-boss",
+    "cmd-network",
+    "cmd-parse",
+    "cmd-qa-core",
+    "cmd-quest"
+  ],
+  "pending_fixes": {
+    "cmd_parse_stale_foundation_hash": 1,
+    "cmd_db_w2_r44_below_threshold": 1
+  },
+  "sprint_milestone": "CMD1 Week 1 DONE, CMD2 Week 1-3 DONE (R44 NEW gap), CMD3 ALL DONE 100%, CMD4 Week 1 DONE",
+  "exit_code": 0
+}
