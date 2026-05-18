@@ -1,0 +1,40 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "alert_id": "cmd-db_r44_wire_coverage_0pct",
+  "severity": "MED",
+  "ts": "2026-05-19T17:32:19Z",
+  "subject": "R44 cross-CMD wire coverage = 0/9 (0%) — consumers have not yet imported CMD2 wrappers",
+  "context": {
+    "tracker": "cmd-db/output/wire_tracker/callsite_scanner.mjs",
+    "outputs": [
+      "cmd-db/output/wire_tracker/callsite_inventory.json",
+      "cmd-db/output/wire_tracker/missing_alerts.json",
+      "cmd-db/output/wire_tracker/coverage_report.md"
+    ],
+    "sibling_cmds_scanned": 19,
+    "total_callsites_found": 0,
+    "expected_wire_entries": 9,
+    "coverage_pct": 0
+  },
+  "missing_wires": [
+    {"consumer": "cmd-engine", "wrapper": "W1", "symbol": "withBattleStart", "reason": "combat_runtime begin"},
+    {"consumer": "cmd-engine", "wrapper": "W1", "symbol": "withBattleEnd", "reason": "combat_runtime end"},
+    {"consumer": "cmd-engine", "wrapper": "W4", "symbol": "bindSnapshotToTxn", "reason": "R68 checksum bind after tick"},
+    {"consumer": "cmd-engine", "wrapper": "W2", "symbol": "withActionTxn", "reason": "skill_cast / item_use"},
+    {"consumer": "cmd-item", "wrapper": "W2", "symbol": "withActionTxn", "reason": "loot / trade"},
+    {"consumer": "cmd-item", "wrapper": "P1.3", "symbol": "pickupItem", "reason": "item pickup"},
+    {"consumer": "cmd-item", "wrapper": "W3", "symbol": "optimisticUpdate", "reason": "inventory_row version-aware update"},
+    {"consumer": "cmd-quest", "wrapper": "W2", "symbol": "withActionTxn", "reason": "reward_claim"},
+    {"consumer": "cmd-qa-core", "wrapper": "W4", "symbol": "verifySnapshotBinding", "reason": "replay divergence audit"}
+  ],
+  "blocker": false,
+  "workaround": "CMD2 ship + API stable per cmd-db/output/wrappers/README.md. Consumer wire is Week 2 day 4-7 task per consumer CMDs (cmd-engine CMD1, cmd-item this session, cmd-quest CMD3, cmd-qa-core CMD4).",
+  "recommendation": [
+    "cmd-engine (CMD1): wrap combat_runtime begin/end with withBattleStart/End + add bindSnapshotToTxn after each replay frame tick + use withActionTxn for skill_cast/item_use paths",
+    "cmd-item (own session): wrap loot/transfer with withActionTxn('trade') + use pickupItem for item pickup + use optimisticUpdate for inventory_row version control",
+    "cmd-quest (CMD3): wrap reward_claim with withActionTxn('reward_claim')",
+    "cmd-qa-core (CMD4): call verifySnapshotBinding during replay divergence audit"
+  ],
+  "rerun_after_wire": "node cmd-db/output/wire_tracker/callsite_scanner.mjs — scanner is idempotent; re-run after each consumer commit to refresh coverage_report.md"
+}

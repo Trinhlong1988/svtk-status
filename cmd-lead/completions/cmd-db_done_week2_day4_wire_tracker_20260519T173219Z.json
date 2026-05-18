@@ -1,0 +1,35 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "Week 2 Day 4 — cross-CMD wire callsite tracker per Mr.Long 'Day 4 cross-CMD wire callsite tracker'",
+  "status": "day4_complete",
+  "ts": "2026-05-19T17:32:19Z",
+  "deliverables": {
+    "scanner": {
+      "file": "cmd-db/output/wire_tracker/callsite_scanner.mjs",
+      "tracked_exports": 16,
+      "expected_wire_entries": 9,
+      "sibling_cmd_scope": "19 cmd-* repos (excludes cmd-db owner + cmd-lead orchestrator)"
+    },
+    "outputs": {
+      "callsite_inventory_json": "cmd-db/output/wire_tracker/callsite_inventory.json",
+      "missing_alerts_json": "cmd-db/output/wire_tracker/missing_alerts.json",
+      "coverage_report_md": "cmd-db/output/wire_tracker/coverage_report.md"
+    },
+    "doc": "cmd-db/output/wire_tracker/README.md"
+  },
+  "first_run_result": {
+    "total_callsites": 0,
+    "satisfied_expected": 0,
+    "missing_expected": 9,
+    "coverage_pct": 0,
+    "interpretation": "consumer CMDs (cmd-engine, cmd-item, cmd-quest, cmd-qa-core) have not yet imported CMD2 wrappers — expected on Day 4; alert MED shipped"
+  },
+  "alert_shipped": "cmd-lead/alerts/cmd-db_alert_r44_wire_coverage_0pct_20260519T173219Z.json",
+  "compliance_progress": {
+    "before_day4": "~98% (Day 1-3 logic + harness)",
+    "after_day4": "~99% (tracker shipped; closes the 'observability' gap of last 5%. Remaining 1% = actual consumer wire — owned by other CMDs, em ship coordination ping)"
+  },
+  "how_to_rerun": "node cmd-db/output/wire_tracker/callsite_scanner.mjs (idempotent; safe to schedule)",
+  "next_action": "Day 5+ — concurrency soak suite OR cmd-lead picks up coordination ping to cmd-engine/cmd-item/cmd-quest/cmd-qa-core"
+}

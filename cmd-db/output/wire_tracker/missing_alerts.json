@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-05-18T17:31:43.874Z",
+  "total_expected": 9,
+  "total_satisfied": 0,
+  "total_missing": 9,
+  "coverage_pct": 0,
+  "missing": [
+    {
+      "consumer": "cmd-engine",
+      "wrapper": "W1",
+      "symbol": "withBattleStart",
+      "reason": "combat_runtime begin"
+    },
+    {
+      "consumer": "cmd-engine",
+      "wrapper": "W1",
+      "symbol": "withBattleEnd",
+      "reason": "combat_runtime end"
+    },
+    {
+      "consumer": "cmd-engine",
+      "wrapper": "W4",
+      "symbol": "bindSnapshotToTxn",
+      "reason": "R68 checksum bind after tick"
+    },
+    {
+      "consumer": "cmd-engine",
+      "wrapper": "W2",
+      "symbol": "withActionTxn",
+      "reason": "skill_cast / item_use"
+    },
+    {
+      "consumer": "cmd-item",
+      "wrapper": "W2",
+      "symbol": "withActionTxn",
+      "reason": "loot / trade"
+    },
+    {
+      "consumer": "cmd-item",
+      "wrapper": "P1.3",
+      "symbol": "pickupItem",
+      "reason": "item pickup"
+    },
+    {
+      "consumer": "cmd-item",
+      "wrapper": "W3",
+      "symbol": "optimisticUpdate",
+      "reason": "inventory_row version-aware update"
+    },
+    {
+      "consumer": "cmd-quest",
+      "wrapper": "W2",
+      "symbol": "withActionTxn",
+      "reason": "reward_claim"
+    },
+    {
+      "consumer": "cmd-qa-core",
+      "wrapper": "W4",
+      "symbol": "verifySnapshotBinding",
+      "reason": "replay divergence audit"
+    }
+  ],
+  "satisfied": []
+}
