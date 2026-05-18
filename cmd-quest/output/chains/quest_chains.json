@@ -1,0 +1,586 @@
+[
+  {
+    "chain_id": "ly_chain_1",
+    "name": "Chuỗi sử thời Ly — phần 1",
+    "era": "ly",
+    "quest_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      26,
+      31,
+      36,
+      41,
+      46,
+      51,
+      56,
+      61
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "ly_chain_2",
+    "name": "Chuỗi sử thời Ly — phần 2",
+    "era": "ly",
+    "quest_ids": [
+      66,
+      71,
+      76,
+      81,
+      86,
+      91,
+      96,
+      101,
+      106,
+      111,
+      116,
+      121,
+      126
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "ly_chain_3",
+    "name": "Chuỗi sử thời Ly — phần 3",
+    "era": "ly",
+    "quest_ids": [
+      131,
+      136,
+      141,
+      146,
+      151,
+      156,
+      161,
+      166,
+      171,
+      176,
+      181,
+      186,
+      191
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "ly_chain_4",
+    "name": "Chuỗi sử thời Ly — phần 4",
+    "era": "ly",
+    "quest_ids": [
+      196,
+      201,
+      206,
+      211,
+      216,
+      221,
+      226,
+      231,
+      236,
+      241,
+      246,
+      251,
+      256
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "tran_chain_1",
+    "name": "Chuỗi sử thời Tran — phần 1",
+    "era": "tran",
+    "quest_ids": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      27,
+      32,
+      37,
+      42,
+      47,
+      52,
+      57,
+      62
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "tran_chain_2",
+    "name": "Chuỗi sử thời Tran — phần 2",
+    "era": "tran",
+    "quest_ids": [
+      67,
+      72,
+      77,
+      82,
+      87,
+      92,
+      97,
+      102,
+      107,
+      112,
+      117,
+      122,
+      127
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "tran_chain_3",
+    "name": "Chuỗi sử thời Tran — phần 3",
+    "era": "tran",
+    "quest_ids": [
+      132,
+      137,
+      142,
+      147,
+      152,
+      157,
+      162,
+      167,
+      172,
+      177,
+      182,
+      187,
+      192
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "tran_chain_4",
+    "name": "Chuỗi sử thời Tran — phần 4",
+    "era": "tran",
+    "quest_ids": [
+      197,
+      202,
+      207,
+      212,
+      217,
+      222,
+      227,
+      232,
+      237,
+      242,
+      247,
+      252,
+      257
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "le_chain_1",
+    "name": "Chuỗi sử thời Le — phần 1",
+    "era": "le",
+    "quest_ids": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      28,
+      33,
+      38,
+      43,
+      48,
+      53,
+      58,
+      63
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "le_chain_2",
+    "name": "Chuỗi sử thời Le — phần 2",
+    "era": "le",
+    "quest_ids": [
+      68,
+      73,
+      78,
+      83,
+      88,
+      93,
+      98,
+      103,
+      108,
+      113,
+      118,
+      123,
+      128
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "le_chain_3",
+    "name": "Chuỗi sử thời Le — phần 3",
+    "era": "le",
+    "quest_ids": [
+      133,
+      138,
+      143,
+      148,
+      153,
+      158,
+      163,
+      168,
+      173,
+      178,
+      183,
+      188,
+      193
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "le_chain_4",
+    "name": "Chuỗi sử thời Le — phần 4",
+    "era": "le",
+    "quest_ids": [
+      198,
+      203,
+      208,
+      213,
+      218,
+      223,
+      228,
+      233,
+      238,
+      243,
+      248,
+      253,
+      258
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "tay_son_chain_1",
+    "name": "Chuỗi sử thời Tay Son — phần 1",
+    "era": "tay_son",
+    "quest_ids": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      29,
+      34,
+      39,
+      44,
+      49,
+      54,
+      59,
+      64
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "tay_son_chain_2",
+    "name": "Chuỗi sử thời Tay Son — phần 2",
+    "era": "tay_son",
+    "quest_ids": [
+      69,
+      74,
+      79,
+      84,
+      89,
+      94,
+      99,
+      104,
+      109,
+      114,
+      119,
+      124,
+      129
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "tay_son_chain_3",
+    "name": "Chuỗi sử thời Tay Son — phần 3",
+    "era": "tay_son",
+    "quest_ids": [
+      134,
+      139,
+      144,
+      149,
+      154,
+      159,
+      164,
+      169,
+      174,
+      179,
+      184,
+      189,
+      194
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "tay_son_chain_4",
+    "name": "Chuỗi sử thời Tay Son — phần 4",
+    "era": "tay_son",
+    "quest_ids": [
+      199,
+      204,
+      209,
+      214,
+      219,
+      224,
+      229,
+      234,
+      239,
+      244,
+      249,
+      254,
+      259
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "nguyen_chain_1",
+    "name": "Chuỗi sử thời Nguyen — phần 1",
+    "era": "nguyen",
+    "quest_ids": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "nguyen_chain_2",
+    "name": "Chuỗi sử thời Nguyen — phần 2",
+    "era": "nguyen",
+    "quest_ids": [
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100,
+      105,
+      110,
+      115,
+      120
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "nguyen_chain_3",
+    "name": "Chuỗi sử thời Nguyen — phần 3",
+    "era": "nguyen",
+    "quest_ids": [
+      125,
+      130,
+      135,
+      140,
+      145,
+      150,
+      155,
+      160,
+      165,
+      170,
+      175,
+      180
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "nguyen_chain_4",
+    "name": "Chuỗi sử thời Nguyen — phần 4",
+    "era": "nguyen",
+    "quest_ids": [
+      185,
+      190,
+      195,
+      200,
+      205,
+      210,
+      215,
+      220,
+      225,
+      230,
+      235,
+      240
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "special_lore_1",
+    "name": "Chuỗi lore đặc biệt 1",
+    "era": "ly",
+    "quest_ids": [
+      402,
+      403,
+      404,
+      405
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_2",
+    "name": "Chuỗi lore đặc biệt 2",
+    "era": "nguyen",
+    "quest_ids": [
+      406,
+      407,
+      408,
+      409
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_3",
+    "name": "Chuỗi lore đặc biệt 3",
+    "era": "tay_son",
+    "quest_ids": [
+      410,
+      411,
+      412,
+      413
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_4",
+    "name": "Chuỗi lore đặc biệt 4",
+    "era": "le",
+    "quest_ids": [
+      414,
+      415,
+      416,
+      417
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_5",
+    "name": "Chuỗi lore đặc biệt 5",
+    "era": "tran",
+    "quest_ids": [
+      418,
+      419,
+      420,
+      421
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_6",
+    "name": "Chuỗi lore đặc biệt 6",
+    "era": "ly",
+    "quest_ids": [
+      422,
+      423,
+      424,
+      425
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_7",
+    "name": "Chuỗi lore đặc biệt 7",
+    "era": "nguyen",
+    "quest_ids": [
+      426,
+      427,
+      428,
+      429
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_8",
+    "name": "Chuỗi lore đặc biệt 8",
+    "era": "tay_son",
+    "quest_ids": [
+      430,
+      431,
+      432,
+      433
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_9",
+    "name": "Chuỗi lore đặc biệt 9",
+    "era": "le",
+    "quest_ids": [
+      434,
+      435,
+      436,
+      437
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_10",
+    "name": "Chuỗi lore đặc biệt 10",
+    "era": "tran",
+    "quest_ids": [
+      438,
+      439,
+      440,
+      441
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_11",
+    "name": "Chuỗi lore đặc biệt 11",
+    "era": "ly",
+    "quest_ids": [
+      442,
+      443,
+      444,
+      445
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_12",
+    "name": "Chuỗi lore đặc biệt 12",
+    "era": "nguyen",
+    "quest_ids": [
+      446,
+      447,
+      448,
+      449
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_13",
+    "name": "Chuỗi lore đặc biệt 13",
+    "era": "tay_son",
+    "quest_ids": [
+      450,
+      451,
+      452,
+      453
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "special_lore_14",
+    "name": "Chuỗi lore đặc biệt 14",
+    "era": "le",
+    "quest_ids": [
+      454,
+      455,
+      456,
+      457
+    ],
+    "unlocks_next_era": false
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "total_tests": 16,
+  "passed": 16,
+  "failed": 0,
+  "details": [
+    {
+      "test": "schema_all_quests_have_quest_id",
+      "pass": true
+    },
+    {
+      "test": "schema_all_quests_have_category",
+      "pass": true
+    },
+    {
+      "test": "schema_all_quests_have_era",
+      "pass": true
+    },
+    {
+      "test": "content_count_ge_3000",
+      "pass": true
+    },
+    {
+      "test": "content_5_era_covered",
+      "pass": true
+    },
+    {
+      "test": "content_cultural_lock_pass",
+      "pass": true
+    },
+    {
+      "test": "crossref_all_have_giver",
+      "pass": true
+    },
+    {
+      "test": "crossref_chain_quests_exist",
+      "pass": true
+    },
+    {
+      "test": "idempotency_unique_quest_id",
+      "pass": true
+    },
+    {
+      "test": "idempotency_unique_chain_id",
+      "pass": true
+    },
+    {
+      "test": "reward_non_negative",
+      "pass": true
+    },
+    {
+      "test": "reward_raid_scales",
+      "pass": true
+    },
+    {
+      "test": "reward_lore_unlocks_codex",
+      "pass": true
+    },
+    {
+      "test": "chain_count_ge_34",
+      "pass": true
+    },
+    {
+      "test": "chain_min_quests_2",
+      "pass": true
+    },
+    {
+      "test": "objective_6_types_covered",
+      "pass": true
+    }
+  ]
+}

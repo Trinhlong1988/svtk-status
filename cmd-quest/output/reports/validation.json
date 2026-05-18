@@ -1,0 +1,104 @@
+{
+  "passed": 15,
+  "total": 15,
+  "pass_rate": 1.0,
+  "errors": [],
+  "checks": [
+    {
+      "code": "quest_count",
+      "pass": true,
+      "found": 3000,
+      "target": 3000
+    },
+    {
+      "code": "category_main",
+      "pass": true,
+      "found": 259,
+      "target": 259
+    },
+    {
+      "code": "category_side",
+      "pass": true,
+      "found": 142,
+      "target": 142
+    },
+    {
+      "code": "category_lore",
+      "pass": true,
+      "found": 88,
+      "target": 88
+    },
+    {
+      "code": "category_event",
+      "pass": true,
+      "found": 28,
+      "target": 28
+    },
+    {
+      "code": "category_raid",
+      "pass": true,
+      "found": 50,
+      "target": 50
+    },
+    {
+      "code": "category_reborn",
+      "pass": true,
+      "found": 21,
+      "target": 21
+    },
+    {
+      "code": "unique_quest_id",
+      "pass": true,
+      "total": 3000,
+      "unique": 3000
+    },
+    {
+      "code": "objective_6_types",
+      "pass": true,
+      "used": [
+        "collect",
+        "deliver",
+        "escort",
+        "explore",
+        "kill",
+        "talk"
+      ]
+    },
+    {
+      "code": "era_5_covered",
+      "pass": true,
+      "used": [
+        "le",
+        "ly",
+        "nguyen",
+        "tay_son",
+        "tran"
+      ]
+    },
+    {
+      "code": "all_have_giver",
+      "pass": true,
+      "missing": 0
+    },
+    {
+      "code": "chains_34",
+      "pass": true,
+      "found": 34
+    },
+    {
+      "code": "schema_exists",
+      "pass": true
+    },
+    {
+      "code": "cultural_lock_title",
+      "pass": true,
+      "violations": 0,
+      "samples": []
+    },
+    {
+      "code": "protagonist_arc_count",
+      "pass": true,
+      "found": 259
+    }
+  ]
+}
