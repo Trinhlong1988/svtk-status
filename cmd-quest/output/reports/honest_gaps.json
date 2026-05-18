@@ -1,0 +1,33 @@
+{
+  "cmd_version": "1.5.0",
+  "foundation_hash_actual": "ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0",
+  "legacy_seed_count": 150,
+  "level_cap": 120,
+  "max_chain_len": 15,
+  "gaps_admitted": [
+    {
+      "severity": "LOW",
+      "item": "cmd-item registry chưa ship → reward_items placeholder",
+      "reason": "cmd-item/output/legacy/ chỉ có TS source, chưa có ITEM JSONL registry. event_token/raid_loot_chest/reborn_token vẫn là logical name.",
+      "mitigation": "CMD ITEM ship JSONL → re-run CMD QUEST rebuild reward link"
+    },
+    {
+      "severity": "LOW",
+      "item": "Pre-existing TS tests dùng legacy schema",
+      "reason": "cmd-quest/tests/{zod_validate,reward_distribution,npc_ref}.test.ts expect 150 entries string-ID schema, hardcoded path C:/.../SVTK_UPLOAD_WORK/. Run sẽ FAIL. Tests stale với v1.3 spec.",
+      "mitigation": "Add v1.3 schema TS tests beside legacy, hoặc deprecate legacy"
+    },
+    {
+      "severity": "LOW",
+      "item": "Generated quest template lặp",
+      "reason": "~2412 quest generated theo template prefix+suffix Vietnamese rotation. Cultural lock pass, nhưng không deep narrative.",
+      "mitigation": "CMD DIALOG enrich qua dialog tree"
+    },
+    {
+      "severity": "LOW",
+      "item": "NPC#1 Trần Long player template — không thể là giver",
+      "reason": "NPC#1 metadata era=tran (mismatch R83 origin g1), can_give_quest=False. Reborn quest dùng giver alt (Sư Vạn Hạnh hoặc NPC giver pool đầu tiên).",
+      "mitigation": "CMD NPC fix metadata Trần Long: era=g1 + can_give_quest=False (player); add NPC mới làm reborn ritualist (Tiên Ông Yên Tử etc.)"
+    }
+  ]
+}

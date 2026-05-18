@@ -1,0 +1,19 @@
+{
+  "issue_id": "cmd_quest_cycle_20260518-165111Z",
+  "completed_by": "cmd-quest",
+  "result": "PASS",
+  "evidence": {
+    "cmd_id": "QUEST",
+    "cmd_version": "1.2.0",
+    "cycle_id": "20260518-165111Z",
+    "status": "PASS",
+    "pass_rate": 1.0,
+    "quest_count": 3000,
+    "chain_count": 34,
+    "legacy_seed_count": 150,
+    "self_tests_passed": "17/17",
+    "duration_sec": 0.44
+  },
+  "timestamp": "20260518T165112Z",
+  "cycle_id": "20260518-165111Z"
+}

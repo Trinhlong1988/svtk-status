@@ -1,0 +1,593 @@
+[
+  {
+    "chain_id": "SVTK_CHAIN_G1_1",
+    "name": "Chuỗi sử thời Globeway hiện đại - phần 1",
+    "era": "g1",
+    "quest_ids": [
+      151,
+      152,
+      181,
+      192,
+      203,
+      214,
+      225,
+      236,
+      247,
+      258,
+      269,
+      280,
+      291,
+      302,
+      313
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F1_1",
+    "name": "Chuỗi sử thời Hồng Bàng - phần 1",
+    "era": "f1",
+    "quest_ids": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      17,
+      182,
+      193
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F1_2",
+    "name": "Chuỗi sử thời Hồng Bàng - phần 2",
+    "era": "f1",
+    "quest_ids": [
+      204,
+      215,
+      226,
+      237,
+      248,
+      259,
+      270,
+      281,
+      292,
+      303,
+      314
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F2_1",
+    "name": "Chuỗi sử thời Âu Lạc - phần 1",
+    "era": "f2",
+    "quest_ids": [
+      19,
+      24,
+      25,
+      27,
+      29,
+      31,
+      33,
+      36,
+      183,
+      194,
+      205,
+      216,
+      227,
+      238,
+      249
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F2_2",
+    "name": "Chuỗi sử thời Âu Lạc - phần 2",
+    "era": "f2",
+    "quest_ids": [
+      260,
+      271,
+      282,
+      293,
+      304,
+      315
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F3_1",
+    "name": "Chuỗi sử thời Bắc thuộc - phần 1",
+    "era": "f3",
+    "quest_ids": [
+      37,
+      38,
+      39,
+      43,
+      47,
+      48,
+      50,
+      53,
+      54,
+      184,
+      195,
+      206,
+      217,
+      228,
+      239
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F3_2",
+    "name": "Chuỗi sử thời Bắc thuộc - phần 2",
+    "era": "f3",
+    "quest_ids": [
+      250,
+      261,
+      272,
+      283,
+      294,
+      305,
+      316
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F4_1",
+    "name": "Chuỗi sử thời Ngô Đinh Lê - phần 1",
+    "era": "f4",
+    "quest_ids": [
+      59,
+      62,
+      65,
+      67,
+      68,
+      70,
+      71,
+      153,
+      154,
+      155,
+      185,
+      196,
+      207,
+      218,
+      229
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F4_2",
+    "name": "Chuỗi sử thời Ngô Đinh Lê - phần 2",
+    "era": "f4",
+    "quest_ids": [
+      240,
+      251,
+      262,
+      273,
+      284,
+      295,
+      306,
+      317
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_F5_1",
+    "name": "Chuỗi sử thời tiền Lý - phần 1",
+    "era": "f5",
+    "quest_ids": [
+      186,
+      197,
+      208,
+      219,
+      230,
+      241,
+      252,
+      263,
+      274,
+      285,
+      296,
+      307,
+      318
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LY_1",
+    "name": "Chuỗi sử thời Lý - phần 1",
+    "era": "ly",
+    "quest_ids": [
+      75,
+      78,
+      83,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      156,
+      157,
+      158,
+      159,
+      187
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LY_2",
+    "name": "Chuỗi sử thời Lý - phần 2",
+    "era": "ly",
+    "quest_ids": [
+      198,
+      209,
+      220,
+      231,
+      242,
+      253,
+      264,
+      275,
+      286,
+      297,
+      308,
+      319
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_TRAN_1",
+    "name": "Chuỗi sử thời Trần - phần 1",
+    "era": "tran",
+    "quest_ids": [
+      94,
+      95,
+      96,
+      98,
+      100,
+      101,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      160
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_TRAN_2",
+    "name": "Chuỗi sử thời Trần - phần 2",
+    "era": "tran",
+    "quest_ids": [
+      161,
+      162,
+      163,
+      164,
+      188,
+      199,
+      210,
+      221
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_TRAN_3",
+    "name": "Chuỗi sử thời Trần - phần 3",
+    "era": "tran",
+    "quest_ids": [
+      232,
+      243,
+      254,
+      265,
+      276,
+      287,
+      298,
+      309,
+      320
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LE_1",
+    "name": "Chuỗi sử thời Lê - phần 1",
+    "era": "le",
+    "quest_ids": [
+      113,
+      114,
+      115,
+      116,
+      118,
+      119,
+      120,
+      122,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LE_2",
+    "name": "Chuỗi sử thời Lê - phần 2",
+    "era": "le",
+    "quest_ids": [
+      165,
+      166,
+      167,
+      168,
+      169,
+      189,
+      200,
+      211,
+      222
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LE_3",
+    "name": "Chuỗi sử thời Lê - phần 3",
+    "era": "le",
+    "quest_ids": [
+      233,
+      244,
+      255,
+      266,
+      277,
+      288,
+      299,
+      310,
+      321
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_TAY_SON_1",
+    "name": "Chuỗi sử thời Tây Sơn - phần 1",
+    "era": "tay_son",
+    "quest_ids": [
+      133,
+      134,
+      136,
+      137,
+      140,
+      141,
+      143,
+      145,
+      146,
+      147,
+      148,
+      150,
+      170,
+      171,
+      172
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_TAY_SON_2",
+    "name": "Chuỗi sử thời Tây Sơn - phần 2",
+    "era": "tay_son",
+    "quest_ids": [
+      173,
+      174,
+      190,
+      201,
+      212,
+      223,
+      234,
+      245,
+      256,
+      267,
+      278,
+      289,
+      300,
+      311
+    ],
+    "unlocks_next_era": true
+  },
+  {
+    "chain_id": "SVTK_CHAIN_NGUYEN_1",
+    "name": "Chuỗi sử thời Nguyễn - phần 1",
+    "era": "nguyen",
+    "quest_ids": [
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      191,
+      202,
+      213
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_NGUYEN_2",
+    "name": "Chuỗi sử thời Nguyễn - phần 2",
+    "era": "nguyen",
+    "quest_ids": [
+      224,
+      235,
+      246,
+      257,
+      268,
+      279,
+      290,
+      301,
+      312
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_1",
+    "name": "Chuỗi lore đặc biệt 1",
+    "era": "f2",
+    "quest_ids": [
+      21,
+      22,
+      28,
+      34,
+      35
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_2",
+    "name": "Chuỗi lore đặc biệt 2",
+    "era": "f3",
+    "quest_ids": [
+      41,
+      45,
+      46,
+      52,
+      55
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_3",
+    "name": "Chuỗi lore đặc biệt 3",
+    "era": "f4",
+    "quest_ids": [
+      61,
+      63,
+      66,
+      72,
+      74
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_4",
+    "name": "Chuỗi lore đặc biệt 4",
+    "era": "ly",
+    "quest_ids": [
+      80,
+      81,
+      82,
+      84,
+      97
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_5",
+    "name": "Chuỗi lore đặc biệt 5",
+    "era": "tran",
+    "quest_ids": [
+      112,
+      117,
+      121,
+      142,
+      149
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_6",
+    "name": "Chuỗi lore đặc biệt 6",
+    "era": "g1",
+    "quest_ids": [
+      427,
+      428,
+      429,
+      430,
+      431
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_7",
+    "name": "Chuỗi lore đặc biệt 7",
+    "era": "f5",
+    "quest_ids": [
+      432,
+      433,
+      434,
+      435,
+      436
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_8",
+    "name": "Chuỗi lore đặc biệt 8",
+    "era": "nguyen",
+    "quest_ids": [
+      437,
+      438,
+      439,
+      440,
+      441
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_9",
+    "name": "Chuỗi lore đặc biệt 9",
+    "era": "f4",
+    "quest_ids": [
+      442,
+      443,
+      444,
+      445,
+      446
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_10",
+    "name": "Chuỗi lore đặc biệt 10",
+    "era": "tay_son",
+    "quest_ids": [
+      447,
+      448,
+      449,
+      450,
+      451
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_11",
+    "name": "Chuỗi lore đặc biệt 11",
+    "era": "f3",
+    "quest_ids": [
+      452,
+      453,
+      454,
+      455,
+      456
+    ],
+    "unlocks_next_era": false
+  },
+  {
+    "chain_id": "SVTK_CHAIN_LORE_12",
+    "name": "Chuỗi lore đặc biệt 12",
+    "era": "le",
+    "quest_ids": [
+      457,
+      458,
+      459,
+      460,
+      461
+    ],
+    "unlocks_next_era": false
+  }
+]
