@@ -191,6 +191,52 @@ $criteria += Check 'G1.32' 'seq range check ≤ MAX_SAFE_INTEGER (audit bug#37)'
     $ok
 }
 
+# ===== Tuần 5 R68 Replay Divergence Detector (added 2026-05-19) =====
+
+$criteria += Check 'G1.33' 'R68.1 state_checksum.ts (canonical sha256, checkpoint interval)' {
+    $f = "$repo\cmd-qa-core\output\replay\state_checksum.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'computeStateChecksum') -and
+    ($c -match 'generateCheckpoints') -and
+    ($c -match 'sha256_canonical_v1') -and
+    ($c -match 'DEFAULT_CHECKPOINT_INTERVAL_TICKS\s*=\s*100')
+}
+
+$criteria += Check 'G1.34' 'R68.2 replay_verifier.ts (verifyReplay returns first divergence)' {
+    $f = "$repo\cmd-qa-core\output\replay\replay_verifier.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'verifyReplay\(') -and
+    ($c -match 'divergenceTick') -and
+    ($c -match 'checkpointsCompared')
+}
+
+$criteria += Check 'G1.35' 'R68.3 forensic_dump.ts (HIGH alert + 10MB cap)' {
+    $f = "$repo\cmd-qa-core\output\replay\forensic_dump.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'writeForensicDump') -and
+    ($c -match 'MAX_STATE_DUMP_BYTES') -and
+    ($c -match "'HIGH'") -and
+    ($c -match 'svtk_forensic_dump_v1')
+}
+
+$criteria += Check 'G1.36' 'R68.4 sampling_policy.ts (Foundation rates PvP/PvE/Raid + flagged override)' {
+    $f = "$repo\cmd-qa-core\output\replay\sampling_policy.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'pvpRate:\s*1\.0') -and
+    ($c -match 'pveNormalRate:\s*0\.05') -and
+    ($c -match 'raidBossRate:\s*1\.0') -and
+    ($c -match 'flaggedPlayerOverride:\s*true')
+}
+
+$criteria += Check 'G1.37' 'R68 test suite (>= 4 test files in cmd-qa-core/tests)' {
+    $count = (Get-ChildItem "$repo\cmd-qa-core\tests" -Filter "*.test.ts" -ErrorAction SilentlyContinue).Count
+    $count -ge 4
+}
+
 $passCount = ($criteria | Where-Object pass).Count
 $total = $criteria.Count
 $pct = if ($total -gt 0) { [Math]::Round($passCount * 100.0 / $total, 1) } else { 0 }

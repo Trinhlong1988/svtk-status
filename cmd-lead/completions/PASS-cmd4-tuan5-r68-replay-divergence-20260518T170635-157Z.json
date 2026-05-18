@@ -1,0 +1,55 @@
+{
+  "fix_id": "cmd4-tuan5-r68-replay-divergence",
+  "fixed_by": "cmd-qa-core",
+  "result": "PASS",
+  "evidence": {
+    "task": "Tuần 5 — Foundation R68 Replay Divergence Detector",
+    "delivered": {
+      "r68_1_state_checksum": "cmd-qa-core/output/replay/state_checksum.ts (sha256_canonical_v1, default 100-tick checkpoint)",
+      "r68_2_replay_verifier": "cmd-qa-core/output/replay/replay_verifier.ts (verifyReplay returns first divergence tick)",
+      "r68_3_forensic_dump": "cmd-qa-core/output/replay/forensic_dump.ts (svtk_forensic_dump_v1 schema, HIGH alert, 10MB truncation cap)",
+      "r68_4_sampling_policy": "cmd-qa-core/output/replay/sampling_policy.ts (Foundation rates PvP=1.0 / PvE=0.05 / Raid=1.0 / Flagged override)",
+      "tests_new": "37 tests (state_checksum 10 + replay_verifier 7 + sampling_policy 14 + forensic_dump 6)",
+      "tests_total_across_cmd4": 200,
+      "gate1_score": "37/37 (100%)",
+      "tsc_strict": "0 errors"
+    },
+    "r68_coverage_complete": {
+      "R68.1 state checksum every N tick": "DONE",
+      "R68.2 replay verification job": "DONE (verifier — re-execution itself is cmd-engine domain)",
+      "R68.3 forensic dump on divergence": "DONE (HIGH alert + 10MB cap + grace truncation)",
+      "R68.4 sampling rate": "DONE",
+      "R68.5 anti-cheat integration": "Deferred — hook is HIGH alert in dump; full auto-suspend belongs to cmd-engine + GM tools",
+      "R68.6 determinism unit tests": "DONE for verifier; combat-side determinism tests live in cmd-engine"
+    }
+  },
+  "timestamp": "20260518T170635-157Z",
+  "cmd": "cmd-qa-core",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T170635-157Z",
+  "task": "Tuần 5 — Foundation R68 Replay Divergence Detector",
+  "status": "DONE",
+  "delivered": {
+    "r68_1_state_checksum": "cmd-qa-core/output/replay/state_checksum.ts (sha256_canonical_v1, default 100-tick checkpoint)",
+    "r68_2_replay_verifier": "cmd-qa-core/output/replay/replay_verifier.ts (verifyReplay returns first divergence tick)",
+    "r68_3_forensic_dump": "cmd-qa-core/output/replay/forensic_dump.ts (svtk_forensic_dump_v1 schema, HIGH alert, 10MB truncation cap)",
+    "r68_4_sampling_policy": "cmd-qa-core/output/replay/sampling_policy.ts (Foundation rates PvP=1.0 / PvE=0.05 / Raid=1.0 / Flagged override)",
+    "tests_new": "37 tests (state_checksum 10 + replay_verifier 7 + sampling_policy 14 + forensic_dump 6)",
+    "tests_total_across_cmd4": 200,
+    "gate1_score": "37/37 (100%)",
+    "tsc_strict": "0 errors"
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "R68 verifier infra ready. cmd-engine can wire combat replay to consume these primitives. Remaining: R66.3 persistent replay_cache (svtk_runtime), R70 unified error model.",
+  "r68_coverage_complete": {
+    "R68.1 state checksum every N tick": "DONE",
+    "R68.2 replay verification job": "DONE (verifier — re-execution itself is cmd-engine domain)",
+    "R68.3 forensic dump on divergence": "DONE (HIGH alert + 10MB cap + grace truncation)",
+    "R68.4 sampling rate": "DONE",
+    "R68.5 anti-cheat integration": "Deferred — hook is HIGH alert in dump; full auto-suspend belongs to cmd-engine + GM tools",
+    "R68.6 determinism unit tests": "DONE for verifier; combat-side determinism tests live in cmd-engine"
+  },
+  "via": "R72_protocol"
+}

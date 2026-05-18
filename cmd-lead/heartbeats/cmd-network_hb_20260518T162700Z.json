@@ -1,0 +1,11 @@
+{
+    "heartbeat_source":  "schtasks_CMD4_HEARTBEAT",
+    "version":  "v2.8.0",
+    "parent":  "CMD4",
+    "cmd":  "cmd-network",
+    "ts_utc":  "20260518T162700Z",
+    "phase":  "14",
+    "foundation_hash":  "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+    "foundation_verified":  true,
+    "status":  "alive"
+}

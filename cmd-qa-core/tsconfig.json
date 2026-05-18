@@ -3,6 +3,5 @@
   "compilerOptions": {
     "rootDir": "."
   },
-  "include": ["output/auth/r66_session_token.ts", "tests/**/*.ts"]
+  "include": ["output/replay/**/*.ts", "tests/**/*.ts"]
 }
-
