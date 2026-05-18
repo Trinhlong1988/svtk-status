@@ -39,10 +39,14 @@ describe.skipIf(skip)('R44 Postgres integration', () => {
 
   beforeAll(async () => {
     h = await withTestDb();
-    // Seed: a player + an item in 'dropped' location
-    await h.pool.query(
-      `INSERT INTO players (player_id, gold) VALUES ('p1', 0), ('p2', 0)`,
-    );
+    // R7 v4 fix: 001 players requires username/email/password_hash NOT NULL.
+    // 003 adds player_id VARCHAR(64) UNIQUE — backfilled from username for
+    // existing rows; for NEW rows em supply both username and player_id.
+    await h.pool.query(`
+      INSERT INTO players (username, email, password_hash, player_id, gold) VALUES
+        ('p1', 'p1@test.local', 'x', 'p1', 0),
+        ('p2', 'p2@test.local', 'x', 'p2', 0)
+    `);
   }, 30_000);
 
   afterAll(async () => {

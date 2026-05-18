@@ -7,4 +7,6 @@ DROP TABLE IF EXISTS item_instances;
 DROP TABLE IF EXISTS transaction_log;
 DROP TABLE IF EXISTS gm_action_log;
 DROP TABLE IF EXISTS pending_actions;
+ALTER TABLE players DROP CONSTRAINT IF EXISTS players_player_id_uq;
 ALTER TABLE players DROP COLUMN IF EXISTS gold;
+ALTER TABLE players DROP COLUMN IF EXISTS player_id;

@@ -1,0 +1,49 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "10-round v4 evidence-based deep dig per Mr.Long '10 lan tiếp tục đào sâu fix triệt để bug'",
+  "status": "complete_1_CRITICAL_bug_fixed_9_clean",
+  "ts": "2026-05-19T17:19:47Z",
+  "doc": "cmd-db/output/BUG_HUNT_10ROUND_V4.md",
+  "real_bugs_found_and_fixed": [
+    {
+      "id": "R7",
+      "class": "Migration FK target column missing + integration test seed missing NOT NULL fields",
+      "severity": "CRITICAL (would block any real-Postgres deployment)",
+      "files": [
+        "cmd-db/migrations/003_anti_dupe_schema.sql",
+        "cmd-db/migrations/003_anti_dupe_schema.down.sql",
+        "cmd-db/output/integration/r44_integration.test.ts"
+      ],
+      "before": "003 inventory.player_id REFERENCES players(player_id); 001 players has NO player_id column (only id BIGSERIAL PK + username/email/password_hash NOT NULL). Integration test seed INSERT INTO players (player_id, gold)... missing 3 NOT NULL fields.",
+      "after": "003 ALTER players ADD COLUMN IF NOT EXISTS player_id VARCHAR(64) + UPDATE backfill from username + DO block to add UNIQUE constraint idempotently. Down migration mirrors. Integration test seed includes username/email/password_hash.",
+      "trigger": "would fail on migration 003 apply: ERROR column player_id does not exist; would fail integration test seed: null value in column username violates not-null constraint",
+      "why_not_caught_earlier": "pg-mem unit tests bypass real 001 (use hand-crafted minimal table); DSN-gated integration suite never executed (no PG_TEST_DSN). v4 R7 explicitly cross-referenced 001 schema against 003 REFERENCES + integration seed."
+    }
+  ],
+  "rounds_clean": {
+    "R1_pending_fall_through": "safe (SELECT FOR UPDATE lock held)",
+    "R2_concurrent_AD12_rollback": "safe (SERIALIZABLE + FOR UPDATE; 2nd caller sees rolled_back → previously_rolled_back=true cache)",
+    "R3_ROLLBACK_on_executor_throw": "safe (INSERT inside BEGIN; ROLLBACK undoes; never visible)",
+    "R4_W3_identifier_injection": "documented caller-whitelist responsibility; 1st-party only",
+    "R5_AD12_re_rollback_target_state": "safe (does NOT mutate transaction_log on rolled_back path)",
+    "R6_cron_loop_drift": "safe (sequential await + setTimeout after work)",
+    "R8_scheduler_lower_bound_guard": "Math.max(60_000, nextDelay) present (was scanner v3 FP)",
+    "R9_promise_race_all": "0 occurrences — all sequential await",
+    "R10_harness_options_injection": "safe (random hex schema + double-quoted)"
+  },
+  "verification_post_fix": {
+    "tsc_strict": "EXIT 0 (66 files)",
+    "aggregate_CMD2_suite": "26 PASS + 11 SKIPPED / 0.94s",
+    "R7_structural_rescan": "003 has ALTER ADD + UPDATE backfill + DO UNIQUE block; integration seed has 5-col INSERT"
+  },
+  "tally_this_v4": { "found": 1, "fixed": 1, "completeness": "100%", "critical": 1 },
+  "tally_cumulative_5_sessions": {
+    "session_1_day1_2": "10 rounds, 3 fixed",
+    "session_2_day3": "10 rounds, 3 fixed (1 CRITICAL: search_path race)",
+    "session_3_v2_cumulative": "15 rounds, 4 fixed",
+    "session_4_v3_edge_cases": "10 rounds, 1 fixed",
+    "session_5_v4_concurrency_schema": "10 rounds, 1 fixed (1 CRITICAL: FK target missing)",
+    "grand_total": "55 rounds, 12 real bugs found + 12 fixed (2 CRITICAL)"
+  }
+}
