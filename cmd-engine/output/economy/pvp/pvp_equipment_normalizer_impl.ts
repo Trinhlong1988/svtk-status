@@ -28,8 +28,8 @@ import {
   type PvPDamageAudit,
   PvPCapsSchema,
 } from './pvp_equipment_normalizer.js';
-import type { ItemStatBlock, Element } from '../itemization/itemization_types.js';
-import { stripDocKeys } from './_schema_helpers.js';
+import type { ItemStatBlock, Element } from '../../../../cmd-item/output/legacy/itemization_types.js';
+import { stripDocKeys } from '../_schema_helpers.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_ROOT = join(__dirname, '../../../data');

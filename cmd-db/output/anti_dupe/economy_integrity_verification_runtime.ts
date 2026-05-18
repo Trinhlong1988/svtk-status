@@ -21,10 +21,10 @@
 import type {
   EconomyPersistenceRuntimeBridge,
   PersistenceLifecycleEntry,
-} from './economy_persistence_runtime_bridge.js';
-import type { InventorySnapshot } from '../economy/inventory_snapshot_schema.js';
-import { serializeInventorySnapshot, canonicalJSON } from '../economy/economy_serialization_contract.js';
-import { fnv1a32 } from '../economy/modifier_ordering_audit.js';
+} from '../persistence/economy_persistence_runtime_bridge.js';
+import type { InventorySnapshot } from '../../../cmd-engine/output/economy/inventory_snapshot_schema.js';
+import { serializeInventorySnapshot, canonicalJSON } from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
+import { fnv1a32 } from '../../../cmd-engine/output/economy/modifier_ordering_audit.js';
 
 export const ECONOMY_INTEGRITY_VERIFICATION_VERSION = 1;
 

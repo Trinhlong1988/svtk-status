@@ -1,0 +1,60 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "10-round Option A fix + hidden bug scan per Mr.Long 'fix sâu thêm 10 lần nữa' + 'phân tích sâu tìm bug ẩn, fix sạch sẽ 100%'",
+  "status": "100_percent_clean",
+  "ts": "2026-05-18T15:30:08Z",
+  "doc": "cmd-db/output/MIGRATION_FIX_10ROUND.md",
+  "result_summary": {
+    "broken_imports_before": 18,
+    "broken_imports_after": 0,
+    "circular_cycles": 0,
+    "hidden_bugs_introduced": 0,
+    "external_transitive_deps_resolvable": "4/4 (cmd-engine/legacy/{types,soft_cap,rng} + cmd-engine/_shared)",
+    "duplicate_file_groups": "1 (3× codepoint_compare.ts vendored per-CMD by design)",
+    "named_export_collisions": "4 (all pre-existing in OLD: findById/listByCharacter repo-pattern + codepointCompare/LootRollResult)",
+    "facade_impl_pairing": "6/6 valid",
+    "import_count_parity_vendored_peers": "10/10 (NEW imports = OLD line count, no extra injection)"
+  },
+  "files_added": [
+    "cmd-engine/output/economy/_schema_helpers.ts",
+    "cmd-engine/output/economy/inventory_snapshot_schema.ts",
+    "cmd-engine/output/economy/economy_serialization_contract.ts",
+    "cmd-engine/output/economy/modifier_ordering_audit.ts",
+    "cmd-engine/output/economy/economy_forensic_telemetry.ts",
+    "cmd-engine/output/_shared/codepoint_compare.ts",
+    "cmd-item/output/_shared/codepoint_compare.ts",
+    "cmd-db/output/_shared/codepoint_compare.ts",
+    "cmd-db/output/persistence/economy_persistence_runtime_bridge.ts",
+    "cmd-db/output/persistence/snapshot_exporter.ts",
+    "cmd-db/output/MIGRATION_FIX_10ROUND.md",
+    "scripts/cmd2_hidden_bug_scan.mjs"
+  ],
+  "files_modified": {
+    "cmd-db": 6,
+    "cmd-item": 7,
+    "cmd-engine_economy": 11,
+    "total_path_patches": 24,
+    "old_workspace_modified": 0
+  },
+  "rounds_executed": [
+    {"round": 1, "subject": "vendor 5 economy peer files → cmd-engine/output/economy/"},
+    {"round": 2, "subject": "patch foundation/loot/pvp ./_schema_helpers → ../_schema_helpers (3 files)"},
+    {"round": 3, "subject": "vendor codepoint_compare × 3 _shared/ (cmd-db + cmd-item + cmd-engine)"},
+    {"round": 4, "subject": "validate cmd-engine economy ../../_shared resolves (no-op)"},
+    {"round": 5, "subject": "patch cmd-item legacy ../../_shared → ../_shared (6 files)"},
+    {"round": 6, "subject": "patch cmd-engine ../../logic/rng → ../../legacy/rng (1 file)"},
+    {"round": 7, "subject": "patch cmd-item cross-CMD ../../logic/{types,soft_cap} → cmd-engine/legacy (2 files)"},
+    {"round": 8, "subject": "patch cmd-engine economy cross-CMD ../itemization → cmd-item/legacy (4 files)"},
+    {"round": 9, "subject": "patch cmd-db cross-CMD ../economy + ../modules/economy → cmd-engine/economy (6 files)"},
+    {"round": "10A-H", "subject": "sweep + cascade fix (3 residual cmd-engine economy, 4 vendored peer subfolder-aware, vendor bridge + snapshot_exporter, final patch)"}
+  ],
+  "exit_criteria": {
+    "✓ 0 unresolved imports": true,
+    "✓ 0 circular cycles": true,
+    "✓ 0 hidden bug introduced": true,
+    "✓ all vendored peers byte-identical OLD": true,
+    "✓ OLD workspace untouched": true
+  },
+  "next_action": "Mr.Long quyết Week 2 NEW R44 wrapper impl kick-off (anti_dupe.ts ~600 LOC + 003_anti_dupe_schema.sql)."
+}

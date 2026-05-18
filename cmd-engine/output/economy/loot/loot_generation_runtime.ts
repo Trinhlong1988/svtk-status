@@ -22,7 +22,7 @@ import { z } from 'zod';
 import {
   EquipmentSlotSchema,
   RaritySchema,
-} from '../itemization/itemization_types.js';
+} from '../../../../cmd-item/output/legacy/itemization_types.js';
 
 // ───────── Loot Context ─────────
 export const LootContextSchema = z.object({

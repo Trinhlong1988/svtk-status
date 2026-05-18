@@ -20,7 +20,7 @@
  * ⚠ NO IMPLEMENTATION — chỉ contract interface.
  */
 import { z } from 'zod';
-import type { ItemStatBlock } from '../itemization/itemization_types.js';
+import type { ItemStatBlock } from '../../../../cmd-item/output/legacy/itemization_types.js';
 
 // ───────── PvP Modes ─────────
 export const PvPModeSchema = z.enum(['arena_1v1', 'arena_3v3', 'battleground', 'open_pvp']);

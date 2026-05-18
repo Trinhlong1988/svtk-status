@@ -22,11 +22,11 @@ import {
   buildCanonicalInventorySnapshot,
   InventorySnapshotSchema,
   InventoryItemSnapshotSchema,
-} from '../modules/economy/inventory_snapshot_schema.js';
+} from '../../../cmd-engine/output/economy/inventory_snapshot_schema.js';
 import {
   serializeInventorySnapshot,
   computeInventoryChecksum,
-} from '../modules/economy/economy_serialization_contract.js';
+} from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
 import { addItem } from './repositories/inventory_repository.js';
 
 export interface SaveSnapshotInput {

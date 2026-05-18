@@ -19,17 +19,17 @@ import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import { createRNG, type RNG } from '../../logic/rng.js';
+import { createRNG, type RNG } from '../../legacy/rng.js';
 import {
   type EquipmentSlot,
   type Rarity,
   type ItemAffix,
   RaritySchema,
   EquipmentSlotSchema,
-} from '../itemization/itemization_types.js';
-import { createAffixRuntime, type AffixRuntime } from '../itemization/affix_runtime.js';
+} from '../../../../cmd-item/output/legacy/itemization_types.js';
+import { createAffixRuntime, type AffixRuntime } from '../../../../cmd-item/output/legacy/affix_runtime.js';
 import { codepointCompare } from '../../_shared/codepoint_compare.js';
-import { loadItemsRegistry, type Item } from '../itemization/item_registry.js';
+import { loadItemsRegistry, type Item } from '../../../../cmd-item/output/legacy/item_registry.js';
 import {
   type LootGenerationRuntime,
   type LootContext,
@@ -39,7 +39,7 @@ import {
   LootContextSchema,
   LootTableSchema,
 } from './loot_generation_runtime.js';
-import { stripDocKeys } from './_schema_helpers.js';
+import { stripDocKeys } from '../_schema_helpers.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_ROOT = join(__dirname, '../../../data');

@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 import type { Item } from './item_registry.js';
 import type { ItemPassive } from './itemization_types.js';
-import { codepointCompare } from '../../_shared/codepoint_compare.js';
+import { codepointCompare } from '../_shared/codepoint_compare.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_ROOT = join(__dirname, '../../../data');

@@ -16,11 +16,11 @@
  *
  * R30 + R31 + canonical sort preserved.
  */
-import type { InventorySnapshot } from '../economy/inventory_snapshot_schema.js';
-import type { LootDeltaMetadata, EconomyForensicSnapshotPayload } from '../economy/economy_serialization_contract.js';
-import { codepointCompare } from '../../_shared/codepoint_compare.js';
-import type { GoldFlow, ItemFlow } from '../economy/economy_foundation_runtime.js';
-import type { EconomyForensicEvent } from '../economy/economy_forensic_telemetry.js';
+import type { InventorySnapshot } from '../../../cmd-engine/output/economy/inventory_snapshot_schema.js';
+import type { LootDeltaMetadata, EconomyForensicSnapshotPayload } from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
+import { codepointCompare } from '../_shared/codepoint_compare.js';
+import type { GoldFlow, ItemFlow } from '../../../cmd-engine/output/economy/foundation/economy_foundation_runtime.js';
+import type { EconomyForensicEvent } from '../../../cmd-engine/output/economy/economy_forensic_telemetry.js';
 import {
   serializeInventorySnapshot,
   deserializeInventorySnapshot,
@@ -29,8 +29,8 @@ import {
   serializeEconomyForensicSnapshot,
   deserializeEconomyForensicSnapshot,
   canonicalJSON,
-} from '../economy/economy_serialization_contract.js';
-import { fnv1a32 } from '../economy/modifier_ordering_audit.js';
+} from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
+import { fnv1a32 } from '../../../cmd-engine/output/economy/modifier_ordering_audit.js';
 
 // ───────── Persistence record kinds ─────────
 export const PERSISTENCE_RECORD_KINDS = [
@@ -117,7 +117,7 @@ export interface PersistenceAdapter {
 
 // ───────── In-memory reference implementation ─────────
 
-import { ECONOMY_SERIALIZATION_VERSION } from '../economy/economy_serialization_contract.js';
+import { ECONOMY_SERIALIZATION_VERSION } from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
 
 interface InMemoryStore {
   records: PersistedRecord[];

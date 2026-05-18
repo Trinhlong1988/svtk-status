@@ -27,7 +27,7 @@ import { resolvePassives } from './passive_resolver.js';
 import { resolveSetBonuses } from './set_bonus.js';
 import { createObservabilityHook } from './itemization_observability_impl.js';
 import type { ItemizationObservabilityHook } from './itemization_observability.js';
-import { codepointCompare } from '../../_shared/codepoint_compare.js';
+import { codepointCompare } from '../_shared/codepoint_compare.js';
 
 // ───────── Modifier collector ─────────
 /**

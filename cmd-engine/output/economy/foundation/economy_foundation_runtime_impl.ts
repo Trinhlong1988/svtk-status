@@ -36,7 +36,7 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_ROOT = join(__dirname, '../../../data');
 
-import { stripDocKeys } from './_schema_helpers.js';
+import { stripDocKeys } from '../_schema_helpers.js';
 
 // ───────── Economy constants schema (Batch 5.4 C1 strict) ─────────
 // stripDocKeys() loại bỏ `_doc` / `_locked_by` / `_dna_lock` trước Zod parse.

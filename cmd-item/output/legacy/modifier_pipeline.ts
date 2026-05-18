@@ -21,8 +21,8 @@ import {
   type PipelineSnapshot,
   type StableModifierComparator,
 } from './modifier_pipeline_contract.js';
-import { applySoftCap } from '../../logic/soft_cap.js';
-import { codepointCompare } from '../../_shared/codepoint_compare.js';
+import { applySoftCap } from '../../../cmd-engine/output/legacy/soft_cap.js';
+import { codepointCompare } from '../_shared/codepoint_compare.js';
 
 // ───────── Stable comparator — 4-tuple EXPLICIT (CMD2.docx FINAL FIX #1 + #2) ─────────
 /**

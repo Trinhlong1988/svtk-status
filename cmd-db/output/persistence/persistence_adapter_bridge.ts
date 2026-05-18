@@ -34,8 +34,8 @@
  * Audit-fix notes (Phase 13 Batch 2 audit pass 3):
  *   - H#1: readLatest() tie-breaker via record_id DESC (was insertion-order dependent)
  */
-import { fnv1a32 } from '../economy/modifier_ordering_audit.js';
-import { canonicalJSON } from '../economy/economy_serialization_contract.js';
+import { fnv1a32 } from '../../../cmd-engine/output/economy/modifier_ordering_audit.js';
+import { canonicalJSON } from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
 
 export const PERSISTENCE_BRIDGE_VERSION = 1;
 

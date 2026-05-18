@@ -18,7 +18,7 @@
  *   Mr.Long ack hoặc reject convention shift này trong audit.
  */
 import { z } from 'zod';
-import { ElementSchema, type Element } from '../../logic/types.js';
+import { ElementSchema, type Element } from '../../../cmd-engine/output/legacy/types.js';
 
 // ───────── Equipment Slot (9 slot — spec/08 Mục II + v15 align) ─────────
 /**

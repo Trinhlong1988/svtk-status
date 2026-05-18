@@ -8,7 +8,7 @@
 import type { Pool, PoolClient } from 'pg';
 import type {
   InventoryItemSnapshot,
-} from '../../modules/economy/inventory_snapshot_schema.js';
+} from '../../../../cmd-engine/output/economy/inventory_snapshot_schema.js';
 
 export interface InventoryRow {
   id: string;

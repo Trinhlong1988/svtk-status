@@ -12,7 +12,7 @@
  */
 import type { ItemPassive } from './itemization_types.js';
 import type { Item } from './item_registry.js';
-import { codepointCompare } from '../../_shared/codepoint_compare.js';
+import { codepointCompare } from '../_shared/codepoint_compare.js';
 
 interface PassiveCandidate {
   passive: ItemPassive;

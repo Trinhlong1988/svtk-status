@@ -19,7 +19,7 @@
  * ⚠ NO IMPLEMENTATION — chỉ contract interface.
  */
 import { z } from 'zod';
-import { RaritySchema } from '../itemization/itemization_types.js';
+import { RaritySchema } from '../../../../cmd-item/output/legacy/itemization_types.js';
 
 // ───────── Source/Sink Kind ENUMs ─────────
 export const GoldSourceKindSchema = z.enum([

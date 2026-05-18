@@ -15,8 +15,8 @@
  *   - Detects region drift (any region's replay_hash differs from others)
  *   - Produces frozen consensus report
  */
-import { fnv1a32 } from '../economy/modifier_ordering_audit.js';
-import { canonicalJSON } from '../economy/economy_serialization_contract.js';
+import { fnv1a32 } from '../../../cmd-engine/output/economy/modifier_ordering_audit.js';
+import { canonicalJSON } from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
 
 export const CROSS_REGION_INTEGRITY_VERSION = 1;
 

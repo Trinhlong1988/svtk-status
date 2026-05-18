@@ -18,7 +18,7 @@ import {
   createAffixRng,
   getAffixPoolForSlot,
 } from './affix_pool.js';
-import { codepointCompare } from '../../_shared/codepoint_compare.js';
+import { codepointCompare } from '../_shared/codepoint_compare.js';
 
 // Affix count per rarity (CMD2 Mục XI rarity scaling).
 const AFFIX_COUNT_BY_RARITY: Record<Rarity, number> = {
