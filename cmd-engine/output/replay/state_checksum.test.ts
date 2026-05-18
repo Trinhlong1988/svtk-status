@@ -23,6 +23,14 @@ import {
   compareCheckpoints,
   forensicDump,
   canonicalize,
+  CANON_SENTINEL_NAN,
+  CANON_SENTINEL_POS_INF,
+  CANON_SENTINEL_NEG_INF,
+  CANON_SENTINEL_BIGINT_PREFIX,
+  CANON_SENTINEL_SYMBOL_PREFIX,
+  CANON_SENTINEL_UNDEFINED,
+  CANON_KEY_PROTO,
+  CANON_SENTINEL_CIRCULAR,
 } from './state_checksum.js';
 
 function makeFrame(turn: number, sessionId: string, encounterId: string, damage = 100): ReplayFrame {
@@ -126,5 +134,140 @@ describe('R68 state_checksum — divergence + forensics', () => {
     const cpB = checksumStream(b, { every_n_turns: 5 });
     const report = compareCheckpoints(cpA, cpB);
     expect(report.divergent).toBe(true);
+  });
+});
+
+describe('R68 state_checksum — NaN/Infinity sentinel (regression BUG-2)', () => {
+  function frameWithDamage(amount: number) {
+    return {
+      schemaVersion: 1,
+      frameId: 'f',
+      turn: 0,
+      sessionId: 's',
+      encounterId: 'e',
+      bossDecision: {
+        branch: 'highest_threat' as const,
+        phaseTransitioned: false,
+        currentPhaseId: 'p1',
+        scheduledMechanicIds: [],
+        resolvedMechanicIds: [],
+      },
+      statusDeltas: [],
+      damageEvents: [{ kind: 'damage' as const, sourceId: 'p', targetId: 'b', amount }],
+      threatSnapshot: [],
+      rngTraces: [],
+    };
+  }
+
+  it('BUG-2: NaN, +Infinity, -Infinity produce DISTINCT hashes', () => {
+    const hNaN = checksumFrame(frameWithDamage(NaN));
+    const hPosInf = checksumFrame(frameWithDamage(Infinity));
+    const hNegInf = checksumFrame(frameWithDamage(-Infinity));
+    const hZero = checksumFrame(frameWithDamage(0));
+    expect(hNaN).not.toBe(hPosInf);
+    expect(hNaN).not.toBe(hNegInf);
+    expect(hPosInf).not.toBe(hNegInf);
+    expect(hNaN).not.toBe(hZero);
+    expect(hPosInf).not.toBe(hZero);
+    expect(hNegInf).not.toBe(hZero);
+  });
+
+  it('BUG-2: canonicalize emits sentinel for non-finite numbers', () => {
+    expect(canonicalize({ x: NaN })).toBe(`{"x":"${CANON_SENTINEL_NAN}"}`);
+    expect(canonicalize({ x: Infinity })).toBe(`{"x":"${CANON_SENTINEL_POS_INF}"}`);
+    expect(canonicalize({ x: -Infinity })).toBe(`{"x":"${CANON_SENTINEL_NEG_INF}"}`);
+  });
+
+  it('BUG-2: finite numbers untouched', () => {
+    expect(canonicalize({ x: 0 })).toBe('{"x":0}');
+    expect(canonicalize({ x: -0 })).toBe('{"x":0}');
+    expect(canonicalize({ x: 1.5 })).toBe('{"x":1.5}');
+    expect(canonicalize({ x: 1e21 })).toBe('{"x":1e+21}');
+  });
+});
+
+describe('R68 state_checksum — bigint/Symbol/undefined sentinels (regression BUG-4/5)', () => {
+  it('BUG-4: canonicalize(bigint) does NOT throw, emits sentinel', () => {
+    expect(() => canonicalize({ x: 123n })).not.toThrow();
+    expect(canonicalize({ x: 123n })).toBe(`{"x":"${CANON_SENTINEL_BIGINT_PREFIX}123__"}`);
+    expect(canonicalize({ x: 0n })).toBe(`{"x":"${CANON_SENTINEL_BIGINT_PREFIX}0__"}`);
+    expect(canonicalize({ x: -999n })).toBe(`{"x":"${CANON_SENTINEL_BIGINT_PREFIX}-999__"}`);
+  });
+
+  it('BUG-4: different bigint values produce different hashes', () => {
+    const h1 = canonicalize({ x: 123n });
+    const h2 = canonicalize({ x: 124n });
+    expect(h1).not.toBe(h2);
+  });
+
+  it('BUG-5: canonicalize Symbol emits sentinel (not silently dropped)', () => {
+    const a = canonicalize({ x: Symbol('abc'), y: 1 });
+    const b = canonicalize({ y: 1 });
+    expect(a).not.toBe(b);
+    expect(a).toBe(`{"x":"${CANON_SENTINEL_SYMBOL_PREFIX}abc__","y":1}`);
+  });
+
+  it('BUG-5: explicit undefined value emits sentinel (distinct from missing key)', () => {
+    const a = canonicalize({ x: undefined, y: 1 });
+    const b = canonicalize({ y: 1 });
+    expect(a).not.toBe(b);
+    expect(a).toBe(`{"x":"${CANON_SENTINEL_UNDEFINED}","y":1}`);
+  });
+
+  it('BUG-6: __proto__ key is preserved via sentinel rename (not silently dropped)', () => {
+    const obj = Object.create(null) as Record<string, unknown>;
+    obj['__proto__'] = 'evil_payload';
+    obj.x = 1;
+    const canon = canonicalize(obj);
+    expect(canon).toContain(CANON_KEY_PROTO);
+    expect(canon).toContain('evil_payload');
+    // Distinct from same payload without __proto__
+    expect(canon).not.toBe(canonicalize({ x: 1 }));
+  });
+
+  it('BUG-7: circular reference does NOT throw — emits CIRCULAR sentinel', () => {
+    const a: { x: number; self?: unknown } = { x: 1 };
+    a.self = a;
+    expect(() => canonicalize(a)).not.toThrow();
+    expect(canonicalize(a)).toContain(CANON_SENTINEL_CIRCULAR);
+  });
+
+  it('BUG-7: deeply nested circular array also handled', () => {
+    const arr: unknown[] = [1, 2];
+    arr.push(arr);
+    expect(() => canonicalize(arr)).not.toThrow();
+    expect(canonicalize(arr)).toContain(CANON_SENTINEL_CIRCULAR);
+  });
+
+  it('BUG-8: unicode composed and decomposed forms produce SAME hash (NFC normalise)', () => {
+    const composed = { name: 'café' };       // é = single U+00E9
+    const decomposed = { name: 'café' };    // e + combining acute U+0301
+    expect(canonicalize(composed)).toBe(canonicalize(decomposed));
+  });
+
+  it('BUG-4/5: integration — frame with bigint event payload no longer crashes checksumFrame', () => {
+    // Synthetic frame whose damage event carries a bigint (boundary scenario)
+    const frame = {
+      schemaVersion: 1,
+      frameId: 'f',
+      turn: 0,
+      sessionId: 's',
+      encounterId: 'e',
+      bossDecision: {
+        branch: 'highest_threat' as const,
+        phaseTransitioned: false,
+        currentPhaseId: 'p1',
+        scheduledMechanicIds: [],
+        resolvedMechanicIds: [],
+      },
+      statusDeltas: [],
+      damageEvents: [{ kind: 'damage' as const, sourceId: 'p', targetId: 'b', amount: 0 }],
+      threatSnapshot: [],
+      rngTraces: [],
+      // ↓ extra forensic metadata that may be wedged in via cast
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      _extra: { monotonic_ns: 999_999_999_999n } as any,
+    } as Parameters<typeof checksumFrame>[0];
+    expect(() => checksumFrame(frame)).not.toThrow();
   });
 });

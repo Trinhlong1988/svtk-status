@@ -72,25 +72,102 @@ export interface ForensicDump {
  * Canonicalize a value for hashing: deep, key-sorted, whitespace-free JSON.
  * Arrays preserve order (semantic). Objects sort keys lexicographically.
  *
- * NaN / Infinity / functions are not expected in ReplayFrame (zod-validated),
- * but we treat them defensively: NaN/Inf → null, functions → null.
+ * NaN / +Infinity / -Infinity are not expected in ReplayFrame (zod-validated),
+ * but we encode them as distinct sentinel strings so forensic divergence is
+ * preserved (R68 invariant: state delta must produce distinct hash). Previous
+ * behavior collapsed all three to `null`, hiding adversarial payloads.
+ *
+ * Functions → null (not serialisable anyway).
  */
+export const CANON_SENTINEL_NAN = '__SVTK_NaN__';
+export const CANON_SENTINEL_POS_INF = '__SVTK_+Infinity__';
+export const CANON_SENTINEL_NEG_INF = '__SVTK_-Infinity__';
+export const CANON_SENTINEL_BIGINT_PREFIX = '__SVTK_BigInt:';
+export const CANON_SENTINEL_SYMBOL_PREFIX = '__SVTK_Symbol:';
+export const CANON_SENTINEL_UNDEFINED = '__SVTK_undefined__';
+/** Sentinel for protocol-reserved keys (__proto__, constructor) so payload is preserved. */
+export const CANON_KEY_PROTO = '__SVTK_KEY_proto__';
+export const CANON_KEY_CONSTRUCTOR = '__SVTK_KEY_constructor__';
+/** Sentinel emitted when a circular reference is detected during walk. */
+export const CANON_SENTINEL_CIRCULAR = '__SVTK_CIRCULAR__';
+
+// Use Map (not object literal) — assigning `__proto__` as a key in object
+// literal syntax sets the prototype of the literal itself instead of creating
+// an own property, which would defeat the rename pass.
+const RESERVED_KEY_MAP = new Map<string, string>([
+  ['__proto__', CANON_KEY_PROTO],
+  ['constructor', CANON_KEY_CONSTRUCTOR],
+]);
+
 export function canonicalize(value: unknown): string {
-  return JSON.stringify(value, canonicalReplacer);
+  // Pre-walk converts exotic types JSON.stringify can't handle (bigint),
+  // silently drops (Symbol values, undefined), or mishandles (__proto__ key
+  // sets prototype instead of own-property). Also NFC-normalises strings and
+  // breaks circular references with a sentinel.
+  const prepared = prepareForJson(value, new WeakSet());
+  return JSON.stringify(prepared, canonicalReplacer);
+}
+
+function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
+  if (typeof val === 'bigint') {
+    return `${CANON_SENTINEL_BIGINT_PREFIX}${val.toString()}__`;
+  }
+  if (typeof val === 'symbol') {
+    return `${CANON_SENTINEL_SYMBOL_PREFIX}${val.description ?? ''}__`;
+  }
+  if (val === undefined) {
+    return CANON_SENTINEL_UNDEFINED;
+  }
+  if (typeof val === 'string') {
+    // NFC normalisation so equivalent unicode forms hash identically.
+    return val.normalize('NFC');
+  }
+  if (Array.isArray(val)) {
+    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
+    seen.add(val);
+    return val.map((item) => prepareForJson(item, seen));
+  }
+  if (val !== null && typeof val === 'object') {
+    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
+    seen.add(val);
+    // Build via Object.create(null) so assigning '__proto__' as a key cannot
+    // mutate the prototype chain. We rename reserved keys to a sentinel so
+    // the payload value is preserved in canonical output.
+    const obj = val as Record<string, unknown>;
+    const out: Record<string, unknown> = Object.create(null);
+    for (const k of Object.keys(obj)) {
+      const safe_key = RESERVED_KEY_MAP.get(k) ?? k;
+      Object.defineProperty(out, safe_key, {
+        value: prepareForJson(obj[k], seen),
+        enumerable: true,
+        configurable: true,
+        writable: true,
+      });
+    }
+    return out;
+  }
+  return val;
 }
 
 function canonicalReplacer(_key: string, val: unknown): unknown {
   if (typeof val === 'number') {
-    return Number.isFinite(val) ? val : null;
+    if (Number.isFinite(val)) return val;
+    if (Number.isNaN(val)) return CANON_SENTINEL_NAN;
+    return val > 0 ? CANON_SENTINEL_POS_INF : CANON_SENTINEL_NEG_INF;
   }
   if (typeof val === 'function') {
     return null;
   }
   if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
     const obj = val as Record<string, unknown>;
-    const sorted: Record<string, unknown> = {};
+    const sorted: Record<string, unknown> = Object.create(null);
     for (const k of Object.keys(obj).sort()) {
-      sorted[k] = obj[k];
+      Object.defineProperty(sorted, k, {
+        value: obj[k],
+        enumerable: true,
+        configurable: true,
+        writable: true,
+      });
     }
     return sorted;
   }

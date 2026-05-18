@@ -157,6 +157,18 @@ export interface R67TickSchedulerConfig {
   clock?: MonotonicClock | DeterministicMonotonicClock;
 }
 
+/**
+ * Validate turn input — R67 requires non-negative finite integer.
+ * Matches ReplayFrameSchema constraint `turn: z.number().int().nonnegative()`.
+ */
+function assertValidTurn(turn: number): void {
+  if (!Number.isInteger(turn) || turn < 0) {
+    throw new RangeError(
+      `R67TickScheduler: turn must be a non-negative integer, got ${turn}`,
+    );
+  }
+}
+
 export function createR67TickScheduler(
   config: R67TickSchedulerConfig = {},
 ): R67TickScheduler {
@@ -186,19 +198,24 @@ export function createR67TickScheduler(
 
   return {
     begin(rt: CombatRuntime, turn: number): R67TickEvent {
+      assertValidTurn(turn);
       beginCombatTurn(rt, turn);
       return stamp(turn, 'begin', rt.config.encounterId);
     },
     guard(rt: CombatRuntime, turn: number): R67TickEvent {
+      assertValidTurn(turn);
       tickAuraGuard(rt.auraGuard, turn);
       return stamp(turn, 'aura_guard', rt.config.encounterId);
     },
     end(rt: CombatRuntime, turn: number): R67TickEvent {
+      assertValidTurn(turn);
       endCombatTurn(rt, turn);
       return stamp(turn, 'end', rt.config.encounterId);
     },
     sequence(): readonly R67TickEvent[] {
-      return ledger;
+      // Return frozen snapshot — internal ledger is private. Prevents external
+      // mutation that would corrupt subsequent sequence() reads.
+      return Object.freeze(ledger.slice());
     },
     next_server_tick(): number {
       return server_tick;

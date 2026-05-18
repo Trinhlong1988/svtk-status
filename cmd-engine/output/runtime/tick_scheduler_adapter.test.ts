@@ -111,3 +111,55 @@ describe('R67 TickScheduler — deterministic adapter', () => {
     expect(h3).not.toBe(h1);
   });
 });
+
+describe('R67 TickScheduler — input validation (regression)', () => {
+  it('BUG-1: rejects negative turn', () => {
+    const rt = freshRuntime('reg_neg');
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    expect(() => sched.begin(rt, -1)).toThrow(/non-negative integer/);
+    expect(() => sched.guard(rt, -10)).toThrow(/non-negative integer/);
+    expect(() => sched.end(rt, -100)).toThrow(/non-negative integer/);
+  });
+
+  it('BUG-1: rejects non-integer turn (fractional, NaN, Infinity)', () => {
+    const rt = freshRuntime('reg_frac');
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    expect(() => sched.begin(rt, 1.5)).toThrow(/non-negative integer/);
+    expect(() => sched.begin(rt, NaN)).toThrow(/non-negative integer/);
+    expect(() => sched.begin(rt, Infinity)).toThrow(/non-negative integer/);
+  });
+
+  it('BUG-1: turn = 0 is accepted (boundary)', () => {
+    const rt = freshRuntime('reg_zero');
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    expect(() => sched.begin(rt, 0)).not.toThrow();
+  });
+});
+
+describe('R67 TickScheduler — ledger encapsulation (regression)', () => {
+  it('BUG-3: sequence() returns frozen snapshot — push throws', () => {
+    const rt = freshRuntime('reg_freeze');
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    sched.begin(rt, 1);
+    sched.guard(rt, 1);
+    const seq = sched.sequence();
+    expect(seq.length).toBe(2);
+    expect(Object.isFrozen(seq)).toBe(true);
+    expect(() => (seq as R67TickEvent[]).push({
+      monotonic_ns: 999n, server_tick: 999, turn: 999, phase: 'begin', encounter_id: 'evil',
+    })).toThrow();
+    // Internal ledger unaffected
+    expect(sched.sequence().length).toBe(2);
+  });
+
+  it('BUG-3: sequence() snapshot does NOT update after later stamps', () => {
+    const rt = freshRuntime('reg_snapshot');
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    sched.begin(rt, 1);
+    const snapshot = sched.sequence();
+    sched.guard(rt, 1);
+    sched.end(rt, 1);
+    expect(snapshot.length).toBe(1);             // snapshot frozen at 1 event
+    expect(sched.sequence().length).toBe(3);     // fresh call sees all 3
+  });
+});
