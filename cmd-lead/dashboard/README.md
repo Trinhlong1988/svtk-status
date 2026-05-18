@@ -1,42 +1,28 @@
-# SVTK DASHBOARD 20260518-224919 (cycle 17 — MEGA AUDIT WAVE)
+# SVTK DASHBOARD 20260518-230607 (cycle 18)
 
-**Foundation:** v2.8.0 ✓ | **Completions resolved:** 35
+**Foundation:** v2.8.0 ✓ | **Completions resolved:** 36
 
-## Cycle 17 — 4 workers ship deep audit
+## Cycle 18 — CMD1 round 3 hunt (autonomous)
 
-### CMD4 — Deep audit 25 rounds
-- **36 bugs found, 27 CRIT+HIGH patched** (9 LOW+MED documented)
-- 109/109 tests pass, GATE 1 25/25 (100%), tsc clean
-- Key fixes: clock-skew bound, prototype pollution guard, Number.isInteger, expiry timing oracle, sessionSecret ≥32B Buffer-only, canonicalJson depth limit (DoS), Symbol key reject, path-traversal guard, R72 monotonic counter
+- +4 hidden bugs fixed (BUG-15/17/18/19: toJSON / array-meta / forensicDump / getter)
+- 87 probes total cumulative (R1+R2+R3)
+- **18 bugs cumulative, 100% fix-clean rate**
+- 28 regression tests / 44 total tests PASS
+- tsc strict 0 errors
 
-### CMD2 — 15-round evidence-based deep dig
-- **1 critical bug fixed: DATA_ROOT path drift** sau monolith→split (10 files patched)
-- Per-file evidence (grep readFileSync) → patch DATA_ROOT relative to NEW layout
-- 13/13 JSON load OK runtime verify | tsc strict EXIT 0 across 58 files
-- R2-R15 all clean (no other drift)
+## CMD1 bug hunt cumulative
 
-### CMD1 — Round 2 bughunt
-- 5 more hidden bugs: Map/Set/Date serialization, frozen shallow encapsulation, unbounded ledger memory
-- **Cumulative round 1+2: 14 bugs fixed** | 39/39 tests pass, tsc 0
+| Round | Bugs | Tests added | Notes |
+|---|---|---|---|
+| R1 | 9 | 13 | R67/R68 hardening: NaN/Inf, bigint, proto pollution, circular DoS |
+| R2 | 5 | 10 | Map/Set/Date, frozen shallow, unbounded ledger |
+| R3 | 4 | 5 | toJSON, array-meta, forensicDump, getter |
+| **Total** | **18** | **28** | **100% fix-clean** |
 
-### QA_VERDICT (154306)
-- GATE 1: 25/25 = 100% PASS ✓
+## CMD1 đang chủ động — không cần Mr.Long paste cho CMD1
 
-## Cumulative bug scoreboard (Phase 14)
-
-| CMD | Audit rounds | Bugs fixed |
-|---|---|---|
-| CMD1 | 30 + 20 bug-hunt | **14** hidden |
-| CMD2 | 10 + 15 deep dig | DATA_ROOT path drift + 18→0 imports |
-| CMD3 | Deep + 58,950 test stable | 1 (B2 level inv) + 75 violations |
-| CMD4 | 25 deep | **27 CRIT+HIGH patched** (36 total found) |
-| **TOTAL** | — | **~60+ bugs fixed across 4 workers** |
-
-## 3 pending Mr.Long decisions
-
-1. R66 4 sub-rules → phase15/cmd6/cmd4?
-2. CMD2 R44 NEW impl → kick/defer? (CMD2 đang explicit chờ)
-3. CMD4 next directive → standby/route?
+Stage 2 plan có ghi "Paste vào CMD1: 2 inbox tickets" — CMD1 vẫn chưa pickup 2 ticket cmd-engine/inbox (turn_orchestrator boss_phase + threat_constants _BP).
+Tuy nhiên CMD1 đang tự chạy bug hunt deeper rounds — có thể CMD1 sẽ pickup inbox sau khi xong hunt cycle.
 
 ## Pending fixes
 
