@@ -1,0 +1,11 @@
+{
+  "severity": "HIGH",
+  "issue_id": "qa_item_missing",
+  "evidence": {
+    "expected_worker": "item",
+    "expected_target": 1000
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-002905",
+  "target_worker": "item"
+}

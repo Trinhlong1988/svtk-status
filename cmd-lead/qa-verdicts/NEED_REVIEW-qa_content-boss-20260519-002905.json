@@ -1,0 +1,9 @@
+{
+  "qa": "qa_content",
+  "target": "boss",
+  "verdict": "NEED_REVIEW",
+  "evidence": {
+    "reason": "registry_not_found"
+  },
+  "timestamp": "20260519-002905"
+}

@@ -1,0 +1,68 @@
+{
+  "cmd": "QA_CONTENT",
+  "timestamp": "20260519-002905",
+  "foundation_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+  "targets": {
+    "npc": 7817,
+    "quest": 2262,
+    "item": 1000,
+    "dialog": 42297,
+    "boss": 1200,
+    "skill": 300,
+    "event": 600
+  },
+  "verdicts": {
+    "npc": {
+      "verdict": "PASS",
+      "count": 10000,
+      "registry": "cmd-npc\\output\\registry\\npc_full.jsonl"
+    },
+    "quest": {
+      "verdict": "FAIL",
+      "count": 150,
+      "registry": "cmd-quest\\output\\registry\\quest_full.jsonl",
+      "issues": [
+        {
+          "type": "count_below_target",
+          "expected": 2262,
+          "actual": 150,
+          "worker": "quest"
+        }
+      ]
+    },
+    "item": {
+      "verdict": "NEED_REVIEW",
+      "reason": "registry_not_found",
+      "expected_target": 1000
+    },
+    "dialog": {
+      "verdict": "FAIL",
+      "count": 150,
+      "registry": "cmd-dialog\\output\\registry\\dialog_tree.jsonl",
+      "issues": [
+        {
+          "type": "count_below_target",
+          "expected": 42297,
+          "actual": 150,
+          "worker": "dialog"
+        }
+      ]
+    },
+    "boss": {
+      "verdict": "NEED_REVIEW",
+      "reason": "registry_not_found",
+      "expected_target": 1200
+    },
+    "skill": {
+      "verdict": "PASS",
+      "count": 306,
+      "registry": "cmd-skill\\output\\registry\\skill_full.jsonl"
+    },
+    "event": {
+      "verdict": "NEED_REVIEW",
+      "reason": "registry_not_found",
+      "expected_target": 600
+    }
+  },
+  "issues_total": 2
+}

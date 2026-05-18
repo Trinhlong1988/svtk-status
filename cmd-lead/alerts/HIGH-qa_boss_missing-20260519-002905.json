@@ -1,0 +1,11 @@
+{
+  "severity": "HIGH",
+  "issue_id": "qa_boss_missing",
+  "evidence": {
+    "expected_worker": "boss",
+    "expected_target": 1200
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-002905",
+  "target_worker": "boss"
+}
