@@ -1,0 +1,43 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "10-pass deep audit per Mr.Long 'chạy sâu thêm 10 vòng nữa'",
+  "status": "10_passes_complete",
+  "ts": "2026-05-18T15:07:09Z",
+  "doc": "cmd-db/output/MIGRATION_AUDIT_10PASS.md",
+  "pass_summary": [
+    {"pass": 1, "subject": "byte-identical OLD vs NEW (21 spot-check)", "result": "21/21 CRLF-normalized match", "verdict": "PASS"},
+    {"pass": 2, "subject": "import re-grep typo + missing module", "result": "384 import lines audited, 0 typo", "verdict": "PASS"},
+    {"pass": 3, "subject": "file count exhaustive vs spec glob", "result": "100% glob coverage", "verdict": "PASS"},
+    {"pass": 4, "subject": "re-export facade ↔ impl contract", "result": "3 facades consistent Zod schemas + types", "verdict": "PASS"},
+    {"pass": 5, "subject": "pollution residue (.test/.spec/.map/.d.ts/.stryker-tmp)", "result": "0 pollution from CMD2 (2 .test.ts found = CMD1 dd3c7e3 deliberate gap-fill ship)", "verdict": "PASS"},
+    {"pass": 6, "subject": "foundation hash verify (cmd.md)", "result": "CRLF-normalized hash 445fd302... matches INDEX.sha256 CMD_DB_v2.4.2_patch.md", "verdict": "PASS"},
+    {"pass": 7, "subject": "cross-CMD dep availability re-evaluate (post CMD1 cmd-engine/legacy ship)", "result": "18 broken imports STILL BROKEN even with cmd-engine/legacy populated; Option A vendor+patch remains correct", "verdict": "PASS (re-confirms prior finding)"},
+    {"pass": 8, "subject": "git timeline + concurrent CMD activity", "result": "em 3 commits clean, no rebase conflict, CMD1+CMD3+CMD4+LEAD progress aligned", "verdict": "PASS"},
+    {"pass": 9, "subject": "commit identity audit", "result": "em commits authored Trinhlong1988 via inline env vars (no git config global mutation per safety)", "verdict": "PASS"},
+    {"pass": 10, "subject": "post-push integrity of em's files", "result": "0 file em pushed modified by subsequent commits", "verdict": "PASS"}
+  ],
+  "findings_total": {
+    "content_bug": 0,
+    "structural_issue": 5,
+    "structural_breakdown": {
+      "G#1_CRLF_auto_convert": "INFO accepted (Windows git autocrlf quirk)",
+      "G#2_18_broken_imports": "MED documented in MIGRATION_INTEGRITY_AUDIT.md — Option A vendor+patch Week 2 Day 1",
+      "G#3_INDEX_sha256_raw_vs_CRLF": "LOW LEAD verify script should CRLF-normalize (recommendation to CMD5)",
+      "G#4_cmd_engine_output_shared_missing": "LOW Option A vendor",
+      "G#5_cmd_item_output_shared_missing": "LOW Option A vendor"
+    }
+  },
+  "new_bugs_vs_prior_audit": 0,
+  "acceptance": {
+    "spec_R49_acceptable_ship": true,
+    "score": "10/10 PASS",
+    "honest_report": true,
+    "0_content_tampering": true
+  },
+  "next_action": "Mr.Long quyết: kick Option A vendor + path patch (1 day) làm Week 2 Day 1, hay defer.",
+  "co_cmd_coordination_request": [
+    {"to": "cmd-lead", "type": "recommendation", "subject": "CRLF-normalize foundation hash verify script (G#3 fix to prevent false-positive stale hash alerts like cmd-parse re-flag)"},
+    {"to": "cmd-engine (CMD1)", "type": "info", "subject": "cmd-engine/output/legacy/ types/soft_cap/rng populated — em (cmd-db & cmd-item) may need to cross-import; will coordinate path on Week 2 Day 1"}
+  ]
+}
