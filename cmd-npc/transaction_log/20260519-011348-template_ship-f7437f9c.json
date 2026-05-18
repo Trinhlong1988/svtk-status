@@ -1,0 +1,13 @@
+{
+  "tx_id": "f7437f9c-4dda-4af1-a93b-2fa738ccdee9",
+  "action": "npc_template_ship",
+  "actor": "cmd-npc-bot",
+  "timestamp": "20260519-011348",
+  "evidence": {
+    "build_ts": "20260519-011348",
+    "template_count": 10000,
+    "uuid_canonical_sha256": "195d4375e61a2c9b0d3d0835b1091a128ce94cf9d4898ace2ee422ec14f1ba59",
+    "rule_anchor": "R74.B — transaction log mỗi action",
+    "note": "NPC templates non-tradeable. Pet instances tracked separately at runtime per R74.A+B+C."
+  }
+}
