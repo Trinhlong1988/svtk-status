@@ -1,0 +1,13 @@
+{
+  "_convention": "BP scale GLOBAL (10000 = 100%) per CLAUDE.md mục 14 + R30.",
+  "counter_chain": ["KIM", "MOC", "THO", "THUY", "HOA"],
+  "counter_multiplier_bp": 12000,
+  "countered_multiplier_bp": 8000,
+  "neutral_multiplier_bp": 10000,
+  "tam_special": {
+    "vs_other_bp": 10000,
+    "other_vs_tam_bp": 10000,
+    "tam_damage_nerf_bp": 8000
+  },
+  "_comment": "KIM > MOC > THO > THUY > HOA > KIM (counter wheel chính). TÂM neutral với mọi hệ, damage TÂM nerf 20% (R19)."
+}

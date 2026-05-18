@@ -1,0 +1,50 @@
+{
+  "_convention": "Skill Engine constants per Phase 3 spec. BP scale (10000=100%) per CLAUDE.md R30. Suffix _BP cho ratio, _TURNS cho turn count, _MS cho millisecond, _SEC cho second, no suffix integer absolute.",
+  "_decoded_from_ts_online": "TURN_DELAY_MS=1200 verified BattleManager.cs:23 + Main.unity:494. Turn duration spec: PvE=15s, Boss=20s, PvP=12s match TS round (10 entity × 1.2s = 12s) + thinking buffer.",
+
+  "GLOBAL_COOLDOWN_TURNS": 1,
+  "MAX_COMBO_DEPTH": 4,
+  "MAX_COMBO_OUTPUT_PER_RULE": 8,
+
+  "TURN_DELAY_MS": 1200,
+  "PVE_TURN_DURATION_SEC": 15,
+  "BOSS_TURN_DURATION_SEC": 20,
+  "PVP_TURN_DURATION_SEC": 12,
+  "AFK_TIMEOUT_TURNS": 3,
+  "RECONNECT_GRACE_SEC": 60,
+  "COMPANION_SWAP_COOLDOWN_TURNS": 5,
+  "MAX_FORMATION_SLOTS_PER_TEAM": 10,
+  "MAX_PARTY_PLAYERS": 5,
+
+  "_anim_note": "ANIM_FRAME_RATE=30 modern SVTK (TS gốc 4 FPS chỉ tham khảo, quá retro cho mobile 2026). TURN_DELAY_MS=1200 giữ TS pacing.",
+  "ANIM_FRAME_RATE": 30,
+  "ANIM_FRAME_DURATION_MS": 33,
+  "IMPACT_FRAME_DEFAULT": 12,
+  "PROJECTILE_TRAVEL_MS_DEFAULT": 400,
+  "BOSS_WINDUP_MS_DEFAULT": 800,
+  "STATUS_TICK_VISUAL_MS": 200,
+  "TIMELINE_MAX_EVENTS_PER_TURN": 64,
+  "PLAYBACK_QUEUE_MAX_DEPTH": 256,
+
+  "MANA_COST_REDUCTION_CAP_BP": 7500,
+  "HASTE_COOLDOWN_REDUCTION_CAP_BP": 5000,
+
+  "SCALING_LV_MIN": 1,
+  "SCALING_LV_MAX": 10,
+  "SCALING_LINEAR_MAX_GROWTH_BP": 30000,
+
+  "TARGET_AOE_MAX_HITS": 12,
+  "TARGET_LINE_MAX_HITS": 8,
+
+  "CAST_TIME_MS_MIN": 0,
+  "CAST_TIME_MS_MAX": 10000,
+  "COOLDOWN_TURNS_MIN": 0,
+  "COOLDOWN_TURNS_MAX": 50,
+  "MANA_COST_MIN": 0,
+  "MANA_COST_MAX": 99999,
+
+  "PVP_HASTE_SCALE_BP": 8000,
+
+  "MAX_TARGET_PER_CAST": 50,
+  "MAX_STATUS_REQUEST_PER_CAST": 16
+}

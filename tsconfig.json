@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022"],
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": [
+    "cmd-engine/output/legacy/**/*.ts",
+    "cmd-engine/output/server/**/*.ts",
+    "cmd-engine/output/runtime/**/*.ts",
+    "cmd-engine/output/replay/**/*.ts",
+    "cmd-boss/output/legacy/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

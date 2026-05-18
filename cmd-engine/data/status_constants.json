@@ -1,0 +1,31 @@
+{
+  "_convention": "Status Effect framework constants per Phase 2 spec. BP scale (10000=100%) per CLAUDE.md mục 14 R30/R31. Suffix _BP cho ratio, _TURNS cho turn count, no suffix integer absolute (cap, level).",
+
+  "DR_RESET_TURNS_HARD_CC": 5,
+  "DR_LEVELS_HARD_CC_BP": [10000, 5000, 0],
+
+  "DR_RESET_TURNS_SOFT_CC": 4,
+  "DR_LEVELS_SOFT_CC_BP": [10000, 7500, 5000, 0],
+
+  "DR_RESET_TURNS_DOT": 0,
+  "DR_LEVELS_DOT_BP": [10000],
+
+  "DR_RESET_TURNS_HOT": 0,
+  "DR_LEVELS_HOT_BP": [10000],
+
+  "STACK_CAP_DOT": 5,
+  "STACK_CAP_HOT": 3,
+  "STACK_CAP_DEBUFF_STAT": 3,
+  "STACK_CAP_BUFF_STAT": 5,
+  "STACK_CAP_DEFAULT": 1,
+
+  "TAUNT_THREAT_BONUS_BP": 50000,
+  "GUARD_DEF_BONUS_BP": 5000,
+  "REFLECT_DAMAGE_PCT_BP": 4000,
+
+  "BOSS_HARDCC_RESIST_BP": 7500,
+  "BOSS_SOFTCC_RESIST_BP": 5000,
+  "PVP_DR_SCALE_BP": 7500,
+
+  "MAX_EFFECT_CHAIN_DEPTH": 16
+}

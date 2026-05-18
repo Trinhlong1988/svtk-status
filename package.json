@@ -1,0 +1,24 @@
+{
+  "name": "svtk-status",
+  "version": "2.8.0",
+  "description": "SVTK Phase 14 v2.8.0 — backend migration workspace. cmd-engine + cmd-boss + 5-CMD architecture.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "typecheck:engine": "tsc --noEmit -p cmd-engine/tsconfig.json"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "seedrandom": "^3.0.5",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/seedrandom": "^3.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}
