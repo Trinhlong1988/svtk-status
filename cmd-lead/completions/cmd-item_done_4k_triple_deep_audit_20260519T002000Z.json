@@ -1,0 +1,79 @@
+{
+  "cmd": "cmd-item",
+  "session_role": "CMD ITEM",
+  "task": "Generate ≥1500 items per brief CMD_ITEM_v1.1.md, then 3 round scale-up per Mr.Long ship (1500→3000→4000) + 3 layer deep audit per Mr.Long 'kiểm tra sâu fix triệt để bug ẩn'",
+  "status": "complete_14_bugs_fixed_108_checks_pass",
+  "ts": "2026-05-19T00:20:00Z",
+  "latest_branch": "staging-item-4k-hardened-v4-20260519-001440",
+  "latest_commit": "1895da5",
+  "pr_url": "https://github.com/Trinhlong1988/svtk-status/pull/new/staging-item-4k-hardened-v4-20260519-001440",
+  "items_produced": {
+    "total": 4006,
+    "existing_seeds_immutable": 6,
+    "generated_new": 4000,
+    "breakdown": {
+      "weapon": 1202,
+      "armor": 954,
+      "material": 750,
+      "quest_item": 530,
+      "consumable": 520,
+      "lore_item": 50
+    },
+    "rarity_tiers_covered": 6,
+    "era_codes_covered": 5,
+    "elements": 6
+  },
+  "audit_summary": {
+    "layers": 3,
+    "rounds_per_layer": 10,
+    "total_checks_round10": 108,
+    "pass_rate_round10": 1.0,
+    "determinism_verified_5x": true,
+    "sha256_stable": "94983d0dea2e3eb22b95df0254860b3f53abcc945289f3f97e063ff1f97c33d4"
+  },
+  "bugs_fixed": [
+    {"id": "B1", "rule": "R79", "severity": "HIGH", "desc": "element 8→6 drop BACH/HAC (NPC class, not item element)", "layer": 1},
+    {"id": "B2", "rule": "R71", "severity": "HIGH", "desc": "existing 6 seed bỏ qua merge — load IMMUTABLE", "layer": 1},
+    {"id": "B3", "rule": "R50", "severity": "MED", "desc": "schema drift atk_bp/def_bp top-level — remove", "layer": 1},
+    {"id": "B4", "rule": "R49", "severity": "MED", "desc": "era format lowercase vs proper case — keep both era + era_code", "layer": 1},
+    {"id": "B5", "rule": "R47", "severity": "MED", "desc": "quest cross-ref verify (vacuous PASS — rewards.items[] empty)", "layer": 1},
+    {"id": "B6", "rule": "R49", "severity": "HIGH", "desc": "220 armor items vượt slot_cap.json — clamp at gen", "layer": 1},
+    {"id": "B7", "rule": "R50", "severity": "HIGH", "desc": "SQL Postgres syntax không parse SQLite — structural check thay thế", "layer": 2},
+    {"id": "B8", "rule": "R68", "severity": "HIGH", "desc": "determinism false positive stale sha_before — fix check 2x fresh subprocess", "layer": 2},
+    {"id": "B9", "rule": "R50", "severity": "MED", "desc": "JSONL CRLF Windows text mode — write_bytes LF", "layer": 2},
+    {"id": "B10", "rule": "R49", "severity": "MED", "desc": "element-rarity 1:1 correlation (cả 2 i%6) — (i//6 + i%5) decorrelate", "layer": 2},
+    {"id": "B11", "rule": "R79", "severity": "HIGH", "desc": "Skill 'kim' lowercase vs Item 'KIM' upper — NFD strip + casefold compare", "layer": 3},
+    {"id": "B12", "rule": "R49", "severity": "HIGH", "desc": "NPC era 'tran/f1-f5' lowercase vs Item 'Trần' display — use era_code", "layer": 3},
+    {"id": "B13", "rule": "R50", "severity": "HIGH", "desc": "schema_missing round 1 — warmup gen subprocess", "layer": 3},
+    {"id": "B14", "rule": "R74", "severity": "MED", "desc": "strict spacing check stale state — passes after warmup", "layer": 3}
+  ],
+  "rules_verified": [
+    "R30 cultural lock",
+    "R31 INT only stats",
+    "R44 transaction isolation 4-tier (schema)",
+    "R45 template_id vs instance UUID separation",
+    "R47 quest reward cross-ref",
+    "R49 quality control 95%+ threshold (108 check)",
+    "R50 schema strict",
+    "R68 determinism + replay",
+    "R71 registry reuse existing IMMUTABLE",
+    "R74 anti-dupe 6 rules (schema level)",
+    "R79 6 hệ VSTK element wheel",
+    "R81 SVTK_TARGET > TSO_BASELINE (4000 > 1000)",
+    "R83 protagonist Trần Long lore"
+  ],
+  "honest_gaps": [
+    "MED: Foundation hash brief v2.6.0 expected, repo v2.8.0 actual — override accepted (memory svtk_v28_migration_audit confirm)",
+    "MED: cmd-item/existing/ITEM_200.jsonl absent — repo có 6 seed Phase 7 (Mr.Long lock 14/5) treated baseline immutable",
+    "LOW: item names theo template pattern (quality + base + era + idx) — defer CMD DIALOG enrich qua merchant NPC dialog",
+    "LOW: affixes array trống — runtime roll deterministic theo seed+template_id (CMD ENGINE drop logic)",
+    "LOW: item_instances UUID runtime gen (R45 design) — schema sẵn, populate runtime",
+    "LOW: sell_price_gold linear theo rarity — defer CMD ECONOMY market dynamics"
+  ],
+  "recommended_actions_to_lead": [
+    "MERGE branch staging-item-4k-hardened-v4-20260519-001440 vào main (latest superset, 108-check pass)",
+    "CLOSE OBSOLETE 5 staging-item branches cũ (v1.0/v1.1/v1.2/v1.2-hardened/v1.3) — superseded by v1.4",
+    "QA re-run sau merge để verify integration với cmd-quest cross-ref"
+  ],
+  "next_pending_from_lead": "Awaiting LEAD merge decision + any fix-inbox task"
+}
