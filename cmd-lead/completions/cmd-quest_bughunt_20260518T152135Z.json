@@ -1,0 +1,60 @@
+{
+  "cmd": "cmd-quest",
+  "ts": "2026-05-18T15:21:35Z",
+  "phase": "14",
+  "task_id": "DEEP_bug_hunt_audit",
+  "scope": "Deep static + semantic audit of CMD3 outputs + ported OLD code",
+  "summary": {
+    "rules_applied": 13,
+    "bugs_found_in_cmd3_output": 1,
+    "bugs_fixed_in_commit": "cddfa3f",
+    "code_smells_in_old_frozen": 1,
+    "smell_actionable": false,
+    "smell_routed": "informational — OLD FROZEN code, not CMD3 to fix"
+  },
+  "rules": {
+    "B1_prereq_integrity": "non-zero only if first-of-chain has prereq OR non-first lacks prereq OR cross-chain prereq OR non-contiguous chain_position",
+    "B2_level_inversion": "prereq.level_req must be ≤ quest.level_req (chain monotonicity)",
+    "B3_duplicate_quest_id": "every quest_id unique",
+    "B4_objective_count": "kill_count/collect objectives must have count > 0",
+    "B5_reward_sanity": "exp/gold > 0 and < 1_000_000",
+    "B6_dialog_ref_unique": "every dialog_tree_ref unique",
+    "B7_giver_flag": "giver_npc_id must exist in NPC_438 AND have can_give_quest=true AND name match",
+    "B8_scene_consistency": "giver_scene_id matches NPC.sceneId",
+    "B9_name_uniqueness_per_chain": "no two quests in same chain share name",
+    "B10_dialog_tree_structure": "every dialog has 3 nodes {intro,accept,decline}, intro has 2 branches",
+    "B11_dialog_giver_match": "dialog.giver_npc_id == quest.giver_npc_id",
+    "B12_reward_outliers": "no exp reward with |z-score| > 3",
+    "B13_orphan_dialog": "every dialog.quest_id exists in quest registry"
+  },
+  "before_fix": {
+    "B2_level_inversion": 75,
+    "all_other_rules": 0,
+    "impact": "50% of generated quests had impossible progression — prerequisite required higher player level than the quest it gated"
+  },
+  "root_cause": "gen_quest_scaffold_150.mjs picked levelReq randomly from chain.level_range per quest with NO ordering. Each quest's level_req independent of prereq's level_req.",
+  "fix": {
+    "commit": "aa295d2 → cddfa3f",
+    "approach": "Linear interpolate baseLevel = lo + round((hi-lo) * posInChain / (count-1)). Add jitter [0,1]. Post-pass clamp: q.level_req = max(prevLevel, q.level_req) per chain.",
+    "verify": "0 violations across all 13 rules, 3 consecutive runs produce identical SHA (deterministic)"
+  },
+  "code_smell_old_frozen": {
+    "location": "cmd-dialog/output/legacy/dialog_runtime.ts:138-140",
+    "issue": "`insertion_order: this.nextInsertionOrder++` returns N then increments; next line `event_id` template literal reads `this.nextInsertionOrder` = N+1. Off-by-one between insertion_order field and event_id numeric suffix.",
+    "severity": "low — may be intentional separation, but breaks naïve trace correlation",
+    "owner": "OLD FROZEN P12 code (CMD3 inherited from src/modules/quest/dialog_runtime.ts)",
+    "action": "informational only — CMD3 won't modify OLD"
+  },
+  "additional_audit_passes": {
+    "TODO_FIXME_HACK_scan": "0 hits across 15 ported files",
+    "console_debug_random_date_scan": "0 hits",
+    "as_any_array_bang_scan": "0 hits",
+    "eval_function_constructor_scan": "0 hits",
+    "prototype_pollution_scan": "0 hits",
+    "sql_injection_template_scan": "0 hits (no string-concat in client.query)",
+    "cultural_lock_cjk_scan": "0 CJK chars",
+    "cultural_lock_tam_quoc_scan": "0 banned names (Tào Tháo, Lưu Bị, ...)",
+    "deterministic_sha_3_run": "identical SHA across 3 consecutive generator runs"
+  },
+  "delta_vs_prev_completion": "+1 real bug discovered and fixed (B2), +1 OLD smell flagged (dialog_runtime off-by-one)"
+}
