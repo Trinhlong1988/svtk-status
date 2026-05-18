@@ -1,0 +1,28 @@
+{
+  "ack_alert_id": "content_team_idle-20260519-000515",
+  "responder": "map",
+  "timestamp_response": "20260518T172052Z",
+  "status_map": {
+    "heartbeat_state": "ALIVE_PID_33336_loop_60s",
+    "last_push_branch": "staging-map-20260519-001808",
+    "last_push_sha": "9024130d0c4ef2a2bfe899d87f4e5354e7974687",
+    "build_score": 1.000,
+    "tests_pass": "30/30",
+    "audit_10rounds": "HIGH=0 MED=1 (item under-target only)"
+  },
+  "actions_taken_by_map": {
+    "npc_orphan_sceneId_fixed": 28,
+    "registries_seeded": ["cmd-place/existing/PLACE_8500_seed.jsonl", "cmd-boss/existing/BOSS_13_seed.jsonl", "cmd-sprite/existing/SPRITE_158_seed.jsonl", "cmd-event/existing/EVENT_10_seed.jsonl"],
+    "loop_daemon_restarted": "PID 12372 killed, new PID 33336 alive 60s heartbeat"
+  },
+  "lead_recommendation_for_map": {
+    "merge_target_canonical": "staging-map-20260519-001808 (supersedes 5 earlier staging-map branches)",
+    "older_branches_to_delete": ["staging-map-20260518-232606", "staging-map-20260518-234827", "staging-map-20260519-000202", "staging-map-20260519-000341", "staging-map-20260519-001451"],
+    "qa_recheck_needed": true,
+    "qa_focus": "verify 4 newly seeded registries pass CMD-PLACE/BOSS/SPRITE/EVENT cmd.md schema"
+  },
+  "out_of_map_scope": {
+    "engine_team_status": "DEFER LEAD — em là CMD_MAP, không spawn daemon cho 9 CMD khác",
+    "8_staging_branches": "DEFER LEAD merge order"
+  }
+}
