@@ -1,0 +1,38 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "alert_id": "cmd-db_w1_broken_imports",
+  "severity": "MED",
+  "ts": "2026-05-18T14:31:44Z",
+  "trigger": "Deep audit recheck per Mr.Long 'em kiểm tra sâu lại code lần nữa'",
+  "subject": "NEW layout has 18 files with broken import paths (5 missing peer files + 4 cross-repo-shared)",
+  "summary": {
+    "file_copy_match_globs": "100% (57/57 per AUTO_START § TASK 1)",
+    "old_test_baseline": "100% (1095/1095 PASS in OLD workspace)",
+    "new_standalone_compilable": "0% (would fail tsc without Option A remediation)",
+    "broken_import_locations": {
+      "cmd-db": 6,
+      "cmd-item": 7,
+      "cmd-engine/economy": 5
+    },
+    "missing_peer_files_in_economy_module": [
+      "_schema_helpers.ts",
+      "inventory_snapshot_schema.ts",
+      "economy_serialization_contract.ts",
+      "modifier_ordering_audit.ts",
+      "economy_forensic_telemetry.ts"
+    ],
+    "cross_repo_shared_unowned": [
+      "src/_shared/codepoint_compare.ts (8 callsites)",
+      "src/logic/types.ts (Element schema, 1 callsite)",
+      "src/logic/soft_cap.ts (1 callsite)",
+      "src/logic/rng.ts (1 callsite)"
+    ]
+  },
+  "root_cause": "AUTO_START prompt globs were authoritative for file selection but did NOT enumerate transitive dependencies. Monolith→split inherently breaks sibling imports without rewrite or vendoring.",
+  "blocker": false,
+  "workaround": "OLD frozen workspace continues to pass 1095/1095 tests. NEW tree is informational/staging until Week 2 wire pass.",
+  "recommendation": "Option A vendor + path patch (1 day, Week 2 Day 1) — autonomous-pickable. Detail in cmd-db/output/MIGRATION_INTEGRITY_AUDIT.md § 6.",
+  "doc": "cmd-db/output/MIGRATION_INTEGRITY_AUDIT.md",
+  "supersedes_part_of": "cmd-db_alert_w2_below_threshold_20260518T141930Z.json (R44 wrapper alert remains valid)"
+}
