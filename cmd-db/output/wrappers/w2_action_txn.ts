@@ -11,10 +11,10 @@
  * Per CMD_DB v2.4.2 § P1.1 SERIALIZABLE retry loop is the strong default;
  * this REPEATABLE READ variant is exposed separately so callers can opt-in.
  */
-import { createHash } from 'node:crypto';
 import type { Pool, PoolClient } from 'pg';
 import {
   EXPIRE_MAP,
+  computePayloadHash,
   type ActionType,
   type IdempotencyResult,
 } from '../anti_dupe/anti_dupe.js';
@@ -29,22 +29,6 @@ const W2_ACTION_TYPES: ReadonlySet<W2ActionType> = new Set([
   'skill_cast', 'item_use', 'trade', 'gold_change', 'reward_claim',
 ]);
 
-function canonicalStringify(value: unknown): string {
-  if (value === null) return 'null';
-  if (value === undefined) return 'undefined';
-  if (typeof value === 'number') return Number.isFinite(value) ? String(value) : 'NaN';
-  if (typeof value === 'string') return JSON.stringify(value);
-  if (typeof value === 'boolean') return String(value);
-  if (typeof value === 'bigint') return `bigint:${value}`;
-  if (Array.isArray(value)) return '[' + value.map(canonicalStringify).join(',') + ']';
-  if (typeof value === 'object') {
-    const obj = value as Record<string, unknown>;
-    const keys = Object.keys(obj).sort();
-    return '{' + keys.map(k => `${JSON.stringify(k)}:${canonicalStringify(obj[k])}`).join(',') + '}';
-  }
-  return JSON.stringify(value);
-}
-
 /** W2 — REPEATABLE READ action with idempotency + retry. */
 export async function withActionTxn<T>(
   pool: Pool,
@@ -58,7 +42,7 @@ export async function withActionTxn<T>(
   if (!W2_ACTION_TYPES.has(action_type)) {
     throw new Error(`W2 rejects action_type ${action_type} (use W1 for battle_*, AD12 for rollback)`);
   }
-  const payloadHash = createHash('sha256').update(canonicalStringify(payload)).digest('hex');
+  const payloadHash = computePayloadHash(payload);
   const expireInterval = EXPIRE_MAP[action_type];
   let lastErr: unknown = null;
 
@@ -90,8 +74,8 @@ export async function withActionTxn<T>(
         await client.query(
           `INSERT INTO pending_actions
              (nonce, action_type, player_id, payload, payload_hash, status, expires_at)
-           VALUES ($1, $2, $3, $4, $5, 'pending', NOW() + INTERVAL '${expireInterval}')`,
-          [nonce, action_type, player_id, JSON.stringify(payload), payloadHash],
+           VALUES ($1, $2, $3, $4, $5, 'pending', NOW() + ($6)::interval)`,
+          [nonce, action_type, player_id, JSON.stringify(payload), payloadHash, expireInterval],
         );
       }
 

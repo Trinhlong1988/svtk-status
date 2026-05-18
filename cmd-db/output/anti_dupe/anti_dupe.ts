@@ -118,8 +118,8 @@ export async function executeWithIdempotency<T>(
         await client.query(
           `INSERT INTO pending_actions
              (nonce, action_type, player_id, payload, payload_hash, status, expires_at)
-           VALUES ($1, $2, $3, $4, $5, 'pending', NOW() + INTERVAL '${expireInterval}')`,
-          [nonce, action_type, player_id, JSON.stringify(payload), payloadHash],
+           VALUES ($1, $2, $3, $4, $5, 'pending', NOW() + ($6)::interval)`,
+          [nonce, action_type, player_id, JSON.stringify(payload), payloadHash, expireInterval],
         );
       }
 
@@ -299,17 +299,20 @@ export async function ad12_rollback(
           compensatedItems = 1;
         }
       } else if (original.txn_type === 'gold_change' && original.player_id) {
-        const delta = Number(original.source_state?.delta ?? 0);
-        if (delta !== 0) {
+        // R3 fix: BIGINT precision — use native BigInt arithmetic
+        const rawDelta = original.source_state?.delta;
+        const delta = typeof rawDelta === 'bigint' ? rawDelta : BigInt(rawDelta ?? 0);
+        if (delta !== 0n) {
           const playerR = await client.query(
             'SELECT gold FROM players WHERE player_id = $1 FOR UPDATE',
             [original.player_id],
           );
-          const goldBefore = Number(playerR.rows[0].gold);
+          const rawGold = playerR.rows[0].gold;
+          const goldBefore = typeof rawGold === 'bigint' ? rawGold : BigInt(rawGold);
 
           await client.query(
             'UPDATE players SET gold = gold + $1 WHERE player_id = $2',
-            [-delta, original.player_id],
+            [(-delta).toString(), original.player_id],
           );
 
           await client.query(
@@ -317,9 +320,16 @@ export async function ad12_rollback(
                (player_id, currency_type, delta, balance_before, balance_after,
                 reason, txn_nonce, source_action)
              VALUES ($1, 'gold', $2, $3, $4, 'rollback_compensation', $5, 'rollback')`,
-            [original.player_id, -delta, goldBefore, goldBefore - delta, rollbackNonce],
+            [
+              original.player_id,
+              (-delta).toString(),
+              goldBefore.toString(),
+              (goldBefore - delta).toString(),
+              rollbackNonce,
+            ],
           );
-          compensatedCurrency = Math.abs(delta);
+          // Math.abs on BigInt: branchless
+          compensatedCurrency = Number(delta < 0n ? -delta : delta);
         }
       }
 

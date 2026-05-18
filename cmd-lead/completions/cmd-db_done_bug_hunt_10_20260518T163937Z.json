@@ -1,0 +1,60 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "10-round bug hunt on Day 1+2 R44 deliverables per Mr.Long 'chạy bug sâu 10 vòng tìm bug ẩn fix triệt để'",
+  "status": "complete_3_bugs_fixed",
+  "ts": "2026-05-18T16:39:37Z",
+  "doc": "cmd-db/output/BUG_HUNT_10ROUND_DAY1_DAY2.md",
+  "scanner": "scripts/cmd2_bug_hunt_10.mjs",
+  "real_bugs_found_and_fixed": [
+    {
+      "id": "R1",
+      "class": "SQL injection defense-in-depth",
+      "callsites": 2,
+      "files": ["cmd-db/output/anti_dupe/anti_dupe.ts:120", "cmd-db/output/wrappers/w2_action_txn.ts:91"],
+      "before": "VALUES (..., NOW() + INTERVAL '${expireInterval}')",
+      "after": "VALUES (..., NOW() + ($6)::interval) with expireInterval bound as $6",
+      "severity": "MED (currently safe — EXPIRE_MAP frozen const, but violates defense-in-depth)"
+    },
+    {
+      "id": "R3",
+      "class": "BIGINT precision loss",
+      "callsites": 2,
+      "file": "cmd-db/output/anti_dupe/anti_dupe.ts (ad12_rollback gold-compensation branch)",
+      "before": "Number(playerR.rows[0].gold) + Number(delta) — loses precision above 2^53",
+      "after": "BigInt arithmetic + .toString() for pg BIGINT param binding",
+      "severity": "HIGH for whale/inflated economy (Number.MAX_SAFE_INTEGER = 9007199254740991)"
+    },
+    {
+      "id": "R8",
+      "class": "Cross-wrapper duplicate logic drift",
+      "files": ["cmd-db/output/wrappers/w2_action_txn.ts"],
+      "before": "Duplicate canonicalStringify impl in 2 files (751 vs 726 chars)",
+      "after": "w2_action_txn imports computePayloadHash from anti_dupe (single source of truth)",
+      "severity": "MED (works today but drift risk over time)"
+    }
+  ],
+  "rounds_clean": {
+    "R2_sql_param_count": "0 mismatch",
+    "R4_resource_leak_finally_release": "0 suspicious",
+    "R5_json_stringify_bigint": "9 informational (defer to QA-CORE integration)",
+    "R6_expire_map_vs_status_enum": "0 orphan + 0 unused",
+    "R7_action_type_vs_expire_map": "0 orphan (1 scanner false-positive on RollbackResult.reason)",
+    "R9_throw_message_standardization": "18 throws all prefixed with module/spec marker",
+    "R10_unawaited_query": "0 suspicious"
+  },
+  "verification_post_fix": {
+    "tsc_strict": "EXIT 0",
+    "vitest_anti_dupe": "13/13 PASS / 203ms",
+    "vitest_wrappers": "12/12 PASS / 396ms",
+    "aggregate_R44_suite": "25/25 PASS / 1.90s",
+    "rescan_R3_bigint": "0 occurrence",
+    "rescan_R8_canonical_drift": "w2 no longer has canonicalStringify (single source)"
+  },
+  "tally": {
+    "real_bugs_found": 3,
+    "real_bugs_fixed": 3,
+    "fix_completeness": "100%"
+  },
+  "next_action": "Day 3 - persistence integration test harness OR continue Mr.Long brief."
+}
