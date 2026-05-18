@@ -10,7 +10,7 @@
     "Pham Ngu Lao",
     "Tran Thai Tong"
   ],
-  "npc_count": 1230,
+  "npc_count": 1218,
   "sample_npc_indices": [
     82,
     100,
@@ -59,8 +59,8 @@
     143,
     144,
     268,
-    453,
+    464,
     467,
-    471
+    469
   ]
 }

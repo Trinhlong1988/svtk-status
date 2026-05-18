@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS npc_templates (
     name                VARCHAR(96) NOT NULL,
     era                 VARCHAR(32) NOT NULL,
     npc_type            VARCHAR(32) NOT NULL,
+    class_hierarchy     VARCHAR(16) NOT NULL,                -- R80
+    dmg_taken_multi     NUMERIC(3,2) NOT NULL DEFAULT 1.00,  -- R80
     scene_id            INTEGER NOT NULL,
     spawn_x             INTEGER NOT NULL,
     spawn_y             INTEGER NOT NULL,
@@ -42,9 +44,12 @@ CREATE TABLE IF NOT EXISTS npc_templates (
     CHECK (level BETWEEN 1 AND 120),
     CHECK (sprite_template_id BETWEEN 1 AND 158),
     CHECK (palette_seed BETWEEN 0 AND 63),
+    CHECK (scene_id BETWEEN 1 AND 7817),
     CHECK (element IN ('kim','mộc','thủy','hỏa','thổ','tâm')),
     CHECK (npc_type IN ('townsmen','shopkeeper','quest_giver','monster','boss',
                         'guard','trainer','pet_master','event_npc','lore_npc')),
+    CHECK (class_hierarchy IN ('regular','elite','mini_boss','boss','thanh','than')),
+    CHECK (dmg_taken_multi BETWEEN 0.30 AND 1.00),
     UNIQUE (uuid),
     UNIQUE (npc_index)
 );

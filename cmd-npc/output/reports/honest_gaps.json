@@ -2,10 +2,25 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260518-232558",
+  "build_timestamp": "20260518-235531",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
+  "round_1_10_audit": {
+    "rounds_completed": 10,
+    "bugs_fixed": {
+      "R1_schema_uniformity": "Added gender/cultural_tag/aggro_range to existing 438 in OUTPUT (source untouched per R71.1).",
+      "R2_uuid_null_R74A": "Backfilled 438 null UUID in existing 438 (OUTPUT only). Source file still has null — alerted LEAD as HIGH severity. R71.1 immutable source preserved.",
+      "R3_spawn_spacing_R75": "Implemented grid-based pick_collision_free_pos(); no two NPC < 8 tile in same sceneId.",
+      "R4_class_hierarchy_R80": "Added class_hierarchy field (regular/elite/mini_boss/boss/thanh/than) to all 10000 NPC.",
+      "R5_dmg_taken_multi_R80": "Added dmg_taken_multi field (1.00→0.30) per class_hierarchy.",
+      "R6_skill_ids_R71_SKILL165": "Generated skill_ids now use 1..165 (SKILL_165 registry per Foundation R71 table). Was 1..80 (CMD_NPC_v1.1 brief outdated).",
+      "R7_scene_id_orphan_R75": "Clamped sceneId to 1..7817 (MAP_SCENE_COUNT). Removed 59 orphan entries.",
+      "R8_boss_tier_R80": "Boss tier now enforced >=5 (R80 boss=tier 6-7, mini_boss=5-6, thanh=7-8, than=9).",
+      "R9_townsmen_tier_R76": "Townsmen tier clamped 0-3 per R76 biome→tier (village/town low tier).",
+      "R10_validator_extension": "Added 5 new validator checks (schema_uniformity, uuid_non_null_R74A, spawn_spacing_R75, scene_id_range, type_tier_consistency_R76_R80). Validator now 20 checks (was 15)."
+    }
+  },
   "gaps_admitted": [
     {
       "severity": "MED",
