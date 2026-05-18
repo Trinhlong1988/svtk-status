@@ -42,6 +42,8 @@ import {
   CANON_TAG_WEAKSET,
   CANON_TAG_WEAKREF,
   CANON_TAG_ITERATOR,
+  CANON_TAG_ARRAY_BUFFER,
+  CANON_TAG_DATA_VIEW,
 } from './state_checksum.js';
 
 function makeFrame(turn: number, sessionId: string, encounterId: string, damage = 100): ReplayFrame {
@@ -159,6 +161,52 @@ describe('R68 state_checksum — divergence + forensics', () => {
     expect(() => { (evt as { turn: number }).turn = 999; }).toThrow();
   });
 
+  it('BUG-25: structuredClone failure (function-valued field) does NOT crash forensicDump', () => {
+    const s = createReplayStream('reg_safe_clone', 'sess');
+    // Cast frame with function field — structuredClone would throw, safeClone falls back
+    const frame_with_fn = {
+      schemaVersion: 1,
+      frameId: 'sess@f0',
+      turn: 0,
+      sessionId: 'sess',
+      encounterId: 'reg_safe_clone',
+      bossDecision: {
+        branch: 'highest_threat' as const,
+        phaseTransitioned: false,
+        currentPhaseId: 'p1',
+        scheduledMechanicIds: [],
+        resolvedMechanicIds: [],
+      },
+      statusDeltas: [],
+      damageEvents: [],
+      threatSnapshot: [],
+      rngTraces: [],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      _evil_hook: (() => 'noop') as any,
+    } as Parameters<typeof appendFrame>[1];
+    appendFrame(s, frame_with_fn);
+    expect(() => forensicDump(s, 0)).not.toThrow();
+    const dump = forensicDump(s, 0);
+    expect(dump.frame).toBeDefined();
+    // Function stripped to null on fallback clone path
+    expect((dump.frame as unknown as Record<string, unknown>)._evil_hook).toBeNull();
+  });
+
+  it('BUG-27: forensicDump rejects NaN / Infinity divergence_turn', () => {
+    const s = createReplayStream('reg_validate', 'sess');
+    expect(() => forensicDump(s, NaN)).toThrow(/divergence_turn must be a finite integer/);
+    expect(() => forensicDump(s, Infinity)).toThrow(/divergence_turn must be a finite integer/);
+    expect(() => forensicDump(s, 1.5)).toThrow(/divergence_turn must be a finite integer/);
+  });
+
+  it('BUG-27: forensicDump accepts negative integer (empty dump, no throw)', () => {
+    const s = createReplayStream('reg_neg_turn', 'sess');
+    appendFrame(s, makeFrame(0, 'sess', 'reg_neg_turn'));
+    const dump = forensicDump(s, -5);
+    expect(dump.frame).toBeUndefined();
+    expect(dump.events_in_turn.length).toBe(0);
+  });
+
   it('7. Length mismatch is reported as divergence', () => {
     const a = buildStream('enc_LEN', 10);
     const b = buildStream('enc_LEN', 25);
@@ -166,6 +214,18 @@ describe('R68 state_checksum — divergence + forensics', () => {
     const cpB = checksumStream(b, { every_n_turns: 5 });
     const report = compareCheckpoints(cpA, cpB);
     expect(report.divergent).toBe(true);
+  });
+
+  it('BUG-28: aggregate-only mismatch reported as divergent (was missed)', () => {
+    const cps_a = [{ turn: 0, frame_id: 'f0', checksum: 'cks_same', aggregate: 'agg_A' }];
+    const cps_b = [{ turn: 0, frame_id: 'f0', checksum: 'cks_same', aggregate: 'agg_B' }];
+    expect(compareCheckpoints(cps_a, cps_b).divergent).toBe(true);
+  });
+
+  it('BUG-29: frame_id mismatch reported as divergent (was missed)', () => {
+    const cps_a = [{ turn: 0, frame_id: 'real_id', checksum: 'hash_X', aggregate: 'agg' }];
+    const cps_b = [{ turn: 0, frame_id: 'spoofed_id', checksum: 'hash_X', aggregate: 'agg' }];
+    expect(compareCheckpoints(cps_a, cps_b).divergent).toBe(true);
   });
 });
 
@@ -446,6 +506,29 @@ describe('R68 state_checksum — bigint/Symbol/undefined sentinels (regression B
     expect(canonicalize(new Map([['k', 1]]))).not.toContain(CANON_TAG_ITERATOR);
     expect(canonicalize(new Set([1]))).not.toContain(CANON_TAG_ITERATOR);
     expect(canonicalize([1, 2, 3])).not.toContain(CANON_TAG_ITERATOR);
+  });
+
+  it('BUG-26: ArrayBuffer hex-encoded (was {} silently)', () => {
+    const buf = new ArrayBuffer(4);
+    new Uint8Array(buf).set([1, 2, 3, 4]);
+    const canon = canonicalize({ x: buf });
+    expect(canon).toContain(CANON_TAG_ARRAY_BUFFER);
+    expect(canon).toContain('01020304');
+  });
+
+  it('BUG-26: ArrayBuffer distinct contents → distinct hash', () => {
+    const a = new ArrayBuffer(2); new Uint8Array(a).set([1, 2]);
+    const b = new ArrayBuffer(2); new Uint8Array(b).set([3, 4]);
+    expect(canonicalize(a)).not.toBe(canonicalize(b));
+  });
+
+  it('BUG-26: DataView encoded with offset + length', () => {
+    const buf = new ArrayBuffer(8);
+    new Uint8Array(buf).set([10, 20, 30, 40, 50, 60, 70, 80]);
+    const v = new DataView(buf, 2, 4);
+    const canon = canonicalize({ x: v });
+    expect(canon).toContain(CANON_TAG_DATA_VIEW);
+    expect(canon).toContain('1e28323c');  // hex of [30, 40, 50, 60]
   });
 
   it('BUG-8: unicode composed and decomposed forms produce SAME hash (NFC normalise)', () => {

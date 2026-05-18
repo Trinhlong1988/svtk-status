@@ -99,6 +99,9 @@ export const CANON_TAG_WEAKMAP = '__SVTK_WeakMap__';
 export const CANON_TAG_WEAKSET = '__SVTK_WeakSet__';
 export const CANON_TAG_WEAKREF = '__SVTK_WeakRef__';
 export const CANON_TAG_ITERATOR = '__SVTK_Iterator__';
+/** Binary buffer types — JSON.stringify would flatten them to {} or partial views. */
+export const CANON_TAG_ARRAY_BUFFER = '__SVTK_ArrayBuffer__';
+export const CANON_TAG_DATA_VIEW = '__SVTK_DataView__';
 /** Sentinel for arrays carrying non-index own properties (otherwise dropped by JSON.stringify). */
 export const CANON_TAG_ARRAY_WITH_META = '__SVTK_ArrayMeta__';
 /** Sentinel emitted when a property getter throws during walk (prevents R68 DoS). */
@@ -125,6 +128,19 @@ const RESERVED_KEY_MAP = new Map<string, string>([
   ['__proto__', CANON_KEY_PROTO],
   ['constructor', CANON_KEY_CONSTRUCTOR],
 ]);
+
+/**
+ * Hex-encode an ArrayBuffer (or slice of one). Deterministic; distinct
+ * contents → distinct strings.
+ */
+function bufferToHex(buf: ArrayBuffer, offset = 0, length?: number): string {
+  const view = new Uint8Array(buf, offset, length);
+  const chars = new Array<string>(view.length);
+  for (let i = 0; i < view.length; i++) {
+    chars[i] = view[i]!.toString(16).padStart(2, '0');
+  }
+  return chars.join('');
+}
 
 /**
  * Detect iterator-like objects (generator results, Map.entries(), explicit
@@ -203,6 +219,13 @@ function prepareForJson(val: unknown, path: WeakSet<object>): unknown {
   }
   if (typeof WeakRef !== 'undefined' && val instanceof WeakRef) {
     return { [CANON_TAG_WEAKREF]: 1 };
+  }
+  if (val instanceof ArrayBuffer) {
+    // Hex-encode contents so distinct buffers hash distinctly.
+    return { [CANON_TAG_ARRAY_BUFFER]: bufferToHex(val) };
+  }
+  if (val instanceof DataView) {
+    return { [CANON_TAG_DATA_VIEW]: bufferToHex(val.buffer as ArrayBuffer, val.byteOffset, val.byteLength) };
   }
   if (val !== null && typeof val === 'object' && isIteratorLike(val)) {
     // Live iterator state is mutable + opaque — emit type tag. Caller must NOT
@@ -423,7 +446,17 @@ export function compareCheckpoints(
     const ai = a[i];
     const bi = b[i];
     if (ai === undefined || bi === undefined) continue;
-    if (ai.turn !== bi.turn || ai.checksum !== bi.checksum) {
+    // Strict equality across all four fields. Aggregate mismatch alone (with
+    // matching turn + checksum) implies the chain diverged BEFORE this turn —
+    // surface immediately so cmd-qa-core can request earlier checkpoints.
+    // Frame_id mismatch (with otherwise identical fields) indicates a
+    // different replay origin (cross-session contamination).
+    if (
+      ai.turn !== bi.turn ||
+      ai.checksum !== bi.checksum ||
+      ai.aggregate !== bi.aggregate ||
+      ai.frame_id !== bi.frame_id
+    ) {
       return {
         divergent: true,
         first_divergent_turn: ai.turn,
@@ -466,23 +499,53 @@ export function compareCheckpoints(
  * Build a forensic dump centred on a turn — returns a DEFENSIVE deep clone +
  * deep-freeze, so cmd-qa-core / cmd-lead consumers can't accidentally rewrite
  * stream state through the dump.frame reference.
+ *
+ * Validates `divergence_turn` — rejects NaN / Infinity / non-integer; negative
+ * turns are allowed (they yield an empty dump) to keep the API permissive for
+ * caller-supplied bound-checks.
+ *
+ * structuredClone can throw on non-cloneable values (functions, Promises,
+ * native handles). On failure, falls back to a JSON-based safe clone via
+ * canonical encoding round-trip so an adversarial frame cannot DoS the
+ * forensic pipeline (BUG-25).
  */
 export function forensicDump(
   stream: ReplayEventStream,
   divergence_turn: number,
   expected_checksum?: Sha256Hex,
 ): ForensicDump {
+  if (!Number.isFinite(divergence_turn) || !Number.isInteger(divergence_turn)) {
+    throw new RangeError(
+      `forensicDump: divergence_turn must be a finite integer, got ${divergence_turn}`,
+    );
+  }
   const live_frame = stream.frames.find((f) => f.turn === divergence_turn);
   const live_in_turn = stream.events.filter((e) => e.turn === divergence_turn);
   const live_prev_turn = stream.events.filter((e) => e.turn === divergence_turn - 1);
   return Object.freeze({
     divergence_turn,
-    frame: live_frame ? (deepFreeze(structuredClone(live_frame)) as ReplayFrame) : undefined,
-    events_in_turn: Object.freeze(live_in_turn.map((e) => deepFreeze(structuredClone(e)) as StreamEvent)),
-    events_prev_turn: Object.freeze(live_prev_turn.map((e) => deepFreeze(structuredClone(e)) as StreamEvent)),
+    frame: live_frame ? (deepFreeze(safeClone(live_frame)) as ReplayFrame) : undefined,
+    events_in_turn: Object.freeze(live_in_turn.map((e) => deepFreeze(safeClone(e)) as StreamEvent)),
+    events_prev_turn: Object.freeze(live_prev_turn.map((e) => deepFreeze(safeClone(e)) as StreamEvent)),
     checksum_actual: live_frame ? checksumFrame(live_frame) : undefined,
     checksum_expected: expected_checksum,
   });
+}
+
+/**
+ * Deep clone defensively — tries `structuredClone` first (fast, preserves Map/
+ * Set/Date/typed arrays). On non-cloneable input (functions, native handles,
+ * Promise) falls back to `JSON.parse(JSON.stringify(value, fnFilter))` so we
+ * still return a fresh tree without throwing.
+ */
+function safeClone<T>(value: T): T {
+  try {
+    return structuredClone(value);
+  } catch {
+    return JSON.parse(
+      JSON.stringify(value, (_, v) => (typeof v === 'function' ? null : v)),
+    ) as T;
+  }
 }
 
 function deepFreeze<T>(value: T): T {
