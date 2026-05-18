@@ -128,7 +128,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_0",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 2,
@@ -151,7 +153,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_1",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 3,
@@ -174,7 +178,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_2",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 4,
@@ -195,7 +201,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_3",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 5,
@@ -218,7 +226,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_4",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 6,
@@ -241,7 +251,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_5",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 7,
@@ -264,7 +276,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_6",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 8,
@@ -285,7 +299,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_7",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 9,
@@ -308,7 +324,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_8",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 10,
@@ -331,7 +349,9 @@
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_9",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 11,
@@ -352,7 +372,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_10",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 12,
@@ -375,7 +397,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_11",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 13,
@@ -396,7 +420,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_12",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 14,
@@ -419,7 +445,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_13",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 15,
@@ -442,7 +470,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_14",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 16,
@@ -463,7 +493,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_15",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 17,
@@ -486,7 +518,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_16",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 18,
@@ -507,7 +541,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_17",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 19,
@@ -528,7 +564,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_0",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 20,
@@ -549,7 +587,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_1",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 21,
@@ -571,7 +611,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_2",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 22,
@@ -595,7 +637,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_3",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 23,
@@ -616,7 +660,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_4",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 24,
@@ -639,7 +685,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_5",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 25,
@@ -662,7 +710,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_6",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 26,
@@ -683,7 +733,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_7",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 27,
@@ -706,7 +758,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_8",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 28,
@@ -730,7 +784,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_9",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 29,
@@ -753,7 +809,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_10",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 30,
@@ -774,7 +832,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_11",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 31,
@@ -797,7 +857,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_12",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 32,
@@ -818,7 +880,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_13",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 33,
@@ -841,7 +905,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_14",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 34,
@@ -865,7 +931,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_15",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Hùng Vương 18 (Hùng Duệ Vương)",
+          "giver_scene_id": 4203
         },
         {
           "quest_id": 35,
@@ -889,7 +957,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_16",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Lạc Long Quân",
+          "giver_scene_id": 678
         },
         {
           "quest_id": 36,
@@ -912,7 +982,9 @@
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_17",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Âu Cơ",
+          "giver_scene_id": 5525
         },
         {
           "quest_id": 37,
@@ -933,7 +1005,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_0",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Hoa Lư",
+          "giver_scene_id": 8479
         },
         {
           "quest_id": 38,
@@ -956,7 +1030,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_1",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Hoa Lư",
+          "giver_scene_id": 8480
         },
         {
           "quest_id": 39,
@@ -979,7 +1055,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_2",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Hoa Lư",
+          "giver_scene_id": 8481
         },
         {
           "quest_id": 40,
@@ -1000,7 +1078,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_3",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Hoa Lư",
+          "giver_scene_id": 8482
         },
         {
           "quest_id": 41,
@@ -1022,7 +1102,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_4",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #5 Hoa Lư",
+          "giver_scene_id": 8483
         },
         {
           "quest_id": 42,
@@ -1043,7 +1125,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_5",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Thăng Long",
+          "giver_scene_id": 735
         },
         {
           "quest_id": 43,
@@ -1066,7 +1150,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_6",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Thăng Long",
+          "giver_scene_id": 736
         },
         {
           "quest_id": 44,
@@ -1087,7 +1173,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_7",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Thăng Long",
+          "giver_scene_id": 737
         },
         {
           "quest_id": 45,
@@ -1109,7 +1197,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_8",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #4 Thăng Long",
+          "giver_scene_id": 738
         },
         {
           "quest_id": 46,
@@ -1131,7 +1221,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_9",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #5 Thăng Long",
+          "giver_scene_id": 739
         },
         {
           "quest_id": 47,
@@ -1154,7 +1246,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_10",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Đông Đô",
+          "giver_scene_id": 6919
         },
         {
           "quest_id": 48,
@@ -1177,7 +1271,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_11",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Đông Đô",
+          "giver_scene_id": 6920
         },
         {
           "quest_id": 49,
@@ -1198,7 +1294,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_12",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Đông Đô",
+          "giver_scene_id": 6921
         },
         {
           "quest_id": 50,
@@ -1221,7 +1319,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_13",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Đông Đô",
+          "giver_scene_id": 6922
         },
         {
           "quest_id": 51,
@@ -1242,7 +1342,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_14",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Đông Đô",
+          "giver_scene_id": 6923
         },
         {
           "quest_id": 52,
@@ -1264,7 +1366,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_15",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #1 Phong Châu",
+          "giver_scene_id": 6076
         },
         {
           "quest_id": 53,
@@ -1287,7 +1391,9 @@
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_16",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Phong Châu",
+          "giver_scene_id": 6077
         },
         {
           "quest_id": 54,
@@ -1308,7 +1414,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_17",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Phong Châu",
+          "giver_scene_id": 6078
         },
         {
           "quest_id": 55,
@@ -1330,7 +1438,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_18",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #4 Phong Châu",
+          "giver_scene_id": 6079
         },
         {
           "quest_id": 56,
@@ -1351,7 +1461,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_0",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Hoa Lư",
+          "giver_scene_id": 8479
         },
         {
           "quest_id": 57,
@@ -1372,7 +1484,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_1",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Hoa Lư",
+          "giver_scene_id": 8480
         },
         {
           "quest_id": 58,
@@ -1393,7 +1507,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_2",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Hoa Lư",
+          "giver_scene_id": 8481
         },
         {
           "quest_id": 59,
@@ -1414,7 +1530,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_3",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Hoa Lư",
+          "giver_scene_id": 8482
         },
         {
           "quest_id": 60,
@@ -1435,7 +1553,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_4",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Hoa Lư",
+          "giver_scene_id": 8483
         },
         {
           "quest_id": 61,
@@ -1457,7 +1577,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_5",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #1 Thăng Long",
+          "giver_scene_id": 735
         },
         {
           "quest_id": 62,
@@ -1480,7 +1602,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_6",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Thăng Long",
+          "giver_scene_id": 736
         },
         {
           "quest_id": 63,
@@ -1502,7 +1626,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #3 Thăng Long",
+          "giver_scene_id": 737
         },
         {
           "quest_id": 64,
@@ -1523,7 +1649,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_8",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Thăng Long",
+          "giver_scene_id": 738
         },
         {
           "quest_id": 65,
@@ -1546,7 +1674,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_9",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Thăng Long",
+          "giver_scene_id": 739
         },
         {
           "quest_id": 66,
@@ -1568,7 +1698,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_10",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #1 Đông Đô",
+          "giver_scene_id": 6919
         },
         {
           "quest_id": 67,
@@ -1591,7 +1723,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_11",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Đông Đô",
+          "giver_scene_id": 6920
         },
         {
           "quest_id": 68,
@@ -1614,7 +1748,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_12",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Đông Đô",
+          "giver_scene_id": 6921
         },
         {
           "quest_id": 69,
@@ -1635,7 +1771,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_13",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Đông Đô",
+          "giver_scene_id": 6922
         },
         {
           "quest_id": 70,
@@ -1658,7 +1796,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_14",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Đông Đô",
+          "giver_scene_id": 6923
         },
         {
           "quest_id": 71,
@@ -1681,7 +1821,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_15",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Phong Châu",
+          "giver_scene_id": 6076
         },
         {
           "quest_id": 72,
@@ -1703,7 +1845,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_16",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #2 Phong Châu",
+          "giver_scene_id": 6077
         },
         {
           "quest_id": 73,
@@ -1724,7 +1868,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_17",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Phong Châu",
+          "giver_scene_id": 6078
         },
         {
           "quest_id": 74,
@@ -1746,7 +1892,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_18",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #4 Phong Châu",
+          "giver_scene_id": 6079
         },
         {
           "quest_id": 75,
@@ -1767,7 +1915,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_0",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Hoa Lư",
+          "giver_scene_id": 8479
         },
         {
           "quest_id": 76,
@@ -1788,7 +1938,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_1",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Hoa Lư",
+          "giver_scene_id": 8480
         },
         {
           "quest_id": 77,
@@ -1809,7 +1961,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_2",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Hoa Lư",
+          "giver_scene_id": 8481
         },
         {
           "quest_id": 78,
@@ -1832,7 +1986,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_3",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Hoa Lư",
+          "giver_scene_id": 8482
         },
         {
           "quest_id": 79,
@@ -1853,7 +2009,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_4",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Hoa Lư",
+          "giver_scene_id": 8483
         },
         {
           "quest_id": 80,
@@ -1875,7 +2033,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_5",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #1 Thăng Long",
+          "giver_scene_id": 735
         },
         {
           "quest_id": 81,
@@ -1897,7 +2057,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_6",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #2 Thăng Long",
+          "giver_scene_id": 736
         },
         {
           "quest_id": 82,
@@ -1919,7 +2081,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #3 Thăng Long",
+          "giver_scene_id": 737
         },
         {
           "quest_id": 83,
@@ -1942,7 +2106,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_8",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Thăng Long",
+          "giver_scene_id": 738
         },
         {
           "quest_id": 84,
@@ -1964,7 +2130,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_9",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #5 Thăng Long",
+          "giver_scene_id": 739
         },
         {
           "quest_id": 85,
@@ -1985,7 +2153,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_10",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Đông Đô",
+          "giver_scene_id": 6919
         },
         {
           "quest_id": 86,
@@ -2008,7 +2178,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_11",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Đông Đô",
+          "giver_scene_id": 6920
         },
         {
           "quest_id": 87,
@@ -2031,7 +2203,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_12",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Đông Đô",
+          "giver_scene_id": 6921
         },
         {
           "quest_id": 88,
@@ -2054,7 +2228,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_13",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Đông Đô",
+          "giver_scene_id": 6922
         },
         {
           "quest_id": 89,
@@ -2077,7 +2253,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_14",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Đông Đô",
+          "giver_scene_id": 6923
         },
         {
           "quest_id": 90,
@@ -2100,7 +2278,9 @@
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_15",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Phong Châu",
+          "giver_scene_id": 6076
         },
         {
           "quest_id": 91,
@@ -2121,7 +2301,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_16",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Phong Châu",
+          "giver_scene_id": 6077
         },
         {
           "quest_id": 92,
@@ -2144,7 +2326,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_17",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Phong Châu",
+          "giver_scene_id": 6078
         },
         {
           "quest_id": 93,
@@ -2165,7 +2349,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_18",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Phong Châu",
+          "giver_scene_id": 6079
         },
         {
           "quest_id": 94,
@@ -2186,7 +2372,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_0",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Hoa Lư",
+          "giver_scene_id": 8479
         },
         {
           "quest_id": 95,
@@ -2209,7 +2397,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_1",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Hoa Lư",
+          "giver_scene_id": 8480
         },
         {
           "quest_id": 96,
@@ -2232,7 +2422,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_2",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Hoa Lư",
+          "giver_scene_id": 8481
         },
         {
           "quest_id": 97,
@@ -2254,7 +2446,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_3",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #4 Hoa Lư",
+          "giver_scene_id": 8482
         },
         {
           "quest_id": 98,
@@ -2277,7 +2471,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_4",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Hoa Lư",
+          "giver_scene_id": 8483
         },
         {
           "quest_id": 99,
@@ -2298,7 +2494,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_5",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Thăng Long",
+          "giver_scene_id": 735
         },
         {
           "quest_id": 100,
@@ -2321,7 +2519,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_6",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Thăng Long",
+          "giver_scene_id": 736
         },
         {
           "quest_id": 101,
@@ -2344,7 +2544,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_7",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Thăng Long",
+          "giver_scene_id": 737
         },
         {
           "quest_id": 102,
@@ -2365,7 +2567,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_8",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Thăng Long",
+          "giver_scene_id": 738
         },
         {
           "quest_id": 103,
@@ -2386,7 +2590,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_9",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Thăng Long",
+          "giver_scene_id": 739
         },
         {
           "quest_id": 104,
@@ -2409,7 +2615,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_10",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Đông Đô",
+          "giver_scene_id": 6919
         },
         {
           "quest_id": 105,
@@ -2432,7 +2640,9 @@
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_11",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Đông Đô",
+          "giver_scene_id": 6920
         },
         {
           "quest_id": 106,
@@ -2453,7 +2663,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_12",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Đông Đô",
+          "giver_scene_id": 6921
         },
         {
           "quest_id": 107,
@@ -2476,7 +2688,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_13",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Đông Đô",
+          "giver_scene_id": 6922
         },
         {
           "quest_id": 108,
@@ -2499,7 +2713,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_14",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Đông Đô",
+          "giver_scene_id": 6923
         },
         {
           "quest_id": 109,
@@ -2522,7 +2738,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_15",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Phong Châu",
+          "giver_scene_id": 6076
         },
         {
           "quest_id": 110,
@@ -2545,7 +2763,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_16",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Phong Châu",
+          "giver_scene_id": 6077
         },
         {
           "quest_id": 111,
@@ -2568,7 +2788,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_17",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Phong Châu",
+          "giver_scene_id": 6078
         },
         {
           "quest_id": 112,
@@ -2590,7 +2812,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_18",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #4 Phong Châu",
+          "giver_scene_id": 6079
         },
         {
           "quest_id": 113,
@@ -2611,7 +2835,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_0",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Hoa Lư",
+          "giver_scene_id": 8479
         },
         {
           "quest_id": 114,
@@ -2634,7 +2860,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_1",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Hoa Lư",
+          "giver_scene_id": 8480
         },
         {
           "quest_id": 115,
@@ -2657,7 +2885,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_2",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Hoa Lư",
+          "giver_scene_id": 8481
         },
         {
           "quest_id": 116,
@@ -2680,7 +2910,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_3",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Hoa Lư",
+          "giver_scene_id": 8482
         },
         {
           "quest_id": 117,
@@ -2702,7 +2934,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_4",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #5 Hoa Lư",
+          "giver_scene_id": 8483
         },
         {
           "quest_id": 118,
@@ -2725,7 +2959,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_5",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Thăng Long",
+          "giver_scene_id": 735
         },
         {
           "quest_id": 119,
@@ -2748,7 +2984,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_6",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Thăng Long",
+          "giver_scene_id": 736
         },
         {
           "quest_id": 120,
@@ -2771,7 +3009,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_7",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Thăng Long",
+          "giver_scene_id": 737
         },
         {
           "quest_id": 121,
@@ -2793,7 +3033,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_8",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #4 Thăng Long",
+          "giver_scene_id": 738
         },
         {
           "quest_id": 122,
@@ -2816,7 +3058,9 @@
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_9",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Thăng Long",
+          "giver_scene_id": 739
         },
         {
           "quest_id": 123,
@@ -2837,7 +3081,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_10",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Đông Đô",
+          "giver_scene_id": 6919
         },
         {
           "quest_id": 124,
@@ -2858,7 +3104,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_11",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Đông Đô",
+          "giver_scene_id": 6920
         },
         {
           "quest_id": 125,
@@ -2879,7 +3127,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_12",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Đông Đô",
+          "giver_scene_id": 6921
         },
         {
           "quest_id": 126,
@@ -2902,7 +3152,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_13",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Đông Đô",
+          "giver_scene_id": 6922
         },
         {
           "quest_id": 127,
@@ -2925,7 +3177,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_14",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Đông Đô",
+          "giver_scene_id": 6923
         },
         {
           "quest_id": 128,
@@ -2948,7 +3202,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_15",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Phong Châu",
+          "giver_scene_id": 6076
         },
         {
           "quest_id": 129,
@@ -2971,7 +3227,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_16",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Phong Châu",
+          "giver_scene_id": 6077
         },
         {
           "quest_id": 130,
@@ -2994,7 +3252,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_17",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Phong Châu",
+          "giver_scene_id": 6078
         },
         {
           "quest_id": 131,
@@ -3017,7 +3277,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_18",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Phong Châu",
+          "giver_scene_id": 6079
         },
         {
           "quest_id": 132,
@@ -3038,7 +3300,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_0",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Hoa Lư",
+          "giver_scene_id": 8479
         },
         {
           "quest_id": 133,
@@ -3059,7 +3323,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_1",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Hoa Lư",
+          "giver_scene_id": 8480
         },
         {
           "quest_id": 134,
@@ -3082,7 +3348,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_2",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Hoa Lư",
+          "giver_scene_id": 8481
         },
         {
           "quest_id": 135,
@@ -3103,7 +3371,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_3",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Hoa Lư",
+          "giver_scene_id": 8482
         },
         {
           "quest_id": 136,
@@ -3126,7 +3396,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_4",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Hoa Lư",
+          "giver_scene_id": 8483
         },
         {
           "quest_id": 137,
@@ -3149,7 +3421,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_5",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Thăng Long",
+          "giver_scene_id": 735
         },
         {
           "quest_id": 138,
@@ -3170,7 +3444,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_6",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Thăng Long",
+          "giver_scene_id": 736
         },
         {
           "quest_id": 139,
@@ -3191,7 +3467,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_7",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Thăng Long",
+          "giver_scene_id": 737
         },
         {
           "quest_id": 140,
@@ -3214,7 +3492,9 @@
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_8",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Thăng Long",
+          "giver_scene_id": 738
         },
         {
           "quest_id": 141,
@@ -3237,7 +3517,9 @@
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_9",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Thăng Long",
+          "giver_scene_id": 739
         },
         {
           "quest_id": 142,
@@ -3259,7 +3541,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_10",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #1 Đông Đô",
+          "giver_scene_id": 6919
         },
         {
           "quest_id": 143,
@@ -3282,7 +3566,9 @@
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_11",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Đông Đô",
+          "giver_scene_id": 6920
         },
         {
           "quest_id": 144,
@@ -3303,7 +3589,9 @@
           "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_12",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #3 Đông Đô",
+          "giver_scene_id": 6921
         },
         {
           "quest_id": 145,
@@ -3326,7 +3614,9 @@
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_13",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Đông Đô",
+          "giver_scene_id": 6922
         },
         {
           "quest_id": 146,
@@ -3347,7 +3637,9 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_14",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #5 Đông Đô",
+          "giver_scene_id": 6923
         },
         {
           "quest_id": 147,
@@ -3370,7 +3662,9 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_15",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #1 Phong Châu",
+          "giver_scene_id": 6076
         },
         {
           "quest_id": 148,
@@ -3393,7 +3687,9 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_16",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #2 Phong Châu",
+          "giver_scene_id": 6077
         },
         {
           "quest_id": 149,
@@ -3415,7 +3711,9 @@
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_17",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
-          "unlocks_codex": true
+          "unlocks_codex": true,
+          "giver_npc_name": "Dân làng #3 Phong Châu",
+          "giver_scene_id": 6078
         },
         {
           "quest_id": 150,
@@ -3438,7 +3736,9 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_18",
           "is_protagonist_arc": true,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "giver_npc_name": "Dân làng #4 Phong Châu",
+          "giver_scene_id": 6079
         }
       ],
       "preserved": 150,
