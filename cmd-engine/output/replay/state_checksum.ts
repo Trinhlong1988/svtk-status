@@ -94,6 +94,10 @@ export const CANON_SENTINEL_CIRCULAR = '__SVTK_CIRCULAR__';
 export const CANON_TAG_DATE = '__SVTK_Date__';
 export const CANON_TAG_MAP = '__SVTK_Map__';
 export const CANON_TAG_SET = '__SVTK_Set__';
+/** Sentinel for arrays carrying non-index own properties (otherwise dropped by JSON.stringify). */
+export const CANON_TAG_ARRAY_WITH_META = '__SVTK_ArrayMeta__';
+/** Sentinel emitted when a property getter throws during walk (prevents R68 DoS). */
+export const CANON_SENTINEL_GETTER_THREW = '__SVTK_GETTER_THREW__';
 
 // Use Map (not object literal) — assigning `__proto__` as a key in object
 // literal syntax sets the prototype of the literal itself instead of creating
@@ -162,7 +166,22 @@ function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
   if (Array.isArray(val)) {
     if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
     seen.add(val);
-    return val.map((item) => prepareForJson(item, seen));
+    const items = val.map((item) => prepareForJson(item, seen));
+    // Detect arrays with non-index own properties (e.g. `arr.metadata = ...`).
+    // Plain JSON.stringify would silently drop those; we tag them so an
+    // attacker can't hide payload by stashing it on an array.
+    const extra_keys = Object.keys(val).filter((k) => !/^\d+$/.test(k));
+    if (extra_keys.length === 0) return items;
+    const meta_block: Record<string, unknown> = Object.create(null);
+    for (const k of extra_keys) {
+      const obj = val as unknown as Record<string, unknown>;
+      const safe_key = RESERVED_KEY_MAP.get(k) ?? k;
+      Object.defineProperty(meta_block, safe_key, {
+        value: prepareForJson(obj[k], seen),
+        enumerable: true, configurable: true, writable: true,
+      });
+    }
+    return { [CANON_TAG_ARRAY_WITH_META]: { items, meta: meta_block } };
   }
   if (val !== null && typeof val === 'object') {
     if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
@@ -173,9 +192,20 @@ function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
     const obj = val as Record<string, unknown>;
     const out: Record<string, unknown> = Object.create(null);
     for (const k of Object.keys(obj)) {
+      // Skip toJSON — JSON.stringify would otherwise call it on the prepared
+      // object and let an attacker replace the entire serialised state.
+      if (k === 'toJSON') continue;
       const safe_key = RESERVED_KEY_MAP.get(k) ?? k;
+      // Wrap getter access — if a property getter throws, emit a sentinel so
+      // R68 doesn't crash on adversarial input.
+      let prepared_value: unknown;
+      try {
+        prepared_value = prepareForJson(obj[k], seen);
+      } catch {
+        prepared_value = CANON_SENTINEL_GETTER_THREW;
+      }
       Object.defineProperty(out, safe_key, {
-        value: prepareForJson(obj[k], seen),
+        value: prepared_value,
         enumerable: true,
         configurable: true,
         writable: true,
@@ -331,20 +361,33 @@ export function compareCheckpoints(
  * `forensicDump(stream, report.first_divergent_turn)` into the alert payload
  * so cmd-qa-core has enough trace to triage.
  */
+/**
+ * Build a forensic dump centred on a turn — returns a DEFENSIVE deep clone +
+ * deep-freeze, so cmd-qa-core / cmd-lead consumers can't accidentally rewrite
+ * stream state through the dump.frame reference.
+ */
 export function forensicDump(
   stream: ReplayEventStream,
   divergence_turn: number,
   expected_checksum?: Sha256Hex,
 ): ForensicDump {
-  const frame = stream.frames.find((f) => f.turn === divergence_turn);
-  const events_in_turn = stream.events.filter((e) => e.turn === divergence_turn);
-  const events_prev_turn = stream.events.filter((e) => e.turn === divergence_turn - 1);
-  return {
+  const live_frame = stream.frames.find((f) => f.turn === divergence_turn);
+  const live_in_turn = stream.events.filter((e) => e.turn === divergence_turn);
+  const live_prev_turn = stream.events.filter((e) => e.turn === divergence_turn - 1);
+  return Object.freeze({
     divergence_turn,
-    frame,
-    events_in_turn,
-    events_prev_turn,
-    checksum_actual: frame ? checksumFrame(frame) : undefined,
+    frame: live_frame ? (deepFreeze(structuredClone(live_frame)) as ReplayFrame) : undefined,
+    events_in_turn: Object.freeze(live_in_turn.map((e) => deepFreeze(structuredClone(e)) as StreamEvent)),
+    events_prev_turn: Object.freeze(live_prev_turn.map((e) => deepFreeze(structuredClone(e)) as StreamEvent)),
+    checksum_actual: live_frame ? checksumFrame(live_frame) : undefined,
     checksum_expected: expected_checksum,
-  };
+  });
+}
+
+function deepFreeze<T>(value: T): T {
+  if (value === null || typeof value !== 'object') return value;
+  for (const k of Object.keys(value as object)) {
+    deepFreeze((value as Record<string, unknown>)[k]);
+  }
+  return Object.freeze(value);
 }

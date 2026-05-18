@@ -1,0 +1,119 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "audit_type": "Round 3 hidden-bug hunt (toJSON / array-meta / forensicDump / getter)",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts": "2026-05-18T15:50:00Z",
+  "probes_total": 16,
+  "bugs_found_and_fixed": 4,
+  "tests_added": 5,
+  "cumulative_with_rounds_1_2": "18 bugs fixed total",
+  "rounds": [
+    {
+      "turn": 1,
+      "angle": "toJSON poisoning",
+      "bug_id": "BUG-15",
+      "severity": "HIGH (security)",
+      "evidence": "Object with own toJSON method intercepts JSON.stringify and substitutes serialised output. `evil={__nasty:'payload', toJSON(){return{x:1}}}` hashed identically to clean `{x:1}` — adversary hides nasty payload from forensic checksum.",
+      "fix": "prepareForJson skips 'toJSON' key when copying own enumerable keys. Prepared null-proto output has no toJSON, so JSON.stringify cannot invoke it.",
+      "regression_tests": 1
+    },
+    {
+      "turn": 2,
+      "angle": "Array extra-property silently dropped",
+      "bug_id": "BUG-17",
+      "severity": "MEDIUM (forensic)",
+      "evidence": "Arrays in JS can carry non-index own properties (e.g. `arr.metadata='hidden'`). JSON.stringify drops them. Adversary attaches extra payload to an array to bypass checksum.",
+      "fix": "prepareForJson detects extra non-index keys on arrays via Object.keys(val).filter(/^\\d+$/). Wraps result in {[CANON_TAG_ARRAY_WITH_META]: {items, meta}}.",
+      "regression_tests": 1
+    },
+    {
+      "turn": 3,
+      "angle": "forensicDump returns live mutable frame reference",
+      "bug_id": "BUG-18",
+      "severity": "HIGH (encapsulation)",
+      "evidence": "dump.frame === stream.frames[i] reference. Caller mutates dump.frame.turn=999 → stream.frames[i].turn=999 — forensic dump rewrote replay state.",
+      "fix": "forensicDump now structuredClones frame + events_in_turn + events_prev_turn AND deepFreezes each. Outer dump is Object.freeze()'d.",
+      "regression_tests": 2
+    },
+    {
+      "turn": 4,
+      "angle": "Getter throws during canonicalize → R68 service DoS",
+      "bug_id": "BUG-19",
+      "severity": "MEDIUM (DoS)",
+      "evidence": "canonicalize({get x(){throw}}) propagates the exception. Adversarial payload (or buggy domain class with throwing getter) crashes R68 forensic pipeline.",
+      "fix": "prepareForJson wraps property access in try/catch; on throw, emits CANON_SENTINEL_GETTER_THREW sentinel.",
+      "regression_tests": 1
+    },
+    {
+      "turn": 5,
+      "angle": "TypedArray serialisation (Uint8Array)",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "Uint8Array([1,2,3,4]) serialised as {\"0\":1,\"1\":2,\"2\":3,\"3\":4} via own indexed props. Distinct from empty TypedArray. Acceptable encoding for current use.",
+      "result": "VERIFIED acceptable (could be tagged in future for stronger forensic — not load-bearing now)"
+    },
+    {
+      "turn": 6,
+      "angle": "Sparse array (hole) vs explicit undefined",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "[1,,3] → '[1,null,3]'; [1,undefined,3] → '[1,\"__SVTK_undefined__\",3]'. Distinct canonicals — actually correct: hole and explicit undefined ARE different JS states.",
+      "result": "VERIFIED no bug (semantically distinct)"
+    },
+    {
+      "turn": 7,
+      "angle": "NUL byte / newline injection in encounter_id",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "encounter_id='evil\\x00injected' passes through verbatim. frameId with embedded newline produces distinct hash. Injection chars don't break serialisation.",
+      "result": "VERIFIED no bug"
+    },
+    {
+      "turn": 8,
+      "angle": "Deterministic clock BigInt overflow",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "step(Number.MAX_SAFE_INTEGER, 'end') produces 20-digit ns value. Well within BigInt range (BigInt has no upper bound).",
+      "result": "VERIFIED no bug"
+    },
+    {
+      "turn": 9,
+      "angle": "Empty array vs empty object canonical",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "[] → '[]', {} → '{}'. Distinct canonicals — correct.",
+      "result": "VERIFIED no bug"
+    },
+    {
+      "turn": 10,
+      "angle": "Promise / Function / class-method in payload",
+      "bug_id": null,
+      "severity": "LOW",
+      "evidence": "Promise serialised as {} (no enumerable own keys). Function → null. Class method (non-enumerable) dropped. Acceptable since these types shouldn't be in serialised state anyway.",
+      "result": "VERIFIED acceptable (defensive: not state-relevant payloads)"
+    }
+  ],
+  "final_verification": {
+    "tsc_typecheck_exit": 0,
+    "vitest_total": 44,
+    "vitest_pass": 44,
+    "vitest_fail": 0,
+    "r67_test_count": 14,
+    "r68_test_count": 30
+  },
+  "cumulative_summary": {
+    "rounds_completed": 3,
+    "total_probes": 87,
+    "total_bugs_found": 18,
+    "total_bugs_fixed": 18,
+    "fix_clean_rate_pct": 100.0,
+    "regression_tests_total": 28,
+    "tests_total": 44
+  },
+  "files_modified_round3": [
+    "cmd-engine/output/replay/state_checksum.ts (toJSON skip, array meta tag, getter try/catch, forensicDump deep-clone/freeze)",
+    "cmd-engine/output/replay/state_checksum.test.ts (+5 tests)"
+  ]
+}

@@ -34,6 +34,8 @@ import {
   CANON_TAG_DATE,
   CANON_TAG_MAP,
   CANON_TAG_SET,
+  CANON_TAG_ARRAY_WITH_META,
+  CANON_SENTINEL_GETTER_THREW,
 } from './state_checksum.js';
 
 function makeFrame(turn: number, sessionId: string, encounterId: string, damage = 100): ReplayFrame {
@@ -128,6 +130,27 @@ describe('R68 state_checksum — divergence + forensics', () => {
     expect(dump.events_prev_turn.length).toBe(2);
     expect(dump.checksum_actual).toBeDefined();
     expect(dump.checksum_expected).toBe('expected_hash_value');
+  });
+
+  it('BUG-18: forensicDump.frame is deep-frozen — cannot leak mutation to stream', () => {
+    const s = buildStream('enc_FROST', 5);
+    const dump = forensicDump(s, 3);
+    expect(dump.frame).toBeDefined();
+    expect(Object.isFrozen(dump.frame)).toBe(true);
+    // Mutation attempt throws (strict mode)
+    expect(() => { (dump.frame as { turn: number }).turn = 999; }).toThrow();
+    // Stream untouched
+    expect(s.frames.find((f) => f.turn === 3)?.turn).toBe(3);
+  });
+
+  it('BUG-18: forensicDump.events_in_turn entries are frozen', () => {
+    const s = buildStream('enc_FROST_E', 5);
+    const dump = forensicDump(s, 2);
+    expect(dump.events_in_turn.length).toBeGreaterThan(0);
+    const evt = dump.events_in_turn[0];
+    expect(evt).toBeDefined();
+    expect(Object.isFrozen(evt)).toBe(true);
+    expect(() => { (evt as { turn: number }).turn = 999; }).toThrow();
   });
 
   it('7. Length mismatch is reported as divergence', () => {
@@ -276,6 +299,37 @@ describe('R68 state_checksum — bigint/Symbol/undefined sentinels (regression B
     expect(d1).not.toBe(d2);
     expect(d1).not.toBe(empty);
     expect(d1).toContain(CANON_TAG_DATE);
+  });
+
+  it('BUG-15: toJSON poisoning — payload preserved, toJSON ignored', () => {
+    const evil = {
+      __nasty: 'evil_payload',
+      toJSON() { return { x: 1 }; },
+    };
+    const clean = { x: 1 };
+    const evil_canon = canonicalize(evil);
+    const clean_canon = canonicalize(clean);
+    expect(evil_canon).not.toBe(clean_canon);
+    expect(evil_canon).toContain('evil_payload');
+  });
+
+  it('BUG-17: array extra-property is preserved (was silently dropped)', () => {
+    const arr = [1, 2, 3] as unknown as { metadata: string } & number[];
+    arr.metadata = 'hidden';
+    const plain = canonicalize([1, 2, 3]);
+    const tagged = canonicalize(arr);
+    expect(tagged).not.toBe(plain);
+    expect(tagged).toContain(CANON_TAG_ARRAY_WITH_META);
+    expect(tagged).toContain('hidden');
+  });
+
+  it('BUG-19: getter that throws does NOT propagate — emits sentinel', () => {
+    const obj = {
+      get x() { throw new Error('GET_DETONATION'); },
+      y: 1,
+    };
+    expect(() => canonicalize(obj)).not.toThrow();
+    expect(canonicalize(obj)).toContain(CANON_SENTINEL_GETTER_THREW);
   });
 
   it('BUG-8: unicode composed and decomposed forms produce SAME hash (NFC normalise)', () => {
