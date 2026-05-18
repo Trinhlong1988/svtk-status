@@ -162,4 +162,63 @@ describe('R67 TickScheduler — ledger encapsulation (regression)', () => {
     expect(snapshot.length).toBe(1);             // snapshot frozen at 1 event
     expect(sched.sequence().length).toBe(3);     // fresh call sees all 3
   });
+
+  it('BUG-13: inner event object also frozen (cannot mutate via snapshot)', () => {
+    const rt = freshRuntime('reg_inner_freeze');
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    sched.begin(rt, 1);
+    const seq = sched.sequence();
+    expect(Object.isFrozen(seq[0])).toBe(true);
+    // Strict-mode assignment to a frozen property throws.
+    expect(() => {
+      (seq[0] as { turn: number }).turn = 999;
+    }).toThrow();
+    expect(sched.sequence()[0]?.turn).toBe(1);
+  });
+});
+
+describe('R67 TickScheduler — bounded ledger (regression BUG-14)', () => {
+  it('BUG-14: max_ledger_size caps in-memory event count (ring buffer)', () => {
+    const rt = freshRuntime('reg_cap');
+    const sched = createR67TickScheduler({
+      clock: createDeterministicMonotonicClock(0n),
+      max_ledger_size: 5,
+    });
+    for (let t = 1; t <= 20; t++) {
+      sched.begin(rt, t);
+      sched.guard(rt, t);
+      sched.end(rt, t);
+    }
+    const seq = sched.sequence();
+    expect(seq.length).toBe(5);
+    // 60 stamps total — last 5 are tail.
+    expect(seq[0]!.turn).toBeGreaterThanOrEqual(18);
+    // server_tick keeps growing — it is NOT bounded.
+    expect(sched.next_server_tick()).toBe(60);
+  });
+
+  it('BUG-14: default unbounded (existing behavior preserved)', () => {
+    const rt = freshRuntime('reg_uncap');
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    for (let t = 1; t <= 30; t++) {
+      sched.begin(rt, t);
+      sched.guard(rt, t);
+      sched.end(rt, t);
+    }
+    expect(sched.sequence().length).toBe(90);
+  });
+
+  it('BUG-14: max_ledger_size = 0 treated as unbounded (defensive)', () => {
+    const rt = freshRuntime('reg_zero_cap');
+    const sched = createR67TickScheduler({
+      clock: createDeterministicMonotonicClock(0n),
+      max_ledger_size: 0,
+    });
+    for (let t = 1; t <= 20; t++) {
+      sched.begin(rt, t);
+      sched.guard(rt, t);
+      sched.end(rt, t);
+    }
+    expect(sched.sequence().length).toBe(60);
+  });
 });

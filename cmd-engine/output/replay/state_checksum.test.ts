@@ -31,6 +31,9 @@ import {
   CANON_SENTINEL_UNDEFINED,
   CANON_KEY_PROTO,
   CANON_SENTINEL_CIRCULAR,
+  CANON_TAG_DATE,
+  CANON_TAG_MAP,
+  CANON_TAG_SET,
 } from './state_checksum.js';
 
 function makeFrame(turn: number, sessionId: string, encounterId: string, damage = 100): ReplayFrame {
@@ -237,6 +240,42 @@ describe('R68 state_checksum — bigint/Symbol/undefined sentinels (regression B
     arr.push(arr);
     expect(() => canonicalize(arr)).not.toThrow();
     expect(canonicalize(arr)).toContain(CANON_SENTINEL_CIRCULAR);
+  });
+
+  it('BUG-10: Map content preserved (was {} silently)', () => {
+    const a = canonicalize({ data: new Map([['k1', 1], ['k2', 2]]) });
+    const empty = canonicalize({ data: {} });
+    expect(a).not.toBe(empty);
+    expect(a).toContain(CANON_TAG_MAP);
+    expect(a).toContain('k1');
+  });
+
+  it('BUG-10: Map distinct entries → distinct hash', () => {
+    expect(canonicalize(new Map([['k', 1]]))).not.toBe(canonicalize(new Map([['k', 2]])));
+  });
+
+  it('BUG-10: Map insertion-order invariant (canonical key sort)', () => {
+    expect(canonicalize(new Map([['a', 1], ['b', 2]]))).toBe(canonicalize(new Map([['b', 2], ['a', 1]])));
+  });
+
+  it('BUG-11: Set content preserved (was {} silently)', () => {
+    const a = canonicalize({ data: new Set([1, 2, 3]) });
+    const empty = canonicalize({ data: {} });
+    expect(a).not.toBe(empty);
+    expect(a).toContain(CANON_TAG_SET);
+  });
+
+  it('BUG-11: Set insertion-order invariant', () => {
+    expect(canonicalize(new Set([1, 2, 3]))).toBe(canonicalize(new Set([3, 1, 2])));
+  });
+
+  it('BUG-12: Date timestamps preserved (was {} silently)', () => {
+    const d1 = canonicalize({ t: new Date(1_000_000) });
+    const d2 = canonicalize({ t: new Date(1_000_001) });
+    const empty = canonicalize({ t: {} });
+    expect(d1).not.toBe(d2);
+    expect(d1).not.toBe(empty);
+    expect(d1).toContain(CANON_TAG_DATE);
   });
 
   it('BUG-8: unicode composed and decomposed forms produce SAME hash (NFC normalise)', () => {

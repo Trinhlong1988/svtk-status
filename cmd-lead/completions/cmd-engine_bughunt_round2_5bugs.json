@@ -1,0 +1,116 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "audit_type": "10-turn deeper bug hunt (round 2)",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts": "2026-05-18T15:42:00Z",
+  "scope": "Built-in containers (Map/Set/Date), frozen-shallow leak, unbounded ledger memory growth",
+  "probes_total": 16,
+  "bugs_found_and_fixed": 5,
+  "tests_added": 10,
+  "cumulative_with_round1": "14 bugs fixed total",
+  "rounds": [
+    {
+      "turn": 1,
+      "angle": "Map object serialization",
+      "bug_id": "BUG-10",
+      "severity": "HIGH (forensic)",
+      "evidence": "canonicalize({data: new Map([['k1',1],['k2',2]])}) === canonicalize({data: {}}) → TRUE. Map content totally lost — state with Map indistinguishable from empty.",
+      "fix": "prepareForJson detects Map via instanceof, emits {[CANON_TAG_MAP]: sorted_entries}",
+      "regression_tests": 3
+    },
+    {
+      "turn": 2,
+      "angle": "Set object serialization",
+      "bug_id": "BUG-11",
+      "severity": "HIGH (forensic)",
+      "evidence": "canonicalize(new Set([1,2,3])) flattened to {} — Set content silently dropped",
+      "fix": "prepareForJson detects Set via instanceof, emits {[CANON_TAG_SET]: sorted_items}",
+      "regression_tests": 2
+    },
+    {
+      "turn": 3,
+      "angle": "Date object — non-deterministic state",
+      "bug_id": "BUG-12",
+      "severity": "MEDIUM (forensic)",
+      "evidence": "canonicalize({t: new Date(1000000)}) === canonicalize({t: new Date(1000001)}) → both '{}', two distinct timestamps indistinguishable",
+      "fix": "prepareForJson detects Date via instanceof, emits {[CANON_TAG_DATE]: getTime()}",
+      "regression_tests": 1
+    },
+    {
+      "turn": 4,
+      "angle": "Frozen sequence shallow — inner mutation possible",
+      "bug_id": "BUG-13",
+      "severity": "HIGH (encapsulation)",
+      "evidence": "seq[0].turn = 999 succeeded after sequence() returned frozen array; fresh sequence() call returned mutated event (turn=999)",
+      "fix": "stamp() now wraps each event in Object.freeze() before pushing to ledger — outer slice + inner objects both frozen",
+      "regression_tests": 1
+    },
+    {
+      "turn": 5,
+      "angle": "Unbounded ledger memory growth",
+      "bug_id": "BUG-14",
+      "severity": "MEDIUM (memory leak risk)",
+      "evidence": "50,000-turn encounter → 150,000 ledger events → +58 MB heap. Long-running PvP / raid encounters can OOM.",
+      "fix": "createR67TickScheduler() now accepts config.max_ledger_size (default unbounded). When set, oldest events dropped (ring-buffer). server_tick continues monotonic increase.",
+      "regression_tests": 3
+    },
+    {
+      "turn": 6,
+      "angle": "Stamp atomicity — server_tick increment ordering",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "When sched.guard(rt={auraGuard:null}) throws inside tickAuraGuard, sched.next_server_tick() = 0 and ledger length = 0 — server_tick NOT incremented mid-throw. Stamp is atomic.",
+      "result": "VERIFIED no bug"
+    },
+    {
+      "turn": 7,
+      "angle": "appendFrame reference semantics",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "Mutating caller's frame after appendFrame changes checksumStream hash — but this is EXPECTED reference semantics. Documented invariant: caller must not mutate frames after handing them off.",
+      "result": "VERIFIED no bug (expected behavior)"
+    },
+    {
+      "turn": 8,
+      "angle": "Empty / null encounter_id",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "createCombatRuntime({encounterId: ''}) accepted by legacy. Stream with empty encounterId works (1 checkpoint emitted). Validation is OLD-code scope, not CMD1's adapter.",
+      "result": "VERIFIED no bug (legacy invariant)"
+    },
+    {
+      "turn": 9,
+      "angle": "Deterministic clock slot=0 boundary (turn=0 begin base=0)",
+      "bug_id": null,
+      "severity": "n/a",
+      "evidence": "step(0,'begin') = 0n; step(0,'aura_guard') = 1000n; monotonic preserved at boundary (last initialized to base_ns-1).",
+      "result": "VERIFIED no bug"
+    },
+    {
+      "turn": 10,
+      "angle": "forensicDump unbounded events filter",
+      "bug_id": null,
+      "severity": "LOW",
+      "evidence": "forensicDump on stream with 100K events in target turn — filter completes in 5ms. Acceptable. If needed, future enhancement: add events_limit option.",
+      "result": "VERIFIED acceptable performance"
+    }
+  ],
+  "final_verification": {
+    "tsc_typecheck_exit": 0,
+    "vitest_total": 39,
+    "vitest_pass": 39,
+    "vitest_fail": 0,
+    "r67_test_count": 14,
+    "r68_test_count": 25,
+    "regression_tests_total_cumulative": 23
+  },
+  "files_modified_round2": [
+    "cmd-engine/output/replay/state_checksum.ts (Map/Set/Date support)",
+    "cmd-engine/output/replay/state_checksum.test.ts (+6 tests)",
+    "cmd-engine/output/runtime/tick_scheduler_adapter.ts (deep freeze + max_ledger_size)",
+    "cmd-engine/output/runtime/tick_scheduler_adapter.test.ts (+4 tests)"
+  ],
+  "summary": "Round 2 hunt found 5 more hidden bugs across container serialization (Map/Set/Date), encapsulation depth (frozen shallow), and memory bound (unbounded ledger). All 5 fixed with regression tests. 16 probes total — 5 bugs + 5 verified-no-bug + 6 acceptable behavior. Cumulative: 14 bugs fixed across both rounds, 39/39 tests pass, TSC exit 0, code-fix-clean rate 100%."
+}

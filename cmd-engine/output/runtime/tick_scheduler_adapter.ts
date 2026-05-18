@@ -155,6 +155,15 @@ export interface R67TickSchedulerConfig {
    * Pass `createWallMonotonicClock()` for live server.
    */
   clock?: MonotonicClock | DeterministicMonotonicClock;
+  /**
+   * Optional cap on the in-memory ledger length. When reached, oldest events
+   * are dropped (ring-buffer semantics). `server_tick` continues to grow
+   * monotonically — only `sequence()` is bounded.
+   *
+   * Use this on long-running encounters where forensic replay only needs the
+   * last N events. Default: unbounded (existing behavior).
+   */
+  max_ledger_size?: number;
 }
 
 /**
@@ -173,6 +182,10 @@ export function createR67TickScheduler(
   config: R67TickSchedulerConfig = {},
 ): R67TickScheduler {
   const clock = config.clock ?? createDeterministicMonotonicClock(0n);
+  const max_ledger_size =
+    config.max_ledger_size !== undefined && config.max_ledger_size > 0
+      ? Math.floor(config.max_ledger_size)
+      : undefined;
   const ledger: R67TickEvent[] = [];
   let server_tick = 0;
 
@@ -184,15 +197,21 @@ export function createR67TickScheduler(
     const monotonic_ns = isDeterministic(clock)
       ? clock.step(turn, phase)
       : clock.now_ns();
-    const ev: R67TickEvent = {
+    // Freeze each event so callers (or hostile inner-object mutation through a
+    // sequence() snapshot) cannot rewrite ledger history.
+    const ev: R67TickEvent = Object.freeze({
       monotonic_ns,
       server_tick,
       turn,
       phase,
       encounter_id,
-    };
+    });
     server_tick += 1;
     ledger.push(ev);
+    if (max_ledger_size !== undefined && ledger.length > max_ledger_size) {
+      // Drop oldest — ring-buffer.
+      ledger.splice(0, ledger.length - max_ledger_size);
+    }
     return ev;
   }
 

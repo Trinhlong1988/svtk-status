@@ -90,6 +90,10 @@ export const CANON_KEY_PROTO = '__SVTK_KEY_proto__';
 export const CANON_KEY_CONSTRUCTOR = '__SVTK_KEY_constructor__';
 /** Sentinel emitted when a circular reference is detected during walk. */
 export const CANON_SENTINEL_CIRCULAR = '__SVTK_CIRCULAR__';
+/** Sentinels for built-in container types — JSON.stringify would otherwise flatten them to {}. */
+export const CANON_TAG_DATE = '__SVTK_Date__';
+export const CANON_TAG_MAP = '__SVTK_Map__';
+export const CANON_TAG_SET = '__SVTK_Set__';
 
 // Use Map (not object literal) — assigning `__proto__` as a key in object
 // literal syntax sets the prototype of the literal itself instead of creating
@@ -121,6 +125,39 @@ function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
   if (typeof val === 'string') {
     // NFC normalisation so equivalent unicode forms hash identically.
     return val.normalize('NFC');
+  }
+  if (val instanceof Date) {
+    // JSON.stringify would call .toJSON() → ISO string, but only when reached
+    // via a plain object's own value; Date wrapped in our null-proto object
+    // and traversed by prepareForJson would otherwise emit {} (no own enum
+    // keys). Tag explicitly so two distinct timestamps hash distinctly.
+    return { [CANON_TAG_DATE]: val.getTime() };
+  }
+  if (val instanceof Map) {
+    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
+    seen.add(val);
+    // Sort entries by canonical-key string for determinism.
+    const entries = Array.from(val.entries()).map(([k, v]) => [
+      prepareForJson(k, seen),
+      prepareForJson(v, seen),
+    ]);
+    entries.sort((a, b) => {
+      const ka = JSON.stringify(a[0]);
+      const kb = JSON.stringify(b[0]);
+      return ka < kb ? -1 : ka > kb ? 1 : 0;
+    });
+    return { [CANON_TAG_MAP]: entries };
+  }
+  if (val instanceof Set) {
+    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
+    seen.add(val);
+    const items = Array.from(val).map((item) => prepareForJson(item, seen));
+    items.sort((a, b) => {
+      const sa = JSON.stringify(a);
+      const sb = JSON.stringify(b);
+      return sa < sb ? -1 : sa > sb ? 1 : 0;
+    });
+    return { [CANON_TAG_SET]: items };
   }
   if (Array.isArray(val)) {
     if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
