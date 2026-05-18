@@ -1,0 +1,128 @@
+{
+  "pass": 20,
+  "warn": 0,
+  "fail": 0,
+  "total": 20,
+  "results": [
+    {
+      "pass": 1,
+      "name": "OLD R1-R33 enumeration",
+      "status": "PASS",
+      "detail": "33 rules"
+    },
+    {
+      "pass": 2,
+      "name": "NEW R66-R70 in Foundation",
+      "status": "PASS",
+      "detail": "5 new rules"
+    },
+    {
+      "pass": 3,
+      "name": "CMD_ENGINE cite OLD+NEW lineage",
+      "status": "PASS",
+      "detail": "OLD: [1, 4, 5, 8, 30, 31] | NEW: [42, 44, 45, 46, 47, 48, 49, 67, 68, 70]"
+    },
+    {
+      "pass": 4,
+      "name": "Grace period for old CMD",
+      "status": "PASS",
+      "detail": "explicit grace clause"
+    },
+    {
+      "pass": 5,
+      "name": "Element wheel 5 chain + TÂM R19 nerf",
+      "status": "PASS",
+      "detail": "BP=8000 nerf"
+    },
+    {
+      "pass": 6,
+      "name": "R23 server tick (TURN_DELAY_MS=1200ms)",
+      "status": "PASS",
+      "detail": "decoded from TS Online"
+    },
+    {
+      "pass": 7,
+      "name": "R10 threat scale data match",
+      "status": "PASS",
+      "detail": "dmg=100% heal=70% taunt=500%"
+    },
+    {
+      "pass": 8,
+      "name": "R30/R31 compliance 9 data files",
+      "status": "PASS",
+      "detail": "9/9 clean"
+    },
+    {
+      "pass": 9,
+      "name": "Combat tick semantics + turn lifecycle",
+      "status": "PASS",
+      "detail": "9 tick refs + turn lifecycle"
+    },
+    {
+      "pass": 10,
+      "name": "Replay infrastructure (3 file)",
+      "status": "PASS",
+      "detail": "3/3 replay file present"
+    },
+    {
+      "pass": 11,
+      "name": "R44-R47 anti-dupe coverage",
+      "status": "PASS",
+      "detail": "35 file with anti-dupe refs"
+    },
+    {
+      "pass": 12,
+      "name": "Test file count ≥338",
+      "status": "PASS",
+      "detail": "338 test files"
+    },
+    {
+      "pass": 13,
+      "name": "NEW CMD spec count",
+      "status": "PASS",
+      "detail": "19 CMD specs"
+    },
+    {
+      "pass": 14,
+      "name": "Backup SHA256 match",
+      "status": "PASS",
+      "detail": "4064719187E557BF..."
+    },
+    {
+      "pass": 15,
+      "name": "Git tag pre-migration-v2.8.0",
+      "status": "PASS",
+      "detail": "tag present"
+    },
+    {
+      "pass": 16,
+      "name": "Repo state (≥6 commit + audit docs)",
+      "status": "PASS",
+      "detail": "7 commits + audit"
+    },
+    {
+      "pass": 17,
+      "name": "No Tam Quốc in OLD data files",
+      "status": "PASS",
+      "detail": "0 hit in data/*.json"
+    },
+    {
+      "pass": 18,
+      "name": "No CJK in OLD data",
+      "status": "PASS",
+      "detail": "0 hit"
+    },
+    {
+      "pass": 19,
+      "name": "BẠCH/HẮC ABSENT in NPC system (correct)",
+      "status": "PASS",
+      "detail": "NPC has 6 hệ only"
+    },
+    {
+      "pass": 20,
+      "name": "Foundation v2.8.0 backward-compat declared",
+      "status": "PASS",
+      "detail": "MINOR + lineage"
+    }
+  ]
+}
