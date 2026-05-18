@@ -1,37 +1,30 @@
-# SVTK DASHBOARD 20260518-232429 (cycle 21 — 2 DECISIONS RESOLVED)
+# SVTK DASHBOARD 20260518-232943 (cycle 22)
 
-**Foundation:** v2.8.0 ✓ | **Completions resolved:** 41
+**Foundation:** v2.8.0 ✓ | **Completions resolved:** 42
 
-## 🎉 Cycle 21 — 2 pending decisions DONE
+## Cycle 22 — CMD2 R44 Day 2: 75% → 95%
 
-### R66 → DECIDED Phase 15 (Option A)
-- CMD4 ship decision file: cmd-lead/escalations/R66_DECIDED_PHASE15.json
-- Tuần 2 completed: R66.1 + R66.2 + R66.3 partial + R66.6
-- Deferred Phase 15 (CMD AUTH proper): R66.4 + R66.5 + R66.7 + R66.8 + R66.9
-- Grace period: legacy src/server/auth/session.ts continues serving
+- W1 battle_txn (SERIALIZABLE) → cmd-engine combat_runtime
+- W2 action_txn (REPEATABLE READ, 5 action types) → cmd-item + cmd-quest + cmd-engine
+- W3 optimistic update (auto-increment version)
+- W4 snapshot bind to txn
+- aggregate R44 suite: 25/25 PASS (971ms) | tsc strict 62 files EXIT 0
+- Next Day 3-4: 003 schema dry-apply + Postgres integration harness + cross-CMD callsite tracker
 
-### CMD2 R44 NEW Day 1 — compliance 30% → 75%
-- Schema: 003_anti_dupe_schema.sql (+down) — 7 tables, 1 function, 1 column
-- anti_dupe.ts core: 11 exports (canonicalStringify, executeWithIdempotency SERIALIZABLE retry, pickupItem, ad12_rollback)
-- stale_pending_runner.ts cron (5min ± 30s jitter)
-- vitest 13/13 PASS via pg-mem | tsc strict EXIT 0
-- 4 honest gaps documented (INVENTORY_MAX=30 hardcoded, gm_action_log retention, in-process scheduler, bigint workaround)
-- Day 2 next: integration wire W1-W4 với CMD1 + cmd-item
+## Content team (NEW Mr.Long start)
 
-## Inbox queue — FULLY CLEARED
+| Worker | Heartbeat | Files | Status |
+|---|---|---|---|
+| cmd-npc | ⏸ chưa push | 6 | initializing |
+| cmd-item | ⏸ chưa push | 36 (CMD2 migration) | initializing |
+| cmd-quest | ⏸ chưa push | 31 (CMD3 prev) | initializing |
+| cmd-map | ⏸ chưa push | 1 | initializing (sẽ build lớn) |
 
-| CMD | Pending |
-|---|---|
-| All workers | **0** — sạch hoàn toàn (R44 đang work in-progress, không pending) |
+Em standby pickup signals khi content team push.
 
-## Status
+## Inbox FULLY CLEARED
 
-- Phase 14 sprint: 4/4 CMD COMPLETE
-- Bug fixed cumulative: **~80+** (CMD1: 21, CMD2: imports+DATA_ROOT, CMD3: 75+B2, CMD4: 27+9 doc)
-- Test pass rate: 100% across all suites
-- R66: Phase 15 deferred ✓
-- R44: 75% (Day 1), Day 2+ → 95-99%
-- Pending Mr.Long: chỉ còn CMD4 next directive (standby OK)
+All 0. R44 inbox archived (CMD2 đã ship Day 1+2).
 
 ## Pending fixes
 
