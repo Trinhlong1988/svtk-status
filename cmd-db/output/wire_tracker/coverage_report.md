@@ -1,6 +1,6 @@
 # R44 Cross-CMD Wire Coverage Report
 
-> Generated: 2026-05-18T18:20:44.498Z
+> Generated: 2026-05-18T18:32:43.641Z
 > Owner: CMD2 (cmd-db wire_tracker scanner)
 
 ## Summary
