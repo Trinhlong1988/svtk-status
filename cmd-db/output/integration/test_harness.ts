@@ -31,6 +31,13 @@ export interface HarnessHandle {
   cleanup: () => Promise<void>;
 }
 
+export interface HarnessOptions {
+  /** Pool max connection count (default 4). Soak tests bump to 16-32. */
+  poolMax?: number;
+  /** Per-statement timeout in ms (default 5000). Soak retry-loops may extend. */
+  statementTimeoutMs?: number;
+}
+
 /** True iff `PG_TEST_DSN` is set in environment. */
 export function harnessAvailable(): boolean {
   return Boolean(process.env.PG_TEST_DSN);
@@ -52,7 +59,7 @@ const MIGRATION_ORDER = [
  * Schema name: `r44_test_<random>` — auto-cleaned by `cleanup()`.
  * Pool config: search_path = '<schema>,public', max=4, statement_timeout=5s.
  */
-export async function withTestDb(): Promise<HarnessHandle> {
+export async function withTestDb(opts: HarnessOptions = {}): Promise<HarnessHandle> {
   const dsn = process.env.PG_TEST_DSN;
   if (!dsn) {
     throw new Error(SKIP_REASON);
@@ -75,8 +82,8 @@ export async function withTestDb(): Promise<HarnessHandle> {
   // the latter raced subsequent queries on the same connection.
   const pool = new Pool({
     connectionString: dsn,
-    max: 4,
-    statement_timeout: 5000,
+    max: opts.poolMax ?? 4,
+    statement_timeout: opts.statementTimeoutMs ?? 5000,
     application_name: `r44_test_${schema}`,
     options: `-c search_path="${schema}",public`,
   });

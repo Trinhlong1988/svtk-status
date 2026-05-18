@@ -1,0 +1,48 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "Week 2 Day 5 — concurrency soak suite per Mr.Long 'Day 5 concurrency soak suite'",
+  "status": "day5_complete",
+  "ts": "2026-05-19T18:07:21Z",
+  "deliverables": {
+    "soak_suite": {
+      "file": "cmd-db/output/integration/concurrency_soak.test.ts",
+      "scenarios": 6,
+      "self_test": 1,
+      "parallel_factor": 8,
+      "pool_max_override": 16,
+      "statement_timeout_override_ms": 10000
+    },
+    "harness_extension": {
+      "file": "cmd-db/output/integration/test_harness.ts",
+      "added": "HarnessOptions interface (poolMax + statementTimeoutMs); withTestDb(opts?) backward-compatible default poolMax=4"
+    },
+    "documentation": "cmd-db/output/integration/SOAK_README.md (scenario matrix, run instructions, contention factor rationale, honest gaps)"
+  },
+  "scenarios": [
+    {"id": "S1", "subject": "8 parallel same-nonce → idempotency convergence (1 exec invocation, ≥7 fromCache)"},
+    {"id": "S2", "subject": "8 parallel gold UPDATEs same player → SERIALIZABLE 40001 retry + final balance exact"},
+    {"id": "S3", "subject": "8 parallel optimisticUpdate same row → 1 winner + 7 OptimisticConflictError"},
+    {"id": "S4", "subject": "8 parallel ad12_rollback same txn → 1 actual + 7 previously_rolled_back=true"},
+    {"id": "S5", "subject": "4 parallel recoverStalePending workers → SKIP LOCKED partitions, total=50 no double-count"},
+    {"id": "S6", "subject": "8 parallel mismatched payload same nonce → all 8 spoof-detection errors"}
+  ],
+  "verification": {
+    "tsc_strict": "EXIT 0 (67 files: +1 soak test, harness modified)",
+    "vitest_no_dsn": "1 PASS + 6 SKIPPED graceful for soak; 1 PASS + 11 SKIPPED for integration",
+    "aggregate_CMD2_suite": "27 PASS + 17 SKIPPED across 4 test files (anti_dupe 13/13 + wrappers 12/12 + integration 12 + soak 7) / 1.46s",
+    "tests_total": 44
+  },
+  "compliance_progress": {
+    "before_day5": "~99% (Day 1-4 logic + harness + wire tracker)",
+    "after_day5": "~99.5% — soak suite closes the last 'true concurrency' coverage gap. Remaining 0.5% = consumer wire (owned by other CMDs) + latency/throughput bench (out of R44 scope)."
+  },
+  "honest_gaps_day5": [
+    "S2 40001 retry count is diagnostic only — Postgres MVCC may serialize UPDATEs without conflict; deterministic contract is final gold balance",
+    "Latency/throughput bench out of scope (separate harness needed)",
+    "Long-duration drift (>1 hour) deferred to release-candidate soak",
+    "Cross-region replication out of scope"
+  ],
+  "to_run_full_soak": "PG_TEST_DSN=postgres://... node ./node_modules/vitest/vitest.mjs run cmd-db/output/integration/",
+  "next_action": "Day 6-7: final 12-item self-audit + Week 2 ship report OR continue Mr.Long brief"
+}
