@@ -1,0 +1,53 @@
+{
+  "fix_id": "cmd4-tuan4-r69-full",
+  "fixed_by": "cmd-network",
+  "result": "PASS",
+  "evidence": {
+    "task": "Tuần 4 — R69 fully closed (ACK + sliding window + session orchestrator)",
+    "delivered": {
+      "r69_4_ack_protocol": "cmd-network/output/r69/ack_protocol.ts (buildAck + buildNack + parseAckOrNack, HMAC-signed, MAX_RETRY_AFTER_MS clamp)",
+      "r69_5_sliding_window": "cmd-network/output/r69/session_window.ts (windowSize=50 default, tryAdmit/ack/reset, retry-hint per pending)",
+      "session_orchestrator": "cmd-network/output/r69/session.ts (wires openEnvelope + ReplayCache + SessionWindow + ack_protocol)",
+      "tests_new": "3 suites (ack_protocol.test 16 + session_window.test 12 + session.test 9 = 37 new tests)",
+      "tests_total": 105,
+      "gate1_score": "29/29 (100%)",
+      "tsc_strict": "0 errors",
+      "r69_coverage": {
+        "R69.1 packet category": "DONE Tuần 2",
+        "R69.2 monotonic seq": "DONE Tuần 2",
+        "R69.3 stale rejection": "DONE Tuần 2",
+        "R69.4 ACK/NACK protocol": "DONE Tuần 4",
+        "R69.5 sliding window (50 unacked)": "DONE Tuần 4",
+        "R69.6 reset on reconnect": "DONE Tuần 2"
+      }
+    }
+  },
+  "timestamp": "20260518T163848-624Z",
+  "cmd": "cmd-network",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T163848-624Z",
+  "task": "Tuần 4 — R69 fully closed (ACK + sliding window + session orchestrator)",
+  "status": "DONE",
+  "delivered": {
+    "r69_4_ack_protocol": "cmd-network/output/r69/ack_protocol.ts (buildAck + buildNack + parseAckOrNack, HMAC-signed, MAX_RETRY_AFTER_MS clamp)",
+    "r69_5_sliding_window": "cmd-network/output/r69/session_window.ts (windowSize=50 default, tryAdmit/ack/reset, retry-hint per pending)",
+    "session_orchestrator": "cmd-network/output/r69/session.ts (wires openEnvelope + ReplayCache + SessionWindow + ack_protocol)",
+    "tests_new": "3 suites (ack_protocol.test 16 + session_window.test 12 + session.test 9 = 37 new tests)",
+    "tests_total": 105,
+    "gate1_score": "29/29 (100%)",
+    "tsc_strict": "0 errors",
+    "r69_coverage": {
+      "R69.1 packet category": "DONE Tuần 2",
+      "R69.2 monotonic seq": "DONE Tuần 2",
+      "R69.3 stale rejection": "DONE Tuần 2",
+      "R69.4 ACK/NACK protocol": "DONE Tuần 4",
+      "R69.5 sliding window (50 unacked)": "DONE Tuần 4",
+      "R69.6 reset on reconnect": "DONE Tuần 2"
+    }
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "R69 fully closed. cmd-network charter complete. Pending CMD AUTH (Phase 15) for R66.4/5/8/9.",
+  "via": "R72_protocol"
+}

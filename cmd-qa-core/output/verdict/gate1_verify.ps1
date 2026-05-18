@@ -122,6 +122,38 @@ $criteria += Check 'G1.25' 'Heartbeat schtask FIRED at least once after register
     $ok
 }
 
+# ===== Tuần 4 R69.4 + R69.5 closure (added 2026-05-18) =====
+
+$criteria += Check 'G1.26' 'R69.4 ack_protocol.ts (buildAck + buildNack + parseAckOrNack)' {
+    $f = "$repo\cmd-network\output\r69\ack_protocol.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'buildAck\(') -and ($c -match 'buildNack\(') -and ($c -match 'parseAckOrNack\(')
+}
+
+$criteria += Check 'G1.27' 'R69.5 session_window.ts (windowSize=50 default + tryAdmit + ack)' {
+    $f = "$repo\cmd-network\output\r69\session_window.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'class\s+SessionWindow') -and ($c -match 'tryAdmit\(') -and ($c -match 'windowSize\s*\?\?\s*50')
+}
+
+$criteria += Check 'G1.28' 'R69 Session orchestrator wires envelope+replay+window+ack' {
+    $f = "$repo\cmd-network\output\r69\session.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'class\s+Session') -and
+    ($c -match 'this\.replay') -and
+    ($c -match 'this\.window') -and
+    ($c -match 'buildAck') -and
+    ($c -match 'buildNack')
+}
+
+$criteria += Check 'G1.29' 'R69 session test suite (ack + window + session) all green' {
+    $count = (Get-ChildItem "$repo\cmd-network\tests" -Filter "*.test.ts" -ErrorAction SilentlyContinue).Count
+    $count -ge 8
+}
+
 $passCount = ($criteria | Where-Object pass).Count
 $total = $criteria.Count
 $pct = if ($total -gt 0) { [Math]::Round($passCount * 100.0 / $total, 1) } else { 0 }
