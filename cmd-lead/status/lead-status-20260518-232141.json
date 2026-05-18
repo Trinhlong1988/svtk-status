@@ -1,0 +1,20 @@
+{
+  "cmd": "LEAD",
+  "version": "2.1",
+  "cycle": 20,
+  "timestamp": "20260518-232141",
+  "completions_resolved": 3,
+  "acks_processed": 2,
+  "inbox_archived": 4,
+  "has_high_alert": false,
+  "pending_fixes": {},
+  "cmd1_cumulative_bugs": 21,
+  "inbox_status": {
+    "cmd-engine": 0,
+    "cmd-qa-core": 0,
+    "cmd-db": 1,
+    "cmd-parse": 0
+  },
+  "r66_escalation_open": true,
+  "exit_code": 0
+}
