@@ -1,0 +1,20 @@
+{
+  "cmd": "cmd-dialog",
+  "ts": "2026-05-18T14:02:13Z",
+  "phase": "14",
+  "task_id": "TASK_1_split_dialog_module",
+  "status": "done",
+  "scope": "Phương án A — port (read OLD, write NEW). No code modification.",
+  "source_old": "D:\\DỰ ÁN AI\\FINAL TSONLINE\\src\\modules\\quest\\ (FROZEN P12)",
+  "target_new": "repo/cmd-dialog/output/*",
+  "files": {
+    "cmd-dialog/output/legacy/dialog_runtime.ts": 4689,
+    "cmd-dialog/output/condition/dialog_condition_evaluator.ts": 9655,
+    "cmd-dialog/output/condition/dialog_condition_hook.ts": 9638,
+    "cmd-dialog/output/narrative/companion_narrative_runtime.ts": 3776,
+    "cmd-dialog/output/narrative/companion_narrative_scaffold.ts": 1326
+  },
+  "loc_total_ts": 857,
+  "files_count": 5,
+  "next_task": "Wait for TASK 2 cmd-quest expand → cmd-dialog re-wire dialog_tree.jsonl reference"
+}

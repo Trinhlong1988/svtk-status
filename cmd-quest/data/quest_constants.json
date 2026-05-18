@@ -1,0 +1,60 @@
+{
+  "_doc": "Phase 8 CMD3 quest/progression constants. Zod validate at load. R30 BP×10000 strict (no float runtime). Override via env: SVTK_QUEST_CONSTANTS_PATH.",
+  "recursion_guard": {
+    "max_progression_depth": 8,
+    "reject_mode": "reject_event",
+    "emit_overflow_telemetry": true
+  },
+  "event_limiter": {
+    "dedupe_window_ticks": 5,
+    "per_tick_cap_default": 200,
+    "burst_window_ticks": 60,
+    "burst_cap_default": 5000,
+    "invalid_event_telemetry": true,
+    "per_kind_caps": {
+      "on_monster_kill": {
+        "per_tick": 50,
+        "burst_window": 60,
+        "burst_cap": 2000
+      },
+      "on_item_collect": {
+        "per_tick": 100,
+        "burst_window": 60,
+        "burst_cap": 3000
+      }
+    }
+  },
+  "condition_guard": {
+    "max_condition_depth": 6,
+    "max_token_count": 100,
+    "max_referenced_flags": 20,
+    "allowed_operators": [
+      "flag",
+      "quest",
+      "affinity",
+      "affinity_tier",
+      "AND",
+      "OR",
+      "NOT",
+      "==",
+      ">=",
+      "<=",
+      ">",
+      "<"
+    ]
+  },
+  "chain_validator": {
+    "max_dependency_depth": 20,
+    "fail_boot_on_violation": true
+  },
+  "companion_affinity_thresholds": [
+    { "tier": "stranger", "min_points": 0, "max_points_exclusive": 1000 },
+    { "tier": "familiar", "min_points": 1000, "max_points_exclusive": 3000 },
+    { "tier": "trusted", "min_points": 3000, "max_points_exclusive": 7000 },
+    { "tier": "bonded", "min_points": 7000, "max_points_exclusive": 15000 },
+    { "tier": "soulbound", "min_points": 15000 }
+  ],
+  "soulbound_cap_per_char": 3,
+  "default_party_size_scale_bp": 8000,
+  "solo_party_size_scale_bp": 10000
+}

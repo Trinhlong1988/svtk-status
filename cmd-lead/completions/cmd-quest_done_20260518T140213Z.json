@@ -1,0 +1,26 @@
+{
+  "cmd": "cmd-quest",
+  "ts": "2026-05-18T14:02:13Z",
+  "phase": "14",
+  "task_id": "TASK_1_split_quest_module",
+  "status": "done",
+  "scope": "Phương án A — port (read OLD, write NEW). No code modification.",
+  "source_old": "D:\\DỰ ÁN AI\\FINAL TSONLINE\\src\\modules\\quest\\ (FROZEN P12)",
+  "target_new": "repo/cmd-quest/output/* + repo/cmd-quest/data/",
+  "files": {
+    "cmd-quest/output/legacy/canonical_persistence_snapshot_runtime.ts": 13167,
+    "cmd-quest/output/companion/companion_progression_hook.ts": 9491,
+    "cmd-quest/output/companion/companion_affinity_autosave.ts": 6644,
+    "cmd-quest/output/companion/companion_affinity_persistence.ts": 5913,
+    "cmd-quest/output/companion/companion_affinity_store.ts": 7535,
+    "cmd-quest/output/condition/condition_complexity_guard.ts": 6373,
+    "cmd-quest/output/condition/condition_complexity_guard_impl.ts": 11968,
+    "cmd-quest/output/validation/content_replay_validation.ts": 2954,
+    "cmd-quest/output/cross_shard/cross_shard_progression_sync.ts": 15613,
+    "cmd-quest/output/dungeon/dungeon_unlock_progression.ts": 5035,
+    "cmd-quest/data/quest_constants.json": "(copied)"
+  },
+  "loc_total_ts": 2421,
+  "files_count": 11,
+  "next_task": "TASK 2 — Quest registry 100→250 (Week 2)"
+}

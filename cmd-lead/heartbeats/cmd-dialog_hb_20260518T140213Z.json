@@ -1,0 +1,13 @@
+{
+  "cmd": "cmd-dialog",
+  "ts": "2026-05-18T14:02:13Z",
+  "phase": "14",
+  "week": 1,
+  "task": "split-dialog-module",
+  "status": "alive",
+  "progress_pct": 100,
+  "files_copied": 5,
+  "loc": 857,
+  "next_check_in_minutes": 30,
+  "blockers": []
+}
