@@ -34,12 +34,23 @@ export interface BattleStateSnapshot {
 /**
  * Compute checksum of a single state snapshot.
  * Deterministic across Node x64 / ARM / Unity Mono (no float in canonical hash).
+ *
+ * Audit bug#40: hash binds BOTH `tick` and `state` so a captured hash cannot
+ * be replayed at a different tick (previously hash was over state only).
  */
 export function computeStateChecksum(snapshot: BattleStateSnapshot): StateChecksum {
-  if (typeof snapshot.tick !== 'number' || !Number.isInteger(snapshot.tick) || snapshot.tick < 0) {
-    throw new RangeError(`computeStateChecksum: tick must be non-negative integer (got ${snapshot.tick})`);
+  if (
+    typeof snapshot.tick !== 'number' ||
+    !Number.isInteger(snapshot.tick) ||
+    snapshot.tick < 0 ||
+    snapshot.tick > Number.MAX_SAFE_INTEGER
+  ) {
+    throw new RangeError(
+      `computeStateChecksum: tick must be integer in [0, MAX_SAFE_INTEGER] (got ${snapshot.tick})`,
+    );
   }
-  const canonical = canonicalJson(snapshot.state, 0);
+  // Bind tick into the canonical input — prevents same-state-different-tick collision.
+  const canonical = canonicalJson({ tick: snapshot.tick, state: snapshot.state }, 0);
   const hash = createHash('sha256').update(canonical).digest('hex');
   return { tick: snapshot.tick, hash, method: CHECKSUM_METHOD };
 }

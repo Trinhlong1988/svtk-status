@@ -57,6 +57,17 @@ export class SamplingPolicy {
    * Foundation R67.1 wall-clock-for-audit rule).
    */
   shouldVerify(battle: BattleMeta, rng: RNG): boolean {
+    // Validate battle input first (audit bug#42 — unknown kind no longer silent).
+    if (!battle || typeof battle !== 'object') {
+      throw new TypeError('SamplingPolicy.shouldVerify: battle must be object');
+    }
+    if (typeof battle.battleId !== 'string' || battle.battleId.length === 0) {
+      throw new TypeError('SamplingPolicy.shouldVerify: battle.battleId must be non-empty string');
+    }
+    if (typeof battle.hasFlaggedPlayer !== 'boolean') {
+      throw new TypeError('SamplingPolicy.shouldVerify: battle.hasFlaggedPlayer must be boolean');
+    }
+    // rateFor() throws on unknown kind.
     if (this.cfg.flaggedPlayerOverride && battle.hasFlaggedPlayer) return true;
     const rate = this.rateFor(battle.kind);
     if (rate >= 1) return true;
@@ -76,6 +87,10 @@ export class SamplingPolicy {
         return this.cfg.pveNormalRate;
       case 'raid_boss':
         return this.cfg.raidBossRate;
+      default:
+        // Audit bug#42: unknown kind previously fell through to silent rng()
+        // and returned false. Now explicit reject.
+        throw new RangeError(`SamplingPolicy.rateFor: unknown battle kind '${kind}'`);
     }
   }
 

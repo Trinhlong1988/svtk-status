@@ -35,8 +35,13 @@ export type ReplayVerifyResult =
  * diverge. `checkpointsCompared` counts checkpoints inspected up to (and
  * including) the divergence — for forensic context.
  *
- * Both arrays must be sorted by tick ascending (caller responsibility).
- * Mismatched array lengths are themselves divergence at the last shared tick.
+ * Audit bugs fixed:
+ *   #41 — match by TICK, not by array index (scrambled order no longer
+ *         produces false divergence at index-1).
+ *   #50 — verifier rejects when `method` field differs between sequences
+ *         (e.g., one sha256_canonical_v1 vs other md5_legacy) so an
+ *         algorithm switch can't false-positive match by coincidence.
+ *   #48 — duplicate ticks in either sequence rejected as malformed.
  */
 export function verifyReplay(p: ReplayVerifyParams): ReplayVerifyResult {
   if (typeof p.battleId !== 'string' || p.battleId.length === 0) {
@@ -46,47 +51,68 @@ export function verifyReplay(p: ReplayVerifyParams): ReplayVerifyResult {
     throw new TypeError('verifyReplay: original and replayed must be arrays');
   }
 
-  const shared = Math.min(p.original.length, p.replayed.length);
-  for (let i = 0; i < shared; i++) {
-    const o = p.original[i];
-    const r = p.replayed[i];
+  // Build tick→checksum maps. Reject duplicate ticks (bug#48).
+  const origByTick = buildMap(p.original, 'original');
+  const replayByTick = buildMap(p.replayed, 'replayed');
+
+  // Verify method consistency across all checksums (bug#50).
+  const methods = new Set<string>();
+  for (const c of p.original) methods.add(c.method);
+  for (const c of p.replayed) methods.add(c.method);
+  if (methods.size > 1) {
+    return {
+      match: false,
+      divergenceTick: -1,
+      originalHash: '<method_mismatch>',
+      replayedHash: Array.from(methods).join(','),
+      checkpointsCompared: 0,
+    };
+  }
+
+  // Union of ticks, iterated ascending — find first divergent tick.
+  const allTicks = new Set<number>();
+  for (const c of p.original) allTicks.add(c.tick);
+  for (const c of p.replayed) allTicks.add(c.tick);
+  const sortedTicks = [...allTicks].sort((a, b) => a - b);
+
+  let compared = 0;
+  for (const tick of sortedTicks) {
+    const o = origByTick.get(tick);
+    const r = replayByTick.get(tick);
     if (!o || !r) {
-      throw new TypeError(`verifyReplay: missing checkpoint at index ${i}`);
-    }
-    if (o.tick !== r.tick) {
-      // Tick-number desync at same index = structural divergence.
+      // Missing in one side → divergence at this tick.
       return {
         match: false,
-        divergenceTick: Math.min(o.tick, r.tick),
-        originalHash: o.hash,
-        replayedHash: r.hash,
-        checkpointsCompared: i + 1,
+        divergenceTick: tick,
+        originalHash: o ? o.hash : '<missing>',
+        replayedHash: r ? r.hash : '<missing>',
+        checkpointsCompared: compared,
       };
     }
     if (o.hash !== r.hash) {
       return {
         match: false,
-        divergenceTick: o.tick,
+        divergenceTick: tick,
         originalHash: o.hash,
         replayedHash: r.hash,
-        checkpointsCompared: i + 1,
+        checkpointsCompared: compared + 1,
       };
     }
+    compared += 1;
   }
-  if (p.original.length !== p.replayed.length) {
-    const longer = p.original.length > p.replayed.length ? p.original : p.replayed;
-    const firstExtra = longer[shared];
-    if (!firstExtra) {
-      // Defensive — should not happen given shared = min(lengths).
-      return { match: true, checkpointsCompared: shared };
+  return { match: true, checkpointsCompared: compared };
+}
+
+function buildMap(
+  arr: ReadonlyArray<{ tick: number; hash: string; method: string }>,
+  label: string,
+): Map<number, { tick: number; hash: string; method: string }> {
+  const map = new Map<number, { tick: number; hash: string; method: string }>();
+  for (const c of arr) {
+    if (map.has(c.tick)) {
+      throw new RangeError(`verifyReplay: ${label} has duplicate tick ${c.tick}`);
     }
-    return {
-      match: false,
-      divergenceTick: firstExtra.tick,
-      originalHash: p.original.length > shared ? firstExtra.hash : '<missing>',
-      replayedHash: p.replayed.length > shared ? firstExtra.hash : '<missing>',
-      checkpointsCompared: shared,
-    };
+    map.set(c.tick, c);
   }
-  return { match: true, checkpointsCompared: shared };
+  return map;
 }

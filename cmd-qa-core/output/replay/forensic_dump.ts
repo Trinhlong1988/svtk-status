@@ -21,10 +21,14 @@
  */
 
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, isAbsolute, normalize, sep } from 'node:path';
 import type { ReplayVerifyResult } from './replay_verifier.js';
 
 export const MAX_STATE_DUMP_BYTES = 10 * 1024 * 1024;
+
+/** ISO-8601 timestamp regex (basic — allows Z or ±HH:MM offset). */
+const ISO_8601_RE =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
 
 export interface ForensicEnvironment {
   foundationVersion: string;
@@ -63,7 +67,21 @@ export function writeForensicDump(p: ForensicDumpParams): ForensicDumpResult {
   if (p.verdict.match) {
     throw new TypeError('writeForensicDump: only call on divergence (verdict.match=false)');
   }
+  // Audit bug#47: timestamp must be ISO-8601 to prevent downstream XSS /
+  // injection when forensic JSON is rendered to dashboards.
+  if (typeof p.timestamp !== 'string' || !ISO_8601_RE.test(p.timestamp)) {
+    throw new TypeError(
+      `writeForensicDump: timestamp must be ISO-8601 (got ${JSON.stringify(p.timestamp)})`,
+    );
+  }
+  // Audit bug#43: outputPath must be absolute and not contain '..' segments
+  // (path traversal). If null, no filesystem write happens (in-memory mode).
+  if (p.outputPath !== null) {
+    validateOutputPath(p.outputPath);
+  }
 
+  // Audit bug#44/#45/#46: safe serializer handles circular refs, BigInt,
+  // NaN/Infinity, Date — instead of crashing or silently coercing to null.
   const originalSerialized = serializeWithCap(p.originalStateFull);
   const replayedSerialized = serializeWithCap(p.replayedStateFull);
   const truncated = originalSerialized.truncated || replayedSerialized.truncated;
@@ -104,15 +122,94 @@ export function writeForensicDump(p: ForensicDumpParams): ForensicDumpResult {
   };
 }
 
+function validateOutputPath(p: string): void {
+  if (typeof p !== 'string' || p.length === 0) {
+    throw new TypeError('forensic_dump.outputPath: must be non-empty string');
+  }
+  if (!isAbsolute(p)) {
+    throw new RangeError(`forensic_dump.outputPath: must be absolute (got ${p})`);
+  }
+  // Reject null bytes (Win32 syscall would mis-truncate).
+  if (p.includes('\0')) {
+    throw new RangeError('forensic_dump.outputPath: null byte not allowed');
+  }
+  // Reject any '..' segment in the RAW path (path.join normalises them away,
+  // but the intent is suspicious — bug#43 defense in depth).
+  const rawSegments = p.split(/[\\/]/);
+  for (const seg of rawSegments) {
+    if (seg === '..') {
+      throw new RangeError(`forensic_dump.outputPath: path traversal segment '..' in ${p}`);
+    }
+  }
+  // Belt-and-suspenders: also check normalized form (handles repeated normalize cycles).
+  const norm = normalize(p);
+  for (const seg of norm.split(sep)) {
+    if (seg === '..') {
+      throw new RangeError(`forensic_dump.outputPath: path traversal after normalize in ${p}`);
+    }
+  }
+}
+
+/**
+ * Safe serializer (audit bugs #44 / #45 / #46):
+ *   - Circular refs become {__circular__: true} markers (no crash)
+ *   - BigInt → {__bigint__: "<decimal string>"}
+ *   - NaN / Infinity → {__non_finite__: "NaN"/"Infinity"/"-Infinity"}
+ *   - Date → {__date__: "<iso>"}
+ *   - Symbol / function values → {__unserializable__: "<type>"}
+ *   - Then JSON.stringify; cap at MAX_STATE_DUMP_BYTES.
+ */
 function serializeWithCap(value: unknown): { value: unknown; truncated: boolean } {
-  const text = JSON.stringify(value);
+  const safe = makeSafe(value, new WeakSet());
+  const text = JSON.stringify(safe);
   if (typeof text === 'string' && Buffer.byteLength(text, 'utf8') > MAX_STATE_DUMP_BYTES) {
-    // Replace with a marker; preserve a small head for grep-ability.
     const head = text.slice(0, 1024);
     return {
-      value: { __truncated__: true, head_preview: head, original_bytes: Buffer.byteLength(text, 'utf8') },
+      value: {
+        __truncated__: true,
+        head_preview: head,
+        original_bytes: Buffer.byteLength(text, 'utf8'),
+      },
       truncated: true,
     };
   }
-  return { value, truncated: false };
+  return { value: safe, truncated: false };
+}
+
+function makeSafe(value: unknown, seen: WeakSet<object>): unknown {
+  if (value === null) return null;
+  const t = typeof value;
+  if (t === 'undefined') return null;
+  if (t === 'function' || t === 'symbol') return { __unserializable__: t };
+  if (t === 'bigint') return { __bigint__: (value as bigint).toString() };
+  if (t === 'number') {
+    const n = value as number;
+    if (Number.isFinite(n)) return n;
+    if (Number.isNaN(n)) return { __non_finite__: 'NaN' };
+    if (n === Infinity) return { __non_finite__: 'Infinity' };
+    return { __non_finite__: '-Infinity' };
+  }
+  if (t === 'string' || t === 'boolean') return value;
+  // object branch
+  if (value instanceof Date) return { __date__: value.toISOString() };
+  if (value instanceof Map) {
+    return { __map__: Array.from(value.entries()).map(([k, v]) => [makeSafe(k, seen), makeSafe(v, seen)]) };
+  }
+  if (value instanceof Set) {
+    return { __set__: Array.from(value.values()).map((v) => makeSafe(v, seen)) };
+  }
+  if (value instanceof RegExp) return { __regex__: value.source, flags: value.flags };
+  if (value instanceof Error) {
+    return { __error__: { name: value.name, message: value.message, stack: value.stack ?? null } };
+  }
+  if (seen.has(value as object)) return { __circular__: true };
+  seen.add(value as object);
+  if (Array.isArray(value)) {
+    return value.map((v) => makeSafe(v, seen));
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+    out[k] = makeSafe(v, seen);
+  }
+  return out;
 }

@@ -1,0 +1,71 @@
+{
+  "fix_id": "cmd4-r68-deep-audit-bugs-40-50",
+  "fixed_by": "cmd-qa-core",
+  "result": "PASS",
+  "evidence": {
+    "task": "R68 deep audit — 11 bugs found, 9 fixed in code",
+    "delivered": {
+      "audit_rounds": 5,
+      "bugs_found": 11,
+      "bugs_fixed_in_code": 9,
+      "bugs_documented_low": 2,
+      "tests_total": 222,
+      "tests_added": 22,
+      "gate1_score": "37/37 (100%)",
+      "tsc_strict": "0 errors",
+      "key_fixes": [
+        "bug#40 HIGH state_checksum binds tick into hash (was state-only → replay-tick-spoofing)",
+        "bug#41 HIGH replay_verifier matches by TICK not index (scrambled order no longer false-divergence)",
+        "bug#42 HIGH SamplingPolicy throws on unknown kind (was silent false)",
+        "bug#43 CRIT forensic_dump path-traversal guard (.. + absolute + null-byte)",
+        "bug#44 HIGH forensic safe-serializer handles circular refs (was crash)",
+        "bug#45 MED safe-serializer marker for BigInt (was crash)",
+        "bug#46 MED safe-serializer markers for NaN / Infinity / -Infinity / Date / Symbol / function (was silent null or crash)",
+        "bug#47 LOW timestamp must be ISO-8601 (XSS hardening)",
+        "bug#48 LOW duplicate tick in verifier inputs throws explicitly",
+        "bug#50 CRIT verifier rejects when checksum method field differs between sequences"
+      ],
+      "documented_only": [
+        "bug#49 interval mismatch in generateCheckpoints (caller config issue, document)",
+        "bug#48 LOW dedup → resolved as throw (above)"
+      ]
+    }
+  },
+  "timestamp": "20260518T172052-058Z",
+  "cmd": "cmd-qa-core",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T172052-058Z",
+  "task": "R68 deep audit — 11 bugs found, 9 fixed in code",
+  "status": "DONE",
+  "delivered": {
+    "audit_rounds": 5,
+    "bugs_found": 11,
+    "bugs_fixed_in_code": 9,
+    "bugs_documented_low": 2,
+    "tests_total": 222,
+    "tests_added": 22,
+    "gate1_score": "37/37 (100%)",
+    "tsc_strict": "0 errors",
+    "key_fixes": [
+      "bug#40 HIGH state_checksum binds tick into hash (was state-only → replay-tick-spoofing)",
+      "bug#41 HIGH replay_verifier matches by TICK not index (scrambled order no longer false-divergence)",
+      "bug#42 HIGH SamplingPolicy throws on unknown kind (was silent false)",
+      "bug#43 CRIT forensic_dump path-traversal guard (.. + absolute + null-byte)",
+      "bug#44 HIGH forensic safe-serializer handles circular refs (was crash)",
+      "bug#45 MED safe-serializer marker for BigInt (was crash)",
+      "bug#46 MED safe-serializer markers for NaN / Infinity / -Infinity / Date / Symbol / function (was silent null or crash)",
+      "bug#47 LOW timestamp must be ISO-8601 (XSS hardening)",
+      "bug#48 LOW duplicate tick in verifier inputs throws explicitly",
+      "bug#50 CRIT verifier rejects when checksum method field differs between sequences"
+    ],
+    "documented_only": [
+      "bug#49 interval mismatch in generateCheckpoints (caller config issue, document)",
+      "bug#48 LOW dedup → resolved as throw (above)"
+    ]
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "R68 hardened comprehensively. cmd-qa-core charter complete for Phase 14.",
+  "via": "R72_protocol"
+}

@@ -33,9 +33,9 @@ describe('R68.1 state_checksum — determinism', () => {
   });
 
   it('rejects negative or non-integer tick', () => {
-    expect(() => computeStateChecksum({ tick: -1, state: {} })).toThrow(/non-negative integer/);
-    expect(() => computeStateChecksum({ tick: 1.5, state: {} })).toThrow(/non-negative integer/);
-    expect(() => computeStateChecksum({ tick: NaN, state: {} })).toThrow(/non-negative integer/);
+    expect(() => computeStateChecksum({ tick: -1, state: {} })).toThrow(/integer in/);
+    expect(() => computeStateChecksum({ tick: 1.5, state: {} })).toThrow(/integer in/);
+    expect(() => computeStateChecksum({ tick: NaN, state: {} })).toThrow(/integer in/);
   });
 
   it('rejects NaN / Infinity / BigInt / Date / Symbol in state', () => {
