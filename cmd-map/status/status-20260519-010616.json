@@ -1,0 +1,27 @@
+{
+  "cmd": "MAP",
+  "version": "1.1.0",
+  "timestamp": "20260519-010616",
+  "validation_score": 1.0,
+  "honest_gaps": [],
+  "bugs_detected": [],
+  "counts": {
+    "existing": 0,
+    "new": 8500,
+    "total": 8500,
+    "npc_mapped": 5373,
+    "quest_mapped": 22,
+    "orphan_npc": 0,
+    "orphan_quest": 0
+  },
+  "exit_code": 0,
+  "foundation_file": "SVTK_FOUNDATION_v2.8.0.md",
+  "foundation_hash_crlf": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "honest_gaps_detail": [
+    "map_image_actual_jpg_gen_offline_lora_controlnet_pending",
+    "biome_transition_smoothing_not_implemented",
+    "fog_of_war_dynamic_lighting_not_implemented",
+    "tile_based_map_not_supported_flat_image_only",
+    "desktop_brief_hash_2e6e8c2_stale_vs_repo_4e9a6d7a"
+  ]
+}

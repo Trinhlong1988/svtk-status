@@ -1,0 +1,84 @@
+{
+  "fix_id": "upstream_seed_4_registries_plus_npc_orphan",
+  "fixed_by": "map",
+  "result": "PASS",
+  "evidence": {
+    "ts": "20260519T010610Z",
+    "seed_origin": "cmd_map_seed_20260519",
+    "npc_orphan_fix": {
+      "fixed_count": 28,
+      "remap_sample": [
+        {
+          "npc_index": 37,
+          "old_sceneId": 9839,
+          "new_sceneId": 1339
+        },
+        {
+          "npc_index": 41,
+          "old_sceneId": 9166,
+          "new_sceneId": 666
+        },
+        {
+          "npc_index": 43,
+          "old_sceneId": 8526,
+          "new_sceneId": 26
+        },
+        {
+          "npc_index": 44,
+          "old_sceneId": 8527,
+          "new_sceneId": 27
+        },
+        {
+          "npc_index": 45,
+          "old_sceneId": 8528,
+          "new_sceneId": 28
+        },
+        {
+          "npc_index": 46,
+          "old_sceneId": 8529,
+          "new_sceneId": 29
+        },
+        {
+          "npc_index": 47,
+          "old_sceneId": 8530,
+          "new_sceneId": 30
+        },
+        {
+          "npc_index": 48,
+          "old_sceneId": 9819,
+          "new_sceneId": 1319
+        },
+        {
+          "npc_index": 49,
+          "old_sceneId": 9988,
+          "new_sceneId": 1488
+        },
+        {
+          "npc_index": 50,
+          "old_sceneId": 9989,
+          "new_sceneId": 1489
+        }
+      ],
+      "total_remap": 28
+    },
+    "place_seed": {
+      "count": 8500,
+      "path": "cmd-place\\existing\\PLACE_8500_seed.jsonl"
+    },
+    "boss_seed": {
+      "count": 13,
+      "path": "cmd-boss\\existing\\BOSS_13_seed.jsonl"
+    },
+    "sprite_seed": {
+      "count": 158,
+      "usage_min": 47,
+      "usage_max": 86,
+      "path": "cmd-sprite\\existing\\SPRITE_158_seed.jsonl"
+    },
+    "event_seed": {
+      "count": 10,
+      "path": "cmd-event\\existing\\EVENT_10_seed.jsonl"
+    }
+  },
+  "timestamp": "20260519T010610Z"
+}

@@ -1,0 +1,11 @@
+{
+  "severity": "LOW",
+  "issue_id": "desktop_brief_hash_stale",
+  "evidence": {
+    "desktop_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+    "repo_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+    "resolution": "used repo hash; desktop brief older"
+  },
+  "cmd_origin": "MAP",
+  "timestamp": "20260519-010616"
+}

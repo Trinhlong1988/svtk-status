@@ -1,0 +1,27 @@
+{
+  "severity": "MED",
+  "issue_id": "item_registry_seed_only",
+  "round": 4,
+  "rule": "R74",
+  "subject": "Item drop pool ref",
+  "evidence": {
+    "round": 4,
+    "rule": "R74",
+    "subject": "Item drop pool ref",
+    "item_count": 6,
+    "item_eras": {
+      "Hùng Vương": 1,
+      "Trần": 1,
+      "An Dương Vương": 1,
+      "Tây Sơn": 1,
+      "Lê": 1,
+      "Lý": 1
+    },
+    "fix_applied": "added `item_drop_era_pool` field per map (era match) — 6 items seed (target 1500)",
+    "alert_severity": "MED",
+    "alert_id": "item_registry_seed_only",
+    "gap": "6/1500 items (0.4%) — quá thưa, chưa đủ drop pool"
+  },
+  "cmd_origin": "MAP",
+  "timestamp": "20260519-010616"
+}
