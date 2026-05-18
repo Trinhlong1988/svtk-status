@@ -100,6 +100,18 @@ export const CANON_TAG_ARRAY_WITH_META = '__SVTK_ArrayMeta__';
 export const CANON_SENTINEL_GETTER_THREW = '__SVTK_GETTER_THREW__';
 /** Prefix for symbol-keyed properties (Object.keys would otherwise skip them, hiding payload). */
 export const CANON_KEY_SYMBOL_PREFIX = '__SVTK_SYM_KEY:';
+/**
+ * Prefix used to escape any user string that begins with the `__SVTK_` reserved
+ * namespace. Without this escape, a user-controlled string like
+ * `"__SVTK_BigInt:5__"` would canonicalise identically to the *actual* bigint
+ * `5n`, letting an attacker forge type-encoded data and pass forensic checks.
+ *
+ * Escape is recursive: the escaped output also starts with `__SVTK_`, so a
+ * crafted `"__SVTK_STR:foo"` becomes `"__SVTK_STR:__SVTK_STR:foo"` on next
+ * pass — every layer of attempted forgery just adds another escape layer.
+ */
+export const CANON_PREFIX_RESERVED = '__SVTK_';
+export const CANON_STR_ESCAPE_PREFIX = '__SVTK_STR:';
 
 // Use Map (not object literal) — assigning `__proto__` as a key in object
 // literal syntax sets the prototype of the literal itself instead of creating
@@ -108,6 +120,21 @@ const RESERVED_KEY_MAP = new Map<string, string>([
   ['__proto__', CANON_KEY_PROTO],
   ['constructor', CANON_KEY_CONSTRUCTOR],
 ]);
+
+/**
+ * Map a user-controlled property key to its canonical (collision-safe) form.
+ *   - Reserved JS keys (__proto__ / constructor) → sentinel rename.
+ *   - Keys starting with our `__SVTK_` reserved prefix → escape with
+ *     `__SVTK_STR:` so user keys cannot collide with our type tags
+ *     (e.g. `{__SVTK_Map__: [['k','v']]}` no longer mimics a real Map).
+ *   - Any other key → unchanged.
+ */
+function escapeUserKey(k: string): string {
+  const reserved = RESERVED_KEY_MAP.get(k);
+  if (reserved !== undefined) return reserved;
+  if (k.startsWith(CANON_PREFIX_RESERVED)) return `${CANON_STR_ESCAPE_PREFIX}${k}`;
+  return k;
+}
 
 export function canonicalize(value: unknown): string {
   // Pre-walk converts exotic types JSON.stringify can't handle (bigint),
@@ -132,7 +159,14 @@ function prepareForJson(val: unknown, path: WeakSet<object>): unknown {
   }
   if (typeof val === 'string') {
     // NFC normalisation so equivalent unicode forms hash identically.
-    return val.normalize('NFC');
+    const normalized = val.normalize('NFC');
+    // Escape any user string that starts with our reserved sentinel prefix so
+    // an attacker cannot forge type-encoded sentinels (BUG-23): a user-supplied
+    // "__SVTK_BigInt:5__" must not collide with the actual bigint encoding.
+    if (normalized.startsWith(CANON_PREFIX_RESERVED)) {
+      return `${CANON_STR_ESCAPE_PREFIX}${normalized}`;
+    }
+    return normalized;
   }
   if (val instanceof Date) {
     // JSON.stringify would call .toJSON() → ISO string, but only when reached
@@ -184,7 +218,7 @@ function prepareForJson(val: unknown, path: WeakSet<object>): unknown {
     const meta_block: Record<string, unknown> = Object.create(null);
     for (const k of extra_keys) {
       const obj = val as unknown as Record<string, unknown>;
-      const safe_key = RESERVED_KEY_MAP.get(k) ?? k;
+      const safe_key = escapeUserKey(k);
       Object.defineProperty(meta_block, safe_key, {
         value: prepareForJson(obj[k], path),
         enumerable: true, configurable: true, writable: true,
@@ -209,7 +243,7 @@ function prepareForJson(val: unknown, path: WeakSet<object>): unknown {
       // Skip toJSON — JSON.stringify would otherwise call it on the prepared
       // object and let an attacker replace the entire serialised state.
       if (k === 'toJSON') continue;
-      const safe_key = RESERVED_KEY_MAP.get(k) ?? k;
+      const safe_key = escapeUserKey(k);
       // Wrap getter access — if a property getter throws, emit a sentinel so
       // R68 doesn't crash on adversarial input.
       let prepared_value: unknown;

@@ -1,0 +1,77 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "audit_type": "Round 5+ deep hunt — sentinel collision attack vector",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts": "2026-05-19T00:00:00Z",
+  "probes_total": 33,
+  "bugs_found_and_fixed": 1,
+  "severity_critical_found": 1,
+  "tests_added": 6,
+  "cumulative_with_rounds_1_4": "22 bugs fixed total (1 critical)",
+  "rounds": [
+    {
+      "turn": 1,
+      "angle": "Sentinel collision attack — user string mimics SVTK type tag",
+      "bug_id": "BUG-23",
+      "severity": "CRITICAL (security)",
+      "evidence": {
+        "h120": "canonicalize({x: '__SVTK_BigInt:5__'}) === canonicalize({x: 5n}) → TRUE",
+        "h121": "canonicalize({x: '__SVTK_NaN__'}) === canonicalize({x: NaN}) → TRUE",
+        "h122": "canonicalize({x: '__SVTK_CIRCULAR__'}) === canonicalize(real_cycle) → TRUE",
+        "deep_collision": "canonicalize({'__SVTK_Map__': [['k','v']]}) === canonicalize(new Map([['k','v']])) → TRUE (object-level forge)",
+        "attack_implication": "Player who can inject any string into game state (inventory name, chat message, custom skill name) can forge type-encoded sentinels and pass forensic divergence checks."
+      },
+      "fix": {
+        "prefix_namespace": "CANON_PREFIX_RESERVED = '__SVTK_'",
+        "escape_prefix": "CANON_STR_ESCAPE_PREFIX = '__SVTK_STR:'",
+        "string_path": "prepareForJson string branch: if input starts with CANON_PREFIX_RESERVED → prepend CANON_STR_ESCAPE_PREFIX. Recursive: each escape adds another layer.",
+        "key_path": "escapeUserKey() helper — RESERVED_KEY_MAP rename OR (if user key starts with __SVTK_) escape with CANON_STR_ESCAPE_PREFIX. Symbol-keyed encoder unchanged.",
+        "applied_at": ["string value branch in prepareForJson", "object key loop", "array meta block key loop"]
+      },
+      "regression_tests": 6
+    },
+    { "turn": 2, "angle": "Proxy with get trap", "result": "VERIFIED no bug — proxy access yields normal canonical" },
+    { "turn": 3, "angle": "Proxy with phantom ownKeys", "result": "VERIFIED no bug — phantom key with undefined value emits CANON_SENTINEL_UNDEFINED" },
+    { "turn": 4, "angle": "max_ledger_size = 1 boundary", "result": "VERIFIED works — keeps only last event" },
+    { "turn": 5, "angle": "max_ledger_size = -5", "result": "VERIFIED treated as unbounded (defensive)" },
+    { "turn": 6, "angle": "Object.create(null) input", "result": "VERIFIED works — null-proto handled" },
+    { "turn": 7, "angle": "Empty frameId / encounterId", "result": "VERIFIED works — distinct hashes preserved" },
+    { "turn": 8, "angle": "Wall clock 1000-spam monotonic", "result": "VERIFIED — min_step_ns 100 (Windows hrtime resolution), all monotonic" },
+    { "turn": 9, "angle": "Schema version 0 / negative", "result": "VERIFIED — checksumFrame is schema-agnostic, produces distinct hash" },
+    { "turn": 10, "angle": "Double-freeze (already frozen) + class with static methods", "result": "VERIFIED no throw, output correct" },
+    { "turn": 11, "angle": "Rollback + rebuild stream determinism", "result": "VERIFIED — identical final aggregate" },
+    { "turn": 12, "angle": "encounter_id / frameId WITH SVTK sentinel prefix", "result": "VERIFIED — escaped via key-path, distinct from real sentinel" },
+    { "turn": 13, "angle": "forensicDump 100K events perf", "result": "524ms — acceptable (occasional triage call, defensive deep-clone trade-off)" },
+    { "turn": 14, "angle": "compareCheckpoints 10K perf", "result": "1ms — fast (early exit on match)" },
+    { "turn": 15, "angle": "Full pipeline 30-turn stress", "result": "VERIFIED — 90 ticks, 30 frames, 30 events, 7 checkpoints, deterministic" },
+    { "turn": 16, "angle": "Deep nesting 1000 levels", "result": "4ms — fast" },
+    { "turn": 17, "angle": "Event payload with bigint", "result": "VERIFIED — sentinel encoded" },
+    { "turn": 18, "angle": "Sibling subtrees with own shared inners", "result": "VERIFIED — path-set scoped per branch, no leak" },
+    { "turn": 19, "angle": "encounter_id containing SVTK sentinel literal", "result": "VERIFIED — preserved in R67 event; escaped in R68 canonical" },
+    { "turn": 20, "angle": "forensicDump deep freeze (frame + damageEvents + threatSnapshot)", "result": "VERIFIED — all entries Object.isFrozen=true" }
+  ],
+  "final_verification": {
+    "tsc_typecheck_exit": 0,
+    "vitest_total": 57,
+    "vitest_pass": 57,
+    "vitest_fail": 0,
+    "r67_test_count": 16,
+    "r68_test_count": 41
+  },
+  "files_modified_round5": [
+    "cmd-engine/output/replay/state_checksum.ts (CANON_PREFIX_RESERVED + CANON_STR_ESCAPE_PREFIX + escapeUserKey() + escape on string-value path)",
+    "cmd-engine/output/replay/state_checksum.test.ts (+6 BUG-23 regression tests)"
+  ],
+  "cumulative_summary": {
+    "rounds_completed": 5,
+    "total_bugs_fixed": 22,
+    "regression_tests_total": 41,
+    "fix_clean_rate_pct": 100.0,
+    "critical_bugs_fixed": 1,
+    "high_bugs_fixed": 9,
+    "medium_bugs_fixed": 9,
+    "low_bugs_fixed": 3
+  }
+}

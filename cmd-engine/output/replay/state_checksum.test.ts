@@ -37,6 +37,7 @@ import {
   CANON_TAG_ARRAY_WITH_META,
   CANON_SENTINEL_GETTER_THREW,
   CANON_KEY_SYMBOL_PREFIX,
+  CANON_STR_ESCAPE_PREFIX,
 } from './state_checksum.js';
 
 function makeFrame(turn: number, sessionId: string, encounterId: string, damage = 100): ReplayFrame {
@@ -370,6 +371,48 @@ describe('R68 state_checksum — bigint/Symbol/undefined sentinels (regression B
   it('BUG-21: distinct symbol-keyed values produce distinct hashes', () => {
     const sym = Symbol('k');
     expect(canonicalize({ [sym]: 'v1' })).not.toBe(canonicalize({ [sym]: 'v2' }));
+  });
+
+  it('BUG-23: user string mimicking BigInt sentinel does NOT collide with real bigint', () => {
+    const forged = canonicalize({ x: '__SVTK_BigInt:5__' });
+    const real = canonicalize({ x: 5n });
+    expect(forged).not.toBe(real);
+    expect(forged).toContain(CANON_STR_ESCAPE_PREFIX);
+  });
+
+  it('BUG-23: user string mimicking NaN sentinel does NOT collide with real NaN', () => {
+    const forged = canonicalize({ x: '__SVTK_NaN__' });
+    const real = canonicalize({ x: NaN });
+    expect(forged).not.toBe(real);
+  });
+
+  it('BUG-23: user string mimicking CIRCULAR sentinel does NOT collide with real cycle', () => {
+    const a: { x: unknown } = { x: 1 };
+    a.x = a;
+    const forged = canonicalize({ x: '__SVTK_CIRCULAR__' });
+    const real = canonicalize(a);
+    expect(forged).not.toBe(real);
+  });
+
+  it('BUG-23: user key mimicking type-tag does NOT collide with real container', () => {
+    // User crafts an object with the Map type tag as a literal key
+    const forged = canonicalize({ '__SVTK_Map__': [['k', 'v']] });
+    const real = canonicalize(new Map([['k', 'v']]));
+    expect(forged).not.toBe(real);
+    expect(forged).toContain(CANON_STR_ESCAPE_PREFIX);
+  });
+
+  it('BUG-23: recursive escape — user string starting with escape prefix also distinguishes', () => {
+    const a = canonicalize({ x: '__SVTK_BigInt:5__' });
+    const b = canonicalize({ x: '__SVTK_STR:__SVTK_BigInt:5__' });
+    // Both contain the user payload but should be distinct (different escape depth).
+    expect(a).not.toBe(b);
+  });
+
+  it('BUG-23: plain user strings unaffected (no escape prefix added)', () => {
+    expect(canonicalize({ x: 'hello world' })).toBe('{"x":"hello world"}');
+    expect(canonicalize({ x: 'foo bar' })).toBe('{"x":"foo bar"}');
+    expect(canonicalize({ x: '' })).toBe('{"x":""}');
   });
 
   it('BUG-8: unicode composed and decomposed forms produce SAME hash (NFC normalise)', () => {
