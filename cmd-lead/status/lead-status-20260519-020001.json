@@ -1,0 +1,27 @@
+{
+  "cmd": "LEAD",
+  "version": "2.1",
+  "cycle": 45,
+  "timestamp": "20260519-020001",
+  "merged": 2,
+  "deleted_branches": 2,
+  "cmd_npc_milestone": "Round 61-70 → cumulative 70/70 bugs fixed",
+  "cmd_qa_content_milestone": "score=1.00 issues=4",
+  "new_branches_spawned": [
+    "staging-qa_content-20260519-015836",
+    "staging-quest-20260518-232720"
+  ],
+  "pending_fixes": {
+    "cmd_db_r44_wire_coverage_0pct": 1,
+    "foundation_hash_three_way_mismatch": 1,
+    "dialog_count_below_target": 1,
+    "quest_count_below_target": 1,
+    "qa_boss_missing": 1,
+    "qa_event_missing": 1,
+    "qa_item_missing": 1,
+    "npc_existing_scene_id_orphan_R75": 1,
+    "npc_existing_systemic_hp_anomaly_R78": 1,
+    "npc_existing_uuid_null_R74A": 1
+  },
+  "exit_code": 0
+}
