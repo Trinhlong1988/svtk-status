@@ -1,0 +1,116 @@
+{
+  "severity": "HIGH",
+  "issue_id": "npc_existing_systemic_hp_anomaly_R78",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "anomaly_count": 366,
+    "total_existing": 438,
+    "anomaly_pct": 83.56,
+    "rule_violated": "R78 stat formula coherence (hp = (50+lv*20)*(1+tier*0.15)*type_multi)",
+    "samples": [
+      {
+        "_index": 2,
+        "name": "Hùng Vương 18 (Hùng Duệ Vương)",
+        "actual_hp": 8000,
+        "expected_hp": 330,
+        "ratio": 24.24,
+        "level": 80,
+        "tier": 0,
+        "npc_type": "lore_npc"
+      },
+      {
+        "_index": 3,
+        "name": "Lạc Long Quân",
+        "actual_hp": 9999,
+        "expected_hp": 330,
+        "ratio": 30.3,
+        "level": 80,
+        "tier": 0,
+        "npc_type": "lore_npc"
+      },
+      {
+        "_index": 4,
+        "name": "Âu Cơ",
+        "actual_hp": 8888,
+        "expected_hp": 330,
+        "ratio": 26.93,
+        "level": 80,
+        "tier": 0,
+        "npc_type": "lore_npc"
+      },
+      {
+        "_index": 5,
+        "name": "Sơn Tinh",
+        "actual_hp": 7500,
+        "expected_hp": 50,
+        "ratio": 150.0,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 7,
+        "name": "Mai An Tiêm",
+        "actual_hp": 1200,
+        "expected_hp": 50,
+        "ratio": 24.0,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 8,
+        "name": "Lang Liêu",
+        "actual_hp": 1500,
+        "expected_hp": 50,
+        "ratio": 30.0,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 9,
+        "name": "Phù Đổng Thiên Vương / Thánh Gióng",
+        "actual_hp": 8000,
+        "expected_hp": 50,
+        "ratio": 160.0,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 10,
+        "name": "Mỵ Nương",
+        "actual_hp": 1500,
+        "expected_hp": 50,
+        "ratio": 30.0,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 11,
+        "name": "Tản Viên Sơn Thánh",
+        "actual_hp": 3000,
+        "expected_hp": 50,
+        "ratio": 60.0,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 12,
+        "name": "Chử Đồng Tử",
+        "actual_hp": 2200,
+        "expected_hp": 50,
+        "ratio": 44.0,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      }
+    ],
+    "remediation": "R71.1 source IMMUTABLE. Systemic source-side bug. Recommend regenerate existing/NPC_438.jsonl with R78 formula compliance OR document R78 as derived formula not enforced in registry."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-014010"
+}

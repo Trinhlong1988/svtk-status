@@ -16,9 +16,10 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 31-40 | 2026-05-19 | 30→35 | 10 | [AUDIT_REPORT_ROUND_31_40_20260519-011348.md](status/AUDIT_REPORT_ROUND_31_40_20260519-011348.md) |
 | 41-50 | 2026-05-19 | 35→40 | 10 | [AUDIT_REPORT_ROUND_41_50_20260519-012526.md](status/AUDIT_REPORT_ROUND_41_50_20260519-012526.md) |
 | 51-60 | 2026-05-19 | 40→45 | 10 | [AUDIT_REPORT_ROUND_51_60_20260519-014139.md](status/AUDIT_REPORT_ROUND_51_60_20260519-014139.md) |
-| **61-70** | **2026-05-19** | **45→50** | **10** | (current build) |
+| 61-70 | 2026-05-19 | 45→50 | 10 | [AUDIT_REPORT_ROUND_61_70_20260519-015224.md](status/AUDIT_REPORT_ROUND_61_70_20260519-015224.md) |
+| **71-80** | **2026-05-19** | **50→55** | **10** | (current build) |
 
-**Cumulative total: 70 hidden bugs fixed.**
+**Cumulative total: 80 hidden bugs fixed.**
 
 ---
 
@@ -44,6 +45,9 @@ Rebirthable non-boss alert, era_start_year backfill, mentor_npc_idx canonical, a
 
 ### Round 61-70: epithet semantic + ecosystem cross-ref + doc freshness
 Boss epithet 100% with class-aware mapping (mini_boss/boss/thanh/than → matching epithet pool), epithet-class semantic match (80 mismatches eliminated), cmd.md audit reference note, AUDIT_INDEX round 61-70 entry, myth-tier hp sub-alert (Lạc Long Quân/Âu Cơ/Hùng Vương ceremonial hp), ecosystem cross-ref alert (CMD_QUEST/ITEM/BOSS/MAP existence check), validator R61-R65 checks (epithet 100%, class match, doc freshness, myth alert, ecosystem alert).
+
+### Round 71-80: determinism + schema completeness + name diversity
+JSON sort_keys=True for stable JSONL diff, UUID5 deterministic (uuid.uuid5 with DNS namespace + name+_index) replacing uuid4 for R68 replay reproducibility, SQL schema +2 columns (mentor_npc_idx, pet_evolution_path_note), existing boss no-epithet alert (27 entries — R71.1 immutable), name+era duplicate elimination via name_era_tracker (828 dupes pre-fix), tier 9 thần class force-aggressive behavior, AUDIT_INDEX round 71-80 entry, cmd-npc README.md pointer to audit history, validator R71-R76 regression checks (sort_keys/uuid5/schema/dupe/behavior).
 
 ---
 

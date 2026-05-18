@@ -1,0 +1,28 @@
+{
+  "severity": "MED",
+  "issue_id": "npc_ecosystem_cross_ref_missing",
+  "evidence": {
+    "missing": [
+      {
+        "cmd": "cmd-quest",
+        "expected_dir": "C:\\Users\\Administrator\\Desktop\\CMD_NPC_WORK\\svtk-status\\cmd-quest\\existing"
+      },
+      {
+        "cmd": "cmd-item",
+        "expected_dir": "C:\\Users\\Administrator\\Desktop\\CMD_NPC_WORK\\svtk-status\\cmd-item\\existing"
+      },
+      {
+        "cmd": "cmd-boss",
+        "expected_dir": "C:\\Users\\Administrator\\Desktop\\CMD_NPC_WORK\\svtk-status\\cmd-boss\\existing"
+      },
+      {
+        "cmd": "cmd-map",
+        "expected_dir": "C:\\Users\\Administrator\\Desktop\\CMD_NPC_WORK\\svtk-status\\cmd-map\\existing"
+      }
+    ],
+    "rule_anchor": "R71 ecosystem — NPC cross-refs SKILL/QUEST/ITEM/MAP",
+    "remediation": "CMD NPC depends on adjacent registries for full validation. Adjacent CMDs ship their existing/ when ready."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-020955"
+}
