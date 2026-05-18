@@ -1,0 +1,11 @@
+{
+  "cmd": "cmd-quest",
+  "ts": "2026-05-18T14:08:45Z",
+  "phase": "14",
+  "week": 2,
+  "task": "quest-registry-expand",
+  "status": "alive",
+  "progress_pct": 100,
+  "next_check_in_minutes": 30,
+  "blockers": []
+}

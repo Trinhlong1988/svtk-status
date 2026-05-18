@@ -1,0 +1,23 @@
+{
+  "cmd": "cmd-dialog",
+  "ts": "2026-05-18T14:08:45Z",
+  "phase": "14",
+  "task_id": "TASK_2_dialog_tree_scaffold",
+  "status": "done",
+  "target": "150 dialog tree khớp cmd-quest registry",
+  "output_files": {
+    "cmd-dialog/output/registry/dialog_tree.jsonl": 150
+  },
+  "schema": {
+    "fields": ["dialog_id", "quest_id", "giver_npc_id", "nodes", "status", "schema_version"],
+    "nodes_per_tree": 3,
+    "node_types": ["intro", "accept", "decline"],
+    "version": "1.0"
+  },
+  "cross_ref": {
+    "quest_source": "cmd-quest/output/registry/quest_full.jsonl",
+    "matched": 150,
+    "orphan_dialog_refs": 0
+  },
+  "generator": "cmd-dialog/scripts/gen_dialog_tree_150.mjs"
+}
