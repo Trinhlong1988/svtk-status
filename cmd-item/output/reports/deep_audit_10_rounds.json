@@ -1,0 +1,90 @@
+{
+  "cmd_id": "ITEM",
+  "audit_version": "deep_v2_10_rounds",
+  "rounds_executed": 10,
+  "final_round_pass_rate": 1.0,
+  "stable_100_percent": true,
+  "audit_log": [
+    {
+      "round": 1,
+      "checks_run": 33,
+      "passed": 33,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 2,
+      "checks_run": 58,
+      "passed": 58,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 3,
+      "checks_run": 78,
+      "passed": 78,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 4,
+      "checks_run": 97,
+      "passed": 97,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 5,
+      "checks_run": 112,
+      "passed": 112,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 6,
+      "checks_run": 130,
+      "passed": 130,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 7,
+      "checks_run": 145,
+      "passed": 145,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 8,
+      "checks_run": 163,
+      "passed": 163,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 9,
+      "checks_run": 181,
+      "passed": 181,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    },
+    {
+      "round": 10,
+      "checks_run": 189,
+      "passed": 189,
+      "pass_rate": 1.0,
+      "failures": [],
+      "items_count": 4006
+    }
+  ],
+  "timestamp": "2026-05-19 01:34:16"
+}
