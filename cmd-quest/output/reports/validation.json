@@ -1,6 +1,6 @@
 {
-  "passed": 15,
-  "total": 15,
+  "passed": 17,
+  "total": 17,
   "pass_rate": 1.0,
   "errors": [],
   "checks": [
@@ -48,9 +48,7 @@
     },
     {
       "code": "unique_quest_id",
-      "pass": true,
-      "total": 3000,
-      "unique": 3000
+      "pass": true
     },
     {
       "code": "objective_6_types",
@@ -65,20 +63,38 @@
       ]
     },
     {
-      "code": "era_5_covered",
+      "code": "era_11_covered",
       "pass": true,
       "used": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "g1",
         "le",
         "ly",
         "nguyen",
         "tay_son",
         "tran"
+      ],
+      "required": [
+        "g1",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "ly",
+        "tran",
+        "le",
+        "tay_son",
+        "nguyen"
       ]
     },
     {
       "code": "all_have_giver",
-      "pass": true,
-      "missing": 0
+      "pass": true
     },
     {
       "code": "chains_34",
@@ -92,13 +108,20 @@
     {
       "code": "cultural_lock_title",
       "pass": true,
-      "violations": 0,
-      "samples": []
+      "violations": 0
     },
     {
       "code": "protagonist_arc_count",
       "pass": true,
       "found": 259
+    },
+    {
+      "code": "r50_prerequisites_field",
+      "pass": true
+    },
+    {
+      "code": "r50_chain_id_field",
+      "pass": true
     }
   ]
 }

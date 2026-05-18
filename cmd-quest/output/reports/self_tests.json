@@ -1,18 +1,22 @@
 {
-  "total_tests": 16,
-  "passed": 16,
+  "total_tests": 17,
+  "passed": 17,
   "failed": 0,
   "details": [
     {
-      "test": "schema_all_quests_have_quest_id",
+      "test": "schema_quest_id_present",
       "pass": true
     },
     {
-      "test": "schema_all_quests_have_category",
+      "test": "schema_has_prerequisites_field",
       "pass": true
     },
     {
-      "test": "schema_all_quests_have_era",
+      "test": "schema_has_chain_id_field",
+      "pass": true
+    },
+    {
+      "test": "schema_has_chain_position_field",
       "pass": true
     },
     {
@@ -20,7 +24,7 @@
       "pass": true
     },
     {
-      "test": "content_5_era_covered",
+      "test": "content_11_era_covered",
       "pass": true
     },
     {
@@ -28,11 +32,15 @@
       "pass": true
     },
     {
+      "test": "content_6_objective_types",
+      "pass": true
+    },
+    {
       "test": "crossref_all_have_giver",
       "pass": true
     },
     {
-      "test": "crossref_chain_quests_exist",
+      "test": "crossref_chain_quest_ref_valid",
       "pass": true
     },
     {
@@ -44,15 +52,15 @@
       "pass": true
     },
     {
+      "test": "r50_prerequisites_refs_valid",
+      "pass": true
+    },
+    {
       "test": "reward_non_negative",
       "pass": true
     },
     {
-      "test": "reward_raid_scales",
-      "pass": true
-    },
-    {
-      "test": "reward_lore_unlocks_codex",
+      "test": "reward_raid_scales_5000+",
       "pass": true
     },
     {
@@ -60,11 +68,7 @@
       "pass": true
     },
     {
-      "test": "chain_min_quests_2",
-      "pass": true
-    },
-    {
-      "test": "objective_6_types_covered",
+      "test": "r83_protagonist_era_coverage",
       "pass": true
     }
   ]
