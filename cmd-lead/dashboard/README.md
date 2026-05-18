@@ -1,38 +1,37 @@
-# SVTK DASHBOARD 20260519-003025 (cycle 33 — CRIT wave)
+# SVTK DASHBOARD 20260519-003434 (cycle 34 — content team active)
 
-**Foundation:** v2.8.0 ✓ | **Completions resolved:** 58
+**Foundation:** v2.8.0 ✓ | **Completions resolved:** 60
 
-## ⚠ Cycle 33 — 3 CRITICAL bugs found+fixed across CMD2+CMD4
+## 🎉 cmd-item ACTIVE — ship 4006 items
+| Type | Count |
+|---|---|
+| Weapon | 1202 |
+| Armor | 954 |
+| Material | 750 |
+| Quest_item | 530 |
+| Consumable | 520 |
+| Lore_item | 50 |
+| **Total** | **4006** (6 seeds + 4000 new) |
+- 6 rarity tiers, 5 era codes, 6 elements (BẠCH/HẮC removed, đúng R79)
+- Triple audit 3 layers × 10 rounds, 108 checks PASS, determinism 5x verified, SHA256 stable
+- 14 bugs fixed during scale-up (B1-B14)
+- Branch: staging-item-4k-hardened-v4-20260519-001440, commit 1895da5
 
-### CMD2 v4 (10 rounds) — 1 CRIT
-- **R7 CRIT Migration FK target column missing** — 003 inventory.player_id REFERENCES players(player_id) nhưng 001 không có column này. Integration test seed missing 3 NOT NULL fields.
-- Would block any real-Postgres deployment.
-- Fix: ALTER players ADD COLUMN player_id + backfill from username + UNIQUE idempotent + down mirror + seed updates
-- Why missed: pg-mem bypass real 001 (minimal table); DSN-gated integration never ran
-- 9 rounds clean
+## 📌 cmd-item RECOMMENDATIONS TO LEAD (anh quyết)
 
-### CMD4 R68 deep audit (5 rounds) — 2 CRIT + 4 HIGH + 2 MED + 2 LOW + 1 doc
-- **bug#43 CRIT** forensic_dump path-traversal guard (.. + absolute + null-byte)
-- **bug#50 CRIT** verifier rejects when checksum method field differs
-- bug#40 HIGH state_checksum binds tick (replay-tick-spoofing)
-- bug#41 HIGH replay_verifier match by TICK not index
-- bug#42 HIGH SamplingPolicy throws on unknown kind
-- bug#44 HIGH forensic safe-serializer handles circular refs
-- bug#45-46 MED safe-serializer markers (BigInt, NaN/Inf/Date/Symbol)
-- bug#47 LOW timestamp ISO-8601 XSS
-- bug#48 LOW duplicate tick verifier explicit throw
-- Tests 222 total (+22), GATE 1 37/37, tsc 0
+1. **MERGE branch staging-item-4k-hardened-v4** vào main (latest superset, 108-check pass)
+2. **CLOSE 5 obsolete staging branches** (v1.0/v1.1/v1.2/v1.2-hardened/v1.3)
+3. QA re-run sau merge để verify integration với cmd-quest cross-ref
 
-### QA_VERDICT 37/37 PASS ✓
+Em chưa tự merge — branch merge = decision lớn về content roadmap. Anh approve em làm.
 
-## Production blocker pre-fix (now resolved)
-- Real-Postgres deployment would fail at 003 migration apply (CMD2 R7)
-- Forensic dump path-traversal exploitable (CMD4 #43)
-- Replay tick spoofing possible (CMD4 #40)
+## CMD1 round 7 — cumulative 28 bugs
+- +5 bugs (1 HIGH DoS + 2 MED + 2 LOW)
+- Cumulative R1-R7: **28 bugs** (1 CRIT + 10 HIGH + 12 MED + 5 LOW)
+- 22 attack vectors hardened, 70/70 tests, tsc 0
 
-→ Sau cycle 33, production blockers cleared.
+## Content team status
+- cmd-item: **ACTIVE** ✓ (ship 4006)
+- cmd-npc/quest/map: chưa heartbeat
 
-## Content team
-- 0 file activity ~30+ phút. Có vẻ chưa thực sự start work.
-
-## Inbox FULLY CLEARED | Pending fixes EMPTY ✓
+## Pending fixes EMPTY ✓
