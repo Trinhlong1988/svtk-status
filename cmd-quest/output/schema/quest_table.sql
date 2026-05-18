@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS quests (
     objective_type      VARCHAR(16) NOT NULL,
     level_min           INTEGER NOT NULL DEFAULT 1,
     giver_npc_id        INTEGER NOT NULL REFERENCES npcs(npc_id),
+    giver_npc_name      VARCHAR(128),
+    giver_scene_id      INTEGER,
     reward_gold         INTEGER DEFAULT 0,
     reward_exp          INTEGER DEFAULT 0,
     reward_items        JSONB DEFAULT '[]'::jsonb,
