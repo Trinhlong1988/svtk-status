@@ -1,0 +1,28 @@
+{
+  "cmd": "cmd-qa-core",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "week": "Tuan 3 — full audit suite",
+  "ts_utc": "20260518T151250Z",
+  "audits_run": [
+    "audit_v280_strict.py",
+    "comprehensive_audit.py",
+    "audit_decisive_all.py"
+  ],
+  "summary": {
+    "audit_v280_strict": {
+      "last_round": "━━━ ROUND 10/10 — 17/17 = 100.0% ━━━",
+      "final_marker": "✅ 10 ROUNDS ZERO BUGS — Foundation v2.8.0 + 21 CMD COMPLETE"
+    },
+    "comprehensive_audit": {
+      "last_round": null,
+      "final_marker": null
+    },
+    "audit_decisive_all": {
+      "last_round": null,
+      "final_marker": null
+    }
+  },
+  "note": "OUTPUT path monkey-patched from /mnt/user-data/outputs (Linux) to foundation/ (Windows)."
+}
