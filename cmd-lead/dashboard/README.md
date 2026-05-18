@@ -1,31 +1,28 @@
-# SVTK DASHBOARD 20260518-232943 (cycle 22)
+# SVTK DASHBOARD 20260518-234728 (cycle 25)
 
-**Foundation:** v2.8.0 ✓ | **Completions resolved:** 42
+**Foundation:** v2.8.0 ✓ | **Completions resolved:** 45
 
-## Cycle 22 — CMD2 R44 Day 2: 75% → 95%
+## 🎉 Cycle 25 — R69 FULL CLOSE + R44 bug hunt
 
-- W1 battle_txn (SERIALIZABLE) → cmd-engine combat_runtime
-- W2 action_txn (REPEATABLE READ, 5 action types) → cmd-item + cmd-quest + cmd-engine
-- W3 optimistic update (auto-increment version)
-- W4 snapshot bind to txn
-- aggregate R44 suite: 25/25 PASS (971ms) | tsc strict 62 files EXIT 0
-- Next Day 3-4: 003 schema dry-apply + Postgres integration harness + cross-CMD callsite tracker
+### CMD4 Tuần 4 — R69 FULLY CLOSED
+| Sub-rule | Status |
+|---|---|
+| R69.1 packet category | ✅ Tuần 2 |
+| R69.2 monotonic seq | ✅ Tuần 2 |
+| R69.3 stale rejection | ✅ Tuần 2 |
+| R69.4 ACK/NACK protocol | ✅ Tuần 4 (HMAC-signed) |
+| R69.5 sliding window (50 unacked) | ✅ Tuần 4 |
+| R69.6 reset on reconnect | ✅ Tuần 2 |
+Tests: +37 new = **105 total** | GATE 1 expanded 25→**29/29 (100%)** | tsc strict 0
 
-## Content team (NEW Mr.Long start)
+### CMD2 bug hunt 10 rounds on R44 Day 1+2
+- 3 real bugs fixed (chi tiết trong cmd-db/MIGRATION_*)
+- 25/25 R44 aggregate tests still PASS
+- Next: Day 3 persistence integration test harness
 
-| Worker | Heartbeat | Files | Status |
-|---|---|---|---|
-| cmd-npc | ⏸ chưa push | 6 | initializing |
-| cmd-item | ⏸ chưa push | 36 (CMD2 migration) | initializing |
-| cmd-quest | ⏸ chưa push | 31 (CMD3 prev) | initializing |
-| cmd-map | ⏸ chưa push | 1 | initializing (sẽ build lớn) |
-
-Em standby pickup signals khi content team push.
+## Content team
+- cmd-npc/item/quest/map: vẫn chưa push heartbeat (chưa initialize xong hoặc đang đọc spec)
 
 ## Inbox FULLY CLEARED
 
-All 0. R44 inbox archived (CMD2 đã ship Day 1+2).
-
-## Pending fixes
-
-**EMPTY** ✓
+## Pending fixes: **EMPTY** ✓
