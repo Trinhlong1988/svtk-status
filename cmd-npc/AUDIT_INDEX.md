@@ -15,9 +15,10 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 21-30 | 2026-05-19 | 25→30 | 10 | [AUDIT_REPORT_ROUND_21_30_20260519-002705.md](status/AUDIT_REPORT_ROUND_21_30_20260519-002705.md) |
 | 31-40 | 2026-05-19 | 30→35 | 10 | [AUDIT_REPORT_ROUND_31_40_20260519-011348.md](status/AUDIT_REPORT_ROUND_31_40_20260519-011348.md) |
 | 41-50 | 2026-05-19 | 35→40 | 10 | [AUDIT_REPORT_ROUND_41_50_20260519-012526.md](status/AUDIT_REPORT_ROUND_41_50_20260519-012526.md) |
-| **51-60** | **2026-05-19** | **40→45** | **10** | (current build) |
+| 51-60 | 2026-05-19 | 40→45 | 10 | [AUDIT_REPORT_ROUND_51_60_20260519-014139.md](status/AUDIT_REPORT_ROUND_51_60_20260519-014139.md) |
+| **61-70** | **2026-05-19** | **45→50** | **10** | (current build) |
 
-**Cumulative total: 60 hidden bugs fixed.**
+**Cumulative total: 70 hidden bugs fixed.**
 
 ---
 
@@ -40,6 +41,9 @@ Existing historical flag (50 names), systemic hp anomaly alert (366 NPCs), mento
 
 ### Round 51-60: data sync + canonical refs + archive cap
 Rebirthable non-boss alert, era_start_year backfill, mentor_npc_idx canonical, alerts-processed cap, audit_history code sync, AUDIT_INDEX.md (this file), status-archived cap, rebirthable alert wire, validator R51-R53 checks, validator R54-R55 checks.
+
+### Round 61-70: epithet semantic + ecosystem cross-ref + doc freshness
+Boss epithet 100% with class-aware mapping (mini_boss/boss/thanh/than → matching epithet pool), epithet-class semantic match (80 mismatches eliminated), cmd.md audit reference note, AUDIT_INDEX round 61-70 entry, myth-tier hp sub-alert (Lạc Long Quân/Âu Cơ/Hùng Vương ceremonial hp), ecosystem cross-ref alert (CMD_QUEST/ITEM/BOSS/MAP existence check), validator R61-R65 checks (epithet 100%, class match, doc freshness, myth alert, ecosystem alert).
 
 ---
 
