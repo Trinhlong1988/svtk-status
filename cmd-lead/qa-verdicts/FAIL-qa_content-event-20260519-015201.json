@@ -1,0 +1,17 @@
+{
+  "qa": "qa_content",
+  "target": "event",
+  "verdict": "FAIL",
+  "evidence": {
+    "issues": [
+      {
+        "type": "count_below_target",
+        "expected": 600,
+        "actual": 10,
+        "worker": "event"
+      }
+    ],
+    "count": 10
+  },
+  "timestamp": "20260519-015201"
+}

@@ -1,0 +1,17 @@
+{
+  "qa": "qa_content",
+  "target": "boss",
+  "verdict": "FAIL",
+  "evidence": {
+    "issues": [
+      {
+        "type": "count_below_target",
+        "expected": 1200,
+        "actual": 13,
+        "worker": "boss"
+      }
+    ],
+    "count": 13
+  },
+  "timestamp": "20260519-015201"
+}
