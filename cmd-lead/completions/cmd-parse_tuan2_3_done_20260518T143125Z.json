@@ -1,0 +1,39 @@
+{
+  "cmd": "cmd-parse + cmd-network + cmd-qa-core",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T143125Z",
+  "task": "Tuần 2 (R69 + R66) + Tuần 3 (GATE 1) + Gap fix",
+  "delivered": {
+    "gap_1_fix": "moved 32 SVTK runtime tools from cmd-parse/output/ts_parsers → cmd-qa-core/output/audit (semantic correction)",
+    "gap_2_fix": "schtasks SVTK_CMD4_HEARTBEAT registered, fires every 30 phút, writes 3 hb JSON",
+    "gap_3_progress": "Tuần 2 + Tuần 3 done in same session",
+    "tuan_2A_R69": [
+      "cmd-network/output/r69/packet_envelope.ts (5 category + HMAC-SHA256 sig + canonical JSON)",
+      "cmd-network/output/r69/replay_cache.ts (10000 nonce bounded ring + monotonic seq + reset on reconnect)"
+    ],
+    "tuan_2B_R66": [
+      "cmd-parse/output/auth/r66_session_token.ts (opaque 256-bit + device fingerprint + reconnect TTL 1h + verify with timing-safe compare)"
+    ],
+    "tuan_3_GATE_1": {
+      "verifier_script": "cmd-qa-core/output/verdict/gate1_verify.ps1",
+      "verdict_file": "cmd-lead/completions/QA_VERDICT_20260518T143035Z.json",
+      "pass_count": 17,
+      "total": 17,
+      "pct": 100,
+      "verdict": "PASS"
+    }
+  },
+  "exit_status": {
+    "tooling_split_done": true,
+    "R69_packet_ordering_implemented": true,
+    "R66_auth_ready_for_new_session": true,
+    "gate_1_17_pass": true,
+    "cmd_lead_completions_ping": true
+  },
+  "foundation_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+  "foundation_verified": true,
+  "old_unchanged": true,
+  "note": "G1.16 initially false-failed do git autocrlf=true convert LF→CRLF on Windows checkout. Verifier fixed to normalize CRLF→LF before SHA-256 (matches git blob canonical hash)."
+}
