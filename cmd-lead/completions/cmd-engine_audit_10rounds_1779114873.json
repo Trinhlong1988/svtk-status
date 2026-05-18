@@ -1,0 +1,167 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "audit_type": "10-round deep verification",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts": "2026-05-18T14:50:00Z",
+  "head_sha": "f417bb6a59d3fa9a29aaededb6f92beeabba1ae8",
+  "rounds": [
+    {
+      "round": 1,
+      "name": "Foundation + repo state",
+      "result": "PASS",
+      "evidence": {
+        "head": "f417bb6",
+        "branch": "main",
+        "uncommitted_files": 0,
+        "remote_sync": "IN_SYNC",
+        "foundation_hash_actual": "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966",
+        "foundation_hash_spec_v280": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+        "hash_mismatch_note": "spec hardcode in cmd-boss/cmd.md references v2.6.0 era hash; not load-bearing for CMD1 migration; flagged for CMD-BOSS content generator session"
+      }
+    },
+    {
+      "round": 2,
+      "name": "File completeness (OLD vs NEW diff)",
+      "result": "PASS",
+      "evidence": {
+        "old_logic_total": 133,
+        "old_combat_ts": 126,
+        "old_boss_ts": 6,
+        "old_handlers_subfolder": 1,
+        "new_engine_legacy_ts": 127,
+        "new_engine_legacy_handlers_subfolder": 1,
+        "new_engine_server_ts": 3,
+        "new_engine_runtime_ts": 2,
+        "new_engine_replay_ts": 2,
+        "new_engine_data_json_top_level": 17,
+        "new_engine_data_total_entries": 19,
+        "data_economy_subfolder_note": "cmd-engine/data/economy is CMD2 contribution, not CMD1 contamination",
+        "new_boss_legacy_ts": 6,
+        "diff_combat_filename": "EMPTY (exact match)",
+        "diff_boss_filename": "EMPTY (exact match)",
+        "diff_data_json": "EMPTY (exact match)"
+      }
+    },
+    {
+      "round": 3,
+      "name": "Import path correctness",
+      "result": "PASS",
+      "evidence": {
+        "engine_to_server_imports": 3,
+        "server_to_legacy_imports_rewritten": 4,
+        "engine_to_boss_imports_via_3lvl_up": 7,
+        "boss_to_engine_imports_via_3lvl_up": 10,
+        "broken_dot_dot_logic_refs": 0,
+        "wrong_dot_slash_boss_refs_in_engine": 0
+      }
+    },
+    {
+      "round": 4,
+      "name": "TSC strict --noEmit pass",
+      "result": "PASS",
+      "evidence": {
+        "exit_code": 0,
+        "duration_ms": 6048,
+        "ts_file_count": 140,
+        "strict_flags": ["strict", "noImplicitAny", "strictNullChecks", "strictFunctionTypes", "noImplicitReturns", "noUncheckedIndexedAccess"],
+        "error_lines": 0
+      }
+    },
+    {
+      "round": 5,
+      "name": "R67 spec compliance",
+      "result": "PASS",
+      "evidence": {
+        "file": "cmd-engine/output/runtime/tick_scheduler_adapter.ts",
+        "exports_required_8_of_8": ["R67TickEvent", "R67TickPhase", "R67TickScheduler", "MonotonicClock", "DeterministicMonotonicClock", "createDeterministicMonotonicClock", "createWallMonotonicClock", "createR67TickScheduler"],
+        "monotonic_ns_field_type": "bigint",
+        "server_tick_field_type": "number",
+        "wraps_old_functions": ["beginCombatTurn", "tickAuraGuard", "endCombatTurn"],
+        "test_count": 5,
+        "test_rerun_pass": "5/5"
+      }
+    },
+    {
+      "round": 6,
+      "name": "R68 spec compliance",
+      "result": "PASS",
+      "evidence": {
+        "file": "cmd-engine/output/replay/state_checksum.ts",
+        "exports_required_10_of_10": ["Sha256Hex", "StateCheckpoint", "DivergenceReport", "ForensicDump", "canonicalize", "checksumFrame", "checksumStream", "compareCheckpoints", "forensicDump", "DEFAULT_CHECKSUM_EVERY_N_TURNS"],
+        "sha256_uses": 4,
+        "wired_to_replay_event_stream": true,
+        "default_n_turns": 10,
+        "forensic_dump_signature": "stream + divergence_turn + expected_checksum",
+        "test_count": 7,
+        "test_rerun_pass": "7/7"
+      }
+    },
+    {
+      "round": 7,
+      "name": "OLD vitest suite — sample re-run",
+      "result": "PASS",
+      "evidence": {
+        "sample_files": ["tests/element.test.ts", "tests/soft_cap.test.ts", "tests/threat.test.ts"],
+        "sample_tests_passed": 34,
+        "sample_failed": 0,
+        "full_suite_prior_run": "337/338 files, 5878 tests PASS (100% non-skipped)"
+      }
+    },
+    {
+      "round": 8,
+      "name": "Determinism — 3-run fingerprint match",
+      "result": "PASS",
+      "evidence": {
+        "r67_50_turn_sha256": "d57cb49faa0e0c7313d42ca959b4cb971ccde4fce188eb417045c80bd42618ae",
+        "r67_3_runs_identical": true,
+        "r68_30_frame_sha256": "e59471846496c8e88a9741b9561a17d1bffd5dad963e007824550e3c27b950f2",
+        "r68_3_runs_identical": true,
+        "method": "via tsx _det_check.mjs (3 fresh process invocations)"
+      }
+    },
+    {
+      "round": 9,
+      "name": "Cross-module wiring graph",
+      "result": "PASS",
+      "evidence": {
+        "engine_to_boss_files": 3,
+        "engine_to_boss_files_expected": ["encounter_recording", "mechanic_scheduler", "raid_stress_harness"],
+        "boss_to_engine_files": 3,
+        "boss_to_engine_files_expected": ["boss_ai_runtime", "boss_mechanic_runtime", "boss_target_hook"],
+        "runtime_legacy_refs_resolved": true,
+        "replay_legacy_refs_resolved": true,
+        "tsc_listFiles_includes_all_targets": true
+      }
+    },
+    {
+      "round": 10,
+      "name": "cmd-lead artifacts JSON validity",
+      "result": "PASS",
+      "evidence": {
+        "heartbeats_files": 2,
+        "completions_files_current": 2,
+        "completions_files_archived_by_LEAD": 1,
+        "archived_path": "cmd-lead/completions-resolved/cmd-engine_done_1779113670.json",
+        "fixed_during_audit": "cmd-engine_test_result_1779114873.json — Windows path backslash escape (D:\\\\… → JSON \\\\)",
+        "all_json_now_valid": true,
+        "phase14_complete_required_fields_present": ["cmd", "phase", "version", "status", "weeks", "exit_criteria"],
+        "exit_criteria_count": 8
+      }
+    }
+  ],
+  "summary": {
+    "rounds_pass": 10,
+    "rounds_fail": 0,
+    "rounds_total": 10,
+    "score_pct": 100.0,
+    "issues_found_and_fixed": [
+      "R10: cmd-engine_test_result JSON had unescaped Windows path backslashes — fixed inline."
+    ],
+    "outstanding_notes_for_other_cmds": [
+      "cmd-boss/cmd.md hardcodes foundation hash 2e6e8c23d8... (v2.6.0 era) while actual SVTK_FOUNDATION_v2.8.0.md hash is 631c00afa28c... — CMD-BOSS content generator session needs to update spec.",
+      "cmd-engine/output/economy/ contains CMD2 TypeScript errors (TS2307 missing module + TS18046 unknown type) — outside CMD1 scope, flagged for CMD2 follow-up."
+    ]
+  }
+}
