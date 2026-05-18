@@ -1,0 +1,17 @@
+{
+  "cmd": "cmd-item",
+  "session_role": "CMD ITEM",
+  "task": "Wire 3 R44 entry points: (1) withActionTxn('trade') around loot/transfer, (2) pickupItem (P1.3) replace existing item-pickup, (3) optimisticUpdate for inventory_row version-aware update.",
+  "status": "PARTIAL",
+  "ts": "2026-05-18T18:29:34Z",
+  "evidence": {
+    "status": "PARTIAL",
+    "stub_path": "cmd-item\\output\\runtime\\item_actions_R44_wire.ts",
+    "note": "TS stub ship; CMD ENGINE consume runtime; verify scanner re-run for item coverage 3/3",
+    "wire_points": [
+      "transferItemAtomic (withActionTxn trade)",
+      "onItemDrop (withActionTxn pickup + pickupItem)",
+      "applyItemStatChange (optimisticUpdate inventory_row)"
+    ]
+  }
+}
