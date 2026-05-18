@@ -1,0 +1,60 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "Week 2 Day 2 — Wire R44 W1/W2/W3/W4 per Mr.Long 'Day 2 wire W1/W2/W3/W4'",
+  "status": "day2_complete",
+  "ts": "2026-05-18T16:26:31Z",
+  "spec_ref": "Foundation v2.8.0 R44 5-wrapper + CMD_DB v2.4.2 § P1.1",
+  "deliverables": {
+    "W1_battle_txn": {
+      "file": "cmd-db/output/wrappers/w1_battle_txn.ts",
+      "exports": ["withBattleStart", "withBattleEnd", "BattleStartPayload", "BattleEndPayload"],
+      "isolation": "SERIALIZABLE",
+      "owner_consumer": "cmd-engine (CMD1) combat_runtime"
+    },
+    "W2_action_txn": {
+      "file": "cmd-db/output/wrappers/w2_action_txn.ts",
+      "exports": ["withActionTxn", "W2ActionType"],
+      "isolation": "REPEATABLE READ",
+      "allowed_action_types": ["skill_cast", "item_use", "trade", "gold_change", "reward_claim"],
+      "rejects": ["battle_start", "battle_end", "rollback"],
+      "owner_consumer": "cmd-item (loot/transfer), cmd-quest (reward_claim), cmd-engine (skill_cast/item_use)"
+    },
+    "W3_optimistic": {
+      "file": "cmd-db/output/wrappers/w3_optimistic.ts",
+      "exports": ["optimisticUpdate", "OptimisticConflictError", "OptimisticUpdateSpec"],
+      "auto_increments": "version → version + 1 on success",
+      "owner_consumer": "any CMD doing version-aware UPDATE"
+    },
+    "W4_snapshot": {
+      "file": "cmd-db/output/wrappers/w4_snapshot.ts",
+      "exports": ["bindSnapshotToTxn", "verifySnapshotBinding", "SnapshotBinding"],
+      "checksum_source": "cmd-engine/output/replay/state_checksum.ts (CMD1 commit dd3c7e3) — single source of truth",
+      "persist_location": "transaction_log.target_state JSONB (r68_checksum, r68_frame_id, r68_turn, r68_bound_at)",
+      "owner_consumer": "cmd-engine combat tick stamping, cmd-qa-core replay-divergence audit"
+    },
+    "documentation": "cmd-db/output/wrappers/README.md (API reference + integration examples + 3 honest gaps)"
+  },
+  "verification": {
+    "tsc_strict": "tsconfig.cmd2.json EXIT 0 across 62 files (was 58 + 4 wrapper + 1 test)",
+    "vitest_W1-W4": "12/12 PASS, 174ms",
+    "vitest_anti_dupe": "13/13 PASS, 227ms (Day 1 unchanged)",
+    "aggregate_R44_suite": "25/25 PASS, 971ms"
+  },
+  "honest_gaps_day2": [
+    "W3 does not sanitize SQL identifiers — caller MUST whitelist (first-party only)",
+    "W4 binds to transaction_log.target_state JSONB; upgrade to dedicated state_checksums table when QA-CORE bulk audit needs",
+    "pg-mem test gap: 3/12 W4 tests use static source-inspection (pg-mem lacks jsonb || operator); production Postgres OK"
+  ],
+  "compliance_progress": {
+    "before_day2": "~75% (Day 1 P1.1-P1.5 logic + 003 schema)",
+    "after_day2": "~95% (W1+W2+W3+W4 API surface shipped + cross-CMD READMEs). Remaining 5% = cross-CMD callsite count verify after CMD1/CMD3 wire."
+  },
+  "cross_cmd_handshake": {
+    "to_cmd_engine_CMD1": "withBattleStart / withBattleEnd ready for combat_runtime bracketing; bindSnapshotToTxn ready for post-tick checksum stamping. See cmd-db/output/wrappers/README.md § W1, § W4.",
+    "to_cmd_item_self": "withActionTxn('trade') for loot transfer; optimisticUpdate for inventory_row version control. See README § W2, § W3.",
+    "to_cmd_quest_CMD3": "withActionTxn('reward_claim') for quest reward grant. See README § W2.",
+    "to_cmd_qa_core": "verifySnapshotBinding for replay-divergence audit; bindSnapshotToTxn already populates target_state JSONB. See README § W4."
+  },
+  "next_day": "Day 3-4: continue per spec — 003 schema dry-apply test + write Postgres integration test harness (skip pg-mem) + cross-CMD callsite tracker."
+}
