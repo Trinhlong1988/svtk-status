@@ -1,0 +1,75 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "Week 2 Day 1 — R44 NEW impl kickoff per Mr.Long 'Vào CMD2: Kick R44 NEW impl Week 2 Day 1'",
+  "status": "day1_complete",
+  "ts": "2026-05-18T16:11:59Z",
+  "spec_ref": "cmd-db/cmd.md § P1.1-P1.5 (CMD_DB v2.4.2 PATCH)",
+  "inbox_dispatch_resolved": "cmd-db/inbox/fix-cmd_db_w2_r44_below_threshold-20260518-213324.json",
+  "deliverables": {
+    "schema_migration": {
+      "up": "cmd-db/migrations/003_anti_dupe_schema.sql",
+      "down": "cmd-db/migrations/003_anti_dupe_schema.down.sql",
+      "tables_added": [
+        "pending_actions (P1.1 idempotency cache + P1.5 stale recovery)",
+        "gm_action_log (P1.4 AD12 audit)",
+        "transaction_log (AD12 source)",
+        "item_instances (AD12 + pickupItem)",
+        "item_transfer_log (AD12 compensation trail)",
+        "currency_change_log (AD12 gold compensation trail)",
+        "inventory (P1.3 slot 0-29 CHECK)"
+      ],
+      "functions_added": ["find_free_inventory_slot(p_player_id)"],
+      "columns_added": ["players.gold BIGINT NOT NULL DEFAULT 0"]
+    },
+    "anti_dupe_core": {
+      "file": "cmd-db/output/anti_dupe/anti_dupe.ts",
+      "exports": [
+        "EXPIRE_MAP (8 action_type → INTERVAL literal)",
+        "ActionType (keyof EXPIRE_MAP)",
+        "canonicalStringify (P1.2 recursive)",
+        "computePayloadHash (sha256)",
+        "executeWithIdempotency<T> (P1.1 SERIALIZABLE retry loop, maxRetries=3, exp backoff + jitter)",
+        "IdempotencyResult<T>",
+        "INVENTORY_MAX_SLOTS = 30",
+        "PickupResult",
+        "pickupItem (P1.3 capacity check)",
+        "RollbackResult",
+        "ad12_rollback (P1.4 rollback-idempotency)"
+      ]
+    },
+    "stale_recovery_cron": {
+      "file": "cmd-db/output/cron/stale_pending_runner.ts",
+      "exports": [
+        "StaleRecoveryResult",
+        "recoverStalePending (P1.5 FOR UPDATE SKIP LOCKED LIMIT 1000 + 24h hard delete)",
+        "StalePendingSchedulerHandle (with stop)",
+        "startStalePendingScheduler (5min ± 30s jitter, initial 30s delay)"
+      ]
+    },
+    "self_audit_test": {
+      "file": "cmd-db/output/anti_dupe/anti_dupe.test.ts",
+      "framework": "vitest + pg-mem in-memory Postgres",
+      "tests_total": 13,
+      "tests_pass": 13,
+      "tests_fail": 0,
+      "audit_items_covered": "12/12 (Item #10+#11 via static source-inspection because pg-mem cannot parse FOR UPDATE SKIP LOCKED in CTE)"
+    }
+  },
+  "verification": {
+    "tsc_strict": "node ./node_modules/typescript/bin/tsc --project tsconfig.cmd2.json --noEmit → EXIT 0",
+    "vitest": "13/13 PASS, 1.26s",
+    "self_audit_12_items": "all PASS (Items 1, 1b, 1c, 2, 2b, 3, 4, 5, 6, 7, 8, 9, 10+11, 12)"
+  },
+  "honest_gaps_per_spec": [
+    "Gap 1 (P1.3) INVENTORY_MAX_SLOTS=30 hardcoded — defer to config when CMD inventory expansion arrives",
+    "Gap 2 (P1.4) gm_action_log retention policy not locked — Foundation v2.5 R53 backlog",
+    "Gap 3 (P1.5) in-process scheduler (setTimeout) — defer pg_cron for production",
+    "Gap 4 (P1.2) bigint serialization workaround `bigint:N` — needs real Postgres BIGINT roundtrip when CMD QA-CORE wires up"
+  ],
+  "compliance_progress": {
+    "before_day1": "~30% (per r44_compliance.md)",
+    "after_day1": "~75% (P1.1+P1.2+P1.3+P1.4+P1.5 logic shipped + 003 schema + 12-item self-audit). Wire to live cmd-engine/cmd-quest pending Day 2+ R44 W1-W4 wrapper API surface."
+  },
+  "next_day": "Day 2: integration wire — W1 battle_txn wrapper API for cmd-engine (CMD1), W2 action wrapper for cmd-item (loot/transfer), W3 optimistic version check helper, W4 R68 compute_state_checksum on top of cmd-engine/output/replay/state_checksum.ts (already shipped by CMD1 commit dd3c7e3)."
+}
