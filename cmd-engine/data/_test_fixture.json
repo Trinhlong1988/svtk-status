@@ -1,0 +1,5 @@
+[
+  { "id": "fix_a", "label": "Fixture A", "value": 100 },
+  { "id": "fix_b", "label": "Fixture B", "value": 200 },
+  { "id": "fix_c", "label": "Fixture C", "value": 50 }
+]

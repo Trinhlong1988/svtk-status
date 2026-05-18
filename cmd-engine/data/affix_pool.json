@@ -1,0 +1,63 @@
+{
+  "_doc": "Affix pool per slot. Roll qua isolated stream rng_affix. Source: spec/08 Mục V + Phase 7 Mục X. BP scale ×10000.",
+  "_locked_by": "Mr.Long 2026-05-14 (initial seed — sẽ mở rộng theo content phase)",
+
+  "pools": {
+    "vu_khi": [
+      { "id": "affix_vk_crit_minor",   "type": "crit_rate_bp",    "min": 100,  "max": 300 },
+      { "id": "affix_vk_crit_major",   "type": "crit_rate_bp",    "min": 400,  "max": 1000 },
+      { "id": "affix_vk_pen_minor",    "type": "penetration_bp",  "min": 200,  "max": 500 },
+      { "id": "affix_vk_pen_major",    "type": "penetration_bp",  "min": 600,  "max": 1500 },
+      { "id": "affix_vk_atk_flat",     "type": "sat_luc",         "min": 10,   "max": 50 },
+      { "id": "affix_vk_int_flat",     "type": "phap_luc",        "min": 10,   "max": 50 },
+      { "id": "affix_vk_lifesteal",    "type": "lifesteal_bp",    "min": 100,  "max": 800 },
+      { "id": "affix_vk_crit_dmg",     "type": "crit_dmg_bp",     "min": 500,  "max": 2000 }
+    ],
+    "gang_tay": [
+      { "id": "affix_gt_atk_flat",     "type": "sat_luc",         "min": 5,    "max": 30 },
+      { "id": "affix_gt_crit_dmg",     "type": "crit_dmg_bp",     "min": 300,  "max": 1500 },
+      { "id": "affix_gt_pen",          "type": "penetration_bp",  "min": 100,  "max": 500 },
+      { "id": "affix_gt_crit_minor",   "type": "crit_rate_bp",    "min": 100,  "max": 400 }
+    ],
+    "mu": [
+      { "id": "affix_mu_int_flat",     "type": "phap_luc",        "min": 5,    "max": 30 },
+      { "id": "affix_mu_hp_flat",      "type": "hp",              "min": 30,   "max": 150 },
+      { "id": "affix_mu_crit_minor",   "type": "crit_rate_bp",    "min": 100,  "max": 300 },
+      { "id": "affix_mu_dodge",        "type": "dodge_bp",        "min": 100,  "max": 400 }
+    ],
+    "ao": [
+      { "id": "affix_ao_hp_flat",      "type": "hp",              "min": 50,   "max": 200 },
+      { "id": "affix_ao_def_flat",     "type": "defense",         "min": 5,    "max": 30 },
+      { "id": "affix_ao_threat",       "type": "threat_coef_bp",  "min": 1000, "max": 3000 },
+      { "id": "affix_ao_hp_regen",     "type": "hp_regen_per_turn","min": 5,   "max": 25 }
+    ],
+    "quan": [
+      { "id": "affix_qu_def_flat",     "type": "defense",         "min": 5,    "max": 25 },
+      { "id": "affix_qu_dodge",        "type": "dodge_bp",        "min": 100,  "max": 600 },
+      { "id": "affix_qu_hp_regen",     "type": "hp_regen_per_turn","min": 5,   "max": 20 },
+      { "id": "affix_qu_agi",          "type": "agility",         "min": 3,    "max": 15 }
+    ],
+    "giay": [
+      { "id": "affix_gy_agi",          "type": "agility",         "min": 5,    "max": 30 },
+      { "id": "affix_gy_dodge",        "type": "dodge_bp",        "min": 200,  "max": 800 },
+      { "id": "affix_gy_crit_minor",   "type": "crit_rate_bp",    "min": 100,  "max": 300 }
+    ],
+    "nhan": [
+      { "id": "affix_nh_lifesteal",    "type": "lifesteal_bp",    "min": 200,  "max": 1200 },
+      { "id": "affix_nh_mana_regen",   "type": "mana_regen_per_turn","min": 5, "max": 25 },
+      { "id": "affix_nh_crit_minor",   "type": "crit_rate_bp",    "min": 100,  "max": 400 },
+      { "id": "affix_nh_pen",          "type": "penetration_bp",  "min": 100,  "max": 400 }
+    ],
+    "day_chuyen": [
+      { "id": "affix_dc_hp_regen",     "type": "hp_regen_per_turn","min": 10,  "max": 30 },
+      { "id": "affix_dc_mana_regen",   "type": "mana_regen_per_turn","min": 10,"max": 30 },
+      { "id": "affix_dc_crit_minor",   "type": "crit_rate_bp",    "min": 100,  "max": 400 },
+      { "id": "affix_dc_int_flat",     "type": "phap_luc",        "min": 5,    "max": 25 }
+    ],
+    "ngoc": [
+      { "id": "affix_ng_crit_minor",   "type": "crit_rate_bp",    "min": 200,  "max": 700 },
+      { "id": "affix_ng_crit_major",   "type": "crit_rate_bp",    "min": 500,  "max": 700 },
+      { "id": "affix_ng_crit_dmg",     "type": "crit_dmg_bp",     "min": 500,  "max": 3000 }
+    ]
+  }
+}

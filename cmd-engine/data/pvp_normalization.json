@@ -1,0 +1,86 @@
+{
+  "_doc": "PvP equipment normalization caps per mode. Anti one-shot + tactical scaling. CMD2 Phase 11 Mục IX + Batch 5.4 A1.b config update.",
+  "_locked_by": "Mr.Long 2026-05-14 (Batch 5.4)",
+  "_dna_lock": "TS Online PvP — tactical, KHÔNG stat explosion. Companion vẫn meaningful nhưng cap nặng hơn.",
+  "_a1b_note": "hp_floor activation rules: arena/battleground → cap_per_hit đủ chặt → hp_floor=0 (cap-only guard). open_pvp → cap 90% + floor 15% → max effective damage 85% (floor TRIGGERS khi raw > 85%). Verified Batch 5.4 test.",
+
+  "modes": {
+    "arena_1v1": {
+      "_doc": "Solo arena — strictest cap, no proc abuse. hp_floor=0 (cap 40% đã đủ anti-one-shot).",
+      "max_crit_rate_bp": 3000,
+      "max_crit_dmg_bp": 18000,
+      "max_penetration_bp": 4000,
+      "max_lifesteal_bp": 800,
+      "max_dodge_bp": 2000,
+      "max_proc_chance_bp": 2000,
+      "damage_cap_per_hit_pct_bp": 4000,
+      "hp_floor_pct_bp": 0,
+      "stat_scaling_bp": 9500
+    },
+    "arena_3v3": {
+      "_doc": "Group arena — slight loosening, team comp matters. hp_floor=0 (cap 50% guard).",
+      "max_crit_rate_bp": 3500,
+      "max_crit_dmg_bp": 19000,
+      "max_penetration_bp": 4500,
+      "max_lifesteal_bp": 1000,
+      "max_dodge_bp": 2200,
+      "max_proc_chance_bp": 2500,
+      "damage_cap_per_hit_pct_bp": 5000,
+      "hp_floor_pct_bp": 0,
+      "stat_scaling_bp": 9700
+    },
+    "battleground": {
+      "_doc": "Large battleground 5v5+ — looser, tank meaningful. hp_floor=0 (cap 60% guard).",
+      "max_crit_rate_bp": 4000,
+      "max_crit_dmg_bp": 20000,
+      "max_penetration_bp": 5000,
+      "max_lifesteal_bp": 1200,
+      "max_dodge_bp": 2500,
+      "max_proc_chance_bp": 3000,
+      "damage_cap_per_hit_pct_bp": 6000,
+      "hp_floor_pct_bp": 0,
+      "stat_scaling_bp": 10000
+    },
+    "open_pvp": {
+      "_doc": "World open PvP — high cap 90% + hp_floor 15% (Batch 5.4 A1.b activation). Risk = reward NHƯNG floor đảm bảo còn ≥ 15% HP sau bất kỳ hit nào.",
+      "max_crit_rate_bp": 5000,
+      "max_crit_dmg_bp": 25000,
+      "max_penetration_bp": 8000,
+      "max_lifesteal_bp": 2000,
+      "max_dodge_bp": 3000,
+      "max_proc_chance_bp": 5000,
+      "damage_cap_per_hit_pct_bp": 9000,
+      "hp_floor_pct_bp": 1500,
+      "stat_scaling_bp": 10000
+    }
+  },
+
+  "companion_pvp_ratio_bp": {
+    "_doc": "Companion stat scaling trong PvP — yếu hơn PvE để tránh 2v1 trá hình.",
+    "arena_1v1": 4500,
+    "arena_3v3": 5000,
+    "battleground": 5500,
+    "open_pvp": 6000
+  },
+
+  "proc_normalization_rules": {
+    "_doc": "Proc effect normalization rules per mode.",
+    "block_passive_types_in_pvp": [
+      "instakill_bonus", "infinite_lifesteal", "stack_unlimited"
+    ],
+    "max_simultaneous_procs_per_action": 3,
+    "proc_value_scaling_bp": {
+      "arena_1v1": 7000,
+      "arena_3v3": 8000,
+      "battleground": 9000,
+      "open_pvp": 10000
+    }
+  },
+
+  "telemetry_severity": {
+    "stat_overcapped": "info",
+    "damage_cap_hit": "warning",
+    "blocked_passive_used": "anomaly",
+    "one_shot_suspect": "critical"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "_doc": "Itemization runtime constants. BP scale ×10000 (R30). INT only (R31). Source: spec/08 + CMD2.docx FIX (1-12 final hardening). Hot-fix-able.",
+  "_locked_by": "Mr.Long 2026-05-14",
+
+  "registry_version": "1.0.0",
+  "formula_version": "v15.0.0",
+  "softcap_version": "v1.0.0",
+
+  "modifier_recursion": {
+    "max_depth": 8,
+    "abort_mode": "abort_with_log",
+    "_doc_anomaly": "Telemetry emit 'recursion_aborted' khi hit max_depth — anomaly tier nếu liên tục."
+  },
+
+  "perf_budget": {
+    "max_aggregation_us": 10,
+    "max_modifier_count": 64,
+    "max_telemetry_per_tick": 100
+  },
+
+  "bao_kich_global_cap_bp": 5000,
+
+  "stat_weight": {
+    "_doc": "Weight for compute total stat power (StatBudgetRuntime). Sum(stat × weight) = power score.",
+    "hp": 1,
+    "sat_luc": 8,
+    "phap_luc": 8,
+    "defense": 5,
+    "agility": 6,
+    "hp_regen_per_turn": 4,
+    "mana_regen_per_turn": 4,
+    "crit_rate_bp": 8,
+    "crit_dmg_bp": 5,
+    "penetration_bp": 7,
+    "lifesteal_bp": 6,
+    "dodge_bp": 6,
+    "threat_coef_bp": 4
+  },
+
+  "max_safe_int_stat": 1000000,
+
+  "bond_multiplier": {
+    "_doc": "Bond level → multiplier BP. Linear formula: base_bp + level × per_level_bp. Hot-fix-able.",
+    "base_bp": 10000,
+    "per_level_bp": 500,
+    "max_level": 10,
+    "max_bp": 15000
+  },
+
+  "rng_streams": {
+    "_doc": "RNG ownership table (CMD2.docx FINAL FIX #6). Stream MUST NOT be consumed across owners.",
+    "rng_loot": {
+      "owner_module": "loot_drop_system",
+      "seed_pattern": "rng_loot:<encounter_id>:<drop_index>",
+      "forbidden_consumers": ["itemization", "combat_proc", "quest", "world_event"]
+    },
+    "rng_affix": {
+      "owner_module": "itemization",
+      "seed_pattern": "rng_affix:<player_id>:<item_id>:<roll_index>",
+      "forbidden_consumers": ["loot", "npc_spawn", "combat_proc", "quest", "world_event"]
+    },
+    "rng_rarity": {
+      "owner_module": "itemization",
+      "seed_pattern": "rng_rarity:<source_event>:<roll_index>",
+      "forbidden_consumers": ["loot", "npc_spawn", "combat_proc", "quest", "world_event"]
+    }
+  },
+
+  "telemetry_severity": {
+    "_doc": "Telemetry severity tiers (CMD2.docx FINAL FIX #10). Critical = persist snapshot.",
+    "tiers": ["info", "warning", "anomaly", "critical"],
+    "critical_persist_snapshot": true,
+    "anomaly_threshold_per_tick": 3
+  }
+}

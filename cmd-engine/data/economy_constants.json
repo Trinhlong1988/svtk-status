@@ -1,0 +1,70 @@
+{
+  "_doc": "Economy foundation constants. Anti-inflation lock + sink/source tracking config. CMD2 Phase 11 Mục VII-VIII.",
+  "_locked_by": "Mr.Long 2026-05-14",
+  "_dna_lock": "TS Online economy — gold/item flow controlled, no AAA loot explosion.",
+
+  "registry_version": "1.0.0",
+  "formula_version": "v1.0.0",
+
+  "inflation": {
+    "_doc": "Inflation guard: gold supply growth phải nằm trong target_per_day_bp.",
+    "target_growth_per_day_bp": 200,
+    "anomaly_threshold_bp": 1000,
+    "critical_threshold_bp": 5000,
+    "snapshot_window_ticks": 100000,
+    "tick_per_day_estimate": 86400
+  },
+
+  "gold_source_caps_per_tick": {
+    "_doc": "Gold source caps per tick per player (anti farm bot). 0 = uncapped.",
+    "quest": 5000,
+    "monster_drop": 2000,
+    "boss_drop": 25000,
+    "raid_drop": 50000,
+    "dungeon_clear": 15000,
+    "event_reward": 10000,
+    "vendor_sell": 20000,
+    "daily_login": 1000,
+    "salvage_refund": 500
+  },
+
+  "gold_sink_min_ratio_bp": {
+    "_doc": "Min ratio (BP) of gold supply phải bị sunk over inflation window. Phòng deflation.",
+    "ratio_bp": 7000,
+    "_explain": "70% gold sourced phải bị sunk lại — repair, vendor_buy, upgrade, crafting."
+  },
+
+  "item_source_kinds": [
+    "drop_mob", "drop_boss", "drop_raid", "drop_dungeon",
+    "quest_reward", "event_reward", "craft_output", "salvage_byproduct",
+    "shop_purchase", "lottery_reward", "achievement_reward"
+  ],
+
+  "item_sink_kinds": [
+    "salvage_input", "vendor_sell", "transmute_input", "upgrade_consume",
+    "set_dismantle", "gem_socket", "crafting_input", "dropped_on_death"
+  ],
+
+  "rarity_inflation_caps": {
+    "_doc": "Số item per rarity TỐI ĐA per player per day. Anti hoarding mythic.",
+    "common": 0,
+    "rare": 0,
+    "epic": 50,
+    "legendary": 10,
+    "mythic": 2
+  },
+
+  "telemetry_severity": {
+    "gold_inflow_anomaly": "anomaly",
+    "gold_outflow_anomaly": "anomaly",
+    "rarity_saturation": "warning",
+    "set_piece_inflation": "warning",
+    "duplicate_drop_detected": "critical",
+    "replay_drift_loot": "critical",
+    "sink_source_imbalance": "anomaly"
+  },
+
+  "replay_drift_alert_count": 1,
+  "replay_drift_window_rolls": 1000000,
+  "_replay_doc": "Max 1 loot mismatch per 1 million rolls before alert critical."
+}

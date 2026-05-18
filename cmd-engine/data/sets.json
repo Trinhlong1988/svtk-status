@@ -1,0 +1,29 @@
+{
+  "_doc": "Set bonus configs. Source: spec/08 Mục VII. Set bonus = utility/conditional, KHÔNG flat damage (R27).",
+  "_locked_by": "Mr.Long 2026-05-14",
+  "_conflict_policy_doc": "CMD2.docx FINAL FIX #9. SUPPORT: strongest_only / additive / exclusive_group / diminishing_return.",
+
+  "sets": [
+    {
+      "set_id": "set_bach_dang_kiem_phap",
+      "name_vi": "Bộ Bạch Đằng Kiếm Pháp",
+      "archetype": "burst_kim",
+      "pieces": [],
+      "conflict_policy": "strongest_only",
+      "bonuses": [
+        { "pieces": 2, "passive_type": "crit_vs_thuy_target", "value_bp_or_raw": 500, "condition": "target_element_THUY" },
+        { "pieces": 3, "passive_type": "stun_resist_trio_bach_dang", "value_bp_or_raw": 5000, "condition": "trio_bach_dang_active" }
+      ]
+    },
+    {
+      "set_id": "set_long_hua_truyen_ky",
+      "name_vi": "Bộ Long Hứa Truyền Kỳ",
+      "archetype": "sustain_kim",
+      "pieces": ["item_kim_nhan_long_hua"],
+      "conflict_policy": "additive",
+      "bonuses": [
+        { "pieces": 2, "passive_type": "lifesteal_burst_after_crit", "value_bp_or_raw": 800 }
+      ]
+    }
+  ]
+}
