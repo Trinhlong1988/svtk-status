@@ -531,7 +531,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 1",
           "description": "Âu Lạc — Thục Phán — Hồi 1",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "kill",
           "level_min": 11,
           "giver_npc_id": 2,
@@ -539,11 +539,9 @@
           "reward_exp": 1570,
           "reward_items": [],
           "reward_reputation": 10,
-          "prerequisites": [
-            17
-          ],
-          "chain_id": "SVTK_CHAIN_F1_1",
-          "chain_position": 13,
+          "prerequisites": [],
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_0",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -554,7 +552,7 @@
           "category": "side",
           "title": "Âu Lạc — Thục Phán — Hồi 2",
           "description": "Âu Lạc — Thục Phán — Hồi 2",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "kill",
           "level_min": 12,
           "giver_npc_id": 3,
@@ -577,7 +575,7 @@
           "category": "lore",
           "title": "Âu Lạc — Thục Phán — Hồi 3",
           "description": "Âu Lạc — Thục Phán — Hồi 3",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "collect",
           "level_min": 12,
           "giver_npc_id": 4,
@@ -592,7 +590,8 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_2",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 22,
@@ -600,7 +599,7 @@
           "category": "lore",
           "title": "Âu Lạc — Thục Phán — Hồi 4",
           "description": "Âu Lạc — Thục Phán — Hồi 4",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "collect",
           "level_min": 13,
           "giver_npc_id": 2,
@@ -615,7 +614,8 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_3",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 23,
@@ -623,7 +623,7 @@
           "category": "side",
           "title": "Âu Lạc — Thục Phán — Hồi 5",
           "description": "Âu Lạc — Thục Phán — Hồi 5",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "deliver",
           "level_min": 14,
           "giver_npc_id": 3,
@@ -646,7 +646,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 6",
           "description": "Âu Lạc — Thục Phán — Hồi 6",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "explore",
           "level_min": 15,
           "giver_npc_id": 4,
@@ -658,8 +658,8 @@
             23,
             19
           ],
-          "chain_id": "SVTK_CHAIN_F1_1",
-          "chain_position": 14,
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_5",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -670,7 +670,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 7",
           "description": "Âu Lạc — Thục Phán — Hồi 7",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "talk",
           "level_min": 15,
           "giver_npc_id": 2,
@@ -681,8 +681,8 @@
           "prerequisites": [
             24
           ],
-          "chain_id": "SVTK_CHAIN_F1_2",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_6",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -693,7 +693,7 @@
           "category": "side",
           "title": "Âu Lạc — Thục Phán — Hồi 8",
           "description": "Âu Lạc — Thục Phán — Hồi 8",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "collect",
           "level_min": 16,
           "giver_npc_id": 3,
@@ -716,7 +716,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 9",
           "description": "Âu Lạc — Thục Phán — Hồi 9",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "collect",
           "level_min": 17,
           "giver_npc_id": 4,
@@ -728,8 +728,8 @@
             26,
             25
           ],
-          "chain_id": "SVTK_CHAIN_F1_2",
-          "chain_position": 1,
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_8",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -740,7 +740,7 @@
           "category": "lore",
           "title": "Âu Lạc — Thục Phán — Hồi 10",
           "description": "Âu Lạc — Thục Phán — Hồi 10",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "explore",
           "level_min": 19,
           "giver_npc_id": 2,
@@ -756,7 +756,8 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_9",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 29,
@@ -764,7 +765,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 11",
           "description": "Âu Lạc — Thục Phán — Hồi 11",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "explore",
           "level_min": 20,
           "giver_npc_id": 3,
@@ -776,8 +777,8 @@
             28,
             27
           ],
-          "chain_id": "SVTK_CHAIN_F1_2",
-          "chain_position": 2,
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_10",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -788,7 +789,7 @@
           "category": "side",
           "title": "Âu Lạc — Thục Phán — Hồi 12",
           "description": "Âu Lạc — Thục Phán — Hồi 12",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "explore",
           "level_min": 20,
           "giver_npc_id": 4,
@@ -811,7 +812,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 13",
           "description": "Âu Lạc — Thục Phán — Hồi 13",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "deliver",
           "level_min": 22,
           "giver_npc_id": 2,
@@ -823,8 +824,8 @@
             30,
             29
           ],
-          "chain_id": "SVTK_CHAIN_F1_2",
-          "chain_position": 3,
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_12",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -835,7 +836,7 @@
           "category": "side",
           "title": "Âu Lạc — Thục Phán — Hồi 14",
           "description": "Âu Lạc — Thục Phán — Hồi 14",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "collect",
           "level_min": 22,
           "giver_npc_id": 3,
@@ -858,7 +859,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 15",
           "description": "Âu Lạc — Thục Phán — Hồi 15",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "deliver",
           "level_min": 23,
           "giver_npc_id": 4,
@@ -870,8 +871,8 @@
             32,
             31
           ],
-          "chain_id": "SVTK_CHAIN_F1_2",
-          "chain_position": 4,
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_14",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -882,7 +883,7 @@
           "category": "lore",
           "title": "Âu Lạc — Thục Phán — Hồi 16",
           "description": "Âu Lạc — Thục Phán — Hồi 16",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "escort",
           "level_min": 24,
           "giver_npc_id": 2,
@@ -898,7 +899,8 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_15",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 35,
@@ -906,7 +908,7 @@
           "category": "lore",
           "title": "Âu Lạc — Thục Phán — Hồi 17",
           "description": "Âu Lạc — Thục Phán — Hồi 17",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "talk",
           "level_min": 25,
           "giver_npc_id": 3,
@@ -921,7 +923,8 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_16",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 36,
@@ -929,7 +932,7 @@
           "category": "main",
           "title": "Âu Lạc — Thục Phán — Hồi 18",
           "description": "Âu Lạc — Thục Phán — Hồi 18",
-          "era": "f1",
+          "era": "f2",
           "objective_type": "collect",
           "level_min": 25,
           "giver_npc_id": 4,
@@ -941,8 +944,8 @@
             35,
             33
           ],
-          "chain_id": "SVTK_CHAIN_F1_2",
-          "chain_position": 5,
+          "chain_id": "SVTK_CHAIN_F2_1",
+          "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_17",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -953,7 +956,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 1",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 1",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "talk",
           "level_min": 20,
           "giver_npc_id": 274,
@@ -962,7 +965,7 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_0",
           "is_protagonist_arc": true,
@@ -974,7 +977,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 2",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 2",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 21,
           "giver_npc_id": 275,
@@ -985,7 +988,7 @@
           "prerequisites": [
             37
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_1",
           "is_protagonist_arc": true,
@@ -997,7 +1000,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 3",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 3",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 23,
           "giver_npc_id": 276,
@@ -1008,7 +1011,7 @@
           "prerequisites": [
             38
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_2",
           "is_protagonist_arc": true,
@@ -1020,7 +1023,7 @@
           "category": "side",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 4",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 4",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "explore",
           "level_min": 23,
           "giver_npc_id": 277,
@@ -1043,7 +1046,7 @@
           "category": "lore",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 5",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 5",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "talk",
           "level_min": 25,
           "giver_npc_id": 278,
@@ -1059,7 +1062,8 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_4",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 42,
@@ -1067,7 +1071,7 @@
           "category": "side",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 6",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 6",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "collect",
           "level_min": 27,
           "giver_npc_id": 289,
@@ -1090,7 +1094,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 7",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 7",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 28,
           "giver_npc_id": 290,
@@ -1102,7 +1106,7 @@
             42,
             39
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_6",
           "is_protagonist_arc": true,
@@ -1114,7 +1118,7 @@
           "category": "side",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 8",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 8",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "explore",
           "level_min": 29,
           "giver_npc_id": 291,
@@ -1137,7 +1141,7 @@
           "category": "lore",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 9",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 9",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "talk",
           "level_min": 30,
           "giver_npc_id": 292,
@@ -1153,7 +1157,8 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_8",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 46,
@@ -1161,7 +1166,7 @@
           "category": "lore",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 10",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 10",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "collect",
           "level_min": 31,
           "giver_npc_id": 293,
@@ -1176,7 +1181,8 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_9",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 47,
@@ -1184,7 +1190,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 11",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 11",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 31,
           "giver_npc_id": 304,
@@ -1196,7 +1202,7 @@
             46,
             43
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_10",
           "is_protagonist_arc": true,
@@ -1208,7 +1214,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 12",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 12",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 33,
           "giver_npc_id": 305,
@@ -1219,7 +1225,7 @@
           "prerequisites": [
             47
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_11",
           "is_protagonist_arc": true,
@@ -1231,7 +1237,7 @@
           "category": "side",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 13",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 13",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "escort",
           "level_min": 33,
           "giver_npc_id": 306,
@@ -1254,7 +1260,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 14",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 14",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 34,
           "giver_npc_id": 307,
@@ -1266,7 +1272,7 @@
             49,
             48
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_13",
           "is_protagonist_arc": true,
@@ -1278,7 +1284,7 @@
           "category": "side",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 15",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 15",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 36,
           "giver_npc_id": 308,
@@ -1301,7 +1307,7 @@
           "category": "lore",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 16",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 16",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "explore",
           "level_min": 37,
           "giver_npc_id": 319,
@@ -1316,7 +1322,8 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_15",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 53,
@@ -1324,7 +1331,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 17",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 17",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "explore",
           "level_min": 38,
           "giver_npc_id": 320,
@@ -1336,7 +1343,7 @@
             52,
             50
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_16",
           "is_protagonist_arc": true,
@@ -1348,7 +1355,7 @@
           "category": "main",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 18",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 18",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "deliver",
           "level_min": 40,
           "giver_npc_id": 321,
@@ -1359,7 +1366,7 @@
           "prerequisites": [
             53
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
+          "chain_id": "SVTK_CHAIN_F3_1",
           "chain_position": 8,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_17",
           "is_protagonist_arc": true,
@@ -1371,7 +1378,7 @@
           "category": "lore",
           "title": "Bắc thuộc — Hai Bà Trưng — Hồi 19",
           "description": "Bắc thuộc — Hai Bà Trưng — Hồi 19",
-          "era": "g1",
+          "era": "f3",
           "objective_type": "escort",
           "level_min": 40,
           "giver_npc_id": 322,
@@ -1387,7 +1394,8 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_18",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 56,
@@ -1395,7 +1403,7 @@
           "category": "side",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 1",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 1",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "kill",
           "level_min": 36,
           "giver_npc_id": 274,
@@ -1416,7 +1424,7 @@
           "category": "side",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 2",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 2",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "collect",
           "level_min": 37,
           "giver_npc_id": 275,
@@ -1439,7 +1447,7 @@
           "category": "side",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 3",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 3",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "escort",
           "level_min": 38,
           "giver_npc_id": 276,
@@ -1462,7 +1470,7 @@
           "category": "main",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 4",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 4",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "talk",
           "level_min": 38,
           "giver_npc_id": 277,
@@ -1471,11 +1479,10 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            58,
-            54
+            58
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
-          "chain_position": 9,
+          "chain_id": "SVTK_CHAIN_F4_1",
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_3",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1486,7 +1493,7 @@
           "category": "side",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 5",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 5",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "escort",
           "level_min": 39,
           "giver_npc_id": 278,
@@ -1509,7 +1516,7 @@
           "category": "lore",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 6",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 6",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "talk",
           "level_min": 41,
           "giver_npc_id": 289,
@@ -1525,7 +1532,8 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_5",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 62,
@@ -1533,7 +1541,7 @@
           "category": "main",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 7",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 7",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "deliver",
           "level_min": 43,
           "giver_npc_id": 290,
@@ -1545,8 +1553,8 @@
             61,
             59
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
-          "chain_position": 10,
+          "chain_id": "SVTK_CHAIN_F4_1",
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_6",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1557,7 +1565,7 @@
           "category": "lore",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 8",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 8",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "talk",
           "level_min": 43,
           "giver_npc_id": 291,
@@ -1573,7 +1581,8 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_7",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 64,
@@ -1581,7 +1590,7 @@
           "category": "side",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 9",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 9",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "explore",
           "level_min": 45,
           "giver_npc_id": 292,
@@ -1604,7 +1613,7 @@
           "category": "main",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 10",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 10",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "collect",
           "level_min": 45,
           "giver_npc_id": 293,
@@ -1616,8 +1625,8 @@
             64,
             62
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
-          "chain_position": 11,
+          "chain_id": "SVTK_CHAIN_F4_1",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_9",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1628,7 +1637,7 @@
           "category": "lore",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 11",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 11",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "talk",
           "level_min": 46,
           "giver_npc_id": 304,
@@ -1643,7 +1652,8 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_10",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 67,
@@ -1651,7 +1661,7 @@
           "category": "main",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 12",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 12",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "collect",
           "level_min": 47,
           "giver_npc_id": 305,
@@ -1663,8 +1673,8 @@
             66,
             65
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
-          "chain_position": 12,
+          "chain_id": "SVTK_CHAIN_F4_1",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_11",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1675,7 +1685,7 @@
           "category": "main",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 13",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 13",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "escort",
           "level_min": 48,
           "giver_npc_id": 306,
@@ -1686,8 +1696,8 @@
           "prerequisites": [
             67
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
-          "chain_position": 13,
+          "chain_id": "SVTK_CHAIN_F4_1",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_12",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1698,7 +1708,7 @@
           "category": "side",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 14",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 14",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "kill",
           "level_min": 50,
           "giver_npc_id": 307,
@@ -1721,7 +1731,7 @@
           "category": "main",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 15",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 15",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "explore",
           "level_min": 51,
           "giver_npc_id": 308,
@@ -1733,8 +1743,8 @@
             69,
             68
           ],
-          "chain_id": "SVTK_CHAIN_G1_1",
-          "chain_position": 14,
+          "chain_id": "SVTK_CHAIN_F4_1",
+          "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_14",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1745,7 +1755,7 @@
           "category": "main",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 16",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 16",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "escort",
           "level_min": 52,
           "giver_npc_id": 319,
@@ -1756,8 +1766,8 @@
           "prerequisites": [
             70
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_F4_1",
+          "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_15",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1768,7 +1778,7 @@
           "category": "lore",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 17",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 17",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "deliver",
           "level_min": 54,
           "giver_npc_id": 320,
@@ -1784,7 +1794,8 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_16",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 73,
@@ -1792,7 +1803,7 @@
           "category": "side",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 18",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 18",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "explore",
           "level_min": 54,
           "giver_npc_id": 321,
@@ -1815,7 +1826,7 @@
           "category": "lore",
           "title": "Ngô-Đinh-Tiền Lê — Hồi 19",
           "description": "Ngô-Đinh-Tiền Lê — Hồi 19",
-          "era": "g1",
+          "era": "f4",
           "objective_type": "escort",
           "level_min": 55,
           "giver_npc_id": 322,
@@ -1831,7 +1842,8 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_18",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 75,
@@ -1839,7 +1851,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 1",
           "description": "Lý — Đại Việt khai cơ — Hồi 1",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "deliver",
           "level_min": 50,
           "giver_npc_id": 274,
@@ -1847,11 +1859,9 @@
           "reward_exp": 5400,
           "reward_items": [],
           "reward_reputation": 10,
-          "prerequisites": [
-            71
-          ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 1,
+          "prerequisites": [],
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_0",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1862,7 +1872,7 @@
           "category": "side",
           "title": "Lý — Đại Việt khai cơ — Hồi 2",
           "description": "Lý — Đại Việt khai cơ — Hồi 2",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "kill",
           "level_min": 52,
           "giver_npc_id": 275,
@@ -1885,7 +1895,7 @@
           "category": "side",
           "title": "Lý — Đại Việt khai cơ — Hồi 3",
           "description": "Lý — Đại Việt khai cơ — Hồi 3",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "escort",
           "level_min": 53,
           "giver_npc_id": 276,
@@ -1908,7 +1918,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 4",
           "description": "Lý — Đại Việt khai cơ — Hồi 4",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "talk",
           "level_min": 54,
           "giver_npc_id": 277,
@@ -1920,8 +1930,8 @@
             77,
             75
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 2,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_3",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -1932,7 +1942,7 @@
           "category": "side",
           "title": "Lý — Đại Việt khai cơ — Hồi 5",
           "description": "Lý — Đại Việt khai cơ — Hồi 5",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "kill",
           "level_min": 54,
           "giver_npc_id": 278,
@@ -1955,7 +1965,7 @@
           "category": "lore",
           "title": "Lý — Đại Việt khai cơ — Hồi 6",
           "description": "Lý — Đại Việt khai cơ — Hồi 6",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "explore",
           "level_min": 57,
           "giver_npc_id": 289,
@@ -1971,7 +1981,8 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_5",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 81,
@@ -1979,7 +1990,7 @@
           "category": "lore",
           "title": "Lý — Đại Việt khai cơ — Hồi 7",
           "description": "Lý — Đại Việt khai cơ — Hồi 7",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "kill",
           "level_min": 57,
           "giver_npc_id": 290,
@@ -1994,7 +2005,8 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_6",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 82,
@@ -2002,7 +2014,7 @@
           "category": "lore",
           "title": "Lý — Đại Việt khai cơ — Hồi 8",
           "description": "Lý — Đại Việt khai cơ — Hồi 8",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "talk",
           "level_min": 59,
           "giver_npc_id": 291,
@@ -2017,7 +2029,8 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_7",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 83,
@@ -2025,7 +2038,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 9",
           "description": "Lý — Đại Việt khai cơ — Hồi 9",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "talk",
           "level_min": 59,
           "giver_npc_id": 292,
@@ -2037,8 +2050,8 @@
             82,
             78
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 3,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_8",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2049,7 +2062,7 @@
           "category": "lore",
           "title": "Lý — Đại Việt khai cơ — Hồi 10",
           "description": "Lý — Đại Việt khai cơ — Hồi 10",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "deliver",
           "level_min": 61,
           "giver_npc_id": 293,
@@ -2065,7 +2078,8 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_9",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 85,
@@ -2073,7 +2087,7 @@
           "category": "side",
           "title": "Lý — Đại Việt khai cơ — Hồi 11",
           "description": "Lý — Đại Việt khai cơ — Hồi 11",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "kill",
           "level_min": 61,
           "giver_npc_id": 304,
@@ -2096,7 +2110,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 12",
           "description": "Lý — Đại Việt khai cơ — Hồi 12",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "talk",
           "level_min": 63,
           "giver_npc_id": 305,
@@ -2108,8 +2122,8 @@
             85,
             83
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 4,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_11",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2120,7 +2134,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 13",
           "description": "Lý — Đại Việt khai cơ — Hồi 13",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "kill",
           "level_min": 63,
           "giver_npc_id": 306,
@@ -2131,8 +2145,8 @@
           "prerequisites": [
             86
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 5,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_12",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2143,7 +2157,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 14",
           "description": "Lý — Đại Việt khai cơ — Hồi 14",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "deliver",
           "level_min": 64,
           "giver_npc_id": 307,
@@ -2154,8 +2168,8 @@
           "prerequisites": [
             87
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 6,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_13",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2166,7 +2180,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 15",
           "description": "Lý — Đại Việt khai cơ — Hồi 15",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "talk",
           "level_min": 66,
           "giver_npc_id": 308,
@@ -2177,8 +2191,8 @@
           "prerequisites": [
             88
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 7,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_14",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2189,7 +2203,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 16",
           "description": "Lý — Đại Việt khai cơ — Hồi 16",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "kill",
           "level_min": 67,
           "giver_npc_id": 319,
@@ -2200,8 +2214,8 @@
           "prerequisites": [
             89
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 8,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_15",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2212,7 +2226,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 17",
           "description": "Lý — Đại Việt khai cơ — Hồi 17",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "escort",
           "level_min": 69,
           "giver_npc_id": 320,
@@ -2223,8 +2237,8 @@
           "prerequisites": [
             90
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 9,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 8,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_16",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2235,7 +2249,7 @@
           "category": "main",
           "title": "Lý — Đại Việt khai cơ — Hồi 18",
           "description": "Lý — Đại Việt khai cơ — Hồi 18",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "kill",
           "level_min": 70,
           "giver_npc_id": 321,
@@ -2246,8 +2260,8 @@
           "prerequisites": [
             91
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 10,
+          "chain_id": "SVTK_CHAIN_LY_1",
+          "chain_position": 9,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_17",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2258,7 +2272,7 @@
           "category": "side",
           "title": "Lý — Đại Việt khai cơ — Hồi 19",
           "description": "Lý — Đại Việt khai cơ — Hồi 19",
-          "era": "g1",
+          "era": "ly",
           "objective_type": "talk",
           "level_min": 70,
           "giver_npc_id": 322,
@@ -2281,7 +2295,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 1",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 1",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "deliver",
           "level_min": 60,
           "giver_npc_id": 274,
@@ -2289,11 +2303,9 @@
           "reward_exp": 6156,
           "reward_items": [],
           "reward_reputation": 10,
-          "prerequisites": [
-            92
-          ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 11,
+          "prerequisites": [],
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_0",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2304,7 +2316,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 2",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 2",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "kill",
           "level_min": 61,
           "giver_npc_id": 275,
@@ -2315,8 +2327,8 @@
           "prerequisites": [
             94
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 12,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_1",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2327,7 +2339,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 3",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 3",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "collect",
           "level_min": 62,
           "giver_npc_id": 276,
@@ -2338,8 +2350,8 @@
           "prerequisites": [
             95
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 13,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_2",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2350,7 +2362,7 @@
           "category": "lore",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 4",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 4",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "explore",
           "level_min": 63,
           "giver_npc_id": 277,
@@ -2366,7 +2378,8 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_3",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 98,
@@ -2374,7 +2387,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 5",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 5",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "talk",
           "level_min": 64,
           "giver_npc_id": 278,
@@ -2386,8 +2399,8 @@
             97,
             96
           ],
-          "chain_id": "SVTK_CHAIN_G1_2",
-          "chain_position": 14,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_4",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2398,7 +2411,7 @@
           "category": "side",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 6",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 6",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "talk",
           "level_min": 66,
           "giver_npc_id": 289,
@@ -2421,7 +2434,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 7",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 7",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "explore",
           "level_min": 67,
           "giver_npc_id": 290,
@@ -2430,10 +2443,11 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            99
+            99,
+            98
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_6",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2444,7 +2458,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 8",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 8",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "kill",
           "level_min": 68,
           "giver_npc_id": 291,
@@ -2455,8 +2469,8 @@
           "prerequisites": [
             100
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 1,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_7",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2467,7 +2481,7 @@
           "category": "side",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 9",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 9",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "talk",
           "level_min": 69,
           "giver_npc_id": 292,
@@ -2490,7 +2504,7 @@
           "category": "side",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 10",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 10",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "kill",
           "level_min": 71,
           "giver_npc_id": 293,
@@ -2513,7 +2527,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 11",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 11",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "collect",
           "level_min": 71,
           "giver_npc_id": 304,
@@ -2525,8 +2539,8 @@
             103,
             101
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 2,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_10",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2537,7 +2551,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 12",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 12",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "kill",
           "level_min": 73,
           "giver_npc_id": 305,
@@ -2548,8 +2562,8 @@
           "prerequisites": [
             104
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 3,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_11",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2560,7 +2574,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 13",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 13",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "escort",
           "level_min": 73,
           "giver_npc_id": 306,
@@ -2571,8 +2585,8 @@
           "prerequisites": [
             105
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 4,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 8,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_12",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2583,7 +2597,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 14",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 14",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "explore",
           "level_min": 74,
           "giver_npc_id": 307,
@@ -2594,8 +2608,8 @@
           "prerequisites": [
             106
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 5,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 9,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_13",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2606,7 +2620,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 15",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 15",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "kill",
           "level_min": 77,
           "giver_npc_id": 308,
@@ -2617,8 +2631,8 @@
           "prerequisites": [
             107
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 6,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 10,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_14",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2629,7 +2643,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 16",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 16",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "deliver",
           "level_min": 78,
           "giver_npc_id": 319,
@@ -2640,8 +2654,8 @@
           "prerequisites": [
             108
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 7,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 11,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_15",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2652,7 +2666,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 17",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 17",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "explore",
           "level_min": 78,
           "giver_npc_id": 320,
@@ -2663,8 +2677,8 @@
           "prerequisites": [
             109
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 8,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 12,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_16",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2675,7 +2689,7 @@
           "category": "main",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 18",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 18",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "kill",
           "level_min": 79,
           "giver_npc_id": 321,
@@ -2686,8 +2700,8 @@
           "prerequisites": [
             110
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 9,
+          "chain_id": "SVTK_CHAIN_TRAN_1",
+          "chain_position": 13,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_17",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2698,7 +2712,7 @@
           "category": "lore",
           "title": "Trần — Ba lần đánh Mông Cổ — Hồi 19",
           "description": "Trần — Ba lần đánh Mông Cổ — Hồi 19",
-          "era": "g1",
+          "era": "tran",
           "objective_type": "deliver",
           "level_min": 80,
           "giver_npc_id": 322,
@@ -2713,7 +2727,8 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_18",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 113,
@@ -2721,7 +2736,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 1",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 1",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 71,
           "giver_npc_id": 274,
@@ -2729,11 +2744,9 @@
           "reward_exp": 7227,
           "reward_items": [],
           "reward_reputation": 10,
-          "prerequisites": [
-            111
-          ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 10,
+          "prerequisites": [],
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_0",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2744,7 +2757,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 2",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 2",
-          "era": "g1",
+          "era": "le",
           "objective_type": "kill",
           "level_min": 71,
           "giver_npc_id": 275,
@@ -2755,8 +2768,8 @@
           "prerequisites": [
             113
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 11,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_1",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2767,7 +2780,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 3",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 3",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 73,
           "giver_npc_id": 276,
@@ -2778,8 +2791,8 @@
           "prerequisites": [
             114
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 12,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_2",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2790,7 +2803,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 4",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 4",
-          "era": "g1",
+          "era": "le",
           "objective_type": "deliver",
           "level_min": 74,
           "giver_npc_id": 277,
@@ -2801,8 +2814,8 @@
           "prerequisites": [
             115
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 13,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_3",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2813,7 +2826,7 @@
           "category": "lore",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 5",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 5",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 75,
           "giver_npc_id": 278,
@@ -2829,7 +2842,8 @@
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_4",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 118,
@@ -2837,7 +2851,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 6",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 6",
-          "era": "g1",
+          "era": "le",
           "objective_type": "escort",
           "level_min": 77,
           "giver_npc_id": 289,
@@ -2849,8 +2863,8 @@
             117,
             116
           ],
-          "chain_id": "SVTK_CHAIN_G1_3",
-          "chain_position": 14,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_5",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2861,7 +2875,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 7",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 7",
-          "era": "g1",
+          "era": "le",
           "objective_type": "talk",
           "level_min": 77,
           "giver_npc_id": 290,
@@ -2872,8 +2886,8 @@
           "prerequisites": [
             118
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_6",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2884,7 +2898,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 8",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 8",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 79,
           "giver_npc_id": 291,
@@ -2895,8 +2909,8 @@
           "prerequisites": [
             119
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 1,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_7",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2907,7 +2921,7 @@
           "category": "lore",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 9",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 9",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 80,
           "giver_npc_id": 292,
@@ -2923,7 +2937,8 @@
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_8",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 122,
@@ -2931,7 +2946,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 10",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 10",
-          "era": "g1",
+          "era": "le",
           "objective_type": "kill",
           "level_min": 81,
           "giver_npc_id": 293,
@@ -2943,8 +2958,8 @@
             121,
             120
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 2,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_9",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -2955,7 +2970,7 @@
           "category": "side",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 11",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 11",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 82,
           "giver_npc_id": 304,
@@ -2978,7 +2993,7 @@
           "category": "side",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 12",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 12",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 83,
           "giver_npc_id": 305,
@@ -3001,7 +3016,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 13",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 13",
-          "era": "g1",
+          "era": "le",
           "objective_type": "explore",
           "level_min": 83,
           "giver_npc_id": 306,
@@ -3013,8 +3028,8 @@
             124,
             122
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 3,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 8,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_12",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3025,7 +3040,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 14",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 14",
-          "era": "g1",
+          "era": "le",
           "objective_type": "collect",
           "level_min": 85,
           "giver_npc_id": 307,
@@ -3036,8 +3051,8 @@
           "prerequisites": [
             125
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 4,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 9,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_13",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3048,7 +3063,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 15",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 15",
-          "era": "g1",
+          "era": "le",
           "objective_type": "deliver",
           "level_min": 87,
           "giver_npc_id": 308,
@@ -3059,8 +3074,8 @@
           "prerequisites": [
             126
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 5,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 10,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_14",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3071,7 +3086,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 16",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 16",
-          "era": "g1",
+          "era": "le",
           "objective_type": "talk",
           "level_min": 88,
           "giver_npc_id": 319,
@@ -3082,8 +3097,8 @@
           "prerequisites": [
             127
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 6,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 11,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_15",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3094,7 +3109,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 17",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 17",
-          "era": "g1",
+          "era": "le",
           "objective_type": "kill",
           "level_min": 88,
           "giver_npc_id": 320,
@@ -3105,8 +3120,8 @@
           "prerequisites": [
             128
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 7,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 12,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_16",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3117,7 +3132,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 18",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 18",
-          "era": "g1",
+          "era": "le",
           "objective_type": "deliver",
           "level_min": 89,
           "giver_npc_id": 321,
@@ -3128,8 +3143,8 @@
           "prerequisites": [
             129
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 8,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 13,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_17",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3140,7 +3155,7 @@
           "category": "main",
           "title": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 19",
           "description": "Lê Sơ — Lam Sơn khởi nghĩa — Hồi 19",
-          "era": "g1",
+          "era": "le",
           "objective_type": "escort",
           "level_min": 90,
           "giver_npc_id": 322,
@@ -3151,8 +3166,8 @@
           "prerequisites": [
             130
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 9,
+          "chain_id": "SVTK_CHAIN_LE_1",
+          "chain_position": 14,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_18",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3163,7 +3178,7 @@
           "category": "side",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 1",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 1",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "escort",
           "level_min": 80,
           "giver_npc_id": 274,
@@ -3184,7 +3199,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 2",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 2",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 82,
           "giver_npc_id": 275,
@@ -3193,11 +3208,10 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            132,
-            131
+            132
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 10,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_1",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3208,7 +3222,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 3",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 3",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "talk",
           "level_min": 82,
           "giver_npc_id": 276,
@@ -3219,8 +3233,8 @@
           "prerequisites": [
             133
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 11,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_2",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3231,7 +3245,7 @@
           "category": "side",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 4",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 4",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 83,
           "giver_npc_id": 277,
@@ -3254,7 +3268,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 5",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 5",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "escort",
           "level_min": 85,
           "giver_npc_id": 278,
@@ -3266,8 +3280,8 @@
             135,
             134
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 12,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_4",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3278,7 +3292,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 6",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 6",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "kill",
           "level_min": 85,
           "giver_npc_id": 289,
@@ -3289,8 +3303,8 @@
           "prerequisites": [
             136
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 13,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_5",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3301,7 +3315,7 @@
           "category": "side",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 7",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 7",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "explore",
           "level_min": 87,
           "giver_npc_id": 290,
@@ -3324,7 +3338,7 @@
           "category": "side",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 8",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 8",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 87,
           "giver_npc_id": 291,
@@ -3347,7 +3361,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 9",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 9",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 88,
           "giver_npc_id": 292,
@@ -3359,8 +3373,8 @@
             139,
             137
           ],
-          "chain_id": "SVTK_CHAIN_G1_4",
-          "chain_position": 14,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_8",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3371,7 +3385,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 10",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 10",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "escort",
           "level_min": 91,
           "giver_npc_id": 293,
@@ -3382,8 +3396,8 @@
           "prerequisites": [
             140
           ],
-          "chain_id": "SVTK_CHAIN_G1_5",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 5,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_9",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3394,7 +3408,7 @@
           "category": "lore",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 11",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 11",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 92,
           "giver_npc_id": 304,
@@ -3410,7 +3424,8 @@
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_10",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 143,
@@ -3418,7 +3433,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 12",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 12",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 93,
           "giver_npc_id": 305,
@@ -3430,8 +3445,8 @@
             142,
             141
           ],
-          "chain_id": "SVTK_CHAIN_G1_5",
-          "chain_position": 1,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 6,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_11",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3442,7 +3457,7 @@
           "category": "side",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 13",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 13",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 93,
           "giver_npc_id": 306,
@@ -3465,7 +3480,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 14",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 14",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "talk",
           "level_min": 94,
           "giver_npc_id": 307,
@@ -3477,8 +3492,8 @@
             144,
             143
           ],
-          "chain_id": "SVTK_CHAIN_G1_5",
-          "chain_position": 2,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 7,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_13",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3489,7 +3504,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 15",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 15",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "explore",
           "level_min": 95,
           "giver_npc_id": 308,
@@ -3500,8 +3515,8 @@
           "prerequisites": [
             145
           ],
-          "chain_id": "SVTK_CHAIN_G1_5",
-          "chain_position": 3,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 8,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_14",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3512,7 +3527,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 16",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 16",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "deliver",
           "level_min": 97,
           "giver_npc_id": 319,
@@ -3523,8 +3538,8 @@
           "prerequisites": [
             146
           ],
-          "chain_id": "SVTK_CHAIN_G1_5",
-          "chain_position": 4,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 9,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_15",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3535,7 +3550,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 17",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 17",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "explore",
           "level_min": 97,
           "giver_npc_id": 320,
@@ -3546,8 +3561,8 @@
           "prerequisites": [
             147
           ],
-          "chain_id": "SVTK_CHAIN_G1_5",
-          "chain_position": 5,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 10,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_16",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
@@ -3558,7 +3573,7 @@
           "category": "lore",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 18",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 18",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "talk",
           "level_min": 99,
           "giver_npc_id": 321,
@@ -3573,7 +3588,8 @@
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_17",
           "is_protagonist_arc": false,
-          "_source": "legacy_scaffold"
+          "_source": "legacy_scaffold",
+          "unlocks_codex": true
         },
         {
           "quest_id": 150,
@@ -3581,7 +3597,7 @@
           "category": "main",
           "title": "Tây Sơn — Quang Trung đại phá — Hồi 19",
           "description": "Tây Sơn — Quang Trung đại phá — Hồi 19",
-          "era": "g1",
+          "era": "tay_son",
           "objective_type": "collect",
           "level_min": 99,
           "giver_npc_id": 322,
@@ -3593,8 +3609,8 @@
             149,
             148
           ],
-          "chain_id": "SVTK_CHAIN_G1_5",
-          "chain_position": 6,
+          "chain_id": "SVTK_CHAIN_TAY_SON_1",
+          "chain_position": 11,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_18",
           "is_protagonist_arc": true,
           "_source": "legacy_scaffold"
