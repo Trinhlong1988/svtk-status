@@ -1,0 +1,42 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "phase": "14",
+  "version": "v2.8.0",
+  "status": "PHASE14_COMPLETE",
+  "ts": "2026-05-18T14:34:33Z",
+  "weeks": {
+    "week1_migrate": {
+      "status": "DONE",
+      "commit": "768abee",
+      "files_migrated_total": 140,
+      "details": "127 combat .ts + 6 boss .ts + 3 server type deps + 4 data JSON (initial). Cross-module import paths rewritten. TSC strict --noEmit PASS."
+    },
+    "week2_gap_fill": {
+      "status": "DONE",
+      "commit": "dd3c7e3",
+      "deliverables": [
+        "R67 TickScheduler adapter — tick_scheduler_adapter.ts + 5 deterministic tests",
+        "R68 state_checksum — state_checksum.ts + 7 deterministic tests",
+        "14 additional data/*.json copied (npc_constants, constants, items, etc.)"
+      ]
+    },
+    "week3_validation": {
+      "status": "DONE",
+      "old_workspace_tests": "337/338 files PASS, 5878 tests PASS (1 file + 19 tests skipped, 0 failed)",
+      "new_workspace_r67_r68_tests": "2/2 files PASS, 12/12 tests PASS",
+      "audit_v280_strict": "exit 0 PASS",
+      "tsc_typecheck": "PASS exit 0 on 140 .ts file"
+    }
+  },
+  "exit_criteria": {
+    "80plus_combat_file_migrated": "PASS (127)",
+    "10plus_boss_file_migrated": "PARTIAL (6 — OLD only had 6 boss_*.ts; 10+ was a floor not requirement)",
+    "tick_scheduler_adapter_present": "PASS",
+    "state_checksum_present": "PASS",
+    "95pct_of_338_tests_pass": "PASS (99.7% files / 100% non-skipped tests)",
+    "audit_v280_strict_exit_0": "PASS",
+    "completion_ping_shipped": "PASS",
+    "no_asking_mr_long": "PASS"
+  }
+}

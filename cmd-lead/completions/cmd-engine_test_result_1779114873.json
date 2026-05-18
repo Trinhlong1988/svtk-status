@@ -1,0 +1,41 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "phase": "week3_validation",
+  "ts": "2026-05-18T14:34:33Z",
+  "tests_old_workspace": {
+    "command": "npm test (D:\DỰ ÁN AI\FINAL TSONLINE)",
+    "duration_sec": 220.02,
+    "test_files_passed": 337,
+    "test_files_skipped": 1,
+    "test_files_failed": 0,
+    "test_files_total": 338,
+    "tests_passed": 5878,
+    "tests_skipped": 19,
+    "tests_failed": 0,
+    "tests_total": 5897,
+    "pass_rate_files_pct": 99.7,
+    "pass_rate_tests_pct": 100.0,
+    "threshold_95pct": "PASS"
+  },
+  "tests_new_workspace_r67_r68": {
+    "command": "npx vitest run cmd-engine/output/{runtime,replay}/*.test.ts",
+    "test_files_passed": 2,
+    "tests_passed": 12,
+    "tests_failed": 0,
+    "duration_ms": 836
+  },
+  "audit_v280_strict": {
+    "command": "python scripts/audit_v280_strict.py",
+    "exit_code": 0,
+    "rounds": 10,
+    "result": "PASS"
+  },
+  "tsc_typecheck": {
+    "command": "npx tsc --noEmit",
+    "exit_code": 0,
+    "scope": "cmd-engine/output/{legacy,server,runtime,replay} + cmd-boss/output/legacy",
+    "ts_file_count": 140,
+    "strict_mode": true
+  }
+}
