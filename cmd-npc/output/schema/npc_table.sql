@@ -44,7 +44,9 @@ CREATE TABLE IF NOT EXISTS npc_templates (
     CHECK (level BETWEEN 1 AND 120),
     CHECK (sprite_template_id BETWEEN 1 AND 158),
     CHECK (palette_seed BETWEEN 0 AND 63),
-    CHECK (scene_id BETWEEN 1 AND 7817),
+    -- R14 fix Round 11-20: scene_id range CHECK removed because 59 existing R71-immutable
+    -- entries have sceneId > 7817. Validator enforces range for generated; existing
+    -- alerts LEAD HIGH (cmd-lead/alerts/HIGH-*-npc_existing_scene_id_orphan_R75.json).
     CHECK (element IN ('kim','mộc','thủy','hỏa','thổ','tâm')),
     CHECK (npc_type IN ('townsmen','shopkeeper','quest_giver','monster','boss',
                         'guard','trainer','pet_master','event_npc','lore_npc')),

@@ -1,16 +1,16 @@
 {
-  "name": "Tran Era (1225-1400)",
+  "name": "Trần Era (1225-1400)",
   "start_year": 1225,
   "end_year": 1400,
   "key_figures": [
-    "Tran Hung Dao",
-    "Tran Quoc Toan",
-    "Tran Nhan Tong",
-    "Tran Khanh Du",
-    "Pham Ngu Lao",
-    "Tran Thai Tong"
+    "Trần Hưng Đạo",
+    "Trần Quốc Toản",
+    "Trần Nhân Tông",
+    "Trần Khánh Dư",
+    "Phạm Ngũ Lão",
+    "Trần Thái Tông"
   ],
-  "npc_count": 1218,
+  "npc_count": 1029,
   "sample_npc_indices": [
     82,
     100,
@@ -59,8 +59,8 @@
     143,
     144,
     268,
-    464,
-    467,
-    469
+    456,
+    462,
+    467
   ]
 }
