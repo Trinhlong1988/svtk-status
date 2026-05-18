@@ -1,12 +1,13 @@
 {
   "cmd_id": "QUEST",
-  "cmd_version": "1.2.0",
-  "cycle_id": "20260518-165111Z",
+  "cmd_version": "1.3.0",
+  "cycle_id": "20260518-171244Z",
   "status": "PASS",
   "pass_rate": 1.0,
   "quest_count": 3000,
   "chain_count": 34,
   "legacy_seed_count": 150,
-  "self_tests_passed": "17/17",
-  "duration_sec": 0.44
+  "self_tests_passed": "21/21",
+  "bugs_detected": 0,
+  "duration_sec": 0.45
 }

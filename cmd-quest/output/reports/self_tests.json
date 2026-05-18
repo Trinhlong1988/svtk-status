@@ -1,74 +1,90 @@
 {
-  "total_tests": 17,
-  "passed": 17,
+  "total_tests": 21,
+  "passed": 21,
   "failed": 0,
   "details": [
     {
-      "test": "schema_quest_id_present",
+      "test": "count_ge_3000",
       "pass": true
     },
     {
-      "test": "schema_has_prerequisites_field",
+      "test": "schema_prerequisites",
       "pass": true
     },
     {
-      "test": "schema_has_chain_id_field",
+      "test": "schema_chain_id",
       "pass": true
     },
     {
-      "test": "schema_has_chain_position_field",
+      "test": "schema_chain_position",
       "pass": true
     },
     {
-      "test": "content_count_ge_3000",
+      "test": "schema_dialog_tree_ref",
       "pass": true
     },
     {
-      "test": "content_11_era_covered",
+      "test": "era_11_covered",
       "pass": true
     },
     {
-      "test": "content_cultural_lock_pass",
+      "test": "cultural_lock",
       "pass": true
     },
     {
-      "test": "content_6_objective_types",
+      "test": "obj_6_types",
       "pass": true
     },
     {
-      "test": "crossref_all_have_giver",
+      "test": "giver_npc_valid",
       "pass": true
     },
     {
-      "test": "crossref_chain_quest_ref_valid",
+      "test": "chain_refs_valid",
       "pass": true
     },
     {
-      "test": "idempotency_unique_quest_id",
+      "test": "unique_quest_id",
       "pass": true
     },
     {
-      "test": "idempotency_unique_chain_id",
+      "test": "unique_chain_id",
       "pass": true
     },
     {
-      "test": "r50_prerequisites_refs_valid",
+      "test": "prereq_refs_valid",
       "pass": true
     },
     {
-      "test": "reward_non_negative",
+      "test": "raid_scaled",
       "pass": true
     },
     {
-      "test": "reward_raid_scales_5000+",
+      "test": "chain_count_34",
       "pass": true
     },
     {
-      "test": "chain_count_ge_34",
+      "test": "v11_chain_length_cap",
       "pass": true
     },
     {
-      "test": "r83_protagonist_era_coverage",
+      "test": "v20_level_cap",
+      "pass": true
+    },
+    {
+      "test": "v21_last_era_no_unlocks",
+      "pass": true
+    },
+    {
+      "test": "v17_no_npc_1",
+      "pass": true
+    },
+    {
+      "test": "v13_legacy_dialog_preserved",
+      "pass": true
+    },
+    {
+      "test": "r83_protagonist_eras",
       "pass": true
     }
   ]

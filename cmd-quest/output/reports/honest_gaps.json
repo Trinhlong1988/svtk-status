@@ -1,37 +1,33 @@
 {
-  "cmd_version": "1.2.0",
+  "cmd_version": "1.3.0",
   "foundation_hash_actual": "ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0",
   "legacy_seed_count": 150,
+  "level_cap": 120,
+  "max_chain_len": 15,
   "gaps_admitted": [
     {
       "severity": "LOW",
-      "item": "Foundation hash drift (CMD brief vs disk)",
-      "reason": "Brief CMD_QUEST_v1.1.md expect 2e6e8c23..., disk v2.8.0 hash khác do CRLF/LF normalization. KHÔNG exit 99 vì file v2.8.0 IS present và rule R66-R83 đã embed sống.",
-      "mitigation": "CMD LEAD verify hash table"
+      "item": "cmd-item registry chưa ship → reward_items placeholder",
+      "reason": "cmd-item/output/legacy/ chỉ có TS source, chưa có ITEM JSONL registry. event_token/raid_loot_chest/reborn_token vẫn là logical name.",
+      "mitigation": "CMD ITEM ship JSONL → re-run CMD QUEST rebuild reward link"
     },
     {
       "severity": "LOW",
-      "item": "Generated quest dùng template prefix+suffix Vietnamese rotation",
-      "reason": "~2412 generated quest theo template, không có deep narrative per-quest.",
+      "item": "Pre-existing TS tests dùng legacy schema",
+      "reason": "cmd-quest/tests/{zod_validate,reward_distribution,npc_ref}.test.ts expect 150 entries string-ID schema, hardcoded path C:/.../SVTK_UPLOAD_WORK/. Run sẽ FAIL. Tests stale với v1.3 spec.",
+      "mitigation": "Add v1.3 schema TS tests beside legacy, hoặc deprecate legacy"
+    },
+    {
+      "severity": "LOW",
+      "item": "Generated quest template lặp",
+      "reason": "~2412 quest generated theo template prefix+suffix Vietnamese rotation. Cultural lock pass, nhưng không deep narrative.",
       "mitigation": "CMD DIALOG enrich qua dialog tree"
     },
     {
       "severity": "LOW",
-      "item": "Reward item placeholder token",
-      "reason": "event_token/raid_loot_chest/reborn_token là logical name, chưa link UUID item_template thật.",
-      "mitigation": "CMD ITEM map sang template UUID khi build registry"
-    },
-    {
-      "severity": "LOW",
-      "item": "svtk_runtime Python module not used",
-      "reason": "Generator stand-alone, không depend runtime package. Pure data gen.",
-      "mitigation": "CMD ENGINE/QA-CORE ship svtk_runtime; gameplay runtime sẽ dùng."
-    },
-    {
-      "severity": "LOW",
-      "item": "Legacy 150 scaffold schema mismatch",
-      "reason": "Đã convert 150 legacy entries từ schema string-ID/multi-obj sang spec schema int-ID/single-obj. quest_uid_legacy preserve để trace.",
-      "mitigation": "CMD LEAD chọn schema canonical chính thức"
+      "item": "NPC#1 Trần Long player template — không thể là giver",
+      "reason": "NPC#1 metadata era=tran (mismatch R83 origin g1), can_give_quest=False. Reborn quest dùng giver alt (Sư Vạn Hạnh hoặc NPC giver pool đầu tiên).",
+      "mitigation": "CMD NPC fix metadata Trần Long: era=g1 + can_give_quest=False (player); add NPC mới làm reborn ritualist (Tiên Ông Yên Tử etc.)"
     }
   ]
 }

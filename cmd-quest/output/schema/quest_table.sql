@@ -1,7 +1,4 @@
--- Quest schema — CMD_QUEST v1.2 / SVTK Foundation v2.8.0 (R45/R50/R74)
--- ============================================================
--- TEMPLATE: định nghĩa quest (immutable, shared across players)
--- ============================================================
+-- Quest schema — CMD_QUEST v1.3 / SVTK Foundation v2.8.0
 CREATE TABLE IF NOT EXISTS quests (
     quest_id            INTEGER PRIMARY KEY,
     quest_uid_legacy    VARCHAR(64),
@@ -19,6 +16,7 @@ CREATE TABLE IF NOT EXISTS quests (
     prerequisites       INTEGER[] DEFAULT '{}',
     chain_id            VARCHAR(64),
     chain_position      INTEGER,
+    dialog_tree_ref     VARCHAR(128),
     is_protagonist_arc  BOOLEAN DEFAULT FALSE,
     event_window_days   INTEGER,
     min_party_size      INTEGER DEFAULT 1,
@@ -28,7 +26,7 @@ CREATE TABLE IF NOT EXISTS quests (
     CHECK (category IN ('main','side','lore','event','raid','reborn','generated')),
     CHECK (objective_type IN ('kill','collect','deliver','escort','talk','explore')),
     CHECK (era IN ('g1','f1','f2','f3','f4','f5','ly','tran','le','tay_son','nguyen')),
-    CHECK (level_min >= 1),
+    CHECK (level_min >= 1 AND level_min <= 120),
     CHECK (reward_gold >= 0),
     CHECK (reward_exp >= 0),
     UNIQUE (quest_id)
@@ -48,9 +46,6 @@ CREATE TABLE IF NOT EXISTS quest_chains (
     UNIQUE (chain_id)
 );
 
--- ============================================================
--- INSTANCE: per-player quest progress (R74 anti-dupe)
--- ============================================================
 CREATE TABLE IF NOT EXISTS quest_instances (
     instance_uuid       UUID PRIMARY KEY,
     quest_id            INTEGER NOT NULL REFERENCES quests(quest_id),
@@ -65,11 +60,7 @@ CREATE TABLE IF NOT EXISTS quest_instances (
     UNIQUE (quest_id, player_id)
 );
 CREATE INDEX IF NOT EXISTS idx_quest_instances_player ON quest_instances(player_id);
-CREATE INDEX IF NOT EXISTS idx_quest_instances_status ON quest_instances(status);
 
--- ============================================================
--- TRANSACTION LOG (R74 audit trail)
--- ============================================================
 CREATE TABLE IF NOT EXISTS quest_transaction_log (
     txn_uuid            UUID PRIMARY KEY,
     actor_uuid          UUID NOT NULL,
@@ -80,12 +71,7 @@ CREATE TABLE IF NOT EXISTS quest_transaction_log (
     CHECK (action IN ('quest_accept','quest_complete','quest_abandon',
                       'quest_rollback','reward_grant','progress_update'))
 );
-CREATE INDEX IF NOT EXISTS idx_quest_txn_actor ON quest_transaction_log(actor_uuid);
-CREATE INDEX IF NOT EXISTS idx_quest_txn_player ON quest_transaction_log(player_id);
 
--- ============================================================
--- REWARD UUID LOG (R74 anti-dupe reward grants)
--- ============================================================
 CREATE TABLE IF NOT EXISTS reward_uuid_log (
     reward_uuid         UUID PRIMARY KEY,
     quest_id            INTEGER REFERENCES quests(quest_id),
@@ -98,5 +84,3 @@ CREATE TABLE IF NOT EXISTS reward_uuid_log (
     CHECK (reward_type IN ('gold','exp','item','reputation')),
     UNIQUE (reward_uuid)
 );
-CREATE INDEX IF NOT EXISTS idx_reward_log_player ON reward_uuid_log(player_id);
-CREATE INDEX IF NOT EXISTS idx_reward_log_quest ON reward_uuid_log(quest_id);
