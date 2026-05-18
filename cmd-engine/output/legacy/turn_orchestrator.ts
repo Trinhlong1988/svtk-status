@@ -277,19 +277,29 @@ export function orchestrateTurn(
   };
 }
 
+/**
+ * Data-driven stage → callback property mapping. Single source of truth;
+ * adding a stage means extending ORCHESTRATOR_STAGES + this table and TS
+ * will surface any drift via the Record<OrchestratorStage, ...> constraint.
+ *
+ * Replaces a 10-case switch with hardcoded stage literals (CMD-LEAD fix
+ * cmd_engine_turn_orchestrator_hardcode_boss_phase, 2026-05-18).
+ */
+const STAGE_CALLBACK_KEY: Readonly<Record<OrchestratorStage, keyof OrchestratorCallbacks>> = {
+  encounter_start:   'onEncounterStart',
+  turn_build:        'onTurnBuild',
+  action_queue:      'onActionQueue',
+  modifier_pipeline: 'onModifierPipeline',
+  status_tick:       'onStatusTick',
+  boss_phase:        'onBossPhase',
+  delayed_aoe:       'onDelayedAoe',
+  replay_capture:    'onReplayCapture',
+  reward_dispatch:   'onRewardDispatch',
+  combat_end:        'onCombatEnd',
+};
+
 function callbackFor(cbs: OrchestratorCallbacks, s: OrchestratorStage): StageCallback | undefined {
-  switch (s) {
-    case 'encounter_start':   return cbs.onEncounterStart;
-    case 'turn_build':        return cbs.onTurnBuild;
-    case 'action_queue':      return cbs.onActionQueue;
-    case 'modifier_pipeline': return cbs.onModifierPipeline;
-    case 'status_tick':       return cbs.onStatusTick;
-    case 'boss_phase':        return cbs.onBossPhase;
-    case 'delayed_aoe':       return cbs.onDelayedAoe;
-    case 'replay_capture':    return cbs.onReplayCapture;
-    case 'reward_dispatch':   return cbs.onRewardDispatch;
-    case 'combat_end':        return cbs.onCombatEnd;
-  }
+  return cbs[STAGE_CALLBACK_KEY[s]];
 }
 
 /**

@@ -178,6 +178,23 @@ function assertValidTurn(turn: number): void {
   }
 }
 
+/**
+ * Validate the CombatRuntime structure before stamping. We don't deep-validate
+ * (legacy combat_runtime owns its invariants) but we do surface a clear error
+ * for the most common caller mistake: passing in a partial runtime stub.
+ */
+function assertValidRuntime(rt: CombatRuntime): void {
+  if (rt === null || typeof rt !== 'object') {
+    throw new TypeError('R67TickScheduler: runtime must be a CombatRuntime object');
+  }
+  if (rt.config === undefined || rt.config === null) {
+    throw new TypeError('R67TickScheduler: runtime.config is missing — expected CombatRuntime built via createCombatRuntime()');
+  }
+  if (typeof rt.config.encounterId !== 'string') {
+    throw new TypeError('R67TickScheduler: runtime.config.encounterId must be a string');
+  }
+}
+
 export function createR67TickScheduler(
   config: R67TickSchedulerConfig = {},
 ): R67TickScheduler {
@@ -218,16 +235,19 @@ export function createR67TickScheduler(
   return {
     begin(rt: CombatRuntime, turn: number): R67TickEvent {
       assertValidTurn(turn);
+      assertValidRuntime(rt);
       beginCombatTurn(rt, turn);
       return stamp(turn, 'begin', rt.config.encounterId);
     },
     guard(rt: CombatRuntime, turn: number): R67TickEvent {
       assertValidTurn(turn);
+      assertValidRuntime(rt);
       tickAuraGuard(rt.auraGuard, turn);
       return stamp(turn, 'aura_guard', rt.config.encounterId);
     },
     end(rt: CombatRuntime, turn: number): R67TickEvent {
       assertValidTurn(turn);
+      assertValidRuntime(rt);
       endCombatTurn(rt, turn);
       return stamp(turn, 'end', rt.config.encounterId);
     },

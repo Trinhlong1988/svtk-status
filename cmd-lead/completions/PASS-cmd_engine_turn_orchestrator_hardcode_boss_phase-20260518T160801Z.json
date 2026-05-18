@@ -1,0 +1,14 @@
+{
+  "fix_id": "cmd_engine_turn_orchestrator_hardcode_boss_phase",
+  "fixed_by": "cmd-engine",
+  "result": "PASS",
+  "timestamp": "20260518T160801Z",
+  "evidence": {
+    "file": "cmd-engine/output/legacy/turn_orchestrator.ts",
+    "fix_approach": "Replaced 10-case switch (line 281-292) with table-driven STAGE_CALLBACK_KEY: Readonly<Record<OrchestratorStage, keyof OrchestratorCallbacks>>",
+    "removed_hardcodes": ["encounter_start","turn_build","action_queue","modifier_pipeline","status_tick","boss_phase","delayed_aoe","replay_capture","reward_dispatch","combat_end"],
+    "callbackFor_new_impl": "return cbs[STAGE_CALLBACK_KEY[s]]",
+    "behavior_change": "NONE — same dispatch identity, table-driven instead of switch",
+    "tsc_typecheck": "PASS exit 0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "fix_id": "threat_constants_missing_bp_suffix",
+  "fixed_by": "cmd-engine",
+  "result": "PASS",
+  "timestamp": "20260518T160801Z",
+  "evidence": {
+    "json_file": "cmd-engine/data/threat_constants.json",
+    "schema_file": "cmd-engine/output/legacy/threat_constants.ts",
+    "consumer_file": "cmd-engine/output/legacy/threat_observability.ts",
+    "renamed_keys": [
+      "RATE_LIMIT_MAX_THREAT_PER_TICK → _BP",
+      "RATE_LIMIT_MAX_THREAT_PER_ACTION → _BP",
+      "RATE_LIMIT_SUMMON_BURST_CAP → _BP",
+      "TELEMETRY_FLICKER_THRESHOLD → _BP",
+      "TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN → _BP"
+    ],
+    "consumer_refs_updated": 6,
+    "tsc_typecheck": "PASS exit 0",
+    "old_threat_tests": "14/14 PASS after rename"
+  }
+}

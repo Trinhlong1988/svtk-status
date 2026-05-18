@@ -134,6 +134,21 @@ describe('R67 TickScheduler — input validation (regression)', () => {
     const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
     expect(() => sched.begin(rt, 0)).not.toThrow();
   });
+
+  it('BUG-22: missing runtime.config throws clear error (not cryptic property access)', () => {
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(() => sched.begin({ auraGuard: {} } as any, 1)).toThrow(/runtime\.config is missing/);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(() => sched.begin(null as any, 1)).toThrow(/runtime must be a CombatRuntime/);
+  });
+
+  it('BUG-22: non-string encounterId rejected', () => {
+    const sched = createR67TickScheduler({ clock: createDeterministicMonotonicClock(0n) });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const fakeRt = { config: { encounterId: 12345 }, auraGuard: {} } as any;
+    expect(() => sched.begin(fakeRt, 1)).toThrow(/encounterId must be a string/);
+  });
 });
 
 describe('R67 TickScheduler — ledger encapsulation (regression)', () => {

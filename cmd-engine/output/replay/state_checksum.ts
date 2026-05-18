@@ -98,6 +98,8 @@ export const CANON_TAG_SET = '__SVTK_Set__';
 export const CANON_TAG_ARRAY_WITH_META = '__SVTK_ArrayMeta__';
 /** Sentinel emitted when a property getter throws during walk (prevents R68 DoS). */
 export const CANON_SENTINEL_GETTER_THREW = '__SVTK_GETTER_THREW__';
+/** Prefix for symbol-keyed properties (Object.keys would otherwise skip them, hiding payload). */
+export const CANON_KEY_SYMBOL_PREFIX = '__SVTK_SYM_KEY:';
 
 // Use Map (not object literal) — assigning `__proto__` as a key in object
 // literal syntax sets the prototype of the literal itself instead of creating
@@ -111,12 +113,14 @@ export function canonicalize(value: unknown): string {
   // Pre-walk converts exotic types JSON.stringify can't handle (bigint),
   // silently drops (Symbol values, undefined), or mishandles (__proto__ key
   // sets prototype instead of own-property). Also NFC-normalises strings and
-  // breaks circular references with a sentinel.
+  // breaks **true** circular references with a sentinel (without false-flagging
+  // legitimately shared DAG subtrees, which is why we use a path-set, not a
+  // visited-set: nodes are removed when we finish walking them).
   const prepared = prepareForJson(value, new WeakSet());
   return JSON.stringify(prepared, canonicalReplacer);
 }
 
-function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
+function prepareForJson(val: unknown, path: WeakSet<object>): unknown {
   if (typeof val === 'bigint') {
     return `${CANON_SENTINEL_BIGINT_PREFIX}${val.toString()}__`;
   }
@@ -138,60 +142,70 @@ function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
     return { [CANON_TAG_DATE]: val.getTime() };
   }
   if (val instanceof Map) {
-    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
-    seen.add(val);
+    if (path.has(val)) return CANON_SENTINEL_CIRCULAR;
+    path.add(val);
     // Sort entries by canonical-key string for determinism.
-    const entries = Array.from(val.entries()).map(([k, v]) => [
-      prepareForJson(k, seen),
-      prepareForJson(v, seen),
+    const map_entries = Array.from(val.entries()).map(([k, v]) => [
+      prepareForJson(k, path),
+      prepareForJson(v, path),
     ]);
-    entries.sort((a, b) => {
+    map_entries.sort((a, b) => {
       const ka = JSON.stringify(a[0]);
       const kb = JSON.stringify(b[0]);
       return ka < kb ? -1 : ka > kb ? 1 : 0;
     });
-    return { [CANON_TAG_MAP]: entries };
+    path.delete(val);
+    return { [CANON_TAG_MAP]: map_entries };
   }
   if (val instanceof Set) {
-    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
-    seen.add(val);
-    const items = Array.from(val).map((item) => prepareForJson(item, seen));
-    items.sort((a, b) => {
+    if (path.has(val)) return CANON_SENTINEL_CIRCULAR;
+    path.add(val);
+    const set_items = Array.from(val).map((item) => prepareForJson(item, path));
+    set_items.sort((a, b) => {
       const sa = JSON.stringify(a);
       const sb = JSON.stringify(b);
       return sa < sb ? -1 : sa > sb ? 1 : 0;
     });
-    return { [CANON_TAG_SET]: items };
+    path.delete(val);
+    return { [CANON_TAG_SET]: set_items };
   }
   if (Array.isArray(val)) {
-    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
-    seen.add(val);
-    const items = val.map((item) => prepareForJson(item, seen));
+    if (path.has(val)) return CANON_SENTINEL_CIRCULAR;
+    path.add(val);
+    const arr_items = val.map((item) => prepareForJson(item, path));
     // Detect arrays with non-index own properties (e.g. `arr.metadata = ...`).
     // Plain JSON.stringify would silently drop those; we tag them so an
     // attacker can't hide payload by stashing it on an array.
     const extra_keys = Object.keys(val).filter((k) => !/^\d+$/.test(k));
-    if (extra_keys.length === 0) return items;
+    if (extra_keys.length === 0) {
+      path.delete(val);
+      return arr_items;
+    }
     const meta_block: Record<string, unknown> = Object.create(null);
     for (const k of extra_keys) {
       const obj = val as unknown as Record<string, unknown>;
       const safe_key = RESERVED_KEY_MAP.get(k) ?? k;
       Object.defineProperty(meta_block, safe_key, {
-        value: prepareForJson(obj[k], seen),
+        value: prepareForJson(obj[k], path),
         enumerable: true, configurable: true, writable: true,
       });
     }
-    return { [CANON_TAG_ARRAY_WITH_META]: { items, meta: meta_block } };
+    path.delete(val);
+    return { [CANON_TAG_ARRAY_WITH_META]: { items: arr_items, meta: meta_block } };
   }
   if (val !== null && typeof val === 'object') {
-    if (seen.has(val)) return CANON_SENTINEL_CIRCULAR;
-    seen.add(val);
+    if (path.has(val)) return CANON_SENTINEL_CIRCULAR;
+    path.add(val);
     // Build via Object.create(null) so assigning '__proto__' as a key cannot
     // mutate the prototype chain. We rename reserved keys to a sentinel so
     // the payload value is preserved in canonical output.
     const obj = val as Record<string, unknown>;
     const out: Record<string, unknown> = Object.create(null);
-    for (const k of Object.keys(obj)) {
+    const string_keys = Object.keys(obj);
+    const symbol_keys = Object.getOwnPropertySymbols(obj).filter((s) =>
+      Object.getOwnPropertyDescriptor(obj, s)?.enumerable === true,
+    );
+    for (const k of string_keys) {
       // Skip toJSON — JSON.stringify would otherwise call it on the prepared
       // object and let an attacker replace the entire serialised state.
       if (k === 'toJSON') continue;
@@ -200,7 +214,7 @@ function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
       // R68 doesn't crash on adversarial input.
       let prepared_value: unknown;
       try {
-        prepared_value = prepareForJson(obj[k], seen);
+        prepared_value = prepareForJson(obj[k], path);
       } catch {
         prepared_value = CANON_SENTINEL_GETTER_THREW;
       }
@@ -211,6 +225,25 @@ function prepareForJson(val: unknown, seen: WeakSet<object>): unknown {
         writable: true,
       });
     }
+    // Symbol-keyed enumerable own properties — Object.keys() skips them, which
+    // would let an attacker hide payload under a symbol key. Encode as
+    // CANON_KEY_SYMBOL_PREFIX + description so the value enters the hash.
+    for (const sym of symbol_keys) {
+      const safe_key = `${CANON_KEY_SYMBOL_PREFIX}${sym.description ?? ''}__`;
+      let prepared_value: unknown;
+      try {
+        prepared_value = prepareForJson((obj as unknown as Record<symbol, unknown>)[sym], path);
+      } catch {
+        prepared_value = CANON_SENTINEL_GETTER_THREW;
+      }
+      Object.defineProperty(out, safe_key, {
+        value: prepared_value,
+        enumerable: true,
+        configurable: true,
+        writable: true,
+      });
+    }
+    path.delete(val);
     return out;
   }
   return val;

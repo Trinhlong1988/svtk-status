@@ -36,6 +36,7 @@ import {
   CANON_TAG_SET,
   CANON_TAG_ARRAY_WITH_META,
   CANON_SENTINEL_GETTER_THREW,
+  CANON_KEY_SYMBOL_PREFIX,
 } from './state_checksum.js';
 
 function makeFrame(turn: number, sessionId: string, encounterId: string, damage = 100): ReplayFrame {
@@ -330,6 +331,45 @@ describe('R68 state_checksum — bigint/Symbol/undefined sentinels (regression B
     };
     expect(() => canonicalize(obj)).not.toThrow();
     expect(canonicalize(obj)).toContain(CANON_SENTINEL_GETTER_THREW);
+  });
+
+  it('BUG-20: shared subtree (DAG) is serialised both times — not falsely flagged as circular', () => {
+    const shared = { val: 'shared_data' };
+    const a = { left: shared, right: shared };
+    const canon = canonicalize(a);
+    expect(canon).not.toContain(CANON_SENTINEL_CIRCULAR);
+    // shared payload appears twice (once per reference)
+    const matches = canon.match(/shared_data/g) ?? [];
+    expect(matches.length).toBe(2);
+  });
+
+  it('BUG-20: shared subtree as array repeat — full serialisation each time', () => {
+    const inner = [1, 2, 3];
+    const outer = { a: inner, b: inner };
+    const canon = canonicalize(outer);
+    expect(canon).not.toContain(CANON_SENTINEL_CIRCULAR);
+    expect(canon).toBe('{"a":[1,2,3],"b":[1,2,3]}');
+  });
+
+  it('BUG-20: TRUE cycle still detected', () => {
+    const c: { x: number; self?: unknown } = { x: 1 };
+    c.self = c;
+    expect(canonicalize(c)).toContain(CANON_SENTINEL_CIRCULAR);
+  });
+
+  it('BUG-21: Symbol-keyed property is preserved (was silently dropped)', () => {
+    const sym = Symbol('secret_key');
+    const a = { [sym]: 'evil_payload', x: 1 };
+    const b = { x: 1 };
+    const a_canon = canonicalize(a);
+    expect(a_canon).not.toBe(canonicalize(b));
+    expect(a_canon).toContain(CANON_KEY_SYMBOL_PREFIX);
+    expect(a_canon).toContain('evil_payload');
+  });
+
+  it('BUG-21: distinct symbol-keyed values produce distinct hashes', () => {
+    const sym = Symbol('k');
+    expect(canonicalize({ [sym]: 'v1' })).not.toBe(canonicalize({ [sym]: 'v2' }));
   });
 
   it('BUG-8: unicode composed and decomposed forms produce SAME hash (NFC normalise)', () => {

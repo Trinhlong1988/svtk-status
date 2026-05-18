@@ -1,0 +1,79 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "audit_type": "Round 4 hidden-bug hunt + 2 cross-CMD inbox fixes",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts": "2026-05-18T16:08:00Z",
+  "round4_bugs_found_and_fixed": 3,
+  "round4_tests_added": 7,
+  "cumulative_with_rounds_1_3": "21 bugs fixed total",
+  "rounds": [
+    {
+      "turn": 1,
+      "angle": "Shared subtree (DAG) misclassified as circular",
+      "bug_id": "BUG-20",
+      "severity": "HIGH (forensic correctness)",
+      "evidence": "{left: shared, right: shared} → right slot stamped as CIRCULAR sentinel. DAG pattern with shared sub-object is legitimate, not a cycle. Round 1's WeakSet-based 'seen' detection over-flagged.",
+      "fix": "Changed `seen: WeakSet` semantics to `path: WeakSet` (path-set). Add on enter, REMOVE on exit. Only true back-edges (currently in stack) flagged as CIRCULAR.",
+      "regression_tests": 3
+    },
+    {
+      "turn": 2,
+      "angle": "Symbol-keyed property dropped",
+      "bug_id": "BUG-21",
+      "severity": "MEDIUM (forensic)",
+      "evidence": "{[Symbol('secret_key')]: 'evil_payload', x: 1} hashed identically to {x: 1} — Object.keys() skips symbol keys; my prepareForJson didn't walk Object.getOwnPropertySymbols().",
+      "fix": "Walk enumerable own symbol keys via Object.getOwnPropertySymbols(); emit as CANON_KEY_SYMBOL_PREFIX + description.",
+      "regression_tests": 2
+    },
+    {
+      "turn": 3,
+      "angle": "Cryptic error when runtime.config missing",
+      "bug_id": "BUG-22",
+      "severity": "LOW (UX)",
+      "evidence": "sched.begin({auraGuard:{}}, 1) → 'Cannot read properties of undefined (reading encounterId)'. Caller can't tell adapter requires CombatRuntime built via createCombatRuntime().",
+      "fix": "assertValidRuntime() — clear error 'runtime.config is missing — expected CombatRuntime built via createCombatRuntime()' + non-string encounterId rejected.",
+      "regression_tests": 2
+    }
+  ],
+  "verified_no_bug": [
+    "primitive canonicalize (string/number/null/bool/undefined/bigint) — all work correctly",
+    "frame mutation during checksumStream iteration — no race",
+    "-0 vs 0 — JSON.stringify normalises both to '0' (correct)",
+    "1MB frame payload checksumFrame in 8ms — acceptable perf",
+    "different encounter_id produces distinct aggregate (seeded chain)",
+    "hash-extension forge — confirms chain is INTEGRITY not AUTHENTICITY; documented threat model"
+  ],
+  "inbox_tasks_processed": [
+    {
+      "fix_id": "threat_constants_missing_bp_suffix",
+      "result": "PASS",
+      "files_modified": 3,
+      "renamed_keys": 5,
+      "consumer_refs_updated": 6,
+      "old_threat_tests": "14/14 PASS post-rename"
+    },
+    {
+      "fix_id": "cmd_engine_turn_orchestrator_hardcode_boss_phase",
+      "result": "PASS",
+      "approach": "Replaced 10-case switch with STAGE_CALLBACK_KEY: Readonly<Record<OrchestratorStage, keyof OrchestratorCallbacks>> table-driven dispatch. callbackFor → cbs[STAGE_CALLBACK_KEY[s]]. Same identity, no behavior change."
+    }
+  ],
+  "final_verification": {
+    "tsc_typecheck_exit": 0,
+    "vitest_total": 51,
+    "vitest_pass": 51,
+    "vitest_fail": 0,
+    "old_threat_tests_after_rename": "14/14 PASS",
+    "r67_test_count": 16,
+    "r68_test_count": 35
+  },
+  "cumulative_summary": {
+    "rounds_completed": 4,
+    "total_bugs_fixed": 21,
+    "regression_tests_total": 35,
+    "fix_clean_rate_pct": 100.0,
+    "inbox_tasks_completed_cumulative": 2
+  }
+}

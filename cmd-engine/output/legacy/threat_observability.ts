@@ -65,7 +65,7 @@ export interface AnomalyHint {
 
 /** Detect target flicker (switch count > threshold). */
 export function detectFlicker(c: ThreatObservabilityCounters): AnomalyHint | null {
-  if (c.targetSwitchCount >= ThreatConstants.TELEMETRY_FLICKER_THRESHOLD) {
+  if (c.targetSwitchCount >= ThreatConstants.TELEMETRY_FLICKER_THRESHOLD_BP) {
     return {
       kind: 'target_flicker_high',
       meta: { count: c.targetSwitchCount },
@@ -87,7 +87,7 @@ export function detectSpikeAnomaly(c: ThreatObservabilityCounters): AnomalyHint 
 
 /** Detect retarget high-freq. */
 export function detectRetargetHighFreq(c: ThreatObservabilityCounters): AnomalyHint | null {
-  if (c.totalRetargets >= ThreatConstants.TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN) {
+  if (c.totalRetargets >= ThreatConstants.TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN_BP) {
     return {
       kind: 'retarget_high_frequency',
       meta: { count: c.totalRetargets },
@@ -152,12 +152,12 @@ export function rateLimitCheck(
   // Per-action cap
   let clamped = amount;
   let reason: RateLimitOutcome['reason'];
-  if (clamped > ThreatConstants.RATE_LIMIT_MAX_THREAT_PER_ACTION) {
-    clamped = ThreatConstants.RATE_LIMIT_MAX_THREAT_PER_ACTION;
+  if (clamped > ThreatConstants.RATE_LIMIT_MAX_THREAT_PER_ACTION_BP) {
+    clamped = ThreatConstants.RATE_LIMIT_MAX_THREAT_PER_ACTION_BP;
     reason = 'per_action_cap';
   }
   // Per-tick cap
-  const remaining = ThreatConstants.RATE_LIMIT_MAX_THREAT_PER_TICK - state.thisTickThreat;
+  const remaining = ThreatConstants.RATE_LIMIT_MAX_THREAT_PER_TICK_BP - state.thisTickThreat;
   if (remaining <= 0) {
     return { allowed: false, clampedAmount: 0, reason: 'per_tick_cap' };
   }
@@ -167,7 +167,7 @@ export function rateLimitCheck(
   }
   // Summon burst
   if (isSummonSource) {
-    if (state.summonBurstCount >= ThreatConstants.RATE_LIMIT_SUMMON_BURST_CAP) {
+    if (state.summonBurstCount >= ThreatConstants.RATE_LIMIT_SUMMON_BURST_CAP_BP) {
       return { allowed: false, clampedAmount: 0, reason: 'summon_burst_cap' };
     }
     state.summonBurstCount++;

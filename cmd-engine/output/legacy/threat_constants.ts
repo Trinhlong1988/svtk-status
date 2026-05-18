@@ -70,14 +70,14 @@ export const ThreatConstantsSchema = z.object({
   SPATIAL_FAR_THRESHOLD: intPositive,
   SPATIAL_LINE_EXPOSURE_BP: intPositive,
 
-  RATE_LIMIT_MAX_THREAT_PER_TICK: intPositive,
-  RATE_LIMIT_MAX_THREAT_PER_ACTION: intPositive,
-  RATE_LIMIT_SUMMON_BURST_CAP: intPositive,
+  RATE_LIMIT_MAX_THREAT_PER_TICK_BP: intPositive,
+  RATE_LIMIT_MAX_THREAT_PER_ACTION_BP: intPositive,
+  RATE_LIMIT_SUMMON_BURST_CAP_BP: intPositive,
   RATE_LIMIT_DOT_AGGREGATE_TURNS: intPositive,
 
-  TELEMETRY_FLICKER_THRESHOLD: intPositive,
+  TELEMETRY_FLICKER_THRESHOLD_BP: intPositive,
   TELEMETRY_SPIKE_ANOMALY_BP: intPositive,
-  TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN: intPositive,
+  TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN_BP: intPositive,
 });
 
 export type ThreatConstants = z.infer<typeof ThreatConstantsSchema>;
