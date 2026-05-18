@@ -1,0 +1,10 @@
+{
+  "issue_id": "cmd_qa_core_determinism_warnings_5",
+  "description": "5 determinism warnings in schema_validation_runtime.test.ts + serialization_hash_validator.test.ts. Review for Math.random / Date.now() leak per R68.",
+  "evidence": { "count": 5, "files": ["schema_validation_runtime.test.ts","serialization_hash_validator.test.ts"] },
+  "severity": "LOW",
+  "priority": 3,
+  "routed_from": "cmd-quest deep validation",
+  "assigned_by": "LEAD",
+  "ts": "20260518-220247"
+}

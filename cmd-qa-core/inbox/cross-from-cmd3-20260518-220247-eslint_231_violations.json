@@ -1,0 +1,10 @@
+{
+  "issue_id": "cmd_qa_core_eslint_231_violations",
+  "description": "231 eslint violations across tests/tools/* — explicit-function-return-type + unused-vars. Run npx eslint --fix where safe, manual review remainder.",
+  "evidence": { "count": 231, "scope": "tests/tools/*", "categories": ["explicit-function-return-type","unused-vars"] },
+  "severity": "MED",
+  "priority": 2,
+  "routed_from": "cmd-quest deep validation",
+  "assigned_by": "LEAD",
+  "ts": "20260518-220247"
+}

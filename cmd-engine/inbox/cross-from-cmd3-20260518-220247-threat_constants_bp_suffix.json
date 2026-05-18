@@ -1,0 +1,11 @@
+{
+  "issue_id": "threat_constants_missing_bp_suffix",
+  "description": "data/threat_constants.json — 5 keys missing _BP suffix: RATE_LIMIT_MAX_THREAT_PER_TICK, RATE_LIMIT_MAX_THREAT_PER_ACTION, RATE_LIMIT_SUMMON_BURST_CAP, TELEMETRY_FLICKER_THRESHOLD, TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN. Note: CMD1 or CMD2 owns — both copies of data/threat_constants.json exist; coordinate.",
+  "evidence": { "file": "data/threat_constants.json", "keys": ["RATE_LIMIT_MAX_THREAT_PER_TICK","RATE_LIMIT_MAX_THREAT_PER_ACTION","RATE_LIMIT_SUMMON_BURST_CAP","TELEMETRY_FLICKER_THRESHOLD","TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN"] },
+  "severity": "LOW",
+  "priority": 3,
+  "routed_from": "cmd-quest deep validation",
+  "coordination_note": "Ping cmd-db (CMD2) if data ownership ambiguous",
+  "assigned_by": "LEAD",
+  "ts": "20260518-220247"
+}

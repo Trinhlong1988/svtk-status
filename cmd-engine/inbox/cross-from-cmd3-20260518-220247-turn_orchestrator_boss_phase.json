@@ -1,0 +1,10 @@
+{
+  "issue_id": "cmd_engine_turn_orchestrator_hardcode_boss_phase",
+  "description": "turn_orchestrator.ts:287 hardcode literal 'boss_phase' string — should be constant/enum per data-driven principle.",
+  "evidence": { "file": "turn_orchestrator.ts", "line": 287, "violation": "hardcode 'boss_phase' literal" },
+  "severity": "LOW",
+  "priority": 3,
+  "routed_from": "cmd-quest deep validation",
+  "assigned_by": "LEAD",
+  "ts": "20260518-220247"
+}

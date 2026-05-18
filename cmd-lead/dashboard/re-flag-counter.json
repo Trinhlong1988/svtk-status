@@ -1,5 +1,3 @@
 {
-  "cmd_parse_stale_foundation_hash": 2,
-  "cmd_db_w1_broken_imports": 1,
-  "cmd_qa_core_stale_foundation_hash": 1
+  "cmd_db_w1_broken_imports": 1
 }
