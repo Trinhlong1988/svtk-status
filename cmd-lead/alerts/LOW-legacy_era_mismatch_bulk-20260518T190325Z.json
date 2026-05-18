@@ -1,0 +1,11 @@
+{
+  "severity": "LOW",
+  "issue_id": "legacy_era_mismatch_bulk",
+  "evidence": {
+    "count": 118,
+    "note": "Legacy giver_npc_id era khác quest era — R71 immutable, cmd-npc team review legacy data quality"
+  },
+  "cmd_origin": "cmd-quest",
+  "timestamp": "20260518T190325Z",
+  "cycle_id": "20260518-190325Z"
+}
