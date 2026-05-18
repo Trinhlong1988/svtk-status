@@ -1,31 +1,27 @@
-# SVTK DASHBOARD 20260518-220628 (cycle 10)
+# SVTK DASHBOARD 20260518-221810 (cycle 11)
 
-**Foundation:** v2.8.0 hash 4e9a6d7a...b364b ✓
-**Completions resolved:** 21
+**Foundation:** v2.8.0 hash 4e9a6d7a...b364b (CRLF on-disk per INDEX convention) ✓
+**Completions resolved:** 24
 
-## Cycle 10 highlights
+## Cycle 11 highlights
 
-- CMD1 ship 20-round extended audit (R11-R30) → **20/20 PASS, cumulative 30/30**
-- 0 issues found in extended scope. LOC delta 0, byte-identical 126/132 combat .ts
-- R67+R68 verified across 5 seeds + 1000-turn smoke + 100-frame zero-collision
-- cmd-parse inbox archived (CMD4 ACKed cycle 9)
+- **CMD2** ship 10-pass deep audit → 10/10 PASS, 0 new content bugs (acceptance R49 ✓)
+- **CMD4** ship Tuần 2 PRODUCTION-GRADE:
+  - 37/37 vitest PASS (cmd-network 22 + cmd-parse 15)
+  - tsc strict 0 errors
+  - **R72 protocol helpers** shipped: cmd-lead/lib/r72_protocol.mjs (pushHeartbeat/pushCompletion/pushAck)
+  - GATE 1 25/25 PASS regression
+- LEAD ack CMD2 CRLF recommendation: KHÔNG actionable — INDEX.sha256 convention đã là CRLF on-disk, em đã dùng đúng
 
-## Pending fixes
+## Pending Mr.Long decisions
+
+1. **cmd-db W1 broken imports** (re-flag 1/3): kick Option A vendor + path patch (1 day) Week 2 Day 1, hay defer?
+2. **R66 4 deferred sub-rules** (R66.4 multi-login / R66.5 hijack / R66.8 flood / R66.9 audit): defer Phase 15 / tạo CMD6 AUTH / grow CMD4?
+
+## Pending fixes (re-flag counter)
 
 - **cmd_db_w1_broken_imports**: 1/3
 
 ## Inbox queue
 
-- cmd-db: 2 (R44 NEW impl + W1 broken imports)
-- cmd-engine: 2 (turn_orchestrator hardcode + threat_constants _BP)
-- cmd-qa-core: 2 (231 eslint + 5 determinism)
-- cmd-parse: 0 (ACKed + archived)
-
-## CMD audit scoreboard
-
-| CMD | Audit rounds | Score |
-|---|---|---|
-| CMD1 | 30 (R1-R30) | 30/30 PASS |
-| CMD4 | 10 + GATE 1 | 10/10 + 25/25 |
-| CMD3 | Full backend | 5895/5895 |
-| CMD2 | Week 1-3 OLD test | 1095/1095 |
+- cmd-db: 2 | cmd-engine: 2 | cmd-qa-core: 2 | cmd-parse: 0 (DONE)
