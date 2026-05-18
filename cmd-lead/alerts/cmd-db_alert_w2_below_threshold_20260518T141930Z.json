@@ -1,0 +1,21 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "alert_id": "cmd-db_w2_r44_below_threshold",
+  "severity": "MED",
+  "ts": "2026-05-18T14:19:30Z",
+  "subject": "Week 2 R44 5-wrapper compliance ~30% — below 99% DB critical threshold",
+  "context": {
+    "spec_threshold": "≥99% (DB critical per CMD_DB v2.4.2)",
+    "current_compliance": "~30%",
+    "reason": "OLD codebase has zero R44 wrapper implementation. Migration copied verification runtime layer only. NEW production-grade DB transaction wrappers (T1 SERIALIZABLE / T2 REPEATABLE READ / W3 optimistic / W4 R68 snapshot / W5 executeWithIdempotency + AD1-AD12) require fresh implementation per cmd-db/cmd.md § P1.1-P1.5.",
+    "blocker": false,
+    "workaround": "Week 1 migration ship complete + Week 3 OLD baseline 1095/1095 PASS. R44 NEW impl is the actual Week 2 work, not a regression."
+  },
+  "recommendation": [
+    "Authorize CMD2 to continue Week 2 NEW impl (~600 LOC + 003_anti_dupe_schema.sql + AD1-AD12 + executeWithIdempotency retry loop + inventory cap + AD12 rollback + stale_pending cron).",
+    "Inter-CMD ping cmd-engine (CMD1) for W1 battle txn API surface coordination.",
+    "Inter-CMD ping cmd-quest (CMD3) for W2 quest-reward grant adapter signature."
+  ],
+  "doc": "cmd-db/output/r44_compliance.md"
+}
