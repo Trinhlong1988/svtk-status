@@ -64,6 +64,31 @@ export function computePayloadHash(payload: unknown): string {
 }
 
 // ════════════════════════════════════════════════════════════════
+// BigInt-safe JSON serialization for pending_actions.result roundtrip
+// (R13 bug-hunt: native JSON.stringify throws on BigInt)
+// ════════════════════════════════════════════════════════════════
+const BIGINT_TAG = '__svtk_bigint__';
+
+export function stringifyBigIntSafe(value: unknown): string {
+  return JSON.stringify(value, (_k, v) =>
+    typeof v === 'bigint' ? { [BIGINT_TAG]: v.toString() } : v,
+  );
+}
+
+export function reviveBigIntSafe<T = unknown>(value: unknown): T {
+  if (value === null || typeof value !== 'object') return value as T;
+  if (Array.isArray(value)) return value.map(reviveBigIntSafe) as unknown as T;
+  const obj = value as Record<string, unknown>;
+  const keys = Object.keys(obj);
+  if (keys.length === 1 && keys[0] === BIGINT_TAG && typeof obj[BIGINT_TAG] === 'string') {
+    return BigInt(obj[BIGINT_TAG] as string) as unknown as T;
+  }
+  const out: Record<string, unknown> = {};
+  for (const k of keys) out[k] = reviveBigIntSafe(obj[k]);
+  return out as T;
+}
+
+// ════════════════════════════════════════════════════════════════
 // P1.1 — executeWithIdempotency with SERIALIZABLE retry loop
 // ════════════════════════════════════════════════════════════════
 export interface IdempotencyResult<T> {
@@ -108,7 +133,8 @@ export async function executeWithIdempotency<T>(
         }
         if (row.status === 'committed') {
           await client.query('COMMIT');
-          return { result: row.result as T, fromCache: true };
+          // R13: revive BigInt-tagged fields from JSONB roundtrip
+          return { result: reviveBigIntSafe<T>(row.result), fromCache: true };
         }
         if (row.status === 'duplicate_rejected' || row.status === 'failed') {
           throw new Error(`Action ${nonce} already ${row.status}`);
@@ -127,7 +153,8 @@ export async function executeWithIdempotency<T>(
 
       await client.query(
         'UPDATE pending_actions SET status = $1, result = $2, completed_at = NOW() WHERE nonce = $3',
-        ['committed', JSON.stringify(result), nonce],
+        // R13: BigInt-safe stringify so caller results containing bigint roundtrip cleanly
+        ['committed', stringifyBigIntSafe(result), nonce],
       );
 
       await client.query('COMMIT');
@@ -220,7 +247,12 @@ export interface RollbackResult {
   success: true;
   txn_id: string;
   compensated_items: number;
-  compensated_currency: number;
+  /**
+   * Absolute compensated currency amount (BIGINT-precision).
+   * R13 bug-hunt: bigint preserves precision when gold > Number.MAX_SAFE_INTEGER
+   * (2^53 − 1). Callers serializing to JSON must convert (e.g., `.toString()`).
+   */
+  compensated_currency: bigint;
   reason: string;
   previously_rolled_back: boolean;
 }
@@ -256,11 +288,14 @@ export async function ad12_rollback(
           [original.target_uuid],
         );
         const prev = prevRollback.rows[0]?.payload;
+        // R13 fix: compensated_currency stored as string in gm_action_log payload to
+        // preserve BIGINT precision through JSONB; parse back as bigint.
+        const rawCurrency = prev?.compensated_currency ?? '0';
         return {
           success: true,
           txn_id: txnId,
           compensated_items: Number(prev?.compensated_items ?? 0),
-          compensated_currency: Number(prev?.compensated_currency ?? 0),
+          compensated_currency: BigInt(typeof rawCurrency === 'string' ? rawCurrency : String(rawCurrency)),
           reason: 'already_rolled_back',
           previously_rolled_back: true,
         };
@@ -271,7 +306,7 @@ export async function ad12_rollback(
       }
 
       let compensatedItems = 0;
-      let compensatedCurrency = 0;
+      let compensatedCurrency = 0n;
 
       if (original.txn_type === 'trade' && original.target_type === 'item') {
         const itemUuid = original.target_uuid;
@@ -307,6 +342,10 @@ export async function ad12_rollback(
             'SELECT gold FROM players WHERE player_id = $1 FOR UPDATE',
             [original.player_id],
           );
+          // R2 bug-hunt: guard against player row deleted between original txn and rollback
+          if (playerR.rows.length === 0) {
+            throw new Error(`AD12: Player ${original.player_id} not found for gold rollback`);
+          }
           const rawGold = playerR.rows[0].gold;
           const goldBefore = typeof rawGold === 'bigint' ? rawGold : BigInt(rawGold);
 
@@ -328,8 +367,8 @@ export async function ad12_rollback(
               rollbackNonce,
             ],
           );
-          // Math.abs on BigInt: branchless
-          compensatedCurrency = Number(delta < 0n ? -delta : delta);
+          // R13 fix: keep BigInt precision (do NOT Number() cast — loses past 2^53)
+          compensatedCurrency = delta < 0n ? -delta : delta;
         }
       }
 
@@ -346,11 +385,12 @@ export async function ad12_rollback(
          VALUES ($1, 'rollback', $2, $3, $4, $5)`,
         [
           gmId, original.player_id, original.target_uuid, reason,
+          // R13 fix: stringify bigint as string (JSON has no native BigInt) — lossless roundtrip
           JSON.stringify({
             rollback_nonce: rollbackNonce,
             original_txn: txnId,
             compensated_items: compensatedItems,
-            compensated_currency: compensatedCurrency,
+            compensated_currency: compensatedCurrency.toString(),
           }),
         ],
       );

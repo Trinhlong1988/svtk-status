@@ -15,6 +15,8 @@ import type { Pool, PoolClient } from 'pg';
 import {
   EXPIRE_MAP,
   computePayloadHash,
+  reviveBigIntSafe,
+  stringifyBigIntSafe,
   type ActionType,
   type IdempotencyResult,
 } from '../anti_dupe/anti_dupe.js';
@@ -65,7 +67,8 @@ export async function withActionTxn<T>(
         }
         if (row.status === 'committed') {
           await client.query('COMMIT');
-          return { result: row.result as T, fromCache: true };
+          // R13: revive BigInt-tagged fields from JSONB roundtrip
+          return { result: reviveBigIntSafe<T>(row.result), fromCache: true };
         }
         if (row.status === 'duplicate_rejected' || row.status === 'failed') {
           throw new Error(`Action ${nonce} already ${row.status}`);
@@ -83,7 +86,8 @@ export async function withActionTxn<T>(
 
       await client.query(
         'UPDATE pending_actions SET status = $1, result = $2, completed_at = NOW() WHERE nonce = $3',
-        ['committed', JSON.stringify(result), nonce],
+        // R13: BigInt-safe stringify so caller results containing bigint roundtrip cleanly
+        ['committed', stringifyBigIntSafe(result), nonce],
       );
 
       await client.query('COMMIT');

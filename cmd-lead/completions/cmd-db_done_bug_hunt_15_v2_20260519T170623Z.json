@@ -1,0 +1,78 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "15-round evidence-based deep dig per Mr.Long 'tiếp tục đào sâu fix bug ẩn 15 vòng, triệt để đúng rule'",
+  "status": "complete_3_plus_1_bugs_fixed",
+  "ts": "2026-05-19T17:06:23Z",
+  "doc": "cmd-db/output/BUG_HUNT_15ROUND_V2.md",
+  "scanner": "scripts/cmd2_deep_dig_15_v2.mjs",
+  "real_bugs_found_and_fixed": [
+    {
+      "id": "R2",
+      "class": "Unguarded .rows[0] access",
+      "severity": "MED",
+      "file": "cmd-db/output/anti_dupe/anti_dupe.ts:310",
+      "before": "const rawGold = playerR.rows[0].gold; (no length check)",
+      "after": "if (playerR.rows.length === 0) throw new Error('AD12: Player ... not found for gold rollback')",
+      "trigger": "player deleted between original gold_change txn and rollback → TypeError instead of meaningful error"
+    },
+    {
+      "id": "R13",
+      "class": "BigInt precision regression in RollbackResult",
+      "severity": "HIGH (whale account inflation)",
+      "file": "cmd-db/output/anti_dupe/anti_dupe.ts:332 + RollbackResult type",
+      "before": "compensated_currency: number; + compensatedCurrency = Number(delta < 0n ? -delta : delta) — loses precision past 2^53",
+      "after": "compensated_currency: bigint; + native BigInt throughout + JSONB roundtrip via stringifyBigIntSafe/reviveBigIntSafe"
+    },
+    {
+      "id": "R13_secondary",
+      "class": "JSON.stringify TypeError on BigInt (uncovered by R13 fix)",
+      "severity": "HIGH (blocks executeWithIdempotency caching path)",
+      "files": ["cmd-db/output/anti_dupe/anti_dupe.ts", "cmd-db/output/wrappers/w2_action_txn.ts"],
+      "before": "JSON.stringify(result) — native, throws on BigInt",
+      "after": "stringifyBigIntSafe(result) — tags bigint as {__svtk_bigint__: '42'} for JSONB roundtrip; reviveBigIntSafe restores on cache hit"
+    },
+    {
+      "id": "R14",
+      "class": "Duplicate import statements",
+      "severity": "LOW",
+      "files": ["cmd-db/output/persistence/economy_persistence_runtime_bridge.ts (2 imports from economy_serialization_contract)", "cmd-db/output/persistence/persistence_adapter.ts (3 imports incl 1 mid-file lazy at line 120)"],
+      "before": "2 + 3 separate import blocks for same source module",
+      "after": "Single consolidated import per source module"
+    }
+  ],
+  "rounds_clean": {
+    "R1_spec_literal_presence": "17/17 P1.1-P1.5 items literal present",
+    "R3_type_erased_cast": "36 occurrences — tsc strict covers any escape",
+    "R4_promise_rejection_swallow_non_shutdown": "0",
+    "R5_pool_leak": "0",
+    "R8_migration_FK_ordering": "0 broken",
+    "R10_async_throw_propagation": "tsc EXIT 0 confirms",
+    "R11_superfluous_await_release": "0",
+    "R12_sql_semicolon_consistency": "0 drift",
+    "R15_tsc_vitest_gold_standard": "tsc EXIT 0 + 26 PASS + 11 SKIPPED"
+  },
+  "rounds_informational_or_false_positive": {
+    "R6_unreferenced_schema_enum": "7 values reserved for future (auction/mail/destroyed/pickup/drop/mail/auction transfer_type) — defensive, NOT bugs",
+    "R7_invalid_INTERVAL_string": "1 scanner false-positive ('already_rolled_back' matched RollbackResult.reason field)",
+    "R9_JSON_stringify_call_sites": "12 informational; verified via R13 fix"
+  },
+  "new_exports_added": [
+    "stringifyBigIntSafe(value): string — JSON.stringify with bigint tag preservation",
+    "reviveBigIntSafe<T>(value): T — restore bigint from {__svtk_bigint__: 'N'} tag"
+  ],
+  "verification_post_fix": {
+    "tsc_strict": "EXIT 0 (66 files)",
+    "vitest_anti_dupe": "13/13 PASS (Item #8 updated for bigint)",
+    "vitest_wrappers": "12/12 PASS",
+    "vitest_integration_no_dsn": "1 PASS + 11 SKIPPED",
+    "aggregate_CMD2_suite": "26 PASS + 11 SKIPPED / 2.31s"
+  },
+  "tally_this_round": { "found": 4, "fixed": 4, "completeness": "100%" },
+  "tally_cumulative_3_sessions": {
+    "session_1_day1_2": { "rounds": 10, "fixed": 3 },
+    "session_2_day3": { "rounds": 10, "fixed": 3 },
+    "session_3_cumulative": { "rounds": 15, "fixed": 4 },
+    "grand_total": "10 real bugs found + 10 fixed across 35 rounds"
+  }
+}

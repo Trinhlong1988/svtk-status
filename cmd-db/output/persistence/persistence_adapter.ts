@@ -21,6 +21,7 @@ import type { LootDeltaMetadata, EconomyForensicSnapshotPayload } from '../../..
 import { codepointCompare } from '../_shared/codepoint_compare.js';
 import type { GoldFlow, ItemFlow } from '../../../cmd-engine/output/economy/foundation/economy_foundation_runtime.js';
 import type { EconomyForensicEvent } from '../../../cmd-engine/output/economy/economy_forensic_telemetry.js';
+// R14 bug-hunt: consolidated dup imports (was 2 separate blocks + 1 mid-file lazy import)
 import {
   serializeInventorySnapshot,
   deserializeInventorySnapshot,
@@ -29,6 +30,7 @@ import {
   serializeEconomyForensicSnapshot,
   deserializeEconomyForensicSnapshot,
   canonicalJSON,
+  ECONOMY_SERIALIZATION_VERSION,
 } from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
 import { fnv1a32 } from '../../../cmd-engine/output/economy/modifier_ordering_audit.js';
 
@@ -116,8 +118,6 @@ export interface PersistenceAdapter {
 }
 
 // ───────── In-memory reference implementation ─────────
-
-import { ECONOMY_SERIALIZATION_VERSION } from '../../../cmd-engine/output/economy/economy_serialization_contract.js';
 
 interface InMemoryStore {
   records: PersistedRecord[];

@@ -216,13 +216,15 @@ describe('CMD2 R44 anti_dupe self-audit 12/12', () => {
       [txnId, itemUuid],
     );
     await pool.query(
+      // R13 fix: compensated_currency stored as STRING to preserve BIGINT precision through JSONB
       `INSERT INTO gm_action_log (gm_id, action_type, target_uuid, payload)
-       VALUES ('gm1', 'rollback', $1, '{"compensated_items":1,"compensated_currency":0}')`,
+       VALUES ('gm1', 'rollback', $1, '{"compensated_items":1,"compensated_currency":"0"}')`,
       [itemUuid],
     );
     const r = await ad12_rollback(pool, txnId, 'gm1', 're-attempt');
     expect(r.previously_rolled_back).toBe(true);
     expect(r.compensated_items).toBe(1);
+    expect(r.compensated_currency).toBe(0n);
     expect(r.reason).toBe('already_rolled_back');
   });
 
