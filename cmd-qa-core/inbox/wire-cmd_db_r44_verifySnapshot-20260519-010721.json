@@ -1,0 +1,11 @@
+{
+  "issue_id": "wire_cmd_db_r44_qa_core_verifySnapshot",
+  "description": "Call verifySnapshotBinding during replay divergence audit (W4 helper).",
+  "imports": "from 'cmd-db/output/wrappers/w4_snapshot'",
+  "verify": "Re-run scanner — expect qa-core coverage 1/1",
+  "severity": "MED",
+  "priority": 2,
+  "routed_from": "CMD2 R44 Day 4 wire tracker alert",
+  "assigned_by": "LEAD",
+  "ts": "20260519-010721"
+}

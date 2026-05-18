@@ -1,37 +1,23 @@
-# SVTK DASHBOARD 20260519-003434 (cycle 34 — content team active)
+# SVTK DASHBOARD 20260519-010721 (cycle 35)
 
-**Foundation:** v2.8.0 ✓ | **Completions resolved:** 60
+**Foundation:** v2.8.0 ✓ | **Completions resolved:** 61
 
-## 🎉 cmd-item ACTIVE — ship 4006 items
-| Type | Count |
-|---|---|
-| Weapon | 1202 |
-| Armor | 954 |
-| Material | 750 |
-| Quest_item | 530 |
-| Consumable | 520 |
-| Lore_item | 50 |
-| **Total** | **4006** (6 seeds + 4000 new) |
-- 6 rarity tiers, 5 era codes, 6 elements (BẠCH/HẮC removed, đúng R79)
-- Triple audit 3 layers × 10 rounds, 108 checks PASS, determinism 5x verified, SHA256 stable
-- 14 bugs fixed during scale-up (B1-B14)
-- Branch: staging-item-4k-hardened-v4-20260519-001440, commit 1895da5
+## CMD2 R44 Day 4 — wire tracker shipped
+- callsite_scanner.mjs tracks 16 exports, 9 expected wire entries
+- First run: 0/9 coverage → alert MED shipped
+- Compliance: 98% → **99%**
 
-## 📌 cmd-item RECOMMENDATIONS TO LEAD (anh quyết)
+## LEAD routed 4 wire tasks (verify alert PHASE 2-4)
+| Consumer | Wires | Inbox |
+|---|---|---|
+| cmd-engine | W1 begin/end + W4 snapshot + W2 skill/item (4) | inbox + |
+| cmd-item | W2 trade + pickupItem + W3 optimistic (3) | inbox + |
+| cmd-quest | W2 reward_claim (1) | inbox + |
+| cmd-qa-core | verifySnapshotBinding (1) | inbox + |
 
-1. **MERGE branch staging-item-4k-hardened-v4** vào main (latest superset, 108-check pass)
-2. **CLOSE 5 obsolete staging branches** (v1.0/v1.1/v1.2/v1.2-hardened/v1.3)
-3. QA re-run sau merge để verify integration với cmd-quest cross-ref
+After 4 worker wire complete, scanner re-run sẽ show 9/9 coverage → R44 100%.
 
-Em chưa tự merge — branch merge = decision lớn về content roadmap. Anh approve em làm.
+## Branch staging-item pending merge (cycle 34)
 
-## CMD1 round 7 — cumulative 28 bugs
-- +5 bugs (1 HIGH DoS + 2 MED + 2 LOW)
-- Cumulative R1-R7: **28 bugs** (1 CRIT + 10 HIGH + 12 MED + 5 LOW)
-- 22 attack vectors hardened, 70/70 tests, tsc 0
-
-## Content team status
-- cmd-item: **ACTIVE** ✓ (ship 4006)
-- cmd-npc/quest/map: chưa heartbeat
-
-## Pending fixes EMPTY ✓
+## Pending fixes
+- **cmd_db_r44_wire_coverage_0pct**: 1/3

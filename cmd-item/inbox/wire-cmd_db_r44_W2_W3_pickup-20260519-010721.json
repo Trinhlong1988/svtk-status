@@ -1,0 +1,11 @@
+{
+  "issue_id": "wire_cmd_db_r44_item_W2_W3_pickup",
+  "description": "Wire 3 R44 entry points: (1) withActionTxn('trade') around loot/transfer, (2) pickupItem (P1.3) replace existing item-pickup, (3) optimisticUpdate for inventory_row version-aware update.",
+  "imports": "from 'cmd-db/output/wrappers/w2_action_txn' + 'cmd-db/output/anti_dupe/anti_dupe' + 'cmd-db/output/wrappers/w3_optimistic'",
+  "verify": "Re-run scanner — expect item coverage 3/3",
+  "severity": "MED",
+  "priority": 2,
+  "routed_from": "CMD2 R44 Day 4 wire tracker alert",
+  "assigned_by": "LEAD",
+  "ts": "20260519-010721"
+}
