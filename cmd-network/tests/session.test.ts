@@ -20,31 +20,44 @@ function packet(seq: number, nonce: string, category: 'combat_action' | 'movemen
 describe('R69 Session orchestrator — happy path', () => {
   it('delivers a fresh combat packet + emits ACK', () => {
     const s = new Session({ sessionSecret: SECRET });
-    const env = packet(1, 'n1');
+    // OrderedReceiver expects initial seq=0 for ordered+reliable.
+    const env = packet(0, 'n0');
     const r = s.inbound(env, NOW + 100);
     expect(r.delivered).toBe(true);
     expect(r.response?.kind).toBe('ack');
     if (r.response) {
-      const parsed = parseAckOrNack(r.response, SECRET);
+      const parsed = parseAckOrNack({
+        raw: r.response,
+        sessionSecret: SECRET,
+        clientNowMs: NOW + 200,
+      });
       expect(parsed.ok).toBe(true);
     }
   });
 
   it('drops replayed nonce (R66.3) — no response either', () => {
     const s = new Session({ sessionSecret: SECRET });
-    const env = packet(1, 'same-nonce');
+    const env = packet(0, 'same-nonce');
     s.inbound(env, NOW + 100);
     const r2 = s.inbound(env, NOW + 200);
     expect(r2.delivered).toBe(false);
     expect(r2.response).toBeUndefined();
   });
 
-  it('rejects out-of-order combat seq (ordered category, R69.2)', () => {
+  it('buffers out-of-order combat seq until predecessor arrives (R69.2 buffering)', () => {
     const s = new Session({ sessionSecret: SECRET });
-    s.inbound(packet(5, 'n5'), NOW + 100);
-    const r = s.inbound(packet(3, 'n3'), NOW + 200);
-    expect(r.delivered).toBe(false);
-    expect(r.response).toBeUndefined();
+    // First combat must start at seq=0 per OrderedReceiver default initialSeq.
+    expect(s.inbound(packet(0, 'n0'), NOW + 100).delivered).toBe(true);
+    // Send seq=2 out of order — should buffer.
+    const buf = s.inbound(packet(2, 'n2'), NOW + 200);
+    expect(buf.delivered).toBe(false);
+    expect(buf.rejectReason).toBe('buffered');
+    // Now send seq=1 — both 1 and 2 should drain in order.
+    const drain = s.inbound(packet(1, 'n1'), NOW + 300);
+    expect(drain.delivered).toBe(true);
+    expect(drain.drained?.length).toBe(2);
+    expect(drain.drained?.[0]?.seq).toBe(1);
+    expect(drain.drained?.[1]?.seq).toBe(2);
   });
 
   it('movement (unreliable, no ack required) delivers WITHOUT response', () => {
@@ -71,11 +84,14 @@ describe('R69 Session orchestrator — backpressure (R69.5)', () => {
 
   it('frees a slot after onClientAck — next packet admitted', () => {
     const s = new Session({ sessionSecret: SECRET, windowSize: 1 });
-    s.inbound(packet(1, 'n1'), NOW + 10);
-    const blocked = s.inbound(packet(2, 'n2'), NOW + 20);
+    s.inbound(packet(0, 'n0'), NOW + 10);
+    const blocked = s.inbound(packet(1, 'n1'), NOW + 20);
     expect(blocked.delivered).toBe(false);
-    expect(s.onClientAck(1)).toBe(true);
-    const ok = s.inbound(packet(3, 'n3'), NOW + 30);
+    expect(s.onClientAck(0)).toBe(true);
+    // Use a NEW nonce — the blocked retry by the same nonce would be rejected
+    // as replay (which is exactly the semantics we want; clients must mint
+    // fresh nonces on retry).
+    const ok = s.inbound(packet(1, 'n1-retry'), NOW + 30);
     expect(ok.delivered).toBe(true);
   });
 });
@@ -85,12 +101,12 @@ describe('R69 Session orchestrator — input validation', () => {
     expect(() => new Session({ sessionSecret: Buffer.alloc(16) })).toThrow(/≥ 32 bytes/);
   });
 
-  it('reset() clears replay cache + window', () => {
+  it('reset() clears replay cache + window + ordered buffers', () => {
     const s = new Session({ sessionSecret: SECRET, windowSize: 1 });
-    s.inbound(packet(1, 'n1'), NOW + 10);
-    s.inbound(packet(2, 'n2'), NOW + 20); // blocked
+    s.inbound(packet(0, 'n0'), NOW + 10);
+    s.inbound(packet(1, 'n1'), NOW + 20); // blocked by windowSize=1
     s.reset();
-    const r = s.inbound(packet(1, 'n1'), NOW + 30); // would replay before reset, OK after
+    const r = s.inbound(packet(0, 'n0'), NOW + 30); // OK after reset (nonce + seq both cleared)
     expect(r.delivered).toBe(true);
   });
 

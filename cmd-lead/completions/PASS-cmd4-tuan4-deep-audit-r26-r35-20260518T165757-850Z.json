@@ -1,0 +1,63 @@
+{
+  "fix_id": "cmd4-tuan4-deep-audit-r26-r35",
+  "fixed_by": "cmd-network",
+  "result": "PASS",
+  "evidence": {
+    "task": "Tuần 4 deep audit 10 rounds — 3 bugs found, all fixed",
+    "delivered": {
+      "audit_rounds": 10,
+      "bugs_found": 3,
+      "bugs_fixed": 3,
+      "tests_total": 122,
+      "tests_passing": 122,
+      "gate1_score": "32/32 (100%)",
+      "tsc_strict": "0 errors",
+      "key_fixes": [
+        "bug#37 LOW — seq range check ≤ MAX_SAFE_INTEGER in ack_protocol/session_window/ordered_receiver (precision loss above 2^53)",
+        "bug#38 HIGH — ACK/NACK timestamp + anti-replay (MAX_ACK_AGE_MS=60s); sig now binds tsMs; parseAckOrNack rejects stale envelopes",
+        "bug#39 CRIT Foundation R69.2 — NEW ordered_receiver.ts implements buffer-until-predecessor-arrives semantics. Session wires it for reliable+ordered categories (combat_action, trade_confirm). Out-of-order packets now BUFFERED + drained when gap fills, instead of dropped."
+      ]
+    },
+    "modules_added": [
+      "cmd-network/output/r69/ordered_receiver.ts"
+    ],
+    "tests_added": [
+      "ordered_receiver.test.ts (10 tests)",
+      "ack_protocol anti-replay tests (3 new)",
+      "session R69.2 buffering test (1 new)"
+    ]
+  },
+  "timestamp": "20260518T165757-850Z",
+  "cmd": "cmd-network",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T165757-850Z",
+  "task": "Tuần 4 deep audit 10 rounds — 3 bugs found, all fixed",
+  "status": "DONE",
+  "delivered": {
+    "audit_rounds": 10,
+    "bugs_found": 3,
+    "bugs_fixed": 3,
+    "tests_total": 122,
+    "tests_passing": 122,
+    "gate1_score": "32/32 (100%)",
+    "tsc_strict": "0 errors",
+    "key_fixes": [
+      "bug#37 LOW — seq range check ≤ MAX_SAFE_INTEGER in ack_protocol/session_window/ordered_receiver (precision loss above 2^53)",
+      "bug#38 HIGH — ACK/NACK timestamp + anti-replay (MAX_ACK_AGE_MS=60s); sig now binds tsMs; parseAckOrNack rejects stale envelopes",
+      "bug#39 CRIT Foundation R69.2 — NEW ordered_receiver.ts implements buffer-until-predecessor-arrives semantics. Session wires it for reliable+ordered categories (combat_action, trade_confirm). Out-of-order packets now BUFFERED + drained when gap fills, instead of dropped."
+    ]
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "Tuần 4 COMPLETE. R69 sub-rules R69.1-R69.6 all Foundation-compliant.",
+  "modules_added": [
+    "cmd-network/output/r69/ordered_receiver.ts"
+  ],
+  "tests_added": [
+    "ordered_receiver.test.ts (10 tests)",
+    "ack_protocol anti-replay tests (3 new)",
+    "session R69.2 buffering test (1 new)"
+  ],
+  "via": "R72_protocol"
+}

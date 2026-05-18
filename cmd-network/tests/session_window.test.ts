@@ -89,9 +89,9 @@ describe('R69.5 SessionWindow — admission', () => {
 
   it('tryAdmit rejects invalid seq inputs (NaN/Infinity/negative/fractional)', () => {
     const w = new SessionWindow();
-    expect(() => w.tryAdmit(-1)).toThrow(/non-negative integer/);
-    expect(() => w.tryAdmit(NaN)).toThrow(/non-negative integer/);
-    expect(() => w.tryAdmit(Infinity)).toThrow(/non-negative integer/);
-    expect(() => w.tryAdmit(1.5)).toThrow(/non-negative integer/);
+    expect(() => w.tryAdmit(-1)).toThrow(/integer in/);
+    expect(() => w.tryAdmit(NaN)).toThrow(/integer in/);
+    expect(() => w.tryAdmit(Infinity)).toThrow(/integer in/);
+    expect(() => w.tryAdmit(1.5)).toThrow(/integer in/);
   });
 });

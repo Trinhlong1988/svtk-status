@@ -154,6 +154,43 @@ $criteria += Check 'G1.29' 'R69 session test suite (ack + window + session) all 
     $count -ge 8
 }
 
+# ===== Tuần 4 deep-audit hardening (R26-R39, added 2026-05-18) =====
+
+$criteria += Check 'G1.30' 'R69.2 ordered_receiver.ts buffering implementation (Foundation R69.2)' {
+    $f = "$repo\cmd-network\output\r69\ordered_receiver.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'class\s+OrderedReceiver') -and
+    ($c -match 'receive\(') -and
+    ($c -match 'duplicate') -and
+    ($c -match 'buffered') -and
+    ($c -match 'overflow')
+}
+
+$criteria += Check 'G1.31' 'R69.4 ACK/NACK timestamp anti-replay (audit bug#38)' {
+    $f = "$repo\cmd-network\output\r69\ack_protocol.ts"
+    if (-not (Test-Path $f)) { return $false }
+    $c = Get-Content $f -Raw
+    ($c -match 'tsMs') -and
+    ($c -match 'MAX_ACK_AGE_MS') -and
+    ($c -match "'stale'")
+}
+
+$criteria += Check 'G1.32' 'seq range check ≤ MAX_SAFE_INTEGER (audit bug#37)' {
+    $files = @(
+        "$repo\cmd-network\output\r69\ack_protocol.ts",
+        "$repo\cmd-network\output\r69\session_window.ts",
+        "$repo\cmd-network\output\r69\ordered_receiver.ts"
+    )
+    $ok = $true
+    foreach ($f in $files) {
+        if (-not (Get-Content $f -Raw | Select-String -Pattern 'MAX_SAFE_INTEGER' -SimpleMatch -Quiet)) {
+            $ok = $false
+        }
+    }
+    $ok
+}
+
 $passCount = ($criteria | Where-Object pass).Count
 $total = $criteria.Count
 $pct = if ($total -gt 0) { [Math]::Round($passCount * 100.0 / $total, 1) } else { 0 }

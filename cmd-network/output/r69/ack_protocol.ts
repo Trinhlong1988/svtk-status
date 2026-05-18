@@ -20,6 +20,7 @@ export interface AckEnvelope {
   kind: 'ack';
   seq: number;
   status: 'processed';
+  tsMs: number; // audit bug#38 — server timestamp prevents ACK replay
   sig: string;
 }
 
@@ -27,6 +28,7 @@ export interface NackEnvelope {
   kind: 'nack';
   seq: number;
   retryAfterMs: number;
+  tsMs: number; // audit bug#38 — server timestamp prevents NACK replay
   sig: string;
 }
 
@@ -34,29 +36,50 @@ export type AckOrNack = AckEnvelope | NackEnvelope;
 
 /** Maximum retry-after hint server can suggest (sanity clamp). */
 export const MAX_RETRY_AFTER_MS = 30_000;
+/** Max age of an ACK/NACK before client should treat as stale (anti-replay window). */
+export const MAX_ACK_AGE_MS = 60_000;
 
-function ackSig(seq: number, kind: 'ack' | 'nack', extra: number, secret: Buffer): string {
+function ackSig(
+  seq: number,
+  kind: 'ack' | 'nack',
+  extra: number,
+  tsMs: number,
+  secret: Buffer,
+): string {
   if (!Buffer.isBuffer(secret) || secret.length < 32) {
     throw new TypeError('ackSig: secret must be Buffer ≥ 32 bytes');
   }
   // Canonical concat — no JSON to avoid the canonicalJson depth/edge cases.
-  const payload = `${kind}|${seq}|${extra}`;
+  // tsMs included in sig binds the envelope to its issue time (bug#38).
+  const payload = `${kind}|${seq}|${extra}|${tsMs}`;
   return createHmac('sha256', secret).update(payload).digest('hex');
+}
+
+/** Validate seq is integer in safe range (audit bug#37). */
+function checkSeq(seq: number, where: string): void {
+  if (!Number.isInteger(seq) || seq < 0 || seq > Number.MAX_SAFE_INTEGER) {
+    throw new RangeError(
+      `${where}: seq must be integer in [0, Number.MAX_SAFE_INTEGER] (got ${seq})`,
+    );
+  }
 }
 
 /**
  * Build a server-side ACK for a successfully-processed inbound packet.
- * `seq` must be a non-negative finite integer (same constraint as ReplayCache.admitSeq).
+ * `seq` must be a non-negative finite integer ≤ MAX_SAFE_INTEGER.
+ * `serverNowMs` is recorded so the client can detect stale ACK replay.
  */
-export function buildAck(seq: number, sessionSecret: Buffer): AckEnvelope {
-  if (!Number.isInteger(seq) || seq < 0) {
-    throw new RangeError(`buildAck: seq must be non-negative integer (got ${seq})`);
+export function buildAck(seq: number, sessionSecret: Buffer, serverNowMs: number): AckEnvelope {
+  checkSeq(seq, 'buildAck');
+  if (typeof serverNowMs !== 'number' || !Number.isFinite(serverNowMs)) {
+    throw new RangeError(`buildAck: serverNowMs must be finite (got ${serverNowMs})`);
   }
   return {
     kind: 'ack',
     seq,
     status: 'processed',
-    sig: ackSig(seq, 'ack', 0, sessionSecret),
+    tsMs: serverNowMs,
+    sig: ackSig(seq, 'ack', 0, serverNowMs, sessionSecret),
   };
 }
 
@@ -65,58 +88,110 @@ export function buildAck(seq: number, sessionSecret: Buffer): AckEnvelope {
  * window pressure (e.g., window-full → retryAfterMs proportional to pending).
  * retryAfterMs is clamped to [0, MAX_RETRY_AFTER_MS].
  */
-export function buildNack(seq: number, retryAfterMs: number, sessionSecret: Buffer): NackEnvelope {
-  if (!Number.isInteger(seq) || seq < 0) {
-    throw new RangeError(`buildNack: seq must be non-negative integer (got ${seq})`);
-  }
+export function buildNack(
+  seq: number,
+  retryAfterMs: number,
+  sessionSecret: Buffer,
+  serverNowMs: number,
+): NackEnvelope {
+  checkSeq(seq, 'buildNack');
   if (typeof retryAfterMs !== 'number' || !Number.isFinite(retryAfterMs)) {
     throw new RangeError(`buildNack: retryAfterMs must be finite (got ${retryAfterMs})`);
+  }
+  if (typeof serverNowMs !== 'number' || !Number.isFinite(serverNowMs)) {
+    throw new RangeError(`buildNack: serverNowMs must be finite (got ${serverNowMs})`);
   }
   const clamped = Math.max(0, Math.min(MAX_RETRY_AFTER_MS, Math.floor(retryAfterMs)));
   return {
     kind: 'nack',
     seq,
     retryAfterMs: clamped,
-    sig: ackSig(seq, 'nack', clamped, sessionSecret),
+    tsMs: serverNowMs,
+    sig: ackSig(seq, 'nack', clamped, serverNowMs, sessionSecret),
   };
 }
 
 export type ParseAckResult =
   | { ok: true; envelope: AckOrNack }
-  | { ok: false; reason: 'malformed' | 'bad_signature' | 'unknown_kind' };
+  | { ok: false; reason: 'malformed' | 'bad_signature' | 'unknown_kind' | 'stale' };
+
+export interface ParseAckParams {
+  raw: unknown;
+  sessionSecret: Buffer;
+  /** Current client time; ACK/NACK older than MAX_ACK_AGE_MS rejected as stale. */
+  clientNowMs: number;
+}
 
 /**
  * Client-side: parse + verify an ACK/NACK from the server.
  * Returns structured failure rather than throwing.
+ * Audit bug#38: validates `tsMs` is within MAX_ACK_AGE_MS to prevent replay.
  */
-export function parseAckOrNack(raw: unknown, sessionSecret: Buffer): ParseAckResult {
+export function parseAckOrNack(p: ParseAckParams): ParseAckResult {
+  const { raw, sessionSecret, clientNowMs } = p;
   if (!Buffer.isBuffer(sessionSecret) || sessionSecret.length < 32) {
     return { ok: false, reason: 'bad_signature' };
   }
+  if (typeof clientNowMs !== 'number' || !Number.isFinite(clientNowMs)) {
+    return { ok: false, reason: 'malformed' };
+  }
   if (!raw || typeof raw !== 'object') return { ok: false, reason: 'malformed' };
   const obj = raw as Record<string, unknown>;
-  if (typeof obj.seq !== 'number' || !Number.isInteger(obj.seq) || obj.seq < 0) {
+  if (
+    typeof obj.seq !== 'number' ||
+    !Number.isInteger(obj.seq) ||
+    obj.seq < 0 ||
+    obj.seq > Number.MAX_SAFE_INTEGER
+  ) {
+    return { ok: false, reason: 'malformed' };
+  }
+  if (typeof obj.tsMs !== 'number' || !Number.isFinite(obj.tsMs)) {
     return { ok: false, reason: 'malformed' };
   }
   if (typeof obj.sig !== 'string' || obj.sig.length === 0) {
     return { ok: false, reason: 'malformed' };
   }
+  // Stale window — reject ACKs older than MAX_ACK_AGE_MS or too-far-future
+  // (clock skew protection same as packet_envelope openEnvelope).
+  const ageMs = clientNowMs - obj.tsMs;
+  if (ageMs > MAX_ACK_AGE_MS || ageMs < -MAX_ACK_AGE_MS) {
+    return { ok: false, reason: 'stale' };
+  }
   if (obj.kind === 'ack') {
     if (obj.status !== 'processed') return { ok: false, reason: 'malformed' };
-    const expected = ackSig(obj.seq, 'ack', 0, sessionSecret);
-    if (!sigMatches(obj.sig, expected)) return { ok: false, reason: 'bad_signature' };
-    return { ok: true, envelope: { kind: 'ack', seq: obj.seq, status: 'processed', sig: obj.sig } };
-  }
-  if (obj.kind === 'nack') {
-    if (typeof obj.retryAfterMs !== 'number' || !Number.isFinite(obj.retryAfterMs) || obj.retryAfterMs < 0) {
-      return { ok: false, reason: 'malformed' };
-    }
-    if (obj.retryAfterMs > MAX_RETRY_AFTER_MS) return { ok: false, reason: 'malformed' };
-    const expected = ackSig(obj.seq, 'nack', obj.retryAfterMs, sessionSecret);
+    const expected = ackSig(obj.seq, 'ack', 0, obj.tsMs, sessionSecret);
     if (!sigMatches(obj.sig, expected)) return { ok: false, reason: 'bad_signature' };
     return {
       ok: true,
-      envelope: { kind: 'nack', seq: obj.seq, retryAfterMs: obj.retryAfterMs, sig: obj.sig },
+      envelope: {
+        kind: 'ack',
+        seq: obj.seq,
+        status: 'processed',
+        tsMs: obj.tsMs,
+        sig: obj.sig,
+      },
+    };
+  }
+  if (obj.kind === 'nack') {
+    if (
+      typeof obj.retryAfterMs !== 'number' ||
+      !Number.isFinite(obj.retryAfterMs) ||
+      obj.retryAfterMs < 0
+    ) {
+      return { ok: false, reason: 'malformed' };
+    }
+    if (obj.retryAfterMs > MAX_RETRY_AFTER_MS) return { ok: false, reason: 'malformed' };
+    const expected = ackSig(obj.seq, 'nack', obj.retryAfterMs, obj.tsMs, sessionSecret);
+    if (!sigMatches(obj.sig, expected)) return { ok: false, reason: 'bad_signature' };
+    return {
+      ok: true,
+      envelope: {
+        kind: 'nack',
+        seq: obj.seq,
+        retryAfterMs: obj.retryAfterMs,
+        tsMs: obj.tsMs,
+        sig: obj.sig,
+      },
     };
   }
   return { ok: false, reason: 'unknown_kind' };

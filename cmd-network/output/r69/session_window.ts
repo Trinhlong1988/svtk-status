@@ -49,8 +49,10 @@ export class SessionWindow {
    * If seq is already pending (duplicate), returns admitted=false (caller dedup'd already).
    */
   tryAdmit(seq: number): AdmitResult {
-    if (!Number.isInteger(seq) || seq < 0) {
-      throw new RangeError(`tryAdmit: seq must be non-negative integer (got ${seq})`);
+    if (!Number.isInteger(seq) || seq < 0 || seq > Number.MAX_SAFE_INTEGER) {
+      throw new RangeError(
+        `tryAdmit: seq must be integer in [0, MAX_SAFE_INTEGER] (got ${seq})`,
+      );
     }
     const pendingBefore = this.pending.size;
     if (this.pending.has(seq)) {
