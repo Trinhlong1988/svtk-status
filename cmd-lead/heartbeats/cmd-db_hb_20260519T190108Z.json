@@ -1,0 +1,9 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "phase": "14",
+  "status": "alive",
+  "ts": "2026-05-19T19:01:08Z",
+  "last_action": "PGlite-based validation run. V7 11/12 PASS (1 pglite-socket quirk). V8 6/6 hit pglite single-thread WASM limit. Found+fixed 2 bugs along the way: CRITICAL R7 schema FK ordering incomplete (would block real-PG deploy) + Gap G1 test fixture BIGINT-in-JSONB precision. Harness upgraded: smarter splitter, single-pool, verify hook. tsc EXIT 0 + 27/27 active vitest preserved.",
+  "next_heartbeat_due": "2026-05-19T19:31:08Z"
+}

@@ -191,14 +191,18 @@ describe.skipIf(skip)('R44 Postgres integration', () => {
 
   // ── BIGINT precision roundtrip ─────────────────────────────────
   it('Gap G1 — ad12_rollback BIGINT roundtrip survives gold > Number.MAX_SAFE_INTEGER', async () => {
-    // Seed: a committed gold_change txn for p1 with delta past 2^53
+    // Seed: a committed gold_change txn for p1 with delta past 2^53.
+    // R13/G1 critical: store delta as JSON STRING (not number) inside
+    // source_state — JSON has no native BIGINT and `jsonb_build_object(_,
+    // $::bigint)` silently rounds to float64 (loses ±1 past 2^53).
+    // anti_dupe.ts ad12_rollback accepts string|bigint and casts via BigInt().
     const txnId = randomUUID();
     const bigDelta = (BigInt(Number.MAX_SAFE_INTEGER) + BigInt(1000)).toString();
     await h.pool.query(`UPDATE players SET gold = $1::bigint WHERE player_id = 'p1'`, [bigDelta]);
     await h.pool.query(
       `INSERT INTO transaction_log (txn_id, txn_type, player_id, target_type, source_state, status)
        VALUES ($1, 'gold_change', 'p1', 'currency',
-               jsonb_build_object('delta', $2::bigint), 'committed')`,
+               jsonb_build_object('delta', $2::text), 'committed')`,
       [txnId, bigDelta]);
     const r = await ad12_rollback(h.pool, txnId, 'gm1', 'big-rollback');
     expect(r.success).toBe(true);

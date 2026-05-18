@@ -5,6 +5,28 @@
 --       item_transfer_log, currency_change_log, inventory (slot 0-29)
 -- ════════════════════════════════════════════════════════════════
 
+-- ── R7 v4 bug-hunt fix (ordering): players.player_id MUST exist + be
+--    UNIQUE before inventory CREATE TABLE FK can target it. 001 only has
+--    players.id BIGSERIAL; spec CMD_DB v2.4.2 references player_id
+--    VARCHAR throughout. ALTER + backfill + UNIQUE constraint here at
+--    the top so subsequent CREATE TABLE inventory ... REFERENCES
+--    players(player_id) resolves cleanly.
+ALTER TABLE players
+    ADD COLUMN IF NOT EXISTS player_id VARCHAR(64);
+UPDATE players
+    SET player_id = username
+    WHERE player_id IS NULL;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'players_player_id_uq'
+    ) THEN
+        ALTER TABLE players ADD CONSTRAINT players_player_id_uq UNIQUE (player_id);
+    END IF;
+END $$;
+ALTER TABLE players
+    ADD COLUMN IF NOT EXISTS gold BIGINT NOT NULL DEFAULT 0;
+
 -- ── pending_actions (P1.1 idempotency cache + P1.5 stale recovery) ──
 CREATE TABLE IF NOT EXISTS pending_actions (
     nonce           VARCHAR(64) PRIMARY KEY,
@@ -142,25 +164,5 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- ── R7 v4 bug-hunt fix: players.player_id VARCHAR(64) — external identifier
---    used by anti_dupe (P1.4 SELECT/UPDATE gold), pending_actions, inventory FK.
---    001 only has players.id BIGSERIAL; spec CMD_DB v2.4.2 references player_id
---    VARCHAR throughout. ALTER add + backfill from username + UNIQUE constraint
---    so inventory FK target is valid.
-ALTER TABLE players
-    ADD COLUMN IF NOT EXISTS player_id VARCHAR(64);
-UPDATE players
-    SET player_id = username
-    WHERE player_id IS NULL;
-DO $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_constraint WHERE conname = 'players_player_id_uq'
-    ) THEN
-        ALTER TABLE players ADD CONSTRAINT players_player_id_uq UNIQUE (player_id);
-    END IF;
-END $$;
-
--- ── gold column on players (referenced by AD12 gold compensation) ──
-ALTER TABLE players
-    ADD COLUMN IF NOT EXISTS gold BIGINT NOT NULL DEFAULT 0;
+-- (R7 v4 ALTER players ADD COLUMN player_id + gold moved to top of file
+--  so inventory FK target exists at CREATE TABLE time — see line 8-29.)
