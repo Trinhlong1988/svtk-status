@@ -193,8 +193,8 @@
           "prerequisites": [
             3
           ],
-          "chain_id": "SVTK_CHAIN_HONG_BANG",
-          "chain_position": 3,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_3",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -286,8 +286,8 @@
           "prerequisites": [
             7
           ],
-          "chain_id": "SVTK_CHAIN_HONG_BANG",
-          "chain_position": 7,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -402,8 +402,8 @@
           "prerequisites": [
             12
           ],
-          "chain_id": "SVTK_CHAIN_HONG_BANG",
-          "chain_position": 12,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_12",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -472,8 +472,8 @@
           "prerequisites": [
             15
           ],
-          "chain_id": "SVTK_CHAIN_HONG_BANG",
-          "chain_position": 15,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_15",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -519,8 +519,8 @@
           "prerequisites": [
             17
           ],
-          "chain_id": "SVTK_CHAIN_HONG_BANG",
-          "chain_position": 17,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_HONG_BANG_17",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -563,8 +563,8 @@
           "prerequisites": [
             19
           ],
-          "chain_id": "SVTK_CHAIN_AU_LAC",
-          "chain_position": 1,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_1",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -634,8 +634,8 @@
           "prerequisites": [
             22
           ],
-          "chain_id": "SVTK_CHAIN_AU_LAC",
-          "chain_position": 4,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_4",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -704,8 +704,8 @@
           "prerequisites": [
             25
           ],
-          "chain_id": "SVTK_CHAIN_AU_LAC",
-          "chain_position": 7,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -800,8 +800,8 @@
           "prerequisites": [
             29
           ],
-          "chain_id": "SVTK_CHAIN_AU_LAC",
-          "chain_position": 11,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_11",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -847,8 +847,8 @@
           "prerequisites": [
             31
           ],
-          "chain_id": "SVTK_CHAIN_AU_LAC",
-          "chain_position": 13,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_13",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -919,8 +919,8 @@
           "prerequisites": [
             34
           ],
-          "chain_id": "SVTK_CHAIN_LORE_2",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_LORE_1",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_AU_LAC_16",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1034,8 +1034,8 @@
           "prerequisites": [
             39
           ],
-          "chain_id": "SVTK_CHAIN_BAC_THUOC",
-          "chain_position": 3,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_3",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1055,11 +1055,10 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            40,
-            35
+            40
           ],
           "chain_id": "SVTK_CHAIN_LORE_2",
-          "chain_position": 1,
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_4",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1082,8 +1081,8 @@
           "prerequisites": [
             41
           ],
-          "chain_id": "SVTK_CHAIN_BAC_THUOC",
-          "chain_position": 5,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_5",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1129,8 +1128,8 @@
           "prerequisites": [
             43
           ],
-          "chain_id": "SVTK_CHAIN_BAC_THUOC",
-          "chain_position": 7,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1154,7 +1153,7 @@
             41
           ],
           "chain_id": "SVTK_CHAIN_LORE_2",
-          "chain_position": 2,
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_8",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1178,7 +1177,7 @@
             45
           ],
           "chain_id": "SVTK_CHAIN_LORE_2",
-          "chain_position": 3,
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_9",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1248,8 +1247,8 @@
           "prerequisites": [
             48
           ],
-          "chain_id": "SVTK_CHAIN_BAC_THUOC",
-          "chain_position": 12,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_12",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1295,8 +1294,8 @@
           "prerequisites": [
             50
           ],
-          "chain_id": "SVTK_CHAIN_BAC_THUOC",
-          "chain_position": 14,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_14",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1316,10 +1315,11 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            51
+            51,
+            46
           ],
-          "chain_id": "SVTK_CHAIN_LORE_3",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_LORE_2",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_15",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1390,8 +1390,8 @@
             54,
             52
           ],
-          "chain_id": "SVTK_CHAIN_LORE_3",
-          "chain_position": 1,
+          "chain_id": "SVTK_CHAIN_LORE_2",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_BAC_THUOC_18",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1412,8 +1412,8 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [],
-          "chain_id": "SVTK_CHAIN_NGO_DINH_LE",
-          "chain_position": 0,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_0",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1435,8 +1435,8 @@
           "prerequisites": [
             56
           ],
-          "chain_id": "SVTK_CHAIN_NGO_DINH_LE",
-          "chain_position": 1,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_1",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1458,8 +1458,8 @@
           "prerequisites": [
             57
           ],
-          "chain_id": "SVTK_CHAIN_NGO_DINH_LE",
-          "chain_position": 2,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_2",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1504,8 +1504,8 @@
           "prerequisites": [
             59
           ],
-          "chain_id": "SVTK_CHAIN_NGO_DINH_LE",
-          "chain_position": 4,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_4",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1525,11 +1525,10 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            60,
-            55
+            60
           ],
           "chain_id": "SVTK_CHAIN_LORE_3",
-          "chain_position": 2,
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_5",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1578,7 +1577,7 @@
             61
           ],
           "chain_id": "SVTK_CHAIN_LORE_3",
-          "chain_position": 3,
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1601,8 +1600,8 @@
           "prerequisites": [
             63
           ],
-          "chain_id": "SVTK_CHAIN_NGO_DINH_LE",
-          "chain_position": 8,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_8",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1646,10 +1645,11 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            65
+            65,
+            63
           ],
-          "chain_id": "SVTK_CHAIN_LORE_4",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_LORE_3",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_10",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1719,8 +1719,8 @@
           "prerequisites": [
             68
           ],
-          "chain_id": "SVTK_CHAIN_NGO_DINH_LE",
-          "chain_position": 13,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_13",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1790,8 +1790,8 @@
             71,
             66
           ],
-          "chain_id": "SVTK_CHAIN_LORE_4",
-          "chain_position": 1,
+          "chain_id": "SVTK_CHAIN_LORE_3",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_16",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1814,8 +1814,8 @@
           "prerequisites": [
             72
           ],
-          "chain_id": "SVTK_CHAIN_NGO_DINH_LE",
-          "chain_position": 17,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_17",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1838,8 +1838,8 @@
             73,
             72
           ],
-          "chain_id": "SVTK_CHAIN_LORE_4",
-          "chain_position": 2,
+          "chain_id": "SVTK_CHAIN_LORE_3",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_NGO_DINH_LE_18",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -1883,8 +1883,8 @@
           "prerequisites": [
             75
           ],
-          "chain_id": "SVTK_CHAIN_LY",
-          "chain_position": 1,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_1",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1906,8 +1906,8 @@
           "prerequisites": [
             76
           ],
-          "chain_id": "SVTK_CHAIN_LY",
-          "chain_position": 2,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_2",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1953,8 +1953,8 @@
           "prerequisites": [
             78
           ],
-          "chain_id": "SVTK_CHAIN_LY",
-          "chain_position": 4,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_4",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -1974,11 +1974,10 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            79,
-            74
+            79
           ],
           "chain_id": "SVTK_CHAIN_LORE_4",
-          "chain_position": 3,
+          "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_5",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -2001,8 +2000,8 @@
           "prerequisites": [
             80
           ],
-          "chain_id": "SVTK_CHAIN_LORE_5",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_LORE_4",
+          "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_6",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -2025,8 +2024,8 @@
           "prerequisites": [
             81
           ],
-          "chain_id": "SVTK_CHAIN_LORE_5",
-          "chain_position": 1,
+          "chain_id": "SVTK_CHAIN_LORE_4",
+          "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -2074,8 +2073,8 @@
             83,
             82
           ],
-          "chain_id": "SVTK_CHAIN_LORE_5",
-          "chain_position": 2,
+          "chain_id": "SVTK_CHAIN_LORE_4",
+          "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_9",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -2098,8 +2097,8 @@
           "prerequisites": [
             84
           ],
-          "chain_id": "SVTK_CHAIN_LY",
-          "chain_position": 10,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_10",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -2283,8 +2282,8 @@
           "prerequisites": [
             92
           ],
-          "chain_id": "SVTK_CHAIN_LY",
-          "chain_position": 18,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LY_18",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -2374,8 +2373,8 @@
             96,
             84
           ],
-          "chain_id": "SVTK_CHAIN_LORE_5",
-          "chain_position": 3,
+          "chain_id": "SVTK_CHAIN_LORE_4",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_3",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
@@ -2422,8 +2421,8 @@
           "prerequisites": [
             98
           ],
-          "chain_id": "SVTK_CHAIN_TRAN",
-          "chain_position": 5,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_5",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -2492,8 +2491,8 @@
           "prerequisites": [
             101
           ],
-          "chain_id": "SVTK_CHAIN_TRAN",
-          "chain_position": 8,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_8",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -2515,8 +2514,8 @@
           "prerequisites": [
             102
           ],
-          "chain_id": "SVTK_CHAIN_TRAN",
-          "chain_position": 9,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_9",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -2723,7 +2722,7 @@
           "prerequisites": [
             111
           ],
-          "chain_id": "SVTK_CHAIN_LORE_6",
+          "chain_id": "SVTK_CHAIN_LORE_5",
           "chain_position": 0,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TRAN_18",
           "is_protagonist_arc": false,
@@ -2838,7 +2837,7 @@
             116,
             112
           ],
-          "chain_id": "SVTK_CHAIN_LORE_6",
+          "chain_id": "SVTK_CHAIN_LORE_5",
           "chain_position": 1,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_4",
           "is_protagonist_arc": false,
@@ -2933,7 +2932,7 @@
             120,
             117
           ],
-          "chain_id": "SVTK_CHAIN_LORE_6",
+          "chain_id": "SVTK_CHAIN_LORE_5",
           "chain_position": 2,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_8",
           "is_protagonist_arc": false,
@@ -2981,8 +2980,8 @@
           "prerequisites": [
             122
           ],
-          "chain_id": "SVTK_CHAIN_LE_SO",
-          "chain_position": 10,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_10",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -3004,8 +3003,8 @@
           "prerequisites": [
             123
           ],
-          "chain_id": "SVTK_CHAIN_LE_SO",
-          "chain_position": 11,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_LE_SO_11",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -3187,8 +3186,8 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [],
-          "chain_id": "SVTK_CHAIN_TAY_SON",
-          "chain_position": 0,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_0",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -3256,8 +3255,8 @@
           "prerequisites": [
             134
           ],
-          "chain_id": "SVTK_CHAIN_TAY_SON",
-          "chain_position": 3,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_3",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -3326,8 +3325,8 @@
           "prerequisites": [
             137
           ],
-          "chain_id": "SVTK_CHAIN_TAY_SON",
-          "chain_position": 6,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_6",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -3349,8 +3348,8 @@
           "prerequisites": [
             138
           ],
-          "chain_id": "SVTK_CHAIN_TAY_SON",
-          "chain_position": 7,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_7",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -3420,7 +3419,7 @@
             141,
             121
           ],
-          "chain_id": "SVTK_CHAIN_LORE_6",
+          "chain_id": "SVTK_CHAIN_LORE_5",
           "chain_position": 3,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_10",
           "is_protagonist_arc": false,
@@ -3468,8 +3467,8 @@
           "prerequisites": [
             143
           ],
-          "chain_id": "SVTK_CHAIN_TAY_SON",
-          "chain_position": 12,
+          "chain_id": null,
+          "chain_position": null,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_12",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold"
@@ -3582,10 +3581,11 @@
           "reward_items": [],
           "reward_reputation": 10,
           "prerequisites": [
-            148
+            148,
+            142
           ],
-          "chain_id": "SVTK_CHAIN_LORE_7",
-          "chain_position": 0,
+          "chain_id": "SVTK_CHAIN_LORE_5",
+          "chain_position": 4,
           "dialog_tree_ref": "DLG_SVTK_CHAIN_TAY_SON_17",
           "is_protagonist_arc": false,
           "_source": "legacy_scaffold",
