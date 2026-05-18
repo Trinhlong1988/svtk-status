@@ -58,7 +58,8 @@ export async function withTestDb(): Promise<HarnessHandle> {
     throw new Error(SKIP_REASON);
   }
 
-  const schema = `r44_test_${randomBytes(6).toString('hex')}`;
+  // R5 bug-hunt: 8 random bytes = 64-bit entropy → collision ~2^32 calls (safe).
+  const schema = `r44_test_${randomBytes(8).toString('hex')}`;
 
   // Step 1: admin pool — create schema
   const adminPool = new Pool({ connectionString: dsn, max: 1 });
@@ -68,23 +69,35 @@ export async function withTestDb(): Promise<HarnessHandle> {
     await adminPool.end();
   }
 
-  // Step 2: scoped pool — search_path points to schema
+  // Step 2: scoped pool.
+  // R3 bug-hunt fix: search_path applied via Postgres `options` startup
+  // parameter (server-side), NOT via fire-and-forget pool.on('connect') —
+  // the latter raced subsequent queries on the same connection.
   const pool = new Pool({
     connectionString: dsn,
     max: 4,
     statement_timeout: 5000,
     application_name: `r44_test_${schema}`,
+    options: `-c search_path="${schema}",public`,
   });
 
-  // Lock search_path on every checkout to keep migrations + queries inside the schema.
-  pool.on('connect', (client) => {
-    client.query(`SET search_path TO "${schema}", public`).catch(() => {});
-  });
-
-  // Step 3: apply migrations in order
-  for (const file of MIGRATION_ORDER) {
-    const sql = readFileSync(join(MIGRATIONS_DIR, file), 'utf8');
-    await pool.query(sql);
+  // Step 3: apply migrations in order.
+  // R2/R4 bug-hunt fix: wrap in try/catch so a mid-migration failure drops
+  // the schema + closes the scoped pool instead of leaking both.
+  try {
+    for (const file of MIGRATION_ORDER) {
+      const sql = readFileSync(join(MIGRATIONS_DIR, file), 'utf8');
+      await pool.query(sql);
+    }
+  } catch (err) {
+    await pool.end().catch(() => {});
+    const rescuePool = new Pool({ connectionString: dsn, max: 1 });
+    try {
+      await rescuePool.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);
+    } finally {
+      await rescuePool.end();
+    }
+    throw err;
   }
 
   return {

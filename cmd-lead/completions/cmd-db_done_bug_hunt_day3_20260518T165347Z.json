@@ -1,0 +1,59 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "10-round bug hunt on Day 3 integration harness per Mr.Long 'chạy bug sâu 10 vòng'",
+  "status": "complete_3_bugs_fixed",
+  "ts": "2026-05-18T16:53:47Z",
+  "doc": "cmd-db/output/BUG_HUNT_10ROUND_DAY3.md",
+  "real_bugs_found_and_fixed": [
+    {
+      "id": "R3",
+      "class": "search_path race condition (CRITICAL)",
+      "severity": "HIGH (intermittent CI failure)",
+      "file": "cmd-db/output/integration/test_harness.ts",
+      "before": "pool.on('connect', client => client.query('SET search_path...').catch(...))  — fire-and-forget, races subsequent queries",
+      "after": "options: '-c search_path=\"<schema>\",public' in Pool config — Postgres startup parameter, server-side, zero race window",
+      "impact": "every test could intermittently fail with table-not-found errors"
+    },
+    {
+      "id": "R2/R4",
+      "class": "Resource leak on mid-migration failure",
+      "severity": "MED",
+      "file": "cmd-db/output/integration/test_harness.ts",
+      "before": "Migration loop bare — if migration throws, scoped pool + schema leak (cleanup never returned to caller)",
+      "after": "try/catch wraps migration loop; on failure pool.end() + rescuePool DROP SCHEMA CASCADE + rethrow"
+    },
+    {
+      "id": "R5",
+      "class": "Collision entropy too low",
+      "severity": "LOW",
+      "file": "cmd-db/output/integration/test_harness.ts",
+      "before": "randomBytes(6) = 48-bit → birthday collision at ~2^24",
+      "after": "randomBytes(8) = 64-bit → safety margin ~2^32"
+    }
+  ],
+  "rounds_clean": {
+    "R1_sql_identifier_injection": "safe — random hex + quoted",
+    "R6_vitest_afterAll_on_failure": "verified — runs regardless",
+    "R7_pool_max_4_appropriate": "OK for concurrency tests",
+    "R8_other_fire_and_forget": "2 remaining only on pool.end() shutdown — appropriate",
+    "R9_cumulative_day1_2_rescan": "all Day 1+2 fixes still in place",
+    "R10_full_vitest_suite": "26 PASS + 11 SKIPPED / 1.29s — no regression"
+  },
+  "verification_post_fix": {
+    "tsc_strict": "EXIT 0 (65 files)",
+    "vitest_anti_dupe": "13/13 PASS",
+    "vitest_wrappers": "12/12 PASS",
+    "vitest_integration_no_dsn": "1 PASS + 11 SKIPPED graceful",
+    "aggregate_CMD2_suite": "26 PASS + 11 SKIPPED"
+  },
+  "informational_findings": [
+    "Scanner R8 false-positive: 'DRIFT' detected on canonicalStringify because w2 no longer has the function (it imports from anti_dupe) — scanner heuristic needs patching but source is correct",
+    "Scanner R7 false-positive: 'reason' reported as unused EXPIRE_MAP key — it's actually a RollbackResult field"
+  ],
+  "tally": {
+    "real_bugs_found": 3,
+    "real_bugs_fixed": 3,
+    "fix_completeness": "100%"
+  }
+}
