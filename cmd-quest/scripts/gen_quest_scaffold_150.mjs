@@ -63,8 +63,13 @@ function buildQuest(seq, chain, posInChain) {
     if (type === 'kill_count' || type === 'collect') o.count = 3 + Math.floor(r() * 8);
     objectives.push(o);
   }
+  // Level monotonic non-decreasing across chain: linear interpolate lo→hi by chain_position,
+  // then add small upward-only jitter so consecutive quests can match but never invert.
   const [lo, hi] = chain.level_range;
-  const levelReq = lo + Math.floor(r() * (hi - lo + 1));
+  const span = chain.count > 1 ? (hi - lo) / (chain.count - 1) : 0;
+  const baseLevel = lo + Math.round(span * posInChain);
+  const jitter = Math.floor(r() * 2); // 0 or 1
+  const levelReq = Math.min(hi, baseLevel + jitter);
   const expReward = 100 * levelReq + Math.floor(r() * 500);
   const goldReward = 50 * levelReq + Math.floor(r() * 200);
   const prerequisites = posInChain === 0
@@ -96,8 +101,12 @@ function buildQuest(seq, chain, posInChain) {
 const out = [];
 let seq = 101; // 100 existing in xlsx → start at 101
 for (const chain of CHAINS) {
+  let prevLevel = 0;
   for (let i = 0; i < chain.count; i++) {
-    out.push(buildQuest(seq++, chain, i));
+    const q = buildQuest(seq++, chain, i);
+    if (q.level_req < prevLevel) q.level_req = prevLevel; // monotonic non-decreasing
+    prevLevel = q.level_req;
+    out.push(q);
   }
 }
 
