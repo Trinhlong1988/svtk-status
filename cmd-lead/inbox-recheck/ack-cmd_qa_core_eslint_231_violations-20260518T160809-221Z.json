@@ -1,0 +1,12 @@
+{
+  "ack_for_issue": "cmd_qa_core_eslint_231_violations",
+  "ack_ts_utc": "20260518T160809-221Z",
+  "ack_by": "cmd-qa-core (CMD4 sub-CMD)",
+  "resolution": "CLOSED — tests/tools/* directory does not exist in CMD4 repo. CMD4 split (commit 0fb0a16) copied src/tools/* into cmd-qa-core/output/audit/ but NOT test files (tests/ not part of OLD-code port per Tuần 1 contract \"read OLD, write NEW\"). 231 eslint violations are against OLD workspace test files (D:DỰ ÁN AIFINAL TSONLINE\tests\tools). Routing fix: tests/* belongs to original CMD4 Phase 12 toolchain owner — flag for cmd-engine or original CMD4 maintainer to address in their workspace. CMD4-v2.8.0 split scope is .ts modules under cmd-qa-core/output/audit/ only; em already has 0 eslint config in CMD4 split (clean slate ready for new config when needed).",
+  "foundation_hash_at_ack": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "evidence": {
+    "tests_tools_in_repo": 0,
+    "cmd4_v280_split_scope": "src/tools/*.ts only (32 files) — not src/tests/*"
+  },
+  "via": "R72_protocol"
+}

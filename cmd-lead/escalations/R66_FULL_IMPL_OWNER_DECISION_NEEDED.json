@@ -1,0 +1,63 @@
+{
+  "title": "R66 full impl (sub-rules 4/5/8/9) — Owner & Phase decision",
+  "raised_by": "cmd-parse (CMD4)",
+  "ts_utc": "20260518T160000Z",
+  "context": {
+    "in_scope_done_tuan_2": ["R66.1 session_token", "R66.2 reconnect_token", "R66.3 anti-replay via packet nonce", "R66.6 device_fingerprint", "R66.7 defer GM 2FA"],
+    "out_of_scope_deferred": [
+      "R66.4 multi-login policy (kick_old / reject_new + 5s grace)",
+      "R66.5 hijack detection (IP change / UA change / geo jump)",
+      "R66.8 login flood protection (per-IP / per-account rate limit)",
+      "R66.9 auth_log triggered audit"
+    ]
+  },
+  "options": {
+    "A_phase15": {
+      "owner": "Phase 15 — new CMD AUTH proper",
+      "pros": [
+        "Clean room implementation — no carry-over from Tuần 2 prep",
+        "CMD AUTH spec can include full state machine for R66.4 multi-login + session.ts retirement",
+        "Foundation v2.8.0 implementation roadmap step 2 already lists 'CMD AUTH v1.0 (mới — chưa có trong 17 CMD list) — 45p'"
+      ],
+      "cons": ["Delays full R66 by 1 phase (~weeks)"],
+      "recommended_for": "Standard path per Foundation roadmap"
+    },
+    "B_cmd6": {
+      "owner": "CMD6 (currently cmd-place — TS Online analyst pivoted to world/place management)",
+      "pros": ["CMD6 already exists in repo", "no new CMD onboarding"],
+      "cons": [
+        "Scope mismatch — cmd-place owns map metadata + region binding, NOT auth/session",
+        "Would dilute CMD6 charter",
+        "CMD6 has not implemented auth domain knowledge"
+      ],
+      "recommended_for": "Only if Mr.Long wants to consolidate CMDs and pivot CMD6 again"
+    },
+    "C_cmd4": {
+      "owner": "CMD4 (em — cmd-parse + cmd-network + cmd-qa-core extension)",
+      "pros": [
+        "Continuity — em already built R66.1/2/3/6/7 in cmd-parse/auth/r66_session_token.ts",
+        "No CMD-onboarding overhead, can ship in ~Tuần 4 of Phase 14",
+        "Tests + tsc + audit infra already in place"
+      ],
+      "cons": [
+        "Stretches CMD4 charter ('parse + network + qa-core', NOT auth proper)",
+        "R66.5 hijack detection needs IP/UA/geo data pipeline — outside CMD4 scope",
+        "R66.8 login flood needs Redis-like rate-limiter — already in cmd-parse/output/anti_bot/redis_like.ts (PORTED but mock)"
+      ],
+      "recommended_for": "If Mr.Long wants R66 finished THIS phase without CMD AUTH spinup"
+    }
+  },
+  "em_recommendation": "A_phase15",
+  "rationale": "Foundation v2.8.0 explicitly lists CMD AUTH as separate new CMD (45p spec). Splitting R66 across 2 CMDs (CMD4 prep + CMD AUTH proper) is by-design grace period. CMD6 pivot is risky (already pivoted once: TS analyst → cmd-place). CMD4 extension is feasible but stretches charter.",
+  "decision_inputs_needed": [
+    "Is Phase 15 close enough that A is acceptable, or is R66 a blocker for Phase 14 production?",
+    "If R66 must ship Phase 14: prefer C (CMD4 extension) over B (CMD6 third pivot).",
+    "Are R66.4-9 actually required for SVTK launch, or can MVP ship with R66.1/2/3/6 + legacy session.ts?"
+  ],
+  "files_em_would_create_if_option_C": [
+    "cmd-parse/output/auth/r66_multi_login.ts (R66.4)",
+    "cmd-parse/output/auth/r66_hijack_detector.ts (R66.5)",
+    "cmd-parse/output/auth/r66_flood_protection.ts (R66.8)",
+    "cmd-parse/output/auth/r66_audit_log.ts (R66.9)"
+  ]
+}
