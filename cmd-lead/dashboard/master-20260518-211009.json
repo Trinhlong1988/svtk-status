@@ -1,0 +1,99 @@
+﻿{
+    "timestamp":  "20260518-211009",
+    "foundation_hash":  "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966",
+    "cycle":  2,
+    "mode":  "NORMAL",
+    "teams":  {
+                  "TEAM_CORE":  {
+                                    "engine":  {
+                                                   "status":  "NO_REPORT"
+                                               },
+                                    "place":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                    "parse":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                    "db":  {
+                                               "status":  "NO_REPORT"
+                                           }
+                                },
+                  "TEAM_CONTENT":  {
+                                       "npc":  {
+                                                   "status":  "NO_REPORT"
+                                               },
+                                       "quest":  {
+                                                     "status":  "ACTIVE_alive",
+                                                     "loc":  2421,
+                                                     "task":  "split-quest-module",
+                                                     "progress":  100
+                                                 },
+                                       "dialog":  {
+                                                      "status":  "ACTIVE_alive",
+                                                      "loc":  857,
+                                                      "task":  "split-dialog-module",
+                                                      "progress":  100
+                                                  },
+                                       "item":  {
+                                                    "status":  "NO_REPORT"
+                                                },
+                                       "boss":  {
+                                                    "status":  "NO_REPORT"
+                                                },
+                                       "skill":  {
+                                                     "status":  "NO_REPORT"
+                                                 },
+                                       "event":  {
+                                                     "status":  "NO_REPORT"
+                                                 }
+                                   },
+                  "TEAM_ART":  {
+                                   "sprite":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                   "map":  {
+                                               "status":  "NO_REPORT"
+                                           },
+                                   "icon":  {
+                                                "status":  "NO_REPORT"
+                                            },
+                                   "audio":  {
+                                                 "status":  "NO_REPORT"
+                                             }
+                               },
+                  "TEAM_QA":  {
+                                  "qa-content":  {
+                                                     "status":  "NO_REPORT"
+                                                 },
+                                  "qa-art":  {
+                                                 "status":  "NO_REPORT"
+                                             },
+                                  "qa-core":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                  "qa-full":  {
+                                                  "status":  "NO_REPORT"
+                                              }
+                              }
+              },
+    "active_from_heartbeat":  [
+                                  "cmd-quest",
+                                  "cmd-dialog"
+                              ],
+    "completions_resolved":  [
+                                 {
+                                     "cmd":  "cmd-dialog",
+                                     "files":  5,
+                                     "task":  "TASK_1_split_dialog_module",
+                                     "loc":  857
+                                 },
+                                 {
+                                     "cmd":  "cmd-quest",
+                                     "files":  11,
+                                     "task":  "TASK_1_split_quest_module",
+                                     "loc":  2421
+                                 }
+                             ],
+    "total_loc":  3278,
+    "total_files":  16
+}

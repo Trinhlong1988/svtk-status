@@ -1,35 +1,41 @@
-﻿# SVTK DASHBOARD 20260518-210326
+﻿# SVTK DASHBOARD 20260518-211009 (cycle 2)
 
-Foundation v2.8.0 hash 631c00af...fdb966
+**Foundation:** v2.8.0 hash 631c00af...fdb966
+**Mode:** NORMAL | **Active workers:** 2 | **Completions resolved:** 2
+**Total LOC ported:** 3278 | **Files:** 16
 
-**Total existing:** 0
-**Total new:** 0
+## Completions (PASS)
 
-## TEAM_ART
+- **cmd-dialog** TASK_1_split_dialog_module — 5 files, 857 LOC
+- **cmd-quest** TASK_1_split_quest_module — 11 files, 2421 LOC
 
-- **sprite**: NO_REPORT
-- **map**: NO_REPORT
-- **icon**: NO_REPORT
-- **audio**: NO_REPORT
+## Worker status
 
-## TEAM_CONTENT
-
-- **npc**: NO_REPORT
-- **quest**: NO_REPORT
-- **dialog**: NO_REPORT
-- **item**: NO_REPORT
-- **boss**: NO_REPORT
-- **skill**: NO_REPORT
-- **event**: NO_REPORT
-
-## TEAM_CORE
+### TEAM_CORE
 
 - **engine**: NO_REPORT
 - **place**: NO_REPORT
 - **parse**: NO_REPORT
 - **db**: NO_REPORT
 
-## TEAM_QA
+### TEAM_CONTENT
+
+- **npc**: NO_REPORT
+- **quest**: ACTIVE_alive (100%) — split-quest-module
+- **dialog**: ACTIVE_alive (100%) — split-dialog-module
+- **item**: NO_REPORT
+- **boss**: NO_REPORT
+- **skill**: NO_REPORT
+- **event**: NO_REPORT
+
+### TEAM_ART
+
+- **sprite**: NO_REPORT
+- **map**: NO_REPORT
+- **icon**: NO_REPORT
+- **audio**: NO_REPORT
+
+### TEAM_QA
 
 - **qa-content**: NO_REPORT
 - **qa-art**: NO_REPORT
