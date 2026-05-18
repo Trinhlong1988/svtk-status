@@ -1,37 +1,37 @@
-# SVTK DASHBOARD 20260518-232141 (cycle 20 — CMD1+CMD4 self-served)
+# SVTK DASHBOARD 20260518-232429 (cycle 21 — 2 DECISIONS RESOLVED)
 
-**Foundation:** v2.8.0 ✓ | **Completions resolved:** 39
+**Foundation:** v2.8.0 ✓ | **Completions resolved:** 41
 
-## ✅ Cycle 20 — Autonomous progress (KHÔNG cần Mr.Long paste)
+## 🎉 Cycle 21 — 2 pending decisions DONE
 
-### CMD1 round 4 + 2 inbox pickup
-- +3 bugs hunt round 4 → cumulative R1+R2+R3+R4 = **21 bugs fixed**, 51/51 tests, tsc 0
-- ✅ Inbox ticket 1: turn_orchestrator boss_phase → CLOSED (ACK + PASS completion)
-- ✅ Inbox ticket 2: threat_constants _BP suffix → CLOSED (ACK + PASS, 14/14 OLD threat tests pass post-rename)
+### R66 → DECIDED Phase 15 (Option A)
+- CMD4 ship decision file: cmd-lead/escalations/R66_DECIDED_PHASE15.json
+- Tuần 2 completed: R66.1 + R66.2 + R66.3 partial + R66.6
+- Deferred Phase 15 (CMD AUTH proper): R66.4 + R66.5 + R66.7 + R66.8 + R66.9
+- Grace period: legacy src/server/auth/session.ts continues serving
 
-### CMD4 R8 CR fix + 2 inbox pickup + R66 escalation
-- ✅ R8 PENDING (carry-over CMD3): Verified all CMD4 files LF in git blob. Extended .gitattributes cho *.ps1/*.py/*.sql
-- ✅ Inbox ticket 1: determinism_warnings_5 → CLOSED (tests không exist trong CMD4 v2.8.0 repo, source modules verified clean)
-- ✅ Inbox ticket 2: eslint_231 → đang xử lý
-- 📌 R66 escalation raised: cmd-lead/escalations/R66_FULL_IMPL_OWNER_DECISION_NEEDED.json (3 options A/B/C + em_recommendation: **A_phase15**)
+### CMD2 R44 NEW Day 1 — compliance 30% → 75%
+- Schema: 003_anti_dupe_schema.sql (+down) — 7 tables, 1 function, 1 column
+- anti_dupe.ts core: 11 exports (canonicalStringify, executeWithIdempotency SERIALIZABLE retry, pickupItem, ad12_rollback)
+- stale_pending_runner.ts cron (5min ± 30s jitter)
+- vitest 13/13 PASS via pg-mem | tsc strict EXIT 0
+- 4 honest gaps documented (INVENTORY_MAX=30 hardcoded, gm_action_log retention, in-process scheduler, bigint workaround)
+- Day 2 next: integration wire W1-W4 với CMD1 + cmd-item
 
-## 🎯 Inbox queue
+## Inbox queue — FULLY CLEARED
 
-| CMD | Pending | Note |
-|---|---|---|
-| cmd-engine | 0 | ✅ ALL CLEARED (2 tickets shipped, archived) |
-| cmd-qa-core | 0 | ✅ ALL CLEARED (2 tickets shipped, CMD4 archived) |
-| cmd-db | 1 | ⏸ R44 NEW (CMD2 chờ Mr.Long authorize) |
-| cmd-parse | 0 | ✅ DONE |
+| CMD | Pending |
+|---|---|
+| All workers | **0** — sạch hoàn toàn (R44 đang work in-progress, không pending) |
 
-## R66 escalation — anh quyết
+## Status
 
-CMD4 raise official escalation với 3 option:
-- **A (em+CMD4 recommend):** Phase 15 — CMD AUTH proper (Foundation v2.8.0 roadmap đã list)
-- **B:** CMD6 = cmd-place (current owner) — KHÔNG recommended, dilutes charter
-- **C:** Grow CMD4 Tuần 4 — feasible nhưng stretch charter, R66.5 hijack cần external pipeline
-
-Anh chỉ cần gõ:  /  /  hoặc tên option (//).
+- Phase 14 sprint: 4/4 CMD COMPLETE
+- Bug fixed cumulative: **~80+** (CMD1: 21, CMD2: imports+DATA_ROOT, CMD3: 75+B2, CMD4: 27+9 doc)
+- Test pass rate: 100% across all suites
+- R66: Phase 15 deferred ✓
+- R44: 75% (Day 1), Day 2+ → 95-99%
+- Pending Mr.Long: chỉ còn CMD4 next directive (standby OK)
 
 ## Pending fixes
 
