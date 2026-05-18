@@ -1,0 +1,41 @@
+{
+  "cmd_id": "NPC",
+  "cmd_version": "1.1.0",
+  "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
+  "build_timestamp": "20260518-232558",
+  "result_pass_rate": 1.0,
+  "existing_count": 438,
+  "new_count": 9562,
+  "gaps_admitted": [
+    {
+      "severity": "MED",
+      "item": "Generated NPC names dùng pattern surname+given_name (~30 surname × ~30 given × middle)",
+      "reason": "Diverse đủ cho 9562 NPC mới nhưng lore depth per-NPC chưa có",
+      "mitigation": "CMD DIALOG sẽ enrich qua dialog. CMD NPC v2 có thể refine theo nhân vật key"
+    },
+    {
+      "severity": "MED",
+      "item": "Mỗi NPC chỉ thuộc 1 era; chưa hỗ trợ NPC xuyên không nhiều era",
+      "reason": "Protagonist Trần Long special case; mass NPC giữ 1 era cho stability",
+      "mitigation": "Special protagonist flag handle riêng"
+    },
+    {
+      "severity": "LOW",
+      "item": "Sprite recolor mapping chưa verify với sprite asset thật (CMD SPRITE chưa ship)",
+      "reason": "palette_seed 0..63 là placeholder, CMD SPRITE sẽ verify khi LoRA art ready",
+      "mitigation": "CMD SPRITE cross-check khi build hoàn tất"
+    },
+    {
+      "severity": "LOW",
+      "item": "skill_ids chỉ ref 1..80 (CMD_SKILL ship 80 skill SKILL_80.jsonl), chưa cross-validate với skill registry thật",
+      "reason": "CMD_SKILL ownership; em chỉ tham chiếu range",
+      "mitigation": "CMD QA-CONTENT cross-ref skill_ids ↔ skill registry"
+    },
+    {
+      "severity": "LOW",
+      "item": "sceneId 1..7817 placeholder; chưa cross-validate với CMD_MAP registry thật",
+      "reason": "CMD_MAP ownership; em map theo công thức deterministic",
+      "mitigation": "CMD QA-CONTENT cross-ref sceneId ↔ map registry"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "cmd": "cmd-npc",
+  "version": "1.1.0",
+  "ts": "20260518-232558",
+  "build_duration_sec": 0.88,
+  "npc_total": 10000,
+  "npc_existing": 438,
+  "npc_new": 9562,
+  "validator_pass_rate": 1.0,
+  "validator_passed": 15,
+  "validator_total": 15
+}
