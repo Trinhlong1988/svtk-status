@@ -1,0 +1,22 @@
+{
+  "cmd": "LEAD",
+  "version": "2.1",
+  "cycle": 3,
+  "timestamp": "20260518-213022",
+  "alerts_processed": 1,
+  "alerts_self_generated": 1,
+  "fix_tasks_assigned": 1,
+  "has_high_alert": true,
+  "active_workers": [
+    "cmd-dialog",
+    "cmd-network",
+    "cmd-parse",
+    "cmd-qa-core",
+    "cmd-quest"
+  ],
+  "completions_resolved_total": 6,
+  "pending_fixes": {
+    "cmd-parse_stale_hash": 1
+  },
+  "exit_code": 0
+}

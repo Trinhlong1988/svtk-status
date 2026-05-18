@@ -1,0 +1,132 @@
+{
+  "timestamp": "20260518-213022",
+  "foundation_hash": "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966",
+  "cycle": 3,
+  "mode": "NORMAL",
+  "teams": {
+    "TEAM_CORE": {
+      "engine": {
+        "status": "NO_REPORT"
+      },
+      "place": {
+        "status": "NO_REPORT"
+      },
+      "parse": {
+        "status": "ACTIVE_alive"
+      },
+      "db": {
+        "status": "NO_REPORT"
+      }
+    },
+    "TEAM_CONTENT": {
+      "npc": {
+        "status": "NO_REPORT"
+      },
+      "quest": {
+        "status": "ACTIVE_standby",
+        "progress": 100,
+        "task": "validation-complete"
+      },
+      "dialog": {
+        "status": "ACTIVE_alive",
+        "progress": 100,
+        "task": "split-dialog-module"
+      },
+      "item": {
+        "status": "NO_REPORT"
+      },
+      "boss": {
+        "status": "NO_REPORT"
+      },
+      "skill": {
+        "status": "NO_REPORT"
+      },
+      "event": {
+        "status": "NO_REPORT"
+      }
+    },
+    "TEAM_ART": {
+      "sprite": {
+        "status": "NO_REPORT"
+      },
+      "map": {
+        "status": "NO_REPORT"
+      },
+      "icon": {
+        "status": "NO_REPORT"
+      },
+      "audio": {
+        "status": "NO_REPORT"
+      }
+    },
+    "TEAM_QA": {
+      "qa-content": {
+        "status": "NO_REPORT"
+      },
+      "qa-art": {
+        "status": "NO_REPORT"
+      },
+      "qa-core": {
+        "status": "ACTIVE_alive"
+      },
+      "qa-full": {
+        "status": "NO_REPORT"
+      }
+    }
+  },
+  "active_from_heartbeat": [
+    "cmd-dialog",
+    "cmd-network",
+    "cmd-parse",
+    "cmd-qa-core",
+    "cmd-quest"
+  ],
+  "completions_count": 6,
+  "pending_fixes": {
+    "cmd-parse_stale_hash": 1
+  },
+  "completions": [
+    {
+      "cmd": "cmd-dialog",
+      "task": "TASK_1_split_dialog_module",
+      "status": "done",
+      "files": 5,
+      "loc": 857
+    },
+    {
+      "cmd": "cmd-dialog",
+      "task": "TASK_2_dialog_tree_scaffold",
+      "status": "done",
+      "files": 1,
+      "loc": 0
+    },
+    {
+      "cmd": "cmd-parse",
+      "task": "Tuần 1 — split tooling",
+      "status": "DONE",
+      "files": 10,
+      "loc": 0
+    },
+    {
+      "cmd": "cmd-quest",
+      "task": "TASK_1_split_quest_module",
+      "status": "done",
+      "files": 11,
+      "loc": 2421
+    },
+    {
+      "cmd": "cmd-quest",
+      "task": "TASK_2_quest_registry_expand",
+      "status": "done",
+      "files": 12,
+      "loc": 0
+    },
+    {
+      "cmd": "cmd-quest",
+      "task": "TASK_3_validation",
+      "status": "done",
+      "files": 0,
+      "loc": 0
+    }
+  ]
+}

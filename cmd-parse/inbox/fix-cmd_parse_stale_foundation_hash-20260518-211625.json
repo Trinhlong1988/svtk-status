@@ -1,0 +1,12 @@
+{
+  "issue_id": "cmd_parse_stale_foundation_hash",
+  "description": "Re-verify foundation hash. Use compute-from-file (sha256 of foundation/SVTK_FOUNDATION_v2.8.0.md), do NOT hardcode literal. Next completion JSON must include actual computed hash = 631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966.",
+  "evidence": {
+    "expected_hash": "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966",
+    "your_reported_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467"
+  },
+  "severity": "HIGH",
+  "priority": 1,
+  "assigned_by": "LEAD_self_detect",
+  "ts": "20260518-211625"
+}

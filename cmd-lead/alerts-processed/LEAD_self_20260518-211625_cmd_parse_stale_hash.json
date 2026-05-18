@@ -1,0 +1,13 @@
+{
+  "severity": "HIGH",
+  "issue_id": "cmd_parse_stale_foundation_hash",
+  "evidence": {
+    "completion_file": "cmd-parse_done_20260518T140711Z.json",
+    "cmd_parse_declared_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+    "foundation_actual_hash": "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966",
+    "cmd_parse_field_foundation_verified": true,
+    "implication": "Either (1) cmd-parse hardcoded old hash literal without computing actual file hash, or (2) cmd-parse uses stale spec/binding still pointing at old hash."
+  },
+  "cmd_origin": "LEAD_self_detect",
+  "timestamp": "20260518-211625"
+}
