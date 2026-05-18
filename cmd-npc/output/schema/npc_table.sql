@@ -54,6 +54,9 @@ CREATE TABLE IF NOT EXISTS npc_templates (
     -- Historical figure metadata
     is_historical_figure BOOLEAN DEFAULT FALSE,
     era_start_year      INTEGER,
+    -- R73 fix Round 71-80: add 2 missing JSONL fields
+    mentor_npc_idx      INTEGER,                                -- R53 canonical mentor ref
+    pet_evolution_path_note TEXT,                               -- R39 deferred expansion note
     gender              VARCHAR(8) DEFAULT 'male',
     cultural_tag        VARCHAR(32) DEFAULT 'viet_pure',
     created_at          TIMESTAMPTZ DEFAULT NOW(),

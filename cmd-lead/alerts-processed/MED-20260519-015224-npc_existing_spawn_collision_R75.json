@@ -1,0 +1,74 @@
+{
+  "severity": "MED",
+  "issue_id": "npc_existing_spawn_collision_R75",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "close_pair_count": 284,
+    "samples": [
+      [
+        [
+          2,
+          50,
+          50
+        ],
+        [
+          8,
+          50,
+          50
+        ]
+      ],
+      [
+        [
+          2,
+          50,
+          50
+        ],
+        [
+          9,
+          50,
+          50
+        ]
+      ],
+      [
+        [
+          2,
+          50,
+          50
+        ],
+        [
+          10,
+          50,
+          50
+        ]
+      ],
+      [
+        [
+          2,
+          50,
+          50
+        ],
+        [
+          12,
+          50,
+          50
+        ]
+      ],
+      [
+        [
+          2,
+          50,
+          50
+        ],
+        [
+          13,
+          50,
+          50
+        ]
+      ]
+    ],
+    "rule_violated": "R75 — MIN_NPC_SPACING >= 8 tile per same sceneId",
+    "remediation": "R71.1 immutable. New NPCs avoid existing positions in OUTPUT."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-015224"
+}
