@@ -1,0 +1,42 @@
+{
+  "issue_id": "R66_full_impl_owner",
+  "decision": "PHASE15_CMD_AUTH",
+  "decided_by": "Mr.Long via cmd-parse (CMD4) autonomous chốt",
+  "ts_utc": "20260518T161500Z",
+  "rationale": [
+    "Foundation v2.8.0 implementation roadmap step 2 explicitly lists 'CMD AUTH v1.0 (mới — chưa có trong 17 CMD list) — 45p'.",
+    "CMD AUTH is a clean-room new CMD; R66.4/5/8/9 fit naturally into its scope (auth/session lifecycle).",
+    "Avoid third pivot of CMD6 (TS Online analyst → cmd-place → would be auth = scope dilution).",
+    "Avoid stretching CMD4 charter (parse + network + qa-core, NOT auth proper).",
+    "Grace period explicitly allowed in Foundation v2.8.0 'Migration Guide': legacy session.ts continues running while R66 ramps."
+  ],
+  "deferred_to_phase15_cmd_auth": [
+    "R66.4 multi-login policy (kick_old / reject_new + 5s grace + alert_threshold)",
+    "R66.5 hijack detection (IP change / device fingerprint mismatch / geo jump > 5000km / UA change)",
+    "R66.7 GM elevated auth (2FA TOTP, 15-min elevation TTL, dual-authorization)",
+    "R66.8 login flood protection (per-IP 5/60s, per-account 5 fails/5min, whitelist)",
+    "R66.9 auth_log triggered audit (event_type per R42 pattern)"
+  ],
+  "tuan_2_prep_completed_by_cmd4": [
+    "R66.1 session_token (opaque 256-bit + payload + verifySessionToken with expiry-first ordering)",
+    "R66.2 reconnect_token (TTL 1h single-use)",
+    "R66.3 anti-replay (in-memory replay_cache 10k nonce ring; persistent storage deferred to svtk_runtime)",
+    "R66.6 device_fingerprint (SHA-256 5-field canonical with JSON.stringify per-field separator)"
+  ],
+  "cmd_auth_handoff_artifacts": {
+    "spec_ref": "cmd-parse/output/auth/r66_session_token.ts file header lists in-scope vs deferred",
+    "production_ts": "246 lines, JSDoc'd, 26 vitest tests (15 normal + 11 hardening + 10 deep-hardening) all passing",
+    "input_validation_covered": [
+      "ttlMs must be positive finite",
+      "nowMs must be finite",
+      "playerId / deviceFingerprint / sessionId non-empty string",
+      "presented/stored token 64-hex (256-bit)",
+      "expiry-first verification order (bug#15 fix — no timing oracle on expired sessions)",
+      "empty-token bypass closed (bug#19)"
+    ],
+    "constants_export": "R66_CONSTANTS = { TOKEN_BYTES:32, RECONNECT_TTL_MS:3600000, SESSION_TTL_MS:86400000 }"
+  },
+  "next_action_for_cmd_auth": "Phase 15 kickoff: new CMD AUTH author imports cmd-parse/output/auth/r66_session_token.ts as foundation, adds R66.4/5/8/9 modules alongside (not replacing).",
+  "grace_period_until": "CMD AUTH v1.0 ships in Phase 15 (~1 sprint per Foundation roadmap 45-minute spec scope)",
+  "legacy_path": "src/server/auth/* (login.ts / password_hash.ts / oauth_zalo.ts / session.ts) ported to cmd-parse/output/auth/ as-is — continues serving until CMD AUTH cuts over."
+}

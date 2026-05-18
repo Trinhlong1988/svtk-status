@@ -10,13 +10,14 @@
  *   R66.2 — reconnect_token (separate, single-use, TTL 1h)
  *   R66.6 — device_fingerprint (SHA-256 of canonical UA + screen + tz + lang + platform)
  *
- * Defer (out of Phase 14 Tuần 2 scope — full impl in CMD AUTH proper):
+ * Defer (Mr.Long quyết 2026-05-18 → Phase 15 CMD AUTH proper, see
+ *   cmd-lead/escalations/R66_DECIDED_PHASE15.json):
  *   R66.3 persistent replay_cache (Redis/PG) — cmd-network/output/r69/replay_cache.ts is in-memory
  *   R66.4 multi-login policy (kick_old / reject_new + 5s grace)
- *   R66.5 hijack detection (IP change / UA change / geo jump)
- *   R66.7 GM 2FA elevation
- *   R66.8 login flood protection (per-IP / per-account rate limit)
- *   R66.9 auth_log triggered audit
+ *   R66.5 hijack detection (IP change / UA change / geo jump > 5000km)
+ *   R66.7 GM 2FA elevation (TOTP, 15-min TTL, dual-authorization)
+ *   R66.8 login flood protection (per-IP 5/60s, per-account 5 fails/5min)
+ *   R66.9 auth_log triggered audit (R42 pattern)
  *
  * In-scope Tuần 2:
  *   R66.1 session_token structure (opaque 256-bit + payload + device fingerprint)

@@ -124,7 +124,7 @@ Tuần 2 = R66 "ready cho NEW session" prep — 5/9 sub-rules in-scope, all deli
 
 | Gap | Owner | Severity |
 |---|---|---|
-| R66.4/5/8/9 full impl | CMD AUTH proper | MED (defer per Foundation grace period) |
+| R66.4/5/8/9 full impl | **DECIDED Phase 15 CMD AUTH proper** (Mr.Long 2026-05-18) — see `cmd-lead/escalations/R66_DECIDED_PHASE15.json` | MED |
 | R69.4 ACK protocol session-level | cmd-network session manager (Tuần 4+) | MED |
 | R69.5 sliding window 50 unacked | cmd-network session manager | MED |
 | R66.3 persistent replay_cache (Redis/PG) | svtk_runtime infra | MED (Foundation Gap 1) |

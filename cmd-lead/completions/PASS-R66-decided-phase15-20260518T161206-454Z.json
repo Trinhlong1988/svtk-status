@@ -1,0 +1,61 @@
+{
+  "fix_id": "R66-decided-phase15",
+  "fixed_by": "cmd-parse",
+  "result": "PASS",
+  "evidence": {
+    "task": "R66 full impl owner DECIDED — Phase 15 CMD AUTH proper",
+    "delivered": {
+      "decision": "Option A — Phase 15 CMD AUTH proper",
+      "decision_file": "cmd-lead/escalations/R66_DECIDED_PHASE15.json",
+      "tuan_2_completed": [
+        "R66.1",
+        "R66.2",
+        "R66.3 partial",
+        "R66.6"
+      ],
+      "deferred_to_phase15": [
+        "R66.4",
+        "R66.5",
+        "R66.7",
+        "R66.8",
+        "R66.9"
+      ],
+      "file_header_updated": "cmd-parse/output/auth/r66_session_token.ts",
+      "report_updated": "cmd-qa-core/output/verdict/CMD4_PHASE14_v280_FINAL_REPORT.md",
+      "grace_period": "legacy src/server/auth/session.ts continues serving until CMD AUTH v1.0 cuts over"
+    },
+    "rationale_summary": "Foundation v2.8.0 roadmap step 2 explicitly lists CMD AUTH as new 45p CMD; CMD6 third pivot risky; CMD4 charter is parse+network+qa-core not auth."
+  },
+  "timestamp": "20260518T161206-454Z",
+  "cmd": "cmd-parse",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T161206-454Z",
+  "task": "R66 full impl owner DECIDED — Phase 15 CMD AUTH proper",
+  "status": "DONE",
+  "delivered": {
+    "decision": "Option A — Phase 15 CMD AUTH proper",
+    "decision_file": "cmd-lead/escalations/R66_DECIDED_PHASE15.json",
+    "tuan_2_completed": [
+      "R66.1",
+      "R66.2",
+      "R66.3 partial",
+      "R66.6"
+    ],
+    "deferred_to_phase15": [
+      "R66.4",
+      "R66.5",
+      "R66.7",
+      "R66.8",
+      "R66.9"
+    ],
+    "file_header_updated": "cmd-parse/output/auth/r66_session_token.ts",
+    "report_updated": "cmd-qa-core/output/verdict/CMD4_PHASE14_v280_FINAL_REPORT.md",
+    "grace_period": "legacy src/server/auth/session.ts continues serving until CMD AUTH v1.0 cuts over"
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "Phase 15 kickoff awaits Mr.Long. Em remains on standby for CMD4 follow-up tasks.",
+  "rationale_summary": "Foundation v2.8.0 roadmap step 2 explicitly lists CMD AUTH as new 45p CMD; CMD6 third pivot risky; CMD4 charter is parse+network+qa-core not auth.",
+  "via": "R72_protocol"
+}
