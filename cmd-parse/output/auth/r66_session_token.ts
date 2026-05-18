@@ -10,9 +10,19 @@
  *   R66.2 — reconnect_token (separate, single-use, TTL 1h)
  *   R66.6 — device_fingerprint (SHA-256 of canonical UA + screen + tz + lang + platform)
  *
- * Defer (per Foundation Gap 1+2):
+ * Defer (out of Phase 14 Tuần 2 scope — full impl in CMD AUTH proper):
  *   R66.3 persistent replay_cache (Redis/PG) — cmd-network/output/r69/replay_cache.ts is in-memory
- *   R66.7 GM 2FA — out of Phase 14 scope
+ *   R66.4 multi-login policy (kick_old / reject_new + 5s grace)
+ *   R66.5 hijack detection (IP change / UA change / geo jump)
+ *   R66.7 GM 2FA elevation
+ *   R66.8 login flood protection (per-IP / per-account rate limit)
+ *   R66.9 auth_log triggered audit
+ *
+ * In-scope Tuần 2:
+ *   R66.1 session_token structure (opaque 256-bit + payload + device fingerprint)
+ *   R66.2 reconnect_token (TTL 1h single-use)
+ *   R66.6 device_fingerprint canonical hash
+ *   R66.3 partial — anti-replay via packet nonce (cmd-network/output/r69/replay_cache.ts)
  */
 
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
@@ -51,6 +61,11 @@ export interface DeviceFingerprintInput {
   platform: string; // "Win32" | "Linux x86_64" ...
 }
 
+/**
+ * R66.6 — Compute device fingerprint from canonical user-agent attributes.
+ * Stable across sessions for the same device; mismatch on verify triggers
+ * R66.5 re-auth path (deferred — see file header).
+ */
 export function computeDeviceFingerprint(d: DeviceFingerprintInput): string {
   const canonical = [
     d.userAgent.trim().toLowerCase(),
@@ -70,6 +85,11 @@ export interface IssueSessionParams {
   rngBytes?: (n: number) => Buffer; // injected for determinism in tests
 }
 
+/**
+ * R66.1 — Issue an opaque 256-bit session token + payload.
+ * RNG injection (`rngBytes`) is required for deterministic test seeding;
+ * production defaults to `node:crypto.randomBytes`.
+ */
 export function issueSessionToken(p: IssueSessionParams): SessionToken {
   const rng = p.rngBytes ?? randomBytes;
   const tokenBuf = rng(TOKEN_BYTES);
@@ -94,6 +114,10 @@ export interface IssueReconnectParams {
   rngBytes?: (n: number) => Buffer;
 }
 
+/**
+ * R66.2 — Issue a single-use reconnect token (TTL 1h, rotated each use).
+ * Caller MUST invalidate on first successful use to enforce single-use.
+ */
 export function issueReconnectToken(p: IssueReconnectParams): ReconnectToken {
   const rng = p.rngBytes ?? randomBytes;
   const tokenBuf = rng(TOKEN_BYTES);
@@ -119,6 +143,10 @@ export interface VerifyParams {
   nowMs: number;
 }
 
+/**
+ * R66.1 verify — timing-safe token compare + expiry + device fingerprint match.
+ * Returns structured reason on failure for auth_log (R66.9 — deferred).
+ */
 export function verifySessionToken(p: VerifyParams): VerifyResult {
   if (!p.storedPayload) return { ok: false, reason: 'unknown_session' };
 

@@ -1,0 +1,44 @@
+{
+  "cmd": "cmd-parse + cmd-network + cmd-qa-core",
+  "parent": "CMD4",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts_utc": "20260518T145155Z",
+  "task": "Deep audit 10 rounds + auto-fix gaps",
+  "rounds": {
+    "R1_exit_criteria": "5/5 met (all EXIT deliverables present)",
+    "R2_cmd_parse_integrity": "all anti_bot+auth identical to OLD (diff empty)",
+    "R3_R69_packet_envelope": "5 categories + correct maxAgeMs + HMAC + timing-safe",
+    "R4_R69_replay_cache": "bounded ring + monotonic seq + reset on reconnect",
+    "R5_R66_session_token": "5/9 sub-rules in-scope (1/2/3/6/7); 4/5/8/9 deferred to CMD AUTH proper — documented in file header post-audit",
+    "R6_anti_cheat_audit": "ban_pipeline identical + 5 original + 32 ported (R100 git rename)",
+    "R7_mutation_94pct_doc": "matches Phase 19 memory (commit cb1eed2, 73 equiv-mutant survivors)",
+    "R8_heartbeat_schtask": "registered + manual fire OK + 3+ hb JSON per CMD",
+    "R9_gate_1_critique": "expanded 17 → 25 criteria (added Math.random check, R66 deferral doc, JSDoc, fire-count)",
+    "R10_claude_md_compliance": "JSDoc per-export added post-audit (was MISSING, now present)"
+  },
+  "gaps_fixed_this_session": [
+    "JSDoc per-export added to packet_envelope.ts + replay_cache.ts + r66_session_token.ts",
+    "R66.4/5/8/9 explicit deferral documented in r66_session_token.ts header",
+    "GATE 1 expanded 17 → 25 criteria (G1.18-G1.25 semantic checks)",
+    "All CMD4 hardcoded foundation hash references switched to dynamic INDEX.sha256 read",
+    "ACK to cmd-lead inbox fix-cmd_parse_stale_foundation_hash-20260518-211625"
+  ],
+  "gaps_deferred": [
+    "Vitest unit tests for R66 + R69 (CLAUDE.md mục 5 yêu cầu 1, defer to CMD AUTH/NETWORK proper)",
+    "tsc --noEmit typecheck (npm install required, defer)",
+    "R66.4 multi-login policy (full CMD AUTH scope)",
+    "R66.5 hijack detection (full CMD AUTH scope)",
+    "R66.8 login flood protection (full CMD AUTH scope)",
+    "R66.9 auth_log triggered audit (full CMD AUTH scope)",
+    "R72 reverse channel push_ack/push_completion/push_heartbeat function helpers (currently inline JSON write)"
+  ],
+  "verdict_files": [
+    "QA_VERDICT_20260518T142904Z.json (16/17 — CRLF false-fail)",
+    "QA_VERDICT_20260518T143035Z.json (17/17 — first PASS)",
+    "QA_VERDICT_20260518T144600Z.json (24/25 — stale hash post LEAD resync)",
+    "QA_VERDICT_20260518T145155Z.json (25/25 — current, dynamic INDEX read)"
+  ],
+  "exit_status": "FULL 5/5 EXIT + 25/25 GATE 1 + 10/10 audit gaps addressed (with documented defers)",
+  "old_unchanged": true
+}

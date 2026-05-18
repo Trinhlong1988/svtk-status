@@ -29,6 +29,11 @@ export interface CategorySpec {
   ackRequired: boolean;
 }
 
+/**
+ * R69.1 — Packet category delivery semantics.
+ * Values pulled verbatim from Foundation v2.8.0 R69.1 YAML config.
+ * Edit Foundation first; this constant mirrors it.
+ */
 export const PACKET_CATEGORY_SPEC: Record<PacketCategory, CategorySpec> = {
   combat_action: { reliable: true, ordered: true, maxAgeMs: 1000, ackRequired: true },
   movement: { reliable: false, ordered: true, maxAgeMs: 200, ackRequired: false },
@@ -55,6 +60,11 @@ export interface SealParams<P> {
   sessionSecret: Buffer;
 }
 
+/**
+ * Wrap a payload with seq+nonce+ts+HMAC signature for transmission.
+ * Caller controls `seq` (monotonic per session) and `nonce` (anti-replay,
+ * caller-injected for determinism — see file header).
+ */
 export function sealEnvelope<P>(p: SealParams<P>): PacketEnvelope<P> {
   const sig = computeSig({
     seq: p.seq,
@@ -77,6 +87,11 @@ export interface OpenParams<P> {
   serverNowMs: number;
 }
 
+/**
+ * Validate signature + stale window for an incoming envelope.
+ * Does NOT enforce seq monotonicity or nonce uniqueness — that is the
+ * caller's responsibility via ReplayCache (R69.2 + R66.3).
+ */
 export function openEnvelope<P>(p: OpenParams<P>): OpenResult<P> {
   const spec = PACKET_CATEGORY_SPEC[p.envelope.category];
   if (!spec) return { ok: false, reason: 'unknown_category' };

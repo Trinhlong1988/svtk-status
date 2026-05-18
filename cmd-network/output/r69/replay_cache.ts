@@ -22,6 +22,7 @@ export class ReplayCache {
   private readonly order: string[] = [];
   private lastSeq = -1;
 
+  /** Default capacity 10_000 per session (R66.3 spec). Throws if ≤ 0. */
   constructor(params: ReplayCacheParams = {}) {
     this.capacity = params.capacity ?? 10_000;
     if (this.capacity <= 0) throw new Error('replay_cache: capacity must be > 0');

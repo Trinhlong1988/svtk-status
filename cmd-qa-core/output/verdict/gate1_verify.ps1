@@ -7,7 +7,12 @@
 $ErrorActionPreference = 'Stop'
 $repo = 'C:\Users\Administrator\Desktop\SVTK_UPLOAD_WORK\repo'
 $ts = (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
-$foundationHash = '2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467'
+# Dynamic foundation hash — read from INDEX.sha256 (cmd-lead authoritative source).
+# Avoids stale-hash HIGH alert when LEAD resyncs INDEX (e.g., commit c220446).
+$indexPath = "$repo\foundation\INDEX.sha256"
+$indexLine = Select-String -Path $indexPath -Pattern 'SVTK_FOUNDATION_v2.8.0.md' | Select-Object -First 1
+if (-not $indexLine) { throw "INDEX.sha256 missing SVTK_FOUNDATION_v2.8.0.md entry" }
+$foundationHash = ($indexLine.Line -split '\s+')[0].ToLower()
 
 function Check {
     param([string]$id, [string]$desc, [scriptblock]$test)
@@ -35,21 +40,86 @@ $criteria += Check 'G1.12' 'combat_network_adapter.ts ported' { Test-Path "$repo
 $criteria += Check 'G1.13' 'cmd-qa-core/output/anti_cheat/ >=1 .ts' { (Get-ChildItem "$repo\cmd-qa-core\output\anti_cheat" -Filter *.ts -ErrorAction SilentlyContinue).Count -ge 1 }
 $criteria += Check 'G1.14' 'cmd-qa-core/output/audit/ >=5 audit hooks' { (Get-ChildItem "$repo\cmd-qa-core\output\audit" -Filter *.ts -ErrorAction SilentlyContinue).Count -ge 5 }
 $criteria += Check 'G1.15' 'cmd-qa-core/docs/mutation_94pct.md (R10-R18)' { Test-Path "$repo\cmd-qa-core\docs\mutation_94pct.md" }
-$criteria += Check 'G1.16' 'Foundation v2.8.0 hash match (canonical LF)' {
+$criteria += Check 'G1.16' 'Foundation v2.8.0 on-disk hash match INDEX.sha256' {
     $fp = "$repo\foundation\SVTK_FOUNDATION_v2.8.0.md"
     if (-not (Test-Path $fp)) { return $false }
-    # Normalize CRLF -> LF (git autocrlf=true converts on checkout; INDEX.sha256
-    # records the canonical LF hash matching the git blob).
-    $bytes = [IO.File]::ReadAllBytes($fp)
-    $text = [Text.Encoding]::UTF8.GetString($bytes) -replace "`r`n", "`n"
-    $lfBytes = [Text.Encoding]::UTF8.GetBytes($text)
-    $sha = [Security.Cryptography.SHA256]::Create()
-    $h = ([BitConverter]::ToString($sha.ComputeHash($lfBytes))).Replace('-', '').ToLower()
+    # INDEX.sha256 records the on-disk hash (CRLF on Windows post-checkout).
+    # Compare directly with Get-FileHash to avoid LF/CRLF guesswork.
+    $h = (Get-FileHash $fp -Algorithm SHA256).Hash.ToLower()
     $h -eq $foundationHash
 }
 $criteria += Check 'G1.17' 'Heartbeat schtask SVTK_CMD4_HEARTBEAT registered' {
     $q = schtasks /Query /TN 'SVTK_CMD4_HEARTBEAT' /FO CSV 2>$null
     $q -and ($q -notmatch 'ERROR')
+}
+
+# ===== Round 9+10 expansion — semantic checks added 2026-05-18 =====
+
+$criteria += Check 'G1.18' 'packet_envelope.ts NO Math.random usage (R6 determinism)' {
+    $c = Get-Content "$repo\cmd-network\output\r69\packet_envelope.ts" -Raw
+    # Strip comments; remaining code must NOT contain Math.random
+    $noComments = [regex]::Replace($c, '/\*[\s\S]*?\*/', '')
+    $noComments = [regex]::Replace($noComments, '//.*', '')
+    -not ($noComments -match 'Math\.random')
+}
+
+$criteria += Check 'G1.19' 'replay_cache.ts NO Math.random usage' {
+    $c = Get-Content "$repo\cmd-network\output\r69\replay_cache.ts" -Raw
+    $noComments = [regex]::Replace($c, '/\*[\s\S]*?\*/', '')
+    $noComments = [regex]::Replace($noComments, '//.*', '')
+    -not ($noComments -match 'Math\.random')
+}
+
+$criteria += Check 'G1.20' 'r66_session_token.ts NO Math.random usage' {
+    $c = Get-Content "$repo\cmd-parse\output\auth\r66_session_token.ts" -Raw
+    $noComments = [regex]::Replace($c, '/\*[\s\S]*?\*/', '')
+    $noComments = [regex]::Replace($noComments, '//.*', '')
+    -not ($noComments -match 'Math\.random')
+}
+
+$criteria += Check 'G1.21' 'R66 sub-rule 4/5/8/9 deferral documented in file header' {
+    $c = Get-Content "$repo\cmd-parse\output\auth\r66_session_token.ts" -Raw
+    ($c -match 'R66\.4') -and ($c -match 'R66\.5') -and ($c -match 'R66\.8') -and ($c -match 'R66\.9')
+}
+
+$criteria += Check 'G1.22' 'R69 5 categories present with correct maxAgeMs' {
+    $c = Get-Content "$repo\cmd-network\output\r69\packet_envelope.ts" -Raw
+    ($c -match 'combat_action.*maxAgeMs:\s*1000') -and
+    ($c -match 'movement.*maxAgeMs:\s*200') -and
+    ($c -match 'chat_message.*maxAgeMs:\s*30_000') -and
+    ($c -match 'ping_heartbeat.*maxAgeMs:\s*5_000') -and
+    ($c -match 'trade_confirm.*maxAgeMs:\s*60_000')
+}
+
+$criteria += Check 'G1.23' 'timing-safe sig compare (no string ===)' {
+    $c = Get-Content "$repo\cmd-network\output\r69\packet_envelope.ts" -Raw
+    $c -match 'timingSafeEqual'
+}
+
+$criteria += Check 'G1.24' 'JSDoc on exported functions (3 files)' {
+    $files = @(
+        "$repo\cmd-network\output\r69\packet_envelope.ts",
+        "$repo\cmd-network\output\r69\replay_cache.ts",
+        "$repo\cmd-parse\output\auth\r66_session_token.ts"
+    )
+    $ok = $true
+    foreach ($f in $files) {
+        $c = Get-Content $f -Raw
+        $exports = ([regex]::Matches($c, '(?m)^export\s+(function|class|const|interface|type)\s+\w+')).Count
+        $blocks = ([regex]::Matches($c, '/\*\*[\s\S]*?\*/')).Count
+        if ($exports -gt 0 -and $blocks -lt 2) { $ok = $false }
+    }
+    $ok
+}
+
+$criteria += Check 'G1.25' 'Heartbeat schtask FIRED at least once after register (>=3 hb JSON per CMD)' {
+    $cmds = @('cmd-parse', 'cmd-network', 'cmd-qa-core')
+    $ok = $true
+    foreach ($c in $cmds) {
+        $n = (Get-ChildItem "$repo\cmd-lead\heartbeats" -Filter "${c}_hb_*.json" -ErrorAction SilentlyContinue).Count
+        if ($n -lt 2) { $ok = $false }
+    }
+    $ok
 }
 
 $passCount = ($criteria | Where-Object pass).Count

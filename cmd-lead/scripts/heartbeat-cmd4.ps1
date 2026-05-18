@@ -8,7 +8,9 @@ $ErrorActionPreference = 'Stop'
 $repo = 'C:\Users\Administrator\Desktop\SVTK_UPLOAD_WORK\repo'
 $hbDir = Join-Path $repo 'cmd-lead\heartbeats'
 $ts = (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")
-$foundationHash = '2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467'
+# Dynamic read from INDEX.sha256 (avoids stale-hash alerts on resync).
+$indexLine = Select-String -Path (Join-Path $repo 'foundation\INDEX.sha256') -Pattern 'SVTK_FOUNDATION_v2.8.0.md' | Select-Object -First 1
+$foundationHash = ($indexLine.Line -split '\s+')[0].ToLower()
 
 $subCmds = @('cmd-parse', 'cmd-network', 'cmd-qa-core')
 
