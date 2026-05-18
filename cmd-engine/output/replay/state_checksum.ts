@@ -94,6 +94,11 @@ export const CANON_SENTINEL_CIRCULAR = '__SVTK_CIRCULAR__';
 export const CANON_TAG_DATE = '__SVTK_Date__';
 export const CANON_TAG_MAP = '__SVTK_Map__';
 export const CANON_TAG_SET = '__SVTK_Set__';
+/** Opaque types whose content is inaccessible by spec — encoded as type tag only. */
+export const CANON_TAG_WEAKMAP = '__SVTK_WeakMap__';
+export const CANON_TAG_WEAKSET = '__SVTK_WeakSet__';
+export const CANON_TAG_WEAKREF = '__SVTK_WeakRef__';
+export const CANON_TAG_ITERATOR = '__SVTK_Iterator__';
 /** Sentinel for arrays carrying non-index own properties (otherwise dropped by JSON.stringify). */
 export const CANON_TAG_ARRAY_WITH_META = '__SVTK_ArrayMeta__';
 /** Sentinel emitted when a property getter throws during walk (prevents R68 DoS). */
@@ -120,6 +125,19 @@ const RESERVED_KEY_MAP = new Map<string, string>([
   ['__proto__', CANON_KEY_PROTO],
   ['constructor', CANON_KEY_CONSTRUCTOR],
 ]);
+
+/**
+ * Detect iterator-like objects (generator results, Map.entries(), explicit
+ * `next()` protocol implementations). We exclude Array/Map/Set/Date so they
+ * keep their richer encoding.
+ */
+function isIteratorLike(val: object): boolean {
+  if (Array.isArray(val)) return false;
+  if (val instanceof Map || val instanceof Set || val instanceof Date) return false;
+  const sym = (val as Record<symbol, unknown>)[Symbol.iterator];
+  const next = (val as Record<string, unknown>)['next'];
+  return typeof sym === 'function' && typeof next === 'function';
+}
 
 /**
  * Map a user-controlled property key to its canonical (collision-safe) form.
@@ -174,6 +192,22 @@ function prepareForJson(val: unknown, path: WeakSet<object>): unknown {
     // and traversed by prepareForJson would otherwise emit {} (no own enum
     // keys). Tag explicitly so two distinct timestamps hash distinctly.
     return { [CANON_TAG_DATE]: val.getTime() };
+  }
+  if (val instanceof WeakMap) {
+    // WeakMap content is by-spec inaccessible — emit type tag so distinct from
+    // empty object. Two WeakMaps hash identically (content is unrecoverable).
+    return { [CANON_TAG_WEAKMAP]: 1 };
+  }
+  if (val instanceof WeakSet) {
+    return { [CANON_TAG_WEAKSET]: 1 };
+  }
+  if (typeof WeakRef !== 'undefined' && val instanceof WeakRef) {
+    return { [CANON_TAG_WEAKREF]: 1 };
+  }
+  if (val !== null && typeof val === 'object' && isIteratorLike(val)) {
+    // Live iterator state is mutable + opaque — emit type tag. Caller must NOT
+    // store iterators in serialised state; this is purely defensive.
+    return { [CANON_TAG_ITERATOR]: 1 };
   }
   if (val instanceof Map) {
     if (path.has(val)) return CANON_SENTINEL_CIRCULAR;

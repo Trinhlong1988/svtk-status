@@ -38,6 +38,10 @@ import {
   CANON_SENTINEL_GETTER_THREW,
   CANON_KEY_SYMBOL_PREFIX,
   CANON_STR_ESCAPE_PREFIX,
+  CANON_TAG_WEAKMAP,
+  CANON_TAG_WEAKSET,
+  CANON_TAG_WEAKREF,
+  CANON_TAG_ITERATOR,
 } from './state_checksum.js';
 
 function makeFrame(turn: number, sessionId: string, encounterId: string, damage = 100): ReplayFrame {
@@ -413,6 +417,35 @@ describe('R68 state_checksum — bigint/Symbol/undefined sentinels (regression B
     expect(canonicalize({ x: 'hello world' })).toBe('{"x":"hello world"}');
     expect(canonicalize({ x: 'foo bar' })).toBe('{"x":"foo bar"}');
     expect(canonicalize({ x: '' })).toBe('{"x":""}');
+  });
+
+  it('BUG-24: WeakMap tagged distinctly from empty object', () => {
+    const wm = canonicalize({ x: new WeakMap() });
+    const empty = canonicalize({ x: {} });
+    expect(wm).not.toBe(empty);
+    expect(wm).toContain(CANON_TAG_WEAKMAP);
+  });
+
+  it('BUG-24: WeakSet tagged', () => {
+    expect(canonicalize({ x: new WeakSet() })).toContain(CANON_TAG_WEAKSET);
+  });
+
+  it('BUG-24: WeakRef tagged', () => {
+    expect(canonicalize({ x: new WeakRef({}) })).toContain(CANON_TAG_WEAKREF);
+  });
+
+  it('BUG-24: generator iterator tagged distinctly from empty object', () => {
+    function* gen() { yield 1; yield 2; }
+    const it_canon = canonicalize({ x: gen() });
+    const empty = canonicalize({ x: {} });
+    expect(it_canon).not.toBe(empty);
+    expect(it_canon).toContain(CANON_TAG_ITERATOR);
+  });
+
+  it('BUG-24: Map / Set / Array NOT misclassified as iterator (richer encoding preserved)', () => {
+    expect(canonicalize(new Map([['k', 1]]))).not.toContain(CANON_TAG_ITERATOR);
+    expect(canonicalize(new Set([1]))).not.toContain(CANON_TAG_ITERATOR);
+    expect(canonicalize([1, 2, 3])).not.toContain(CANON_TAG_ITERATOR);
   });
 
   it('BUG-8: unicode composed and decomposed forms produce SAME hash (NFC normalise)', () => {

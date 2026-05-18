@@ -1,0 +1,77 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "audit_type": "Round 6-20 — 15-angle deep hunt (WeakMap/iterator + 14 verified-no-bug angles)",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts": "2026-05-19T00:08:00Z",
+  "probes_total": 21,
+  "bugs_found_and_fixed": 1,
+  "tests_added": 5,
+  "cumulative_with_rounds_1_5": "23 bugs fixed total (1 critical + 9 high + 10 med + 3 low)",
+  "rounds": [
+    {
+      "round": 6,
+      "angle": "WeakMap / WeakRef / Iterator opaque type collapse",
+      "bug_id": "BUG-24",
+      "severity": "LOW (forensic — uncommon in game state but defensive)",
+      "evidence": "canonicalize({x: new WeakMap()}) === canonicalize({x: {}}) === canonicalize({x: new WeakRef({})}) — all three opaque types indistinguishable from empty object.",
+      "fix": "Added CANON_TAG_WEAKMAP / WEAKSET / WEAKREF / ITERATOR sentinels. prepareForJson detects via instanceof + isIteratorLike(). Map/Set/Array/Date excluded from iterator branch to preserve their richer encoding.",
+      "regression_tests": 5
+    },
+    { "round": 7, "angle": "Inherited (prototype) class property", "result": "VERIFIED no bug — this.x in constructor creates own enumerable, properly walked" },
+    { "round": 8, "angle": "Prototype chain poisoning via Object.create(evil_proto)", "result": "VERIFIED no bug under current threat model — Object.keys returns own only by JS spec; prototype data not state-relevant. Acceptable constraint." },
+    { "round": 9, "angle": "Non-enumerable property", "result": "VERIFIED no bug — non-enumerable is by design out-of-band metadata, not state. Object.keys excludes." },
+    { "round": 10, "angle": "writable: false property", "result": "VERIFIED no bug — enumerable: true still walked correctly" },
+    { "round": 11, "angle": "Getter-only property", "result": "VERIFIED — getter invoked, value captured" },
+    { "round": 12, "angle": "Object.getOwnPropertyNames vs Object.keys", "result": "VERIFIED no bug — by-design exclusion of non-enumerable" },
+    { "round": 13, "angle": "Reflect.set('__proto__', ...) prototype assignment", "result": "VERIFIED no bug — Reflect.set sets prototype, Object.keys still ['x'] only" },
+    { "round": 14, "angle": "Numeric string key vs integer key (JS coercion)", "result": "VERIFIED — both coerce to '5' string per JS spec; distinct only on value" },
+    { "round": 15, "angle": "Large numeric key (BigInt-sized string)", "result": "VERIFIED — preserved as string key in canonical" },
+    { "round": 16, "angle": "Frozen object Object.assign hack", "result": "VERIFIED — JS throws 'not extensible', frozen object stays frozen" },
+    { "round": 17, "angle": "Module-level cached state pollution", "result": "VERIFIED — 1000 canonicalize calls of same input yield ONE unique hash; checksumFrame pure" },
+    { "round": 18, "angle": "Lock-in stable hash test", "result": "Captured: schemaVersion=1 empty frame hash = 6322d33eb26422f71468daec384a88f91a939babaeb50c74cba2cfd3273c25e2" },
+    { "round": 19, "angle": "Empty / newline / special-char object keys", "result": "VERIFIED — JSON escapes correctly, key order invariant {a,b}={b,a}" },
+    { "round": 20, "angle": "forensicDump on future / nonexistent turn", "result": "VERIFIED — dump.frame undefined, events arrays empty, no throw" }
+  ],
+  "final_verification": {
+    "tsc_typecheck_exit": 0,
+    "vitest_total": 62,
+    "vitest_pass": 62,
+    "vitest_fail": 0,
+    "r67_test_count": 16,
+    "r68_test_count": 46
+  },
+  "cumulative_summary": {
+    "rounds_completed": 6,
+    "total_bugs_fixed": 23,
+    "regression_tests_total": 46,
+    "fix_clean_rate_pct": 100.0,
+    "severity_distribution": {
+      "CRITICAL": 1,
+      "HIGH": 9,
+      "MEDIUM": 10,
+      "LOW": 3
+    },
+    "attack_vectors_hardened": [
+      "negative/non-integer turn",
+      "mutable ledger (frozen snapshot + deep-freeze)",
+      "NaN/Inf collapse",
+      "bigint crash",
+      "Symbol/undefined drop",
+      "__proto__ payload mask",
+      "circular DoS",
+      "unicode drift (NFC)",
+      "Map/Set/Date silent drop",
+      "toJSON poisoning",
+      "array extra-prop drop",
+      "forensicDump live ref (deepFreeze clone)",
+      "getter throws DoS",
+      "DAG shared subtree false-circular",
+      "Symbol-keyed property",
+      "runtime.config undefined cryptic error",
+      "sentinel collision attack (BUG-23 CRITICAL)",
+      "WeakMap/WeakRef/Iterator opaque-type collapse"
+    ]
+  }
+}
