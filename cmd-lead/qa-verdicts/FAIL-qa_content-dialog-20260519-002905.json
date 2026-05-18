@@ -1,0 +1,17 @@
+{
+  "qa": "qa_content",
+  "target": "dialog",
+  "verdict": "FAIL",
+  "evidence": {
+    "issues": [
+      {
+        "type": "count_below_target",
+        "expected": 42297,
+        "actual": 150,
+        "worker": "dialog"
+      }
+    ],
+    "count": 150
+  },
+  "timestamp": "20260519-002905"
+}

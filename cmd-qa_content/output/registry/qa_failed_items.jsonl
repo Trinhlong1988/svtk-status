@@ -1,0 +1,5 @@
+{"type": "count_below_target", "expected": 2262, "actual": 150, "worker": "quest"}
+{"worker": "item", "type": "registry_not_found"}
+{"type": "count_below_target", "expected": 42297, "actual": 150, "worker": "dialog"}
+{"worker": "boss", "type": "registry_not_found"}
+{"worker": "event", "type": "registry_not_found"}
