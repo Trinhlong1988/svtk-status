@@ -1,0 +1,73 @@
+﻿{
+    "teams":  {
+                  "TEAM_ART":  {
+                                   "icon":  {
+                                                "status":  "NO_REPORT"
+                                            },
+                                   "audio":  {
+                                                 "status":  "NO_REPORT"
+                                             },
+                                   "sprite":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                   "map":  {
+                                               "status":  "NO_REPORT"
+                                           }
+                               },
+                  "TEAM_CONTENT":  {
+                                       "dialog":  {
+                                                      "status":  "NO_REPORT"
+                                                  },
+                                       "quest":  {
+                                                     "status":  "NO_REPORT"
+                                                 },
+                                       "event":  {
+                                                     "status":  "NO_REPORT"
+                                                 },
+                                       "npc":  {
+                                                   "status":  "NO_REPORT"
+                                               },
+                                       "boss":  {
+                                                    "status":  "NO_REPORT"
+                                                },
+                                       "item":  {
+                                                    "status":  "NO_REPORT"
+                                                },
+                                       "skill":  {
+                                                     "status":  "NO_REPORT"
+                                                 }
+                                   },
+                  "TEAM_CORE":  {
+                                    "db":  {
+                                               "status":  "NO_REPORT"
+                                           },
+                                    "place":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                    "engine":  {
+                                                   "status":  "NO_REPORT"
+                                               },
+                                    "parse":  {
+                                                  "status":  "NO_REPORT"
+                                              }
+                                },
+                  "TEAM_QA":  {
+                                  "qa-full":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                  "qa-core":  {
+                                                  "status":  "NO_REPORT"
+                                              },
+                                  "qa-content":  {
+                                                     "status":  "NO_REPORT"
+                                                 },
+                                  "qa-art":  {
+                                                 "status":  "NO_REPORT"
+                                             }
+                              }
+              },
+    "total_existing":  0,
+    "timestamp":  "20260518-210326",
+    "total_new":  0,
+    "foundation_hash":  "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966"
+}

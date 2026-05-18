@@ -1,0 +1,17 @@
+﻿{
+  "issue_id": "foundation_hash_mismatch_v2_8_0",
+  "severity": "BLOCKER",
+  "cmd_origin": "LEAD",
+  "evidence": {
+    "spec_expected": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+    "repo_actual": "631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966",
+    "file_path": "foundation/SVTK_FOUNDATION_v2.8.0.md",
+    "file_header_version": "v2.8.0 (label OK)",
+    "file_body_anomaly": "Changelog body mentions v2.5.0 -> v2.6.0, R66-R70 from v2.6.0 — content/label drift",
+    "last_commit": "34a63af 2026-05-18 18:26:42 +0700",
+    "spec_version": "CMD5_LEAD v2.1 (2026-05-18)"
+  },
+  "action": "FROZEN — LEAD cycle HALTED before Phase 1. Mr.Long must resolve: (A) update FOUNDATION_HASH in spec, (B) revert foundation file, or (C) confirm new hash and re-issue spec.",
+  "user": "smartbeevn@gmail.com",
+  "timestamp": "20260518-205250"
+}

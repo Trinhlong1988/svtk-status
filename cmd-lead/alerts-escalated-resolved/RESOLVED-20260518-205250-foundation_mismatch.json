@@ -1,0 +1,7 @@
+﻿{
+  "issue_id": "foundation_hash_mismatch_v2_8_0",
+  "resolution": "OPTION_A_APPLIED",
+  "resolved_at": "20260518-205603",
+  "action_taken": "Mr.Long updated FOUNDATION_HASH in CMD5_LEAD v2.1.md spec to 631c00afa28cf6661574ae0787788ffa6c1de0c615ee324d3192144c6bfdb966 (file actual). Re-verified MATCH. LEAD unblocked.",
+  "next_step": "4 CMD (CMD1-4) auto_start prompts do NOT hardcode hash — safe to start. LEAD standby cycle begins."
+}

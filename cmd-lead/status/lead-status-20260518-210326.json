@@ -1,0 +1,11 @@
+﻿{
+    "version":  "2.1",
+    "alerts_processed":  0,
+    "cmd":  "LEAD",
+    "total_new":  0,
+    "total_existing":  0,
+    "timestamp":  "20260518-210326",
+    "exit_code":  0,
+    "has_high_alert":  false,
+    "note":  "First cycle after foundation hash resync. 4 worker CMD not yet started — 0 status reports expected."
+}
