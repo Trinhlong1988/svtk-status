@@ -1,28 +1,33 @@
-# SVTK DASHBOARD 20260518-224136 (cycle 15)
+# SVTK DASHBOARD 20260518-224355 (cycle 16)
 
-**Foundation:** v2.8.0 ✓ | **Completions resolved:** 30
+**Foundation:** v2.8.0 ✓ | **Completions resolved:** 31 | **Pending fixes:** 0
 
-## 🎉 Cycle 15 — CMD2 RESOLVED Pending 1
+## Cycle 16 — CMD3 deep hunt 10 overnight
 
-**CMD2 Option A 10-round fix DONE:**
+- 1 real bug fixed (B2 level inversion, 75 violations, commit cddfa3f)
+- 1 cosmetic CR fix pending
+- 5 prior speculations RETIRED (proved benign)
+- 4 cross-CMD tickets routed (CMD1+CMD4, em đã distribute cycle 9)
 
-| Metric | Before | After |
-|---|---|---|
-| Broken imports | 18 | **0** |
-| Circular cycles | — | 0 |
-| Hidden bugs introduced | — | 0 |
-| Files added (vendored) | — | 12 |
-| Exit criteria | — | 5/5 ✓ |
+### Parallel validation 10× full backend
 
-CMD2 next_action: Mr.Long quyết Week 2 NEW R44 wrapper kick-off (Pending 3).
+| Metric | Value |
+|---|---|
+| Files per round | 338 |
+| Tests per round | 5895 pass + 1 skip / 5896 total |
+| Rounds executed | 10 sequential |
+| **Total tests ran** | **58,950** |
+| Pass rate | 100% all rounds |
+| Flake | 0 |
+| Wall-clock | ~35 min |
+| Determinism | 10/10 IDENTICAL |
 
-## Pending Mr.Long decisions (3 còn lại)
+## 3 pending Mr.Long decisions
 
-1. ~~cmd-db W1 Option A~~ ✅ RESOLVED
-2. R66 4 deferred sub-rules → phase15/cmd6/cmd4?
-3. CMD2 R44 NEW impl (~600 LOC) → kick or defer?
-4. CMD4 next directive → standby/route?
+1. R66 4 sub-rules → phase15/cmd6/cmd4?
+2. CMD2 R44 NEW impl (~600 LOC) → kick/defer?
+3. CMD4 next directive → standby/route?
 
-## Pending fixes (re-flag counter)
+## Pending fixes
 
-**EMPTY — no pending issues** ✓
+**EMPTY** ✓
