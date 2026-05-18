@@ -1,0 +1,44 @@
+{
+  "concurrent_count": 3,
+  "total_time_sec": 0.36,
+  "all_returncode_zero": true,
+  "results": [
+    {
+      "idx": 0,
+      "returncode": 0,
+      "duration_sec": 0.34,
+      "stdout_lines": 16,
+      "stderr_lines": 1,
+      "stderr_snip": ""
+    },
+    {
+      "idx": 1,
+      "returncode": 0,
+      "duration_sec": 0.34,
+      "stdout_lines": 16,
+      "stderr_lines": 1,
+      "stderr_snip": ""
+    },
+    {
+      "idx": 2,
+      "returncode": 0,
+      "duration_sec": 0.35,
+      "stdout_lines": 16,
+      "stderr_lines": 1,
+      "stderr_snip": ""
+    }
+  ],
+  "final_sha256": "fd7ef0bd6f7e498fea152836ce534787849a9d0e1f7a8a737b8c99930d591301",
+  "line_counts": {
+    "item_weapon": 1202,
+    "item_armor": 954,
+    "item_consumable": 520,
+    "item_material": 750,
+    "item_quest": 530,
+    "item_lore": 50,
+    "item_full": 4006
+  },
+  "expected_full_lines": 4006,
+  "line_count_match": true,
+  "timestamp": "2026-05-19 02:07:12"
+}

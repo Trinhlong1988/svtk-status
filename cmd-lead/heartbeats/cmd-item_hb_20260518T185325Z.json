@@ -1,0 +1,9 @@
+{
+  "cmd": "cmd-item",
+  "session_role": "CMD ITEM",
+  "phase": "14",
+  "status": "alive",
+  "ts": "2026-05-18T18:53:25Z",
+  "last_action": "gen v1.2.0 OK — 4006 items (6 seed + 4000 gen), sha256=fd7ef0bd6f7e498f",
+  "next_heartbeat_due": "2026-05-18T19:23:25Z"
+}

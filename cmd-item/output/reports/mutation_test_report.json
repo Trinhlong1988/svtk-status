@@ -1,0 +1,250 @@
+{
+  "total_mutations": 20,
+  "caught_count": 20,
+  "blind_spot_count": 0,
+  "catch_rate": 1.0,
+  "results": [
+    {
+      "mutation": "M1_invalid_element",
+      "expect": "R79_element_only_6",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R79_element_only_6",
+        "R79_element_only_6",
+        "R79_element_distribution_weapon"
+      ],
+      "target_id": "item_weapon_1051"
+    },
+    {
+      "mutation": "M2_duplicate_template_id",
+      "expect": "R50_template_id_unique",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R50_template_id_unique",
+        "R50_template_id_unique",
+        "R50_template_id_unique"
+      ],
+      "target_id": "item_lore_1002"
+    },
+    {
+      "mutation": "M3_empty_name",
+      "expect": "R50_no_empty_string_in_required",
+      "caught": true,
+      "catch_kind": "lenient",
+      "actual_failures": [
+        "R50_required_fields",
+        "R50_required_fields",
+        "R50_required_fields"
+      ],
+      "target_id": "item_weapon_1095"
+    },
+    {
+      "mutation": "M4_invalid_era_code",
+      "expect": "data_era_code_canonical_subset",
+      "caught": true,
+      "catch_kind": "lenient",
+      "actual_failures": [
+        "R49_era_distribution_15_25",
+        "R49_era_distribution_15_25",
+        "R49_era_chi_squared_uniform"
+      ],
+      "target_id": "item_weapon_1195"
+    },
+    {
+      "mutation": "M5_invalid_rarity",
+      "expect": "schema_rarity_valid",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "schema_rarity_valid",
+        "schema_rarity_valid",
+        "schema_rarity_valid"
+      ],
+      "target_id": "item_weapon_1295"
+    },
+    {
+      "mutation": "M6_cjk_inject",
+      "expect": "R30_cultural_lock",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R30_cultural_lock",
+        "R30_cultural_lock",
+        "R30_cultural_lock"
+      ],
+      "target_id": "item_armor_1395"
+    },
+    {
+      "mutation": "M7_tam_quoc_inject",
+      "expect": "R30_cultural_lock",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R30_cultural_lock",
+        "R30_cultural_lock",
+        "R30_cultural_lock"
+      ],
+      "target_id": "item_armor_1495"
+    },
+    {
+      "mutation": "M8_invalid_category",
+      "expect": "schema_category_valid",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "schema_category_valid",
+        "R49_category_targets_met",
+        "schema_category_valid"
+      ],
+      "target_id": "item_cons_1595"
+    },
+    {
+      "mutation": "M9_old_bach_element",
+      "expect": "R79_element_only_6",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R79_element_only_6",
+        "R79_element_only_6",
+        "R79_element_distribution_weapon"
+      ],
+      "target_id": "item_weapon_1051"
+    },
+    {
+      "mutation": "M10_negative_sell_price",
+      "expect": "schema_sell_price_nonneg",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "schema_sell_price_nonneg",
+        "schema_sell_price_nonneg",
+        "schema_sell_price_nonneg"
+      ],
+      "target_id": "item_mat_1695"
+    },
+    {
+      "mutation": "M11_invalid_cultural_tag",
+      "expect": "R74_cultural_tag_valid",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R74_cultural_tag_valid",
+        "R74_cultural_tag_valid",
+        "R74_cultural_tag_valid"
+      ],
+      "target_id": "item_mat_1795"
+    },
+    {
+      "mutation": "M12_slot_invalid",
+      "expect": "schema_slot_valid",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "schema_slot_valid",
+        "schema_slot_valid",
+        "schema_slot_valid"
+      ],
+      "target_id": "item_quest_1895"
+    },
+    {
+      "mutation": "M13_consecutive_spaces_name",
+      "expect": "data_no_consecutive_spaces",
+      "caught": true,
+      "catch_kind": "lenient",
+      "actual_failures": [
+        "artifact_no_phantom_files",
+        "artifact_no_phantom_files",
+        "artifact_no_phantom_files"
+      ],
+      "target_id": "item_quest_1995"
+    },
+    {
+      "mutation": "M14_seed_id_mutate",
+      "expect": "R71_existing_unmodified",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R71_existing_unmodified",
+        "R71_existing_unmodified",
+        "R71_existing_unmodified"
+      ],
+      "target_id": "item_kim_dao_dong_son"
+    },
+    {
+      "mutation": "M15_tam_weapon_remove_resonance",
+      "expect": "R79_tam_resonance_present",
+      "caught": true,
+      "catch_kind": "lenient",
+      "actual_failures": [
+        "artifact_no_phantom_files",
+        "artifact_no_phantom_files",
+        "artifact_no_phantom_files"
+      ],
+      "target_id": "item_weapon_1060"
+    },
+    {
+      "mutation": "M16_drop_id_field",
+      "expect": "R50_required_fields",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "R71_existing_present",
+        "R50_required_fields",
+        "R71_existing_present"
+      ],
+      "target_id": "?"
+    },
+    {
+      "mutation": "M17_extra_unknown_field",
+      "expect": "schema_no_extra_unknown_fields",
+      "caught": true,
+      "catch_kind": "lenient",
+      "actual_failures": [
+        "artifact_no_phantom_files",
+        "artifact_no_phantom_files",
+        "artifact_no_phantom_files"
+      ],
+      "target_id": "item_weapon_2195"
+    },
+    {
+      "mutation": "M18_atk_def_topfield_leak",
+      "expect": "schema_no_atk_def_topfield",
+      "caught": true,
+      "catch_kind": "exact",
+      "actual_failures": [
+        "schema_no_atk_def_topfield",
+        "schema_no_atk_def_topfield",
+        "schema_no_atk_def_topfield"
+      ],
+      "target_id": "item_weapon_2295"
+    },
+    {
+      "mutation": "M19_lore_great_4_wrong_era",
+      "expect": "R83_lore_4_great_era_correct",
+      "caught": true,
+      "catch_kind": "lenient",
+      "actual_failures": [
+        "data_region_era_consistency",
+        "R83_no_anachronism_region",
+        "artifact_no_phantom_files"
+      ],
+      "target_id": "item_lore_1001"
+    },
+    {
+      "mutation": "M20_lore_great_4_low_rarity",
+      "expect": "R83_lore_great_4_legendary_plus_strict",
+      "caught": true,
+      "catch_kind": "lenient",
+      "actual_failures": [
+        "R49_tier_matches_rarity",
+        "R49_tier_matches_rarity",
+        "artifact_no_phantom_files"
+      ],
+      "target_id": "item_lore_1002"
+    }
+  ],
+  "blind_spots": [],
+  "timestamp": "2026-05-19 02:06:44"
+}
