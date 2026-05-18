@@ -1,0 +1,49 @@
+{
+  "cmd": "cmd-quest",
+  "ts": "2026-05-18T14:55:30Z",
+  "phase": "14",
+  "task_id": "DEEP_validation_full_backend",
+  "headline": "Full backend suite: 5895/5895 executable PASS (100%), 0 fail",
+  "scope": "Beyond CMD3 (quest only) — full SVTK backend validation, all 338 test file across all modules.",
+  "checks": {
+    "typecheck": { "status": "PASS", "command": "npm run typecheck", "errors": 0 },
+    "lint": { "status": "FAIL", "command": "npm run lint", "errors": 231, "owner": "OLD FROZEN code (not CMD3 scope)", "note": "All 231 errors pre-existing in tests/tools/* and src/* — outside cmd-quest/cmd-dialog scope" },
+    "check_no_hardcode": { "status": "FAIL", "command": "npm run check:no-hardcode", "violations": 2, "location": "src/logic/turn_orchestrator.ts:287 — case 'boss_phase' literal (CMD1 combat scope)" },
+    "check_int_convention": { "status": "FAIL", "command": "npm run check:int-convention", "violations": 5, "location": "data/threat_constants.json — missing _BP suffix on 5 keys (CMD1/CMD2 boundary)" },
+    "lint_determinism": { "status": "WARN_ONLY", "command": "npm run lint:determinism", "errors": 0, "warnings": 5, "note": "All warnings in tests/tools/schema_validation_runtime + serialization_hash_validator — non-blocking" }
+  },
+  "full_test_suite": {
+    "command": "SVTK_REAL_PG_URL + TEST_DB_URL set, npx vitest run",
+    "duration_sec": 219.58,
+    "test_files": 338,
+    "tests_total": 5896,
+    "tests_passed": 5895,
+    "tests_skipped": 1,
+    "tests_failed": 0,
+    "pass_pct_over_total": 99.98,
+    "pass_pct_over_executable": 100.00,
+    "vs_memory_baseline": "+17 pass vs '5878 test pass' baseline (memory project_svtk_phase13_status.md)"
+  },
+  "remaining_1_skip": {
+    "location": "tests/quest/progression_persistence_postgres_real.test.ts:294",
+    "pattern": "describe.skipIf(REAL_PG_URL)(...) — registers describe regardless of env, vitest counts child as skipped when env set",
+    "why_cannot_reach_100pct_total": "Pattern differs from pass8 which uses `if(!hasRealPg){describe(...)}` (conditional register, vanishes when env set). Frozen OLD test author chose describe.skipIf form for this file. Fixing requires modifying OLD frozen test source.",
+    "decision": "Accept as architectural — 1 placeholder skip is no-op, zero impact on suite health"
+  },
+  "outside_cmd3_scope_findings_for_other_cmds": {
+    "cmd1_engine": "turn_orchestrator.ts:287 hardcode 'boss_phase' literal → CMD1 follow-up",
+    "cmd1_or_cmd2": "data/threat_constants.json: RATE_LIMIT_MAX_THREAT_PER_TICK, RATE_LIMIT_MAX_THREAT_PER_ACTION, RATE_LIMIT_SUMMON_BURST_CAP, TELEMETRY_FLICKER_THRESHOLD, TELEMETRY_RETARGET_HIGH_FREQ_PER_TURN missing _BP suffix",
+    "cmd4_qa_core": "231 eslint violations across tests/tools/* — explicit-function-return-type + unused-vars",
+    "cmd4_qa_core_minor": "5 determinism warnings in schema_validation_runtime.test.ts + serialization_hash_validator.test.ts"
+  },
+  "infra_summary": {
+    "embedded_postgres_version": "18.3",
+    "workspace": "C:\\Users\\Public\\svtk-pg-test",
+    "runtime_user": "svtkpgtest (non-admin temp)",
+    "port": 55432,
+    "envs_set": ["SVTK_REAL_PG_URL", "TEST_DB_URL"],
+    "migrations_applied": ["001_init.sql", "002_progression_snapshots.sql"],
+    "cleanup_pending": true
+  },
+  "status": "DONE. CMD3 standby. 4 follow-up tickets routed to other CMD (CMD1/CMD2/CMD4) above."
+}
