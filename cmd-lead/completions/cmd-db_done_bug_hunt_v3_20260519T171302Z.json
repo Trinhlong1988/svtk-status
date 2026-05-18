@@ -1,0 +1,51 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "10-round v3 evidence-based deep dig per Mr.Long 'tiếp tục đào sâu fix triệt để bug'",
+  "status": "complete_1_bug_fixed_9_clean",
+  "ts": "2026-05-19T17:13:02Z",
+  "doc": "cmd-db/output/BUG_HUNT_10ROUND_V3.md",
+  "scanner": "scripts/cmd2_bug_hunt_v3.mjs",
+  "real_bugs_found_and_fixed": [
+    {
+      "id": "R5",
+      "class": "ORDER BY without tie-breaker (non-deterministic row pick)",
+      "severity": "MED (correctness on `previously_rolled_back` path under same-µs timestamp)",
+      "file": "cmd-db/output/anti_dupe/anti_dupe.ts:287",
+      "before": "ORDER BY timestamp DESC LIMIT 1",
+      "after": "ORDER BY timestamp DESC, log_id DESC LIMIT 1",
+      "rationale": "log_id is BIGSERIAL PRIMARY KEY → monotonic strict total order; guarantees deterministic pick even on µs collision"
+    }
+  ],
+  "rounds_clean": {
+    "R1_scheduler_stop": "3/3 guards (stopped flag respect + clearTimeout + nullable timer)",
+    "R2_BigInt_null_risk": "scanner FP — all 3 callsites have string-by-construction guarantee",
+    "R3_revive_corner_cases": "3/3 guards (length===1, BIGINT_TAG check, recursive fallback)",
+    "R4_pg_BIGINT_bind": "2 bind sites use .toString() pattern (pg lib accepts as BIGINT)",
+    "R6_stack_trace_preservation": "0 wrappers lose stack",
+    "R7_migration_idempotency": "7/7 tables + 8/8 indexes + 1/1 ALTER use IF NOT EXISTS",
+    "R8_jitter_range_guard": "scanner FP — Math.max(60_000, nextDelay) present at line 95 (regex missed underscored literal)",
+    "R9_payload_hash_edge_inputs": "covered by anti_dupe.test.ts Item #4",
+    "R10_tsc_strict": "EXIT 0 (66 files)"
+  },
+  "scanner_false_positives_identified": [
+    "R2 BigInt: regex flagged 3 sites that are safe by construction (typeof string check or String() cast)",
+    "R8 jitter: regex \\d+ doesn't span underscored numerals (60_000)"
+  ],
+  "verification_post_fix": {
+    "tsc_strict": "EXIT 0",
+    "vitest_anti_dupe": "13/13 PASS",
+    "vitest_wrappers": "12/12 PASS",
+    "vitest_integration_no_dsn": "1 PASS + 11 SKIPPED",
+    "aggregate_CMD2_suite": "26 PASS + 11 SKIPPED / 1.10s",
+    "R5_rescan": "log_id DESC secondary sort present at line 290"
+  },
+  "tally_this_v3": { "found": 1, "fixed": 1, "completeness": "100%" },
+  "tally_cumulative_4_sessions": {
+    "session_1_day1_2": "10 rounds, 3 fixed",
+    "session_2_day3": "10 rounds, 3 fixed",
+    "session_3_v2_cumulative": "15 rounds, 4 fixed",
+    "session_4_v3_edge_cases": "10 rounds, 1 fixed",
+    "grand_total": "45 rounds, 11 real bugs found + 11 fixed"
+  }
+}

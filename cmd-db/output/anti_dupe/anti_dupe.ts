@@ -282,9 +282,11 @@ export async function ad12_rollback(
       // P1.4: idempotency check — do not re-rollback
       if (original.status === 'rolled_back') {
         const prevRollback = await client.query(
+          // R5 v3 bug-hunt: log_id DESC tie-breaker — 2 rollbacks at identical
+          // µs timestamp would otherwise pick non-deterministic row.
           `SELECT payload FROM gm_action_log
              WHERE action_type = 'rollback' AND target_uuid = $1
-             ORDER BY timestamp DESC LIMIT 1`,
+             ORDER BY timestamp DESC, log_id DESC LIMIT 1`,
           [original.target_uuid],
         );
         const prev = prevRollback.rows[0]?.payload;
