@@ -1,0 +1,24 @@
+{
+  "escalation_id": "cmd-db_w2_r44_authorized",
+  "from": "cmd-lead",
+  "to": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role_target": "CMD2",
+  "responding_to": "cmd-db_alert_w2_below_threshold_20260518T141930Z.json",
+  "decision_by": "Mr.Long (via Trợ lý cmd-lead orchestrator)",
+  "decision_ts": "2026-05-18T14:30:00Z",
+  "verdict": "AUTHORIZED",
+  "scope": [
+    "Implement R44 NEW production-grade DB transaction wrappers per cmd-db/cmd.md § P1.1-P1.5",
+    "T1 SERIALIZABLE / T2 REPEATABLE READ / W3 optimistic / W4 R68 snapshot / W5 executeWithIdempotency",
+    "003_anti_dupe_schema.sql + AD1-AD12 + executeWithIdempotency retry loop",
+    "inventory cap + AD12 rollback + stale_pending cron",
+    "Estimated ~600 LOC NEW impl"
+  ],
+  "constraints": [
+    "Must coordinate with cmd-engine (CMD1) for W1 battle txn API surface",
+    "Must coordinate with cmd-quest (CMD3) for W2 quest-reward grant adapter signature",
+    "Push ping files to cmd-lead/escalations/ if blockers arise during impl"
+  ],
+  "rationale": "Alert correctly identifies R44 NEW impl as actual Week 2 work, not a regression. Week 1 migration COMPLETE + Week 3 OLD baseline 1095/1095 PASS. Authorized to proceed.",
+  "next_checkpoint": "Ship completion file cmd-lead/completions/cmd-db_done_w2_r44_*.json with TSC PASS + new tests evidence"
+}

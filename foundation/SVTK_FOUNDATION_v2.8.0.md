@@ -4,7 +4,7 @@
 > **THAY THẾ:** v2.5.0
 > **LOẠI:** MINOR (backward-compat + grace period)
 >
-> **CHANGELOG v2.5.0 → v2.6.0 — 5 P1 RULE:**
+> **CHANGELOG v2.5.0 → v2.8.0 — 5 P1 RULE:**
 > - **ADD R66** — Auth / Session Security (reconnect token, rotation, anti-replay)
 > - **ADD R67** — Authoritative Time System (monotonic server clock, tick authority)
 > - **ADD R68** — Replay Divergence Detector (state checksum, forensic dump)
@@ -25,7 +25,7 @@ R45-R47  v2.3.1:       Concurrency hardening
 R48-R49  v2.3.2:       CMD authoring + goal-driven
 R50-R56  v2.4.0:       Runtime platform layer
 R57-R65  v2.5.0:       MMO Runtime Era (network/journal/recovery)
-R66-R70  v2.6.0:       Runtime Correctness Era ← MỚI
+R66-R70  v2.8.0:       Runtime Correctness Era ← MỚI
 ```
 
 **Grace period:** CMD đã ship (DB v2.4.2, ENGINE v1.0 nếu có) vẫn chạy. CMD AUTH/NETWORK/SHARD mới BẮT BUỘC tuân R66-R70.
@@ -571,7 +571,7 @@ escalation:
 
 ---
 
-# 📋 MIGRATION GUIDE v2.5.0 → v2.6.0
+# 📋 MIGRATION GUIDE v2.5.0 → v2.8.0
 
 **Backward-compat với grace period:**
 
@@ -580,12 +580,12 @@ escalation:
 | CMD AUTH (mới) | BẮT BUỘC R66 từ đầu |
 | CMD NETWORK (mới) | R67 + R69 |
 | CMD ENGINE refactor | R68 replay verifier integration |
-| Runtime svtk_runtime | Bump v2.6.0 add `auth.py` / `time_authority.py` / `replay_verifier.py` |
+| Runtime svtk_runtime | Bump v2.8.0 add `auth.py` / `time_authority.py` / `replay_verifier.py` |
 | CMD DB v2.4.2 | Grace — không cần fix ngay |
 
 ---
 
-# 🔍 SELF-AUDIT FOUNDATION v2.6.0 (nghiêm túc — KHÔNG claim perfect)
+# 🔍 SELF-AUDIT FOUNDATION v2.8.0 (nghiêm túc — KHÔNG claim perfect)
 
 **Goal:** 5 P1 rule R66-R70 đầy đủ pattern + migration + cross-reference.
 
@@ -641,7 +641,7 @@ Một số error vừa transient vừa contention (network deadlock). Có thể 
 
 # 📊 ĐÁNH GIÁ THEO PHASE
 
-| Hạng mục | v2.5.0 | v2.6.0 |
+| Hạng mục | v2.5.0 | v2.8.0 |
 |---|---|---|
 | Security/auth | 5.5/10 | **8.5/10** ★ R66 |
 | Time authority | 6.0/10 | **9.0/10** ★ R67 |
@@ -667,23 +667,23 @@ Một số error vừa transient vừa contention (network deadlock). Có thể 
 
 # 🎯 IMPLEMENTATION ROADMAP
 
-Foundation v2.6.0 đã define rule. Tiếp theo:
+Foundation v2.8.0 đã define rule. Tiếp theo:
 
 | Step | Việc | Time |
 |---|---|---|
-| 1 | svtk_runtime v2.6.0 — add `auth.py`, `time_authority.py`, `replay_verifier.py` | 60p |
+| 1 | svtk_runtime v2.8.0 — add `auth.py`, `time_authority.py`, `replay_verifier.py` | 60p |
 | 2 | CMD AUTH v1.0 (mới — chưa có trong 17 CMD list) | 45p |
 | 3 | CMD NETWORK v1.0 (mới) — R67/R69 implementation | 60p |
 | 4 | CMD ENGINE v1.1 — integrate R68 replay verifier | 30p (refactor) |
 
-**Tổng: ~3.5 giờ** cho full v2.6.0 implementation.
+**Tổng: ~3.5 giờ** cho full v2.8.0 implementation.
 
 ---
 
-**END SVTK FOUNDATION v2.6.0**
+**END SVTK FOUNDATION v2.8.0**
 
-> Đi kèm: `SVTK_FOUNDATION_v2.6.0.md.sha256`
-> `CMD_EXPECTED_FOUNDATION_VERSION = "v2.6.0"` cho CMD AUTH/NETWORK/ENGINE mới.
+> Đi kèm: `SVTK_FOUNDATION_v2.8.0.md.sha256`
+> `CMD_EXPECTED_FOUNDATION_VERSION = "v2.8.0"` cho CMD AUTH/NETWORK/ENGINE mới.
 > CMD cũ v2.4.x: grace period.
 > Self-audit ~95% + 5 gap admit honest. KHÔNG perfect 100%.
 
