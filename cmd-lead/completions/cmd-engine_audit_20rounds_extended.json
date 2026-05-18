@@ -1,0 +1,234 @@
+{
+  "cmd": "cmd-engine+cmd-boss",
+  "cmd_alias": "CMD1",
+  "audit_type": "20-round extended deep verification (R11-R30)",
+  "phase": "14",
+  "version": "v2.8.0",
+  "ts": "2026-05-18T15:00:00Z",
+  "supersedes": "cmd-engine_audit_10rounds_1779114873.json (R1-R10 still valid)",
+  "rounds": [
+    {
+      "round": 11,
+      "name": "Byte-level content identity (CR-normalized)",
+      "result": "PASS",
+      "evidence": {
+        "method": "tr -d '\\r' + sha256sum per file",
+        "old_combat_ts": 132,
+        "byte_identical_lf_normalized": 126,
+        "modified_for_import_fix": 6,
+        "modified_files": ["encounter_recording.ts", "mechanic_scheduler.ts", "raid_stress_harness.ts", "boss_ai_runtime.ts", "boss_mechanic_runtime.ts", "boss_target_hook.ts"],
+        "note": "126 of 132 OLD .ts copied byte-for-byte; only 6 cross-package boss↔engine import-fixed. NO combat logic edits."
+      }
+    },
+    {
+      "round": 12,
+      "name": "LOC count match",
+      "result": "PASS",
+      "evidence": {
+        "old_logic_total_loc": 25332,
+        "new_engine_legacy_loc": 23876,
+        "new_boss_legacy_loc": 1456,
+        "new_combined_loc": 25332,
+        "delta": 0
+      }
+    },
+    {
+      "round": 13,
+      "name": "Server type-deps diff (3 file)",
+      "result": "PASS",
+      "evidence": {
+        "state_delta_ts": "identical (no edits — no ../logic ref)",
+        "telemetry_ts": "modified (../logic/ → ../legacy/)",
+        "threat_service_ts": "modified (../logic/ → ../legacy/)"
+      }
+    },
+    {
+      "round": 14,
+      "name": "Zero Math.random() in code",
+      "result": "PASS",
+      "evidence": {
+        "grep_hits": 3,
+        "real_invocations": 0,
+        "hit_breakdown": ["deterministic_audit.ts:7 doc comment", "deterministic_audit.ts:40 string literal (ban list)", "rng.ts:5 doc comment"]
+      }
+    },
+    {
+      "round": 15,
+      "name": "Date.now() raw usage audit",
+      "result": "PASS",
+      "evidence": {
+        "real_invocations": 1,
+        "location": "tick_scheduler_adapter.ts:124 createWallMonotonicClock fallback",
+        "justification": "wall clock by design — deterministic clock used in tests/replay"
+      }
+    },
+    {
+      "round": 16,
+      "name": "new Date().toISOString() usage audit",
+      "result": "PASS",
+      "evidence": {
+        "real_invocations": 1,
+        "location": "deterministic_clock.ts:50 createWallClock",
+        "justification": "wall clock by design — turn-derived clock for replay-safe telemetry"
+      }
+    },
+    {
+      "round": 17,
+      "name": "Zero localeCompare (CMD2 determinism precedent)",
+      "result": "PASS",
+      "evidence": {
+        "grep_hits": 2,
+        "real_invocations": 0,
+        "hit_breakdown": ["multiplayer_combat_session_runtime.ts:385 comment", "multiplayer_combat_session_runtime.ts:488 comment"]
+      }
+    },
+    {
+      "round": 18,
+      "name": "Export symbol surface count",
+      "result": "PASS",
+      "evidence": {
+        "cmd_engine_legacy": 1171,
+        "cmd_boss_legacy": 76,
+        "cmd_engine_server": 20,
+        "cmd_engine_runtime_tick_adapter": 9,
+        "cmd_engine_replay_state_checksum": 11,
+        "total": 1287
+      }
+    },
+    {
+      "round": 19,
+      "name": "All data/*.json parseable",
+      "result": "PASS",
+      "evidence": {
+        "json_files": 17,
+        "parse_ok": 17,
+        "parse_fail": 0
+      }
+    },
+    {
+      "round": 20,
+      "name": "Zero hardcoded entity-id branches",
+      "result": "PASS",
+      "evidence": {
+        "grep_hits": 2,
+        "real_branches": 0,
+        "hit_breakdown": ["db.ts:11 doc comment", "skill_registry.ts:7 doc comment — registry dispatch pattern"]
+      }
+    },
+    {
+      "round": 21,
+      "name": "Git tree hygiene — node_modules/dist/build not tracked",
+      "result": "PASS",
+      "evidence": {
+        "tracked_in_those_paths": 0
+      }
+    },
+    {
+      "round": 22,
+      "name": "Git tree hygiene — no .DS_Store / .env / *.log",
+      "result": "PASS",
+      "evidence": {
+        "tracked": 0
+      }
+    },
+    {
+      "round": 23,
+      "name": "cmd-lead/inbox-recheck pending for cmd-engine",
+      "result": "PASS",
+      "evidence": {
+        "pending_for_cmd_engine": 0
+      }
+    },
+    {
+      "round": 24,
+      "name": "cmd-lead/alerts self-alerts cmd-engine",
+      "result": "PASS",
+      "evidence": {
+        "self_alerts": 0
+      }
+    },
+    {
+      "round": 25,
+      "name": "Sample file round-trip (combat_runtime.ts)",
+      "result": "PASS",
+      "evidence": {
+        "lines": 272,
+        "exports": 11,
+        "first_3": ["CombatRuntimeConfig", "CombatRuntime", "DEFAULT_COMBAT_RUNTIME_OPTS"]
+      }
+    },
+    {
+      "round": 26,
+      "name": "R67 + R68 wire integration (full pipeline)",
+      "result": "PASS",
+      "evidence": {
+        "turns": 25,
+        "r67_tick_count": 75,
+        "server_tick_end": 75,
+        "frames_appended": 25,
+        "events_appended": 25,
+        "checkpoints_emitted": 6,
+        "rerun_identical": true
+      }
+    },
+    {
+      "round": 27,
+      "name": "Memory smoke — 1000 turn no OOM",
+      "result": "PASS",
+      "evidence": {
+        "turns": 1000,
+        "ticks": 3000,
+        "elapsed_ms": 18,
+        "mem_start_mb": 10.94,
+        "mem_end_mb": 11.96,
+        "mem_delta_mb": 1.02
+      }
+    },
+    {
+      "round": 28,
+      "name": "R67 property-based determinism (5 random turn sequences)",
+      "result": "PASS",
+      "evidence": {
+        "seeds_tested": [1, 7, 42, 1337, 99991],
+        "match_count": 5,
+        "drift_count": 0
+      }
+    },
+    {
+      "round": 29,
+      "name": "R68 hash collision check (100 random frames)",
+      "result": "PASS",
+      "evidence": {
+        "frames": 100,
+        "unique_hashes": 100,
+        "collisions": 0
+      }
+    },
+    {
+      "round": 30,
+      "name": "R68 canonical encoding key-reorder invariant",
+      "result": "PASS",
+      "evidence": {
+        "frame_A_keys_order_natural": "5d7dfc73cebe1a5e847a0b76fdfedfb0d40297beadb4436786f5a70f6ca9985e",
+        "frame_B_keys_order_reversed": "5d7dfc73cebe1a5e847a0b76fdfedfb0d40297beadb4436786f5a70f6ca9985e",
+        "key_order_independent": true,
+        "canonical_sample": "{\"a\":2,\"m\":3,\"z\":1}"
+      }
+    }
+  ],
+  "summary": {
+    "rounds_pass": 20,
+    "rounds_fail": 0,
+    "rounds_total": 20,
+    "score_pct": 100.0,
+    "cumulative_with_r1_r10": "30/30 PASS",
+    "issues_found": 0,
+    "notes": [
+      "126 of 132 combat .ts byte-identical with OLD — only 6 cross-package import-fix files modified. Combat logic NOT touched.",
+      "LOC delta NEW vs OLD = 0 (25,332 lines preserved).",
+      "Math.random / Date.now / toISOString / localeCompare: 0 real determinism violations. Wall-clock implementations are intentional (deterministic clock available for replay).",
+      "R67/R68 verified: hash determinism across 5 random seeds + 1000-turn memory smoke (18ms, +1MB) + 100-frame zero-collision + key-order-independent canonical encoding.",
+      "R67+R68 wire integration: full pipeline rerun-identical."
+    ]
+  }
+}
