@@ -14,7 +14,7 @@ import type { ItemPassive } from './itemization_types.js';
 import { codepointCompare } from '../_shared/codepoint_compare.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../data');
 
 // ───────── Conflict Policy (CMD2.docx FINAL FIX #9) ─────────
 export const SetBonusConflictPolicySchema = z.enum([

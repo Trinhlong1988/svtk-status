@@ -32,7 +32,7 @@ import type { ItemStatBlock, Element } from '../../../../cmd-item/output/legacy/
 import { stripDocKeys } from '../_schema_helpers.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../../data/economy');
 
 const BP_DENOM = 10000;
 

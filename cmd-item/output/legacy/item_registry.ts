@@ -22,7 +22,7 @@ import {
 } from './itemization_types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../data');
 
 // ───────── Item Schema (full canonical v15) ─────────
 export const ItemSchema = z.object({

@@ -42,7 +42,7 @@ import {
 import { stripDocKeys } from '../_schema_helpers.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../../../cmd-item/data');
 
 // ───────── Loot table file schema (Batch 5.4 C1 strict) ─────────
 // stripDocKeys() removes `_doc`/`_locked_by`/`_dna_lock`/`_seed_pattern`/`_validation` annotations.

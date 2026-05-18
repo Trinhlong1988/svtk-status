@@ -18,7 +18,7 @@ import type {
 } from './modifier_recursion_guard.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../data');
 
 const RecursionConfigSchema = z.object({
   modifier_recursion: z.object({

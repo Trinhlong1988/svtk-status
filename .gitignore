@@ -9,3 +9,4 @@ dist/
 build/
 .tsbuildinfo
 *.tsbuildinfo
+tsconfig.cmd2.json

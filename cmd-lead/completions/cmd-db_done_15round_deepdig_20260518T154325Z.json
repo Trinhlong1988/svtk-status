@@ -1,0 +1,64 @@
+{
+  "cmd": "cmd-db+cmd-item+cmd-engine(economy)",
+  "session_role": "CMD2",
+  "task": "15-round evidence-based deep dig per Mr.Long 'tiếp tục đào sâu 15 vòng nữa fix bug ẩn, fix triệt để không suy luận, không phán đoán, phải có căn cứ code, triệt để 100%'",
+  "status": "15_rounds_complete_evidence_based_tsc_strict_exit_0",
+  "ts": "2026-05-18T15:43:25Z",
+  "doc": "cmd-db/output/MIGRATION_DEEP_DIG_15ROUND.md",
+  "critical_finding": {
+    "round": "R1",
+    "bug_class": "DATA_ROOT path drift after monolith→split relocation",
+    "evidence_command": "grep -rnE 'DATA_ROOT[^a-zA-Z_]*=' cmd-{item,engine}/output/",
+    "files_affected": 10,
+    "broken_pattern": "join(__dirname, '../../../data') — OLD layout assumption (src/modules/X/ → 3 ups to repo root /data/)",
+    "fix_strategy": "per-file evidence (grep readFileSync to identify which JSON each impl loads) → patch DATA_ROOT to actual relative path in NEW layout",
+    "fix_verification": "node script resolves dirname+rel → join(dataRoot, jsonFile) → existsSync = 13/13 OK",
+    "patched": [
+      "cmd-item/output/legacy/affix_pool.ts → '../../data' (loads affix_pool.json)",
+      "cmd-item/output/legacy/companion_equipment.ts → '../../data' (loads itemization_constants.json)",
+      "cmd-item/output/legacy/itemization_observability_impl.ts → '../../data'",
+      "cmd-item/output/legacy/item_registry.ts → '../../data' (loads items.json + itemization_constants.json)",
+      "cmd-item/output/legacy/modifier_recursion_guard_impl.ts → '../../data'",
+      "cmd-item/output/legacy/set_bonus.ts → '../../data' (loads sets.json)",
+      "cmd-item/output/legacy/stat_budget_runtime_impl.ts → '../../data' (loads stat_budget.json + slot_cap.json + itemization_constants.json)",
+      "cmd-engine/output/economy/foundation/economy_foundation_runtime_impl.ts → '../../../data/economy' (loads economy_constants.json)",
+      "cmd-engine/output/economy/pvp/pvp_equipment_normalizer_impl.ts → '../../../data/economy' (loads pvp_normalization.json)",
+      "cmd-engine/output/economy/loot/loot_generation_runtime_impl.ts → '../../../../cmd-item/data' (loads loot_tables.json — CROSS-CMD because spec puts loot_tables.json in cmd-item/data/)"
+    ]
+  },
+  "rounds_clean": {
+    "R2_symbol_existence": 0,
+    "R5_default_export_mismatch": 0,
+    "R6_commented_dead_code": 0,
+    "R7_sql_ddl_drift_crlf_normalized": "4/4 identical",
+    "R8_json_parses_with_non_null_root": "9/9 valid",
+    "R9_case_sensitive_paths": 0,
+    "R10_filename_collision": "1 (codepoint_compare ×2 vendored peer copy — expected)",
+    "R11_bom": 0,
+    "R12_js_extension_consistency": 0,
+    "R13_re_export_chain": "33 informational occurrences",
+    "R14_side_effect_only_imports": 0,
+    "R15_tsc_strict_compile": "EXIT 0 across 58 files"
+  },
+  "evidence_artifacts": [
+    "cmd-db/output/MIGRATION_DEEP_DIG_15ROUND.md (8-section report)",
+    "tsconfig.cmd2.json (CMD2-scope strict tsc config — does NOT modify CMD1's tsconfig.json)",
+    "scripts/cmd2_deep_dig_15.mjs (reusable evidence-based scanner)",
+    "node_modules junction (local-only, not committed)"
+  ],
+  "exit_criteria": {
+    "✓ evidence_only_no_inference": true,
+    "✓ multi_round_deep_dig": "15 rounds",
+    "✓ real_bug_found_and_fixed": "1 (DATA_ROOT)",
+    "✓ tsc_strict_clean": "exit 0",
+    "✓ runtime_path_verified": "13/13 JSON load OK",
+    "✓ old_workspace_untouched": true
+  },
+  "next_action": "Mr.Long quyết Week 2 NEW R44 wrapper impl (anti_dupe.ts + 003_anti_dupe_schema.sql) hoặc tiếp dig.",
+  "supersedes_cumulative": [
+    "MIGRATION_INTEGRITY_AUDIT.md (commit 9ed4e02)",
+    "MIGRATION_AUDIT_10PASS.md (commit c83523f)",
+    "MIGRATION_FIX_10ROUND.md (commit 040a2a2 / 21ba4b4)",
+    "this MIGRATION_DEEP_DIG_15ROUND.md (current)"
+  ]
+}

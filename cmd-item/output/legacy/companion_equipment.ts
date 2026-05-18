@@ -32,7 +32,7 @@ import { createEquipmentStatProvider } from './equipment_aggregate.js';
 import { getItem } from './item_registry.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../data');
 
 // ───────── Bond mult formula loaded from JSON (CMD2.docx FINAL FIX #8) ─────────
 const BondConfigSchema = z.object({

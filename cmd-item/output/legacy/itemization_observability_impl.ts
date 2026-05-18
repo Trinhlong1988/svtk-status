@@ -15,7 +15,7 @@ import type {
 } from './itemization_observability.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../data');
 
 const PerfBudgetConfigSchema = z.object({
   perf_budget: z.object({

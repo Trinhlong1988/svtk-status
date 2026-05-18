@@ -34,7 +34,7 @@ import {
 } from './economy_foundation_runtime.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../../data/economy');
 
 import { stripDocKeys } from '../_schema_helpers.js';
 

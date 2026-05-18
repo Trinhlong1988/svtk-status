@@ -16,7 +16,7 @@ import {
 } from './itemization_types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../data');
 
 // ───────── Affix entry schema (per pool) ─────────
 const AffixEntrySchema = z.object({

@@ -22,7 +22,7 @@ import {
 } from './stat_budget_runtime.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = join(__dirname, '../../../data');
+const DATA_ROOT = join(__dirname, '../../data');
 
 // ───────── Config schemas ─────────
 const StatBudgetConfigSchema = z.object({
