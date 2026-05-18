@@ -1,5 +1,5 @@
 {
-  "eras": [
+  "eras_declared": [
     "pre_lich_su",
     "bac_thuoc_g1",
     "hau_le_trinh_nguyen",
@@ -10,45 +10,9 @@
     "tuong_lai_f5",
     "hoa_lu_968_origin"
   ],
-  "detail": {
-    "pre_lich_su": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "bac_thuoc_g1": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "hau_le_trinh_nguyen": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "phap_thuoc_g1": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "khang_chien_f3": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "doi_moi_f4": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "current_f5": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "tuong_lai_f5": {
-      "npc_count": 0,
-      "sample": []
-    },
-    "hoa_lu_968_origin": {
-      "npc_count": 0,
-      "sample": []
-    },
+  "active": {
     "f1": {
-      "npc_count": 3083,
+      "npc_count": 3034,
       "sample": [
         2,
         3,
@@ -83,7 +47,7 @@
       ]
     },
     "f2": {
-      "npc_count": 292,
+      "npc_count": 261,
       "sample": [
         38,
         39,
@@ -103,22 +67,22 @@
         248,
         257,
         258,
-        455,
-        463,
-        524,
-        552,
-        574,
-        601,
-        615,
-        726,
-        751,
-        818,
-        824,
-        845
+        560,
+        618,
+        633,
+        895,
+        937,
+        944,
+        989,
+        1009,
+        1014,
+        1036,
+        1202,
+        1256
       ]
     },
     "f3": {
-      "npc_count": 163,
+      "npc_count": 192,
       "sample": [
         47,
         52,
@@ -136,24 +100,24 @@
         259,
         260,
         265,
-        510,
-        599,
-        649,
-        653,
-        775,
-        812,
-        830,
-        982,
-        1029,
-        1035,
-        1384,
-        1478,
-        1776,
-        1783
+        461,
+        515,
+        555,
+        654,
+        657,
+        837,
+        841,
+        858,
+        935,
+        1061,
+        1062,
+        1123,
+        1236,
+        1618
       ]
     },
     "f4": {
-      "npc_count": 100,
+      "npc_count": 111,
       "sample": [
         61,
         62,
@@ -168,27 +132,27 @@
         262,
         263,
         264,
-        477,
-        555,
-        694,
-        994,
-        1285,
-        1352,
-        1353,
-        1411,
-        1503,
-        1577,
-        1656,
-        1793,
-        2253,
-        2325,
-        2373,
-        2526,
-        2539
+        478,
+        506,
+        1008,
+        1286,
+        1311,
+        1355,
+        1356,
+        1378,
+        1790,
+        1924,
+        1932,
+        1988,
+        2186,
+        2294,
+        2372,
+        2822,
+        2857
       ]
     },
     "f5": {
-      "npc_count": 81,
+      "npc_count": 108,
       "sample": [
         68,
         69,
@@ -199,31 +163,31 @@
         74,
         249,
         261,
-        499,
-        793,
-        1013,
-        1028,
-        1140,
-        1146,
-        1188,
-        1224,
-        1247,
-        1291,
-        1318,
-        1403,
-        1777,
-        1795,
-        1884,
-        2133,
-        2357,
-        2414,
-        2878,
-        2967,
-        3122
+        500,
+        553,
+        717,
+        768,
+        1021,
+        1144,
+        1150,
+        1577,
+        1813,
+        1819,
+        1854,
+        1957,
+        2098,
+        2340,
+        2351,
+        2383,
+        2526,
+        2540,
+        2706,
+        2726,
+        2900
       ]
     },
     "g1": {
-      "npc_count": 1919,
+      "npc_count": 1959,
       "sample": [
         1,
         269,
@@ -257,5 +221,53 @@
         297
       ]
     }
-  }
+  },
+  "unused": {
+    "pre_lich_su": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "bac_thuoc_g1": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "hau_le_trinh_nguyen": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "phap_thuoc_g1": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "khang_chien_f3": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "doi_moi_f4": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "current_f5": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "tuong_lai_f5": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    },
+    "hoa_lu_968_origin": {
+      "npc_count": 0,
+      "status": "DECLARED_NOT_POPULATED",
+      "reason": "Brief CMD_NPC_v1.1 declares 9 extra era buckets; current registry uses F-prefix + g1 only. Future expansion reserved."
+    }
+  },
+  "note": "R26 fix Round 21-30: split active (populated) vs unused (declared but empty)."
 }

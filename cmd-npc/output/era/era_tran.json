@@ -10,7 +10,7 @@
     "Phạm Ngũ Lão",
     "Trần Thái Tông"
   ],
-  "npc_count": 1029,
+  "npc_count": 964,
   "sample_npc_indices": [
     82,
     100,
@@ -59,8 +59,8 @@
     143,
     144,
     268,
+    452,
     456,
-    462,
-    467
+    466
   ]
 }
