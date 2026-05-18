@@ -1,0 +1,188 @@
+{
+  "audit_ts": "20260519T010615Z",
+  "manifest_count": 8500,
+  "foundation_version": "v2.8.0",
+  "rounds": [
+    {
+      "round": 1,
+      "rule": "R47",
+      "subject": "PLACE cross-ref",
+      "data_found": 1,
+      "fix_applied": "linked 1 place files",
+      "alert_severity": null,
+      "alert_id": null,
+      "gap": "cmd-place chưa có data registry, R47 cross-ref không thực thi được"
+    },
+    {
+      "round": 2,
+      "rule": "R80",
+      "subject": "BOSS cross-ref (tier ↔ biome)",
+      "data_found": 1,
+      "fix_applied": "linked 1 boss file",
+      "alert_severity": null,
+      "alert_id": null,
+      "gap": "Boss registry mới ở legacy/*.ts, chưa có jsonl. Dungeon/capital_inner thiếu boss link."
+    },
+    {
+      "round": 3,
+      "rule": "R79",
+      "subject": "Element 6 hệ verify",
+      "skill_count": 306,
+      "skill_elements": [
+        "hỏa",
+        "kim",
+        "mộc",
+        "thổ",
+        "thủy",
+        "tâm"
+      ],
+      "map_elements": [
+        "hỏa",
+        "kim",
+        "mộc",
+        "thổ",
+        "thủy",
+        "tâm"
+      ],
+      "fix_applied": "PASS — all 6 element verified",
+      "alert_severity": null
+    },
+    {
+      "round": 4,
+      "rule": "R74",
+      "subject": "Item drop pool ref",
+      "item_count": 6,
+      "item_eras": {
+        "Hùng Vương": 1,
+        "Trần": 1,
+        "An Dương Vương": 1,
+        "Tây Sơn": 1,
+        "Lê": 1,
+        "Lý": 1
+      },
+      "fix_applied": "added `item_drop_era_pool` field per map (era match) — 6 items seed (target 1500)",
+      "alert_severity": "MED",
+      "alert_id": "item_registry_seed_only",
+      "gap": "6/1500 items (0.4%) — quá thưa, chưa đủ drop pool"
+    },
+    {
+      "round": 5,
+      "rule": "(dialog cross-ref)",
+      "subject": "Dialog tree per quest",
+      "dialog_count": 150,
+      "quest_count": 150,
+      "dialog_per_quest": "150/150 quests có dialog",
+      "fix_applied": "added `dialog_tree_refs` field per map (qua quest_giver_ids)",
+      "alert_severity": null
+    },
+    {
+      "round": 6,
+      "rule": "R75",
+      "subject": "Sprite template_id 1..158 + cmd-sprite registry",
+      "registry_files": 1,
+      "npc_used_sprite_unique": 158,
+      "sprite_range_actual": [
+        1,
+        158
+      ],
+      "out_of_range_count": 0,
+      "alert_severity": null,
+      "alert_id": null,
+      "gap": "cmd-sprite không có .jsonl registry, chỉ có cmd.md spec. NPC dùng id 1..158 inline."
+    },
+    {
+      "round": 7,
+      "rule": "R75",
+      "subject": "Density actual NPC vs declared range",
+      "overcrowd_count": 0,
+      "undercrowd_count": 5274,
+      "overcrowd_sample": [],
+      "fix_applied": "audit only — re-balance cần CMD_NPC điều chỉnh sceneId distribution",
+      "alert_severity": null
+    },
+    {
+      "round": 8,
+      "rule": "R83",
+      "subject": "Era distribution per protagonist Trần Long → Lý",
+      "current_distribution_pct": {
+        "ly": 30.54,
+        "tran": 17.98,
+        "le": 14.55,
+        "nguyen": 10.26,
+        "tay_son": 8.34,
+        "g1": 4.12,
+        "f4": 2.99,
+        "f5": 2.91,
+        "f1": 2.89,
+        "f3": 2.78,
+        "f2": 2.65
+      },
+      "expected": "Lý ≥ 25% (heaviest, starting era), F-era ≤ 30% combined",
+      "ly_pct": 30.54,
+      "fix_applied": "rebalance applied in gen_map_entry (Round 8 weights)",
+      "alert_severity": null
+    },
+    {
+      "round": 9,
+      "rule": "R75 + realistic curve",
+      "subject": "Biome realistic distribution",
+      "current_distribution_pct": {
+        "village": 25.68,
+        "plain": 17.62,
+        "forest": 14.88,
+        "mountain": 11.75,
+        "river": 10.44,
+        "town": 8.19,
+        "sea": 4.75,
+        "dungeon": 3.81,
+        "capital": 2.0,
+        "capital_inner": 0.87
+      },
+      "capital_inner_pct": 0.87,
+      "village_plain_pct": 43.3,
+      "expected": "capital_inner ≤ 3%, village+plain ≥ 35%",
+      "fix_applied": "rebalance applied in gen_map_entry (Round 9 weights)",
+      "alert_severity": null
+    },
+    {
+      "round": 10,
+      "rule": "R68",
+      "subject": "State checksum canonical SHA256",
+      "manifest_state_checksum": "d2e21d2e03048b799b30d7030fe53830f435163a06ef9694c9477222458838ef",
+      "schema_keys": [
+        "_index",
+        "biome",
+        "dialog_tree_refs",
+        "element_primary",
+        "era",
+        "height_tiles",
+        "image_filename",
+        "image_id",
+        "image_quality",
+        "image_resolution_h",
+        "image_resolution_w",
+        "item_drop_era_pool",
+        "mapId_at_0x00",
+        "markId_at_0x104",
+        "name",
+        "npc_count_actual",
+        "npc_density_max",
+        "npc_density_min",
+        "npc_ids",
+        "quest_count_actual",
+        "quest_giver_ids",
+        "region",
+        "seed",
+        "target_size_kb",
+        "uuid",
+        "width_tiles"
+      ],
+      "entry_count": 8500,
+      "fix_applied": "written to gen_config.json + status JSON",
+      "alert_severity": null
+    }
+  ],
+  "alerts_total": 1,
+  "alerts_high": 0,
+  "alerts_med": 1
+}

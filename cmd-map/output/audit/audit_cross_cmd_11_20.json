@@ -1,0 +1,100 @@
+{
+  "rounds": [
+    {
+      "round": 11,
+      "rule": "R79",
+      "subject": "NPC element diacritic",
+      "npc_count": 10000,
+      "bad_count": 0,
+      "bad_elements_histogram": {},
+      "alert_severity": null,
+      "fix_strategy": null
+    },
+    {
+      "round": 12,
+      "rule": "R47",
+      "subject": "NPC.skill_ids ⊂ skill registry",
+      "valid_skill_count": 306,
+      "orphan_skill_ref_count": 0,
+      "sample": [],
+      "alert_severity": null
+    },
+    {
+      "round": 13,
+      "rule": "R76",
+      "subject": "NPC tier-level boundary (R76)",
+      "violation_count": 0,
+      "sample": [],
+      "alert_severity": null
+    },
+    {
+      "round": 14,
+      "rule": "R76",
+      "subject": "NPC HP formula (type_multi Foundation gap)",
+      "extreme_low_count": 0,
+      "sample": [],
+      "foundation_gap": "R76 không define type_multi mapping per npc_type",
+      "alert_severity": null
+    },
+    {
+      "round": 15,
+      "rule": "R47",
+      "subject": "Quest.giver_npc_id ⊂ NPC",
+      "quest_count": 150,
+      "orphan_count": 0,
+      "sample": [],
+      "alert_severity": null
+    },
+    {
+      "round": 16,
+      "rule": "R47",
+      "subject": "Quest.objective.target_npc_id ⊂ NPC",
+      "orphan_count": 0,
+      "sample": [],
+      "alert_severity": null
+    },
+    {
+      "round": 17,
+      "rule": "R47",
+      "subject": "Quest.dialog_tree_ref ⊂ dialog registry",
+      "dialog_count": 150,
+      "orphan_count": 0,
+      "sample": [],
+      "alert_severity": null
+    },
+    {
+      "round": 18,
+      "rule": "R77",
+      "subject": "Skill.valid_classes ⊂ R77 5 classes",
+      "skill_count": 306,
+      "invalid_class_ref_count": 0,
+      "sample": [],
+      "alert_severity": null
+    },
+    {
+      "round": 19,
+      "rule": "R79",
+      "subject": "Skill.element ⊂ 6 hệ diacritic",
+      "skill_count": 306,
+      "bad_count": 0,
+      "bad_elements": [],
+      "alert_severity": null
+    },
+    {
+      "round": 20,
+      "rule": "R47",
+      "subject": "Map↔NPC round-trip consistency",
+      "map_count": 8500,
+      "npc_count": 10000,
+      "inconsistency_count": 0,
+      "sample": [],
+      "alert_severity": null
+    }
+  ],
+  "alerts_total": 0,
+  "alerts_high": 0,
+  "alerts_med": 0,
+  "audit_ts": "20260519T010708Z",
+  "audit_type": "cross_cmd_rounds_11_20",
+  "foundation_version": "v2.8.0"
+}

@@ -1,0 +1,84 @@
+{
+  "cmd": "MAP",
+  "version": "1.1.0",
+  "target_image_count": 8500,
+  "tso_baseline": 7047,
+  "resolution": {
+    "w": 832,
+    "h": 640
+  },
+  "quality": 70,
+  "target_size_kb": 50,
+  "biomes": [
+    "forest",
+    "mountain",
+    "river",
+    "plain",
+    "sea",
+    "capital",
+    "village",
+    "town",
+    "dungeon",
+    "capital_inner"
+  ],
+  "eras_safe": [
+    "ly",
+    "tran",
+    "le",
+    "tay_son",
+    "nguyen"
+  ],
+  "eras_fictional": [
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5"
+  ],
+  "regions": [
+    "bac_bo",
+    "trung_bo",
+    "nam_bo"
+  ],
+  "elements": [
+    "kim",
+    "mộc",
+    "thổ",
+    "thủy",
+    "hỏa",
+    "tâm"
+  ],
+  "foundation": {
+    "file": "SVTK_FOUNDATION_v2.8.0.md",
+    "hash_crlf": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
+  },
+  "existing_count": 0,
+  "new_count": 8500,
+  "rules": [
+    "R45",
+    "R47",
+    "R49",
+    "R50",
+    "R68",
+    "R71",
+    "R79"
+  ],
+  "cross_ref": {
+    "maps_with_npc": 5373,
+    "maps_with_quest": 22,
+    "orphan_npc_count": 0,
+    "orphan_quest_count": 0,
+    "orphan_npc_sample": [],
+    "orphan_quest_sample": [],
+    "items_era_pool": {
+      "Hùng Vương": 1,
+      "Trần": 1,
+      "An Dương Vương": 1,
+      "Tây Sơn": 1,
+      "Lê": 1,
+      "Lý": 1
+    },
+    "dialog_quest_links": 150,
+    "state_checksum_sha256": "d2e21d2e03048b799b30d7030fe53830f435163a06ef9694c9477222458838ef"
+  }
+}
