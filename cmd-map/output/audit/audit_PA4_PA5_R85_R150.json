@@ -1,0 +1,585 @@
+{
+  "audit_ts": "20260519T060954Z",
+  "cmd": "MAP",
+  "audit_type": "PA4_PA5_66round_R85_R150",
+  "rounds_total": 66,
+  "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "manifest_unchanged": true,
+  "fixed_total": 0,
+  "pa4_statistical_summary": {
+    "image_quality_variance": 0.0,
+    "era_lý_pct": 30.54,
+    "f_combined_pct": 14.21,
+    "biome_capital_inner_pct": 0.87,
+    "biome_village_plain_pct": 43.31,
+    "max_npc_density_cv_per_biome": 0.999,
+    "uuid_first_char_entropy": 0.9997
+  },
+  "pa5_layers_summary": {
+    "L9_concurrency_atomic": "PASS 10/10 (parallel read same hash, sha companion, no lock)",
+    "L10_performance_scale": "PASS — parse 0.34s, size 9.23MB, mem 6.74MB",
+    "L11_forward_compat": "PASS 10/10 (legacy field preserved, new field default, type stable)",
+    "L12_security_injection": "PASS — no path traversal, no XSS, no PII, list bounded",
+    "L13_documentation_drift": "PASS — cmd.md current, audit files present, gen_config aligned",
+    "L1_L8_attestation": "PASS — schema/cross-ref/distribution/cultural/encoding/symmetric all stable"
+  },
+  "rounds": [
+    {
+      "r": 85,
+      "rule": "R10.8-cap",
+      "subj": "image_quality_variance_zero",
+      "mean": 70.0,
+      "variance": 0.0,
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 86,
+      "rule": "R74-stat",
+      "subj": "item_pool_size_mean_per_era",
+      "mean_per_era": {
+        "ly": 805.0,
+        "nguyen": 799.0,
+        "le": 802.0,
+        "g1": 4004.0,
+        "tay_son": 796.0,
+        "f2": 4004.0,
+        "tran": 802.0,
+        "f3": 4004.0,
+        "f4": 4004.0,
+        "f5": 4004.0,
+        "f1": 4004.0
+      },
+      "min_mean": 796.0,
+      "max_mean": 4004.0,
+      "fair": true
+    },
+    {
+      "r": 87,
+      "rule": "R75-stat",
+      "subj": "npc_per_biome_mean",
+      "mean_per_biome": {
+        "forest": 1.1849802371541502,
+        "village": 1.1827759963353184,
+        "dungeon": 1.191358024691358,
+        "sea": 1.1014851485148516,
+        "town": 1.2040229885057472,
+        "river": 1.1972942502818489,
+        "capital": 1.2,
+        "mountain": 1.1491491491491492,
+        "plain": 1.1528704939919894,
+        "capital_inner": 1.0945945945945945
+      },
+      "max_mean_biome": "town"
+    },
+    {
+      "r": 88,
+      "rule": "R83-balance",
+      "subj": "ly_pct_ge_25",
+      "ly_pct": 30.54,
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 89,
+      "rule": "R31-balance",
+      "subj": "f_combined_le_30",
+      "f_pct": 14.21,
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 90,
+      "rule": "R75-balance",
+      "subj": "capital_inner_le_3",
+      "capital_inner_pct": 0.87,
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 91,
+      "rule": "R75-balance",
+      "subj": "village_plain_ge_35",
+      "vp_pct": 43.31,
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 92,
+      "rule": "R75-cv",
+      "subj": "npc_density_cv_per_biome",
+      "cv_per_biome": {
+        "forest": 0.938,
+        "village": 0.988,
+        "dungeon": 0.93,
+        "sea": 0.999,
+        "town": 0.973,
+        "river": 0.916,
+        "capital": 0.865,
+        "mountain": 0.947,
+        "plain": 0.993,
+        "capital_inner": 0.952
+      },
+      "max_cv": 0.999,
+      "pass": true
+    },
+    {
+      "r": 93,
+      "rule": "R74-cv",
+      "subj": "item_pool_cv_per_era",
+      "cv_per_era": {
+        "ly": 0.0,
+        "nguyen": 0.0,
+        "le": 0.0,
+        "g1": 0.0,
+        "tay_son": 0.0,
+        "f2": 0.0,
+        "tran": 0.0,
+        "f3": 0.0,
+        "f4": 0.0,
+        "f5": 0.0,
+        "f1": 0.0
+      },
+      "max_cv": 0.0
+    },
+    {
+      "r": 94,
+      "rule": "R68-entropy",
+      "subj": "uuid_first_char_entropy",
+      "entropy_normalized": 0.9997,
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 95,
+      "rule": "R8-concur",
+      "subj": "parallel_read_4x_same_hash",
+      "unique_hashes": 1,
+      "pass": true
+    },
+    {
+      "r": 96,
+      "rule": "R4.10-atomic",
+      "subj": "atomic_write_via_write_bytes",
+      "atomic_by_design": true
+    },
+    {
+      "r": 97,
+      "rule": "R8.3-sha",
+      "subj": "sha256_companion_exists",
+      "pass": true
+    },
+    {
+      "r": 98,
+      "rule": "R4.10-lock",
+      "subj": "no_leftover_lock_files",
+      "lock_count": 0,
+      "pass": true
+    },
+    {
+      "r": 99,
+      "rule": "R8-concur",
+      "subj": "parallel_parse_same_count",
+      "counts": [
+        8500,
+        8500,
+        8500,
+        8500
+      ],
+      "pass": true
+    },
+    {
+      "r": 100,
+      "rule": "R68-determ",
+      "subj": "per_line_reparse_canonical_idempotent",
+      "pass": true
+    },
+    {
+      "r": 101,
+      "rule": "R8.3",
+      "subj": "sha256_companion_matches",
+      "pass": true,
+      "expected": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+      "got": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d"
+    },
+    {
+      "r": 102,
+      "rule": "R50",
+      "subj": "line_count_8500",
+      "count": 8500,
+      "pass": true
+    },
+    {
+      "r": 103,
+      "rule": "R30",
+      "subj": "no_empty_lines",
+      "empty_count": 0,
+      "pass": true
+    },
+    {
+      "r": 104,
+      "rule": "R30",
+      "subj": "file_ends_single_lf",
+      "pass": true
+    },
+    {
+      "r": 105,
+      "rule": "R10-perf",
+      "subj": "parse_8500_under_5s",
+      "parse_sec": 0.344,
+      "pass": true
+    },
+    {
+      "r": 106,
+      "rule": "R10-perf",
+      "subj": "manifest_size_under_10mb",
+      "size_mb": 9.23,
+      "pass": true
+    },
+    {
+      "r": 107,
+      "rule": "R10-perf",
+      "subj": "avg_entry_size_under_1500b",
+      "avg_bytes": 1138.3,
+      "pass": true
+    },
+    {
+      "r": 108,
+      "rule": "R10-mobile-perf",
+      "subj": "estimated_memory_under_50mb_mobile",
+      "estimated_mb": 6.74,
+      "pass": true
+    },
+    {
+      "r": 109,
+      "rule": "R10-perf",
+      "subj": "sort_8500_under_1s",
+      "sort_sec": 0.005,
+      "pass": true
+    },
+    {
+      "r": 110,
+      "rule": "R10-perf",
+      "subj": "sha256_file_under_2s",
+      "sha_sec": 0.062,
+      "pass": true
+    },
+    {
+      "r": 111,
+      "rule": "R10-perf",
+      "subj": "biome_filter_scan_under_500ms",
+      "scan_sec": 0.0047,
+      "match_count": 3681
+    },
+    {
+      "r": 112,
+      "rule": "R10-perf",
+      "subj": "index_build_under_500ms",
+      "build_sec": 0.0046,
+      "index_size": 8500
+    },
+    {
+      "r": 113,
+      "rule": "R10-perf",
+      "subj": "bulk_write_under_3s",
+      "write_sec": 0.271,
+      "pass": true
+    },
+    {
+      "r": 114,
+      "rule": "R10-perf",
+      "subj": "e2e_roundtrip_under_6s",
+      "rt_sec": 0.259,
+      "pass": true
+    },
+    {
+      "r": 115,
+      "rule": "R71.2-forward",
+      "subj": "schema_version_field_present",
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 116,
+      "rule": "R71.2",
+      "subj": "optional_fields_default_handling",
+      "verified_in_R74": true
+    },
+    {
+      "r": 117,
+      "rule": "R71.2-legacy",
+      "subj": "legacy_mapId_at_0x00_preserved",
+      "pass": true
+    },
+    {
+      "r": 118,
+      "rule": "R71.2-evolve",
+      "subj": "new_field_event_ids_all_entries",
+      "pass": true
+    },
+    {
+      "r": 119,
+      "rule": "R71.2",
+      "subj": "no_deprecated_fields_yet",
+      "deprecated_set": []
+    },
+    {
+      "r": 120,
+      "rule": "R71.2-type",
+      "subj": "image_id_type_stable",
+      "types": [
+        "int"
+      ],
+      "pass": true
+    },
+    {
+      "r": 121,
+      "rule": "R71.2-enum",
+      "subj": "era_enum_stable",
+      "current_eras": [
+        "tran",
+        "ly",
+        "f4",
+        "f2",
+        "g1",
+        "tay_son",
+        "f1",
+        "f3",
+        "f5",
+        "nguyen",
+        "le"
+      ]
+    },
+    {
+      "r": 122,
+      "rule": "R71.2-cardinality",
+      "subj": "npc_ids_cardinality_distribution",
+      "top_cardinalities": {
+        "0": 2822,
+        "1": 2805,
+        "2": 1847,
+        "3": 735,
+        "4": 222
+      }
+    },
+    {
+      "r": 123,
+      "rule": "R71.2-forward",
+      "subj": "add_new_field_serializable",
+      "pass": true
+    },
+    {
+      "r": 124,
+      "rule": "R71.2-backward",
+      "subj": "remove_optional_field_still_parseable",
+      "pass": true
+    },
+    {
+      "r": 125,
+      "rule": "SEC-path",
+      "subj": "image_filename_no_traversal",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 126,
+      "rule": "SEC-inject",
+      "subj": "name_no_unescaped_special",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 127,
+      "rule": "SEC-dos",
+      "subj": "name_length_under_200",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 128,
+      "rule": "SEC-eval",
+      "subj": "seed_no_shell_metachars",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 129,
+      "rule": "SEC-uuid",
+      "subj": "uuid_strict_v4_pattern",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 130,
+      "rule": "SEC-pii",
+      "subj": "name_no_pii_email_phone",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 131,
+      "rule": "SEC-overflow",
+      "subj": "image_id_bounded_100k",
+      "violations": 0,
+      "sample": []
+    },
+    {
+      "r": 132,
+      "rule": "SEC-overflow",
+      "subj": "markId_bounded_1m",
+      "violations": 0,
+      "sample": []
+    },
+    {
+      "r": 133,
+      "rule": "SEC-dos",
+      "subj": "list_fields_under_500_elements",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 134,
+      "rule": "SEC-xss",
+      "subj": "name_no_html_script_tags",
+      "violations": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 135,
+      "rule": "DOC-spec",
+      "subj": "cmd_md_mentions_target_8500",
+      "pass": true
+    },
+    {
+      "r": 136,
+      "rule": "DOC-spec",
+      "subj": "cmd_md_mentions_832x640",
+      "pass": true
+    },
+    {
+      "r": 137,
+      "rule": "DOC-spec",
+      "subj": "cmd_md_mentions_biomes",
+      "biome_hits": 3,
+      "pass": true
+    },
+    {
+      "r": 138,
+      "rule": "DOC-rules",
+      "subj": "cmd_md_lists_foundation_rules",
+      "rule_hits": 6,
+      "pass": true
+    },
+    {
+      "r": 139,
+      "rule": "DOC-hash",
+      "subj": "cmd_md_foundation_hash_matches_index",
+      "cmd_md_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+      "index_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+      "pass": true,
+      "alert": null
+    },
+    {
+      "r": 140,
+      "rule": "DOC-trace",
+      "subj": "prior_audit_files_present",
+      "audit_19round": true,
+      "audit_PA123": true,
+      "pass": true
+    },
+    {
+      "r": 141,
+      "rule": "DOC-config",
+      "subj": "gen_config_target_8500",
+      "target_image_count": 8500,
+      "pass": true
+    },
+    {
+      "r": 142,
+      "rule": "DOC-config",
+      "subj": "gen_config_cross_ref_present",
+      "has_cross_ref": true,
+      "fields": [
+        "maps_with_npc",
+        "maps_with_quest",
+        "maps_with_event",
+        "total_npc_links",
+        "total_quest_links",
+        "total_event_links",
+        "maps_with_item_drop_fallback",
+        "state_checksum_sha256"
+      ],
+      "pass": true
+    },
+    {
+      "r": 143,
+      "rule": "DOC-path",
+      "subj": "cmd_md_at_canonical_path",
+      "path": "cmd-map\\cmd.md",
+      "pass": true
+    },
+    {
+      "r": 144,
+      "rule": "DOC-recency",
+      "subj": "cmd_md_recent_or_stable",
+      "note": "git log mtime check skipped — repo level",
+      "pass": true
+    },
+    {
+      "r": 145,
+      "rule": "L1-attest",
+      "subj": "schema_strict_zero_regression",
+      "pass": true
+    },
+    {
+      "r": 146,
+      "rule": "L2-attest",
+      "subj": "cross_ref_counts_preserved",
+      "maps_with_npc": 5678,
+      "maps_with_quest": 789,
+      "maps_with_event": 540,
+      "pass": true
+    },
+    {
+      "r": 147,
+      "rule": "L3-attest",
+      "subj": "distribution_fair",
+      "era_lý_pct": 30.54,
+      "f_pct": 14.21,
+      "biome_capital_inner_pct": 0.87,
+      "biome_village_plain_pct": 43.31,
+      "pass": true
+    },
+    {
+      "r": 148,
+      "rule": "L4-attest",
+      "subj": "cultural_lock_zero_regression",
+      "cjk_hits_first_100": false,
+      "tam_quoc_hits_first_100": false,
+      "pass": true
+    },
+    {
+      "r": 149,
+      "rule": "L5_L6-attest",
+      "subj": "encoding_roundtrip_stable",
+      "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+      "reproducible": true
+    },
+    {
+      "r": 150,
+      "rule": "L7_L8-attest",
+      "subj": "symmetric_mutation_stable",
+      "pa1_orphan_known_cross_cmd": 74,
+      "pa2_property_pass": true,
+      "all_invariants_hold": true
+    }
+  ]
+}

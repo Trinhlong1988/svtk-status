@@ -1,0 +1,45 @@
+{
+  "fix_id": "map_PA4_PA5_66round_R85_R150",
+  "fixed_by": "map",
+  "result": "PASS",
+  "timestamp": "20260519-061252",
+  "trigger": "Mr.Long lệnh tiếp PA4 + PA5 sau khi PA1+PA2+PA3 done",
+  "rounds_executed": 66,
+  "rounds_range": "R85..R150",
+  "manifest_optimization": {
+    "size_pre_mb": 21.82,
+    "size_post_mb": 9.23,
+    "shrink_pct": 57.7,
+    "avg_entry_pre_bytes": 2691,
+    "avg_entry_post_bytes": 1138,
+    "actions": [
+      "item_drop_era_pool truncated 100 → 20 entries (full pool derivable from era)",
+      "_index field dropped (redundant with image_id)",
+      "schema_version: 1.1 field added (forward compat)"
+    ]
+  },
+  "evidence": {
+    "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+    "all_66_rounds_pass": true,
+    "zero_fails": true
+  },
+  "pa4_statistical_R85_R94": {
+    "image_quality_variance": 0.0,
+    "era_lý_pct": 30.54,
+    "f_combined_pct": 14.21,
+    "biome_capital_inner_pct": 0.87,
+    "biome_village_plain_pct": 43.31,
+    "item_pool_size_mean_fair_across_era": true,
+    "npc_density_cv_max": 0.999,
+    "uuid_first_char_entropy_normalized": 0.9997
+  },
+  "pa5_layer_breakdown": {
+    "L9_concurrency_atomic_R95_R104": "PASS 10/10 (parallel 4x read same hash, atomic write, sha companion, no leftover lock, line count 8500, no empty line, single LF end)",
+    "L10_performance_scale_R105_R114": "PASS 10/10 — parse 0.63s, manifest 9.23MB, avg 1138B, mem 6.74MB, sort 0.01s, sha 0.05s, e2e RT 0.7s",
+    "L11_forward_compat_R115_R124": "PASS 10/10 (schema_version 1.1 added, legacy mapId_at_0x00 preserved, new field event_ids all 8500, type stable, enum stable, cardinality recorded, new+remove field still serializable)",
+    "L12_security_injection_R125_R134": "PASS 10/10 — 0 path traversal, 0 JSON inject in name, 0 long name, 0 shell metachar in seed, 0 bad UUID, 0 PII, 0 overflow, 0 huge list, 0 HTML/script tag",
+    "L13_documentation_drift_R135_R144": "PASS 10/10 — cmd.md mentions 8500/832x640/biomes/4+ rules, foundation hash drift logged earlier, audit files present, gen_config target=8500 + cross_ref populated",
+    "L1_L8_attestation_R145_R150": "PASS — schema strict, cross-ref preserved (npc=5678 quest=789 event=540), distribution fair, cultural lock 0 violation, encoding stable, symmetric+mutation invariants hold"
+  },
+  "exit_code": 0
+}
