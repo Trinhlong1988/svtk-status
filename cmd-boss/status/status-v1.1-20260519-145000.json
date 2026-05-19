@@ -1,0 +1,45 @@
+{
+  "cmd": "BOSS",
+  "version": "1.1.0",
+  "supersedes": "1.0.0",
+  "timestamp": "20260519-145000",
+  "branch": "staging-boss-20260519-142613",
+  "deep_audit": {
+    "rounds": 17,
+    "bugs_found_initial": 2,
+    "bugs_fixed": 2,
+    "bugs_remaining": 0
+  },
+  "bugs_fixed": [
+    {
+      "id": "R15_DMG_TAKEN_INCONSISTENT",
+      "severity": "HIGH",
+      "evidence_before": "elite bucket có dmg_taken {0.4, 0.45, 0.5} — derivation tier-only ép boss_id=6 (T7 thanh, dmg=0.4) vào elite cùng T7 boss (dmg=0.5) và new T7@0.45",
+      "root_cause": "derive_boss_tier_class_from_numeric chỉ dùng tier → boss_id=6 (T7 thanh, anomaly trong seed) misclassified as elite",
+      "fix": "derive_boss_tier_class(tier, npc_class): T7+thanh → raid (not elite). Elite spec dmg_taken 0.45 → 0.50 match seed T7 boss.",
+      "verify": "audit_17 R15 elite={0.5} raid={0.4} after fix"
+    },
+    {
+      "id": "R12_DISPLAY_NAME_COLLISION",
+      "severity": "MED",
+      "evidence_before": "1187 generated names → 515 unique. Top dupes: ('Thủy Quái Phú Xuân', 7), ('Hắc Hổ Lý Triều', 7) — 7-fold collision",
+      "root_cause": "Pool 15 root × 3 era_title × 5 era = 225 combos, deterministic SHA mod cluster + skew amplifies collision tại N=1187",
+      "fix": "Add 30 modifier prefix pool + boss_id:04d suffix → 'Đại Thủy Quái Phú Xuân 0014'. Namespace 30×15×3×5 + numeric → guaranteed unique.",
+      "verify": "audit_17 R12: 1187/1187 unique"
+    }
+  ],
+  "audit_layers_all_pass": {
+    "deep_17_rounds": "0 bugs",
+    "independent_53_checks": "53/53 = 1.0000",
+    "deployed_15_tests": "15/15 PASS"
+  },
+  "distribution_v1.1": {
+    "existing_by_class": {"normal": 2, "elite": 3, "raid": 5, "world": 3},
+    "needed_new":       {"normal": 598, "elite": 297, "raid": 195, "world": 97},
+    "actual_total":     {"normal": 600, "elite": 300, "raid": 200, "world": 100}
+  },
+  "semantic_note": "v1.1 derivation (tier, npc_class) phù hợp seed pattern hơn v1.0 — boss_id=6 (T7 thanh) là raid (semantic correct) thay vì elite (tier-only artifact).",
+  "score": 1.0,
+  "result": "PASS",
+  "exit_code": 0
+}
