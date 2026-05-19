@@ -1,0 +1,14 @@
+{
+  "fix_id": "npc_extend_to_10000",
+  "fixed_by": "cmd-npc",
+  "result": "PASS",
+  "evidence": {
+    "total": 10000,
+    "target": 10000,
+    "existing": 438,
+    "new": 9562,
+    "score": 1.0,
+    "gaps": []
+  },
+  "timestamp": "20260519-130507"
+}
