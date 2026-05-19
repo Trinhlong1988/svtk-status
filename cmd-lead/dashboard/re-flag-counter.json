@@ -3,5 +3,6 @@
   "quest_count_below_target": 2,
   "qa_event_missing": 2,
   "qa_item_missing": 2,
-  "event_count_below_target": 1
+  "event_count_below_target": 1,
+  "npc_tam_quoc_ref": 1
 }

@@ -1,0 +1,11 @@
+{
+  "issue_id": "npc_tam_quoc_ref",
+  "description": "QA_CONTENT scanned 10000 NPCs, found 2 with Tam Quốc references (first at index 4091). Foundation R30 Cultural Lock VIOLATION. Locate + replace 2 NPC references with Vietnamese historical/myth names per culturalLock filter.",
+  "evidence": { "first_index": 4091, "total_violation": 2, "scanned": 10000 },
+  "severity": "HIGH",
+  "priority": 1,
+  "foundation_rule": "R30 Cultural Lock — no Tam Quốc names (Tào Tháo, Lưu Bị, Quan Vũ, etc.)",
+  "verify": "rerun QA_CONTENT scan after fix, expect 0 violations",
+  "assigned_by": "LEAD",
+  "ts": "20260519-151537"
+}
