@@ -5974,6 +5974,121 @@ ROUND_L24_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 25 — R44 wire artifact strict (PENTAICOSA-DEEP, v1.26)
+# Validate runtime/item_actions_R44_wire.ts shape: 3 entry points,
+# correct imports, no TODOs, exports declared.
+# ============================================================
+WIRE_PATH = REPO_DIR / "cmd-item" / "output" / "runtime" / "item_actions_R44_wire.ts"
+
+
+def _wire_src():
+    return WIRE_PATH.read_text(encoding="utf-8") if WIRE_PATH.exists() else ""
+
+
+def chk_L25_wire_file_present(items, *_):
+    return WIRE_PATH.exists() and WIRE_PATH.stat().st_size > 100, {
+        "size": WIRE_PATH.stat().st_size if WIRE_PATH.exists() else 0
+    }
+
+
+def chk_L25_wire_imports_w2_action_txn(items, *_):
+    s = _wire_src()
+    return "withActionTxn" in s and "w2_action_txn" in s, {"present": True}
+
+
+def chk_L25_wire_imports_anti_dupe(items, *_):
+    s = _wire_src()
+    return "pickupItem" in s and "anti_dupe" in s, {"present": True}
+
+
+def chk_L25_wire_imports_optimistic(items, *_):
+    s = _wire_src()
+    return "optimisticUpdate" in s and "w3_optimistic" in s, {"present": True}
+
+
+def chk_L25_wire_three_entry_points(items, *_):
+    s = _wire_src()
+    candidates = ("transferItemAtomic", "onItemDrop",
+                  "applyConsumableOptimistic", "applyItemStatChange",
+                  "consumeItemOptimistic")
+    entries = [name for name in candidates
+               if f"export async function {name}" in s
+               or f"export function {name}" in s]
+    return len(entries) >= 3, {"entries_found": entries}
+
+
+def chk_L25_wire_no_TODO(items, *_):
+    s = _wire_src()
+    bad = re.findall(r"\bTODO\b|\bFIXME\b|\bXXX\b", s)
+    return len(bad) == 0, {"todos": len(bad)}
+
+
+def chk_L25_wire_no_console_log_leftover(items, *_):
+    s = _wire_src()
+    return "console.log" not in s, {"present": "console.log" in s}
+
+
+def chk_L25_wire_typescript_syntax_hint(items, *_):
+    s = _wire_src()
+    has_iface = "interface " in s
+    has_export = "export " in s
+    return has_iface and has_export, {"interface": has_iface,
+                                       "export": has_export}
+
+
+def chk_L25_wire_no_python_artifact(items, *_):
+    s = _wire_src()
+    return "def " not in s and "import json" not in s, {"clean": True}
+
+
+def chk_L25_wire_action_txn_kind_trade(items, *_):
+    s = _wire_src()
+    return "withActionTxn('trade'" in s or 'withActionTxn("trade"' in s, {"present": True}
+
+
+def chk_L25_wire_uses_atomic_transfer(items, *_):
+    s = _wire_src()
+    return "Atomic" in s or "atomic" in s, {"present": True}
+
+
+ROUND_L25_CHECKS = {
+    2: [
+        ("L25_wire_file_present", "R44", chk_L25_wire_file_present),
+        ("L25_wire_imports_w2_action_txn", "R44",
+         chk_L25_wire_imports_w2_action_txn),
+    ],
+    3: [
+        ("L25_wire_imports_anti_dupe", "R44",
+         chk_L25_wire_imports_anti_dupe),
+        ("L25_wire_imports_optimistic", "R44",
+         chk_L25_wire_imports_optimistic),
+    ],
+    4: [
+        ("L25_wire_three_entry_points", "R44",
+         chk_L25_wire_three_entry_points),
+        ("L25_wire_no_TODO", "R30", chk_L25_wire_no_TODO),
+    ],
+    5: [
+        ("L25_wire_no_console_log_leftover", "R30",
+         chk_L25_wire_no_console_log_leftover),
+        ("L25_wire_typescript_syntax_hint", "R30",
+         chk_L25_wire_typescript_syntax_hint),
+    ],
+    6: [
+        ("L25_wire_no_python_artifact", "R30",
+         chk_L25_wire_no_python_artifact),
+        ("L25_wire_action_txn_kind_trade", "R44",
+         chk_L25_wire_action_txn_kind_trade),
+    ],
+    7: [
+        ("L25_wire_uses_atomic_transfer", "R44",
+         chk_L25_wire_uses_atomic_transfer),
+    ],
+    8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -6089,6 +6204,8 @@ def main():
             active_checks.extend(ROUND_L23_CHECKS[r])
         if r in ROUND_L24_CHECKS:
             active_checks.extend(ROUND_L24_CHECKS[r])
+        if r in ROUND_L25_CHECKS:
+            active_checks.extend(ROUND_L25_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
