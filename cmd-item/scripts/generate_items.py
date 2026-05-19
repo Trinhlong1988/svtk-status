@@ -25,15 +25,48 @@ from pathlib import Path
 
 
 def atomic_write_bytes(path: Path, data: bytes) -> None:
-    """B35 fix (v1.30): atomic write via temp + os.replace so concurrent
-    readers never observe partial content. Critical for audit/mutation
-    parallel reads (race condition root-cause)."""
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    with open(tmp, "wb") as f:
-        f.write(data)
-        f.flush()
-        os.fsync(f.fileno())
-    os.replace(tmp, path)
+    """B35 (v1.30) + B37 (v1.30+) + B38 (v1.30++): atomic write via
+    per-worker temp + os.replace.
+
+    - B35 root: temp file + os.replace so concurrent readers never see
+      half-written content. Was non-atomic write_bytes() before.
+    - B37 worker isolation: tmp name includes pid + time_ns so 3 parallel
+      generator workers don't collide on a shared tmp.
+    - B38 Windows-quirk: os.replace can raise PermissionError (WinError 5
+      Access denied) when target is being read by another process.
+      Since gen is deterministic, byte content is identical across
+      workers — retry briefly, and if the file is already up-to-date,
+      treat as success (last-writer-wins semantic preserved)."""
+    tmp = path.with_suffix(
+        path.suffix + f".tmp.{os.getpid()}.{time.time_ns()}"
+    )
+    try:
+        with open(tmp, "wb") as f:
+            f.write(data)
+            f.flush()
+            os.fsync(f.fileno())
+        # Retry loop for Windows transient lock (WinError 5)
+        for attempt in range(6):
+            try:
+                os.replace(tmp, path)
+                return
+            except PermissionError:
+                # Already-replaced check: if target already matches our
+                # content, we can drop our tmp and exit clean.
+                try:
+                    if path.exists() and path.read_bytes() == data:
+                        return
+                except OSError:
+                    pass
+                time.sleep(0.02 * (attempt + 1))
+        # Final attempt — if still locked, raise.
+        os.replace(tmp, path)
+    finally:
+        try:
+            if tmp.exists():
+                tmp.unlink()
+        except OSError:
+            pass
 
 
 def atomic_write_text(path: Path, text: str, encoding: str = "utf-8") -> None:
