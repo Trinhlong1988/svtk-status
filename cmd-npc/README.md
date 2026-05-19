@@ -2,12 +2,16 @@
 
 NPC registry for SVTK Sử Việt Truyền Kỳ — 10000 NPCs sử Việt.
 
+**Version:** 1.1.0  
+**Audit state:** 9 deep audit rounds completed (R1-R90, cumulative 90 hidden bugs fixed).  
+**Validator:** 60/60 PASS (rate 1.0).
+
 ## Quick links
 
 - **Brief (R71.1 preserved):** [cmd.md](cmd.md) — original AUTONOMOUS spec from Mr.Long
-- **Audit history (80 hidden bugs fixed):** [AUDIT_INDEX.md](AUDIT_INDEX.md)
+- **Audit history (90 hidden bugs fixed):** [AUDIT_INDEX.md](AUDIT_INDEX.md)
 - **Output registry:** `output/registry/npc_full.jsonl` (10000 NPCs)
-- **Validation:** `output/reports/validation.json` (55/55 checks PASS)
+- **Validation:** `output/reports/validation.json` (60/60 checks PASS)
 - **Honest gaps:** `output/reports/honest_gaps.json`
 
 ## Structure
@@ -28,15 +32,16 @@ cmd-npc/
 ├── status/              (per-build status.json + AUDIT_REPORT_ROUND_*.md, capped 3 latest)
 ├── status-archived/     (older status, capped 5)
 ├── status-archived-cold/(very old status, long-term storage)
-├── transaction_log/     (R74.B template_ship transactions, idempotent)
+├── transaction_log/     (R74.B template_ship transactions, idempotent, capped 3 latest)
+├── transaction_log-archived/ (older tx log, cold storage — R82 cap Round 81-90)
 └── inbox/               (LEAD fix tasks landing here — processed → completion)
 ```
 
 ## Cumulative audit status
 
-- **80 hidden bugs fixed** across 8 audit rounds (R1-R80).
-- **Validator: 55/55 PASS** (rate 1.0).
-- **Active ex-side alerts: 13** (R71.1 immutable source side; documented for source-team regen).
+- **90 hidden bugs fixed** across 9 audit rounds (R1-R90).
+- **Validator: 60/60 PASS** (rate 1.0).
+- **Active ex-side alerts: 16** (R71.1 immutable source side + 1 ecosystem cross-ref + content-gap alerts).
 - **Generated-side: 0 violations.**
 
 See [AUDIT_INDEX.md](AUDIT_INDEX.md) for per-round detail.
