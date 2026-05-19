@@ -1,8 +1,598 @@
 {
-  "passed": 70,
-  "total": 70,
+  "passed": 75,
+  "total": 75,
   "pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
-  "errors": []
+  "errors": [],
+  "checks": [
+    {
+      "name": "npc_count",
+      "ok": true,
+      "evidence": {
+        "found": 10000,
+        "target": 10000
+      }
+    },
+    {
+      "name": "unique_index",
+      "ok": true,
+      "evidence": {
+        "duplicates": 0
+      }
+    },
+    {
+      "name": "unique_uuid",
+      "ok": true,
+      "evidence": {
+        "duplicates": 0
+      }
+    },
+    {
+      "name": "main_era_5",
+      "ok": true,
+      "evidence": {
+        "found": 5
+      }
+    },
+    {
+      "name": "protagonist_tran_long",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "cultural_lock",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "schema_exists",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "sprite_mapping",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "era_files_5",
+      "ok": true,
+      "evidence": {
+        "found": 5
+      }
+    },
+    {
+      "name": "era_extra_file",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "jsonl_splits_4",
+      "ok": true,
+      "evidence": {
+        "found": 4
+      }
+    },
+    {
+      "name": "surname_diversity",
+      "ok": true,
+      "evidence": {
+        "found": 100
+      }
+    },
+    {
+      "name": "sprite_range",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "npc_types_10",
+      "ok": true,
+      "evidence": {
+        "found": 10
+      }
+    },
+    {
+      "name": "stat_coherence",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "schema_uniformity",
+      "ok": true,
+      "evidence": {
+        "npcs_with_missing_fields": 0
+      }
+    },
+    {
+      "name": "uuid_non_null_R74A",
+      "ok": true,
+      "evidence": {
+        "null_count": 0
+      }
+    },
+    {
+      "name": "spawn_spacing_R75_generated",
+      "ok": true,
+      "evidence": {
+        "gen_gen": 0,
+        "ex_gen": 0,
+        "ex_ex_alert_only": 284
+      }
+    },
+    {
+      "name": "scene_id_range_generated",
+      "ok": true,
+      "evidence": {
+        "gen_orphan": 0,
+        "ex_orphan_alert_only": 59
+      }
+    },
+    {
+      "name": "type_tier_consistency_R76_R80_generated",
+      "ok": true,
+      "evidence": {
+        "gen_violations": 0,
+        "ex_violations_alert_only": 111
+      }
+    },
+    {
+      "name": "protagonist_uniqueness_R83",
+      "ok": true,
+      "evidence": {
+        "tran_long_exact": 0,
+        "tran_long_total": 1
+      }
+    },
+    {
+      "name": "protagonist_mentor_R83",
+      "ok": true,
+      "evidence": {
+        "mentor": "Sư Vạn Hạnh"
+      }
+    },
+    {
+      "name": "mentor_su_van_hanh_R83",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "historical_figure_diacritics_R13",
+      "ok": true,
+      "evidence": {
+        "violations": 0,
+        "samples": []
+      }
+    },
+    {
+      "name": "recolor_index_field_R21",
+      "ok": true,
+      "evidence": {
+        "missing": 0
+      }
+    },
+    {
+      "name": "protagonist_starting_class_R22",
+      "ok": true,
+      "evidence": {
+        "starting_class": "novice"
+      }
+    },
+    {
+      "name": "pet_evolution_path_R23",
+      "ok": true,
+      "evidence": {
+        "pettable_total": 706,
+        "with_evolution_path": 706
+      }
+    },
+    {
+      "name": "transaction_log_R74B",
+      "ok": true,
+      "evidence": {
+        "tx_files": 3
+      }
+    },
+    {
+      "name": "aggro_range_tier_scaling_R28",
+      "ok": true,
+      "evidence": {
+        "unique_aggro_values": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          12,
+          16
+        ]
+      }
+    },
+    {
+      "name": "sql_schema_columns_R31",
+      "ok": true,
+      "evidence": {
+        "missing_cols": []
+      }
+    },
+    {
+      "name": "skill_ids_dedup_R32",
+      "ok": true,
+      "evidence": {
+        "npcs_with_dup_skills": 0
+      }
+    },
+    {
+      "name": "gender_heuristic_R33",
+      "ok": true,
+      "evidence": {
+        "existing_female": 46,
+        "total_female": 2885
+      }
+    },
+    {
+      "name": "no_questgiver_redundancy_R34",
+      "ok": true,
+      "evidence": {
+        "redundant_count": 0
+      }
+    },
+    {
+      "name": "historical_background_R35",
+      "ok": true,
+      "evidence": {
+        "historical_total": 57,
+        "with_background": 57
+      }
+    },
+    {
+      "name": "historical_figure_flag_R41",
+      "ok": true,
+      "evidence": {
+        "flagged": 57,
+        "target_min": 25
+      }
+    },
+    {
+      "name": "mentor_cross_ref_R48",
+      "ok": true,
+      "evidence": {
+        "mentor": "Sư Vạn Hạnh",
+        "match_count": 1
+      }
+    },
+    {
+      "name": "hp_formula_coverage_R49",
+      "ok": true,
+      "evidence": {
+        "aligned_pct": 95.68,
+        "threshold": 80.0
+      }
+    },
+    {
+      "name": "alert_dedup_policy_R50",
+      "ok": true,
+      "evidence": {
+        "stale_alerts": 0,
+        "samples": []
+      }
+    },
+    {
+      "name": "existing_pettable_fields_R47",
+      "ok": true,
+      "evidence": {
+        "ex_pettable": 3,
+        "with_pet_fields": 3
+      }
+    },
+    {
+      "name": "rebirthable_boss_only_R51",
+      "ok": true,
+      "evidence": {
+        "gen_violations": 0
+      }
+    },
+    {
+      "name": "era_start_year_coverage_R52",
+      "ok": true,
+      "evidence": {
+        "with_year": 57,
+        "total": 57,
+        "coverage_pct": 100.0
+      }
+    },
+    {
+      "name": "protagonist_mentor_npc_idx_R53",
+      "ok": true,
+      "evidence": {
+        "mentor_npc_idx": 84
+      }
+    },
+    {
+      "name": "alerts_processed_cap_R54",
+      "ok": true,
+      "evidence": {
+        "unique_ts_groups": 3,
+        "cap": 3
+      }
+    },
+    {
+      "name": "audit_history_complete_R55",
+      "ok": true,
+      "evidence": {
+        "present": [
+          "round_101_110",
+          "round_111_120",
+          "round_11_20",
+          "round_1_10",
+          "round_21_30",
+          "round_31_40",
+          "round_41_50",
+          "round_51_60",
+          "round_61_70",
+          "round_71_80",
+          "round_81_90",
+          "round_91_100"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "name": "boss_epithet_100pct_R61",
+      "ok": true,
+      "evidence": {
+        "gen_boss": 176,
+        "with_epithet": 176
+      }
+    },
+    {
+      "name": "epithet_class_semantic_R62",
+      "ok": true,
+      "evidence": {
+        "mismatches": 0
+      }
+    },
+    {
+      "name": "audit_index_freshness_R64",
+      "ok": true,
+      "evidence": {
+        "exists": true,
+        "contains_round_61_70": true
+      }
+    },
+    {
+      "name": "myth_tier_alert_R65",
+      "ok": true,
+      "evidence": {
+        "alert_files": 1
+      }
+    },
+    {
+      "name": "jsonl_sort_keys_R71",
+      "ok": true,
+      "evidence": {
+        "sample_size": 5,
+        "all_sorted": true
+      }
+    },
+    {
+      "name": "uuid_deterministic_R72",
+      "ok": true,
+      "evidence": {
+        "sample_idx": 1,
+        "expected": "de9985f4-704b-57...",
+        "actual": "de9985f4-704b-57..."
+      }
+    },
+    {
+      "name": "sql_schema_R73_complete",
+      "ok": true,
+      "evidence": {
+        "mentor_npc_idx_in_sql": true,
+        "pet_evolution_path_note_in_sql": true
+      }
+    },
+    {
+      "name": "name_era_diversity_R75",
+      "ok": true,
+      "evidence": {
+        "dupe_count": 11,
+        "threshold": 200
+      }
+    },
+    {
+      "name": "tier9_aggressive_R76",
+      "ok": true,
+      "evidence": {
+        "tier9_combat_total": 69,
+        "aggressive_count": 69
+      }
+    },
+    {
+      "name": "pet_master_pettable_R81",
+      "ok": true,
+      "evidence": {
+        "gen_pet_master": 389,
+        "pettable_true_count": 389
+      }
+    },
+    {
+      "name": "transaction_log_cap_R82",
+      "ok": true,
+      "evidence": {
+        "active_tx_files": 3,
+        "cap": 3
+      }
+    },
+    {
+      "name": "tier_level_anomaly_alert_R83",
+      "ok": true,
+      "evidence": {
+        "existing_violations": true,
+        "alert_files": 1
+      }
+    },
+    {
+      "name": "extra_era_empty_alert_R84",
+      "ok": true,
+      "evidence": {
+        "any_extra_empty": true,
+        "alert_files": 1
+      }
+    },
+    {
+      "name": "element_stat_skew_alert_R85",
+      "ok": true,
+      "evidence": {
+        "any_skew_gt_10pct": true,
+        "alert_files": 1
+      }
+    },
+    {
+      "name": "sceneId_gen_range_R92",
+      "ok": true,
+      "evidence": {
+        "gen_violations": 0,
+        "range": [
+          1,
+          7817
+        ]
+      }
+    },
+    {
+      "name": "skill_ids_range_R93",
+      "ok": true,
+      "evidence": {
+        "violations": 0,
+        "range": [
+          1,
+          165
+        ]
+      }
+    },
+    {
+      "name": "ai_behavior_valid_R94",
+      "ok": true,
+      "evidence": {
+        "violations": 0,
+        "valid_set_size": 8
+      }
+    },
+    {
+      "name": "tier_level_adherence_R95",
+      "ok": true,
+      "evidence": {
+        "gen_violations": 0
+      }
+    },
+    {
+      "name": "registry_split_sum_R96",
+      "ok": true,
+      "evidence": {
+        "main": 208,
+        "side": 132,
+        "lore": 98,
+        "generated": 9562,
+        "sum_parts": 10000,
+        "full": 10000,
+        "target": 10000
+      }
+    },
+    {
+      "name": "sha256_sidecar_match_R101",
+      "ok": true,
+      "evidence": {
+        "mismatched_or_missing": []
+      }
+    },
+    {
+      "name": "protagonist_in_main_split_R102",
+      "ok": true,
+      "evidence": {
+        "npc_main_contains_idx_1": true
+      }
+    },
+    {
+      "name": "sql_check_enum_match_R103",
+      "ok": true,
+      "evidence": {}
+    },
+    {
+      "name": "alerts_json_schema_R104",
+      "ok": true,
+      "evidence": {
+        "checked": 20,
+        "violations": 0
+      }
+    },
+    {
+      "name": "recolor_palette_alias_R105",
+      "ok": true,
+      "evidence": {
+        "mismatch_count": 0
+      }
+    },
+    {
+      "name": "heartbeat_file_present_R111",
+      "ok": true,
+      "evidence": {
+        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-114503.json",
+        "exists": true
+      }
+    },
+    {
+      "name": "completion_file_present_R112",
+      "ok": true,
+      "evidence": {
+        "count": 1,
+        "files": [
+          "BUILDING-npc_extend_to_10000-20260519-114503.json"
+        ]
+      }
+    },
+    {
+      "name": "foundation_v280_present_R113",
+      "ok": true,
+      "evidence": {
+        "exists": true,
+        "hash_prefix": "ab1b4eb2a50a79ea"
+      }
+    },
+    {
+      "name": "existing_source_438_lines_R114",
+      "ok": true,
+      "evidence": {
+        "actual_lines": 438,
+        "expected": 438
+      }
+    },
+    {
+      "name": "pet_evolution_path_invariant_R115",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "ecosystem_cross_ref_alert_R66",
+      "ok": true,
+      "evidence": {
+        "expected_alert": true,
+        "actual_alerts": 1
+      }
+    },
+    {
+      "name": "era_pattern_divergence_R71_4",
+      "ok": true,
+      "evidence": {
+        "max_divergence_pct": 11.11,
+        "tolerance_pct": 20.0,
+        "note": "Tolerance 20% accounts for forced le/tay_son coverage per R83"
+      }
+    }
+  ]
 }

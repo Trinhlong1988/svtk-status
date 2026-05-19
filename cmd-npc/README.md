@@ -3,15 +3,15 @@
 NPC registry for SVTK Sử Việt Truyền Kỳ — 10000 NPCs sử Việt.
 
 **Version:** 1.1.0  
-**Audit state:** 11 deep audit rounds completed (R1-R110, cumulative 110 hidden bugs fixed).  
-**Validator:** 70/70 PASS (rate 1.0).
+**Audit state:** 12 deep audit rounds completed (R1-R120, cumulative 120 hidden bugs fixed).  
+**Validator:** 75/75 PASS (rate 1.0).
 
 ## Quick links
 
 - **Brief (R71.1 preserved):** [cmd.md](cmd.md) — original AUTONOMOUS spec from Mr.Long
-- **Audit history (110 hidden bugs fixed):** [AUDIT_INDEX.md](AUDIT_INDEX.md)
+- **Audit history (120 hidden bugs fixed):** [AUDIT_INDEX.md](AUDIT_INDEX.md)
 - **Output registry:** `output/registry/npc_full.jsonl` (10000 NPCs)
-- **Validation:** `output/reports/validation.json` (70/70 checks PASS)
+- **Validation:** `output/reports/validation.json` (75/75 checks PASS + per-check detail)
 - **Honest gaps:** `output/reports/honest_gaps.json`
 
 ## Structure
@@ -39,9 +39,9 @@ cmd-npc/
 
 ## Cumulative audit status
 
-- **110 hidden bugs fixed** across 11 audit rounds (R1-R110).
-- **Validator: 70/70 PASS** (rate 1.0).
-- **Active ex-side alerts: 19** (R71.1 immutable source side + 1 ecosystem cross-ref + content-gap + flag-design + era-fprefix-dominance INFO alerts).
+- **120 hidden bugs fixed** across 12 audit rounds (R1-R120).
+- **Validator: 75/75 PASS** (rate 1.0).
+- **Active ex-side alerts: 20** (R71.1 immutable + ecosystem cross-ref + content-gap + flag-design + foundation-version-mismatch).
 - **Generated-side: 0 violations.**
 
 See [AUDIT_INDEX.md](AUDIT_INDEX.md) for per-round detail.
