@@ -6089,6 +6089,134 @@ ROUND_L25_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 26 — Forbidden lexicon & cultural compliance (HEXAICOSA-DEEP, v1.27)
+# ============================================================
+FORBIDDEN_PROFANITY_RE = re.compile(
+    r"\b(dm|dcm|đm|đcm|cmm|vcl|đụ|đéo|cứt|đái|đái|đụ má)\b",
+    re.IGNORECASE
+)
+FORBIDDEN_MODERN_BRAND_RE = re.compile(
+    r"\b(iPhone|Samsung|Apple|Google|Facebook|Microsoft|Tesla|"
+    r"BMW|Mercedes|Toyota|Honda)\b"
+)
+FORBIDDEN_RELIGION_POLEMIC_RE = re.compile(
+    r"\b(dị giáo|tà giáo)\b",
+    re.IGNORECASE
+)
+FORBIDDEN_SLANG_RE = re.compile(
+    r"\b(bro|sis|wtf|lol|omg|gg|noob|gấu|cún|gấu yêu|crush|"
+    r"trẻ trâu|sống ảo)\b",
+    re.IGNORECASE
+)
+FORBIDDEN_MEDICAL_RE = re.compile(
+    r"\b(viagra|cocaine|heroin|ma túy|cannabis|cần sa)\b",
+    re.IGNORECASE
+)
+FORBIDDEN_POLITIC_MODERN_RE = re.compile(
+    r"\b(NATO|Liên Xô|USSR|Cộng hòa Pháp 2026|Cộng sản hiện đại)\b"
+)
+
+
+def _scan_strings(items, pat):
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and pat.search(v):
+                bad.append({"id": it["id"], "field": k,
+                            "snippet": v[:60]})
+                break
+        if len(bad) >= 5:
+            break
+    return bad
+
+
+def chk_L26_no_profanity(items, *_):
+    bad = _scan_strings(items, FORBIDDEN_PROFANITY_RE)
+    return len(bad) == 0, {"profanity": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_modern_brand(items, *_):
+    bad = _scan_strings(items, FORBIDDEN_MODERN_BRAND_RE)
+    return len(bad) == 0, {"brand": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_religion_polemic(items, *_):
+    bad = _scan_strings(items, FORBIDDEN_RELIGION_POLEMIC_RE)
+    return len(bad) == 0, {"religion": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_modern_slang(items, *_):
+    bad = _scan_strings(items, FORBIDDEN_SLANG_RE)
+    return len(bad) == 0, {"slang": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_medical_illegal(items, *_):
+    bad = _scan_strings(items, FORBIDDEN_MEDICAL_RE)
+    return len(bad) == 0, {"medical": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_modern_politic(items, *_):
+    bad = _scan_strings(items, FORBIDDEN_POLITIC_MODERN_RE)
+    return len(bad) == 0, {"politic": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_url_in_strings(items, *_):
+    pat = re.compile(r"https?://|www\.", re.IGNORECASE)
+    bad = _scan_strings(items, pat)
+    return len(bad) == 0, {"url": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_email_in_strings(items, *_):
+    pat = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
+    bad = _scan_strings(items, pat)
+    return len(bad) == 0, {"email": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_phone_in_strings(items, *_):
+    pat = re.compile(r"\b0\d{9,10}\b|\+84\d{8,10}")
+    bad = _scan_strings(items, pat)
+    return len(bad) == 0, {"phone": len(bad), "samples": bad[:5]}
+
+
+def chk_L26_no_repeated_char_5plus(items, *_):
+    """No 'aaaaa' / '?????' / '!!!!!' style spam in any string."""
+    pat = re.compile(r"(.)\1{5,}")
+    bad = _scan_strings(items, pat)
+    return len(bad) == 0, {"spam_char": len(bad), "samples": bad[:5]}
+
+
+ROUND_L26_CHECKS = {
+    2: [
+        ("L26_no_profanity", "R30", chk_L26_no_profanity),
+        ("L26_no_modern_brand", "R30", chk_L26_no_modern_brand),
+    ],
+    3: [
+        ("L26_no_religion_polemic", "R30",
+         chk_L26_no_religion_polemic),
+        ("L26_no_modern_slang", "R30", chk_L26_no_modern_slang),
+    ],
+    4: [
+        ("L26_no_medical_illegal", "R30",
+         chk_L26_no_medical_illegal),
+        ("L26_no_modern_politic", "R30",
+         chk_L26_no_modern_politic),
+    ],
+    5: [
+        ("L26_no_url_in_strings", "R30", chk_L26_no_url_in_strings),
+        ("L26_no_email_in_strings", "R30",
+         chk_L26_no_email_in_strings),
+    ],
+    6: [
+        ("L26_no_phone_in_strings", "R30",
+         chk_L26_no_phone_in_strings),
+        ("L26_no_repeated_char_5plus", "R30",
+         chk_L26_no_repeated_char_5plus),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -6206,6 +6334,8 @@ def main():
             active_checks.extend(ROUND_L24_CHECKS[r])
         if r in ROUND_L25_CHECKS:
             active_checks.extend(ROUND_L25_CHECKS[r])
+        if r in ROUND_L26_CHECKS:
+            active_checks.extend(ROUND_L26_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
