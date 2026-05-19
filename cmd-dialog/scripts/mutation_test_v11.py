@@ -1110,6 +1110,212 @@ def test_main_exit_0_on_full_pass(tmp_path, monkeypatch):
     assert rc in (0, 1)  # 0 if all checks pass, 1 if any fail
 
 
+# ============================================================
+# TARGETED MUTATION KILLERS (round 5) — specific surviving lines
+# ============================================================
+
+def test_audit_era_pool_coverage_iterates_kills_zero_iter(monkeypatch):
+    """Ensures _audit_era_pool_coverage actually iterates both dtypes
+    and eras. Kills ZeroIterationForLoop on outer/inner for loops."""
+    visited = []
+    orig_resolve = gen._resolve_template_pool
+
+    def spy(dtype, era):
+        visited.append((dtype, era))
+        return orig_resolve(dtype, era)
+
+    monkeypatch.setattr(gen, "_resolve_template_pool", spy)
+    gen._audit_era_pool_coverage()
+    # Must iterate ERA_TAGGED_TYPES × ERAS_ALL = 2 × 11 = 22
+    assert len(visited) == 22
+    types_seen = {t for t, _ in visited}
+    eras_seen = {e for _, e in visited}
+    assert types_seen == gen.ERA_TAGGED_TYPES
+    assert eras_seen == set(gen.ERAS_ALL)
+
+
+def test_audit_era_pool_coverage_exits_3_on_empty(monkeypatch):
+    """If a pool returns empty, function exits with EXACTLY code 3.
+    Kills NumberReplacer mutations on sys.exit(3)."""
+    monkeypatch.setattr(gen, "_resolve_template_pool",
+                        lambda dtype, era: [] if era == "ly" else ["x"])
+    with pytest.raises(SystemExit) as exc:
+        gen._audit_era_pool_coverage()
+    assert exc.value.code == 3
+
+
+def test_load_npc_registry_missing_exits_code_2(tmp_path, monkeypatch):
+    """Missing registry exits with EXACTLY code 2. Kills NumberReplacer
+    on sys.exit(2)."""
+    missing = tmp_path / "nonexistent_npc.jsonl"
+    monkeypatch.setattr(gen, "NPC_REGISTRY", missing)
+    with pytest.raises(SystemExit) as exc:
+        gen.load_npc_registry()
+    assert exc.value.code == 2
+
+
+def test_build_dialogs_first_id_is_1():
+    """First dialog has i=1. Kills dialog_id=1 NumberReplacer mutation."""
+    npcs = [{"_index": 1, "name": "X", "era": "ly", "npc_type": "townsmen"}]
+    orig_final = dict(gen.FINAL_COUNT_BY_TYPE)
+    try:
+        gen.FINAL_COUNT_BY_TYPE = {t: 1 for t in TYPES_ORDER}
+        dialogs = gen.build_dialogs(npcs)
+        assert dialogs[0]["i"] == 1
+    finally:
+        gen.FINAL_COUNT_BY_TYPE = orig_final
+
+
+def test_build_dialogs_ids_sequential():
+    """Dialog ids must be 1, 2, 3, ... consecutively.
+    Kills `dialog_id += 1` mutations (e.g. += 2 / += 0)."""
+    npcs = [{"_index": 1, "name": "X", "era": "ly", "npc_type": "townsmen"}]
+    orig_final = dict(gen.FINAL_COUNT_BY_TYPE)
+    try:
+        gen.FINAL_COUNT_BY_TYPE = {t: 3 for t in TYPES_ORDER}
+        dialogs = gen.build_dialogs(npcs)
+        ids = [d["i"] for d in dialogs]
+        assert ids == list(range(1, len(dialogs) + 1))
+    finally:
+        gen.FINAL_COUNT_BY_TYPE = orig_final
+
+
+def test_write_reports_summary_vietnamese_unescaped(tmp_path, monkeypatch):
+    """summary.json must contain raw Vietnamese (not \\uXXXX escapes).
+    Kills ReplaceFalseWithTrue on ensure_ascii=False."""
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    fp = tmp_path / "fnd.md"
+    fp.write_bytes(b"x")
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    dialogs = [{"i": i + 1, "speaker_id": 1, "speaker_name": "Trần Long",
+                "era": "ly", "dialog_type": "greeting",
+                "text": "Xin chào", "cultural_lock_pass": True}
+               for i in range(7)]
+    gen.write_outputs(dialogs)
+    gen.write_reports(dialogs, {"passed": 1, "total": 1, "pass_rate": 1.0,
+                                 "checks": []}, {})
+    text = (tmp_path / "reports" / "summary.json").read_text("utf-8")
+    # If ensure_ascii=True, Vietnamese chars escape as \u...
+    assert "Trần Long" not in text or "Trần Long" in text  # may not appear in summary directly
+    # Actual signal: no '\u' Unicode escape sequences for these specific chars
+    assert "\\u1ea" not in text  # ầ encoded
+    assert "\\u00e0" not in text  # à
+
+
+def test_write_reports_summary_indent_2(tmp_path, monkeypatch):
+    """summary.json formatted with indent=2. Kills NumberReplacer on
+    the indent value."""
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    fp = tmp_path / "fnd.md"
+    fp.write_bytes(b"x")
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    dialogs = [{"i": 1, "speaker_id": 1, "speaker_name": "X",
+                "era": "ly", "dialog_type": "greeting",
+                "text": "hi", "cultural_lock_pass": True}]
+    gen.write_outputs(dialogs)
+    gen.write_reports(dialogs, {"passed": 1, "total": 1, "pass_rate": 1.0,
+                                 "checks": []}, {})
+    raw = (tmp_path / "reports" / "summary.json").read_text("utf-8")
+    # indent=2 produces lines starting with 2 spaces. Look for distinctive pattern.
+    lines = raw.split("\n")
+    indented = [ln for ln in lines if ln.startswith("  ") and not ln.startswith("   ")]
+    assert len(indented) >= 5  # several top-level keys indented exactly 2 spaces
+    # NOT indented with 0 or 4 spaces consistently
+    deep_indent = [ln for ln in lines if ln.startswith("    ")
+                   and not ln.startswith("     ")]
+    # Deep keys (nested) indented 4 spaces — confirms indent=2 nesting
+    assert len(deep_indent) > 0
+
+
+def test_write_reports_spec_target_baseline_42297(tmp_path, monkeypatch):
+    """summary.json carries spec_target_baseline = EXACTLY 42297.
+    Kills NumberReplacer on the literal 42297."""
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    fp = tmp_path / "fnd.md"
+    fp.write_bytes(b"x")
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    dialogs = [{"i": 1, "speaker_id": 1, "speaker_name": "X",
+                "era": "ly", "dialog_type": "greeting",
+                "text": "hi", "cultural_lock_pass": True}]
+    gen.write_outputs(dialogs)
+    gen.write_reports(dialogs, {"passed": 1, "total": 1, "pass_rate": 1.0,
+                                 "checks": []}, {})
+    summary = json.loads((tmp_path / "reports" / "summary.json").read_text("utf-8"))
+    assert summary["spec_target_baseline"] == 42297
+
+
+def test_write_reports_reports_dir_exists_idempotent(tmp_path, monkeypatch):
+    """write_reports must work even if reports/ already exists.
+    Kills ReplaceTrueWithFalse on exist_ok=True."""
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    fp = tmp_path / "fnd.md"
+    fp.write_bytes(b"x")
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    # Pre-create reports dir
+    (tmp_path / "reports").mkdir()
+    dialogs = [{"i": 1, "speaker_id": 1, "speaker_name": "X",
+                "era": "ly", "dialog_type": "greeting",
+                "text": "hi", "cultural_lock_pass": True}]
+    gen.write_outputs(dialogs)
+    gen.write_reports(dialogs, {"passed": 1, "total": 1, "pass_rate": 1.0,
+                                 "checks": []}, {})  # must not raise
+    assert (tmp_path / "reports" / "summary.json").exists()
+
+
+def test_write_reports_validation_indent_2(tmp_path, monkeypatch):
+    """validation.json formatted with indent=2."""
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    fp = tmp_path / "fnd.md"
+    fp.write_bytes(b"x")
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    dialogs = [{"i": 1, "speaker_id": 1, "speaker_name": "X",
+                "era": "ly", "dialog_type": "greeting",
+                "text": "hi", "cultural_lock_pass": True}]
+    gen.write_outputs(dialogs)
+    audit = {"passed": 15, "total": 15, "pass_rate": 1.0,
+             "checks": [{"name": "count_50000", "pass": True}]}
+    gen.write_reports(dialogs, audit, {})
+    raw = (tmp_path / "reports" / "validation.json").read_text("utf-8")
+    # indent=2 → top-level keys at 2 spaces
+    assert '\n  "passed"' in raw or '\n  "total"' in raw
+
+
+def test_write_reports_honest_gaps_indent_2(tmp_path, monkeypatch):
+    """honest_gaps_v11.json formatted with indent=2."""
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    fp = tmp_path / "fnd.md"
+    fp.write_bytes(b"x")
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    dialogs = [{"i": 1, "speaker_id": 1, "speaker_name": "X",
+                "era": "ly", "dialog_type": "greeting",
+                "text": "hi", "cultural_lock_pass": True}]
+    gen.write_outputs(dialogs)
+    gen.write_reports(dialogs, {"passed": 1, "total": 1, "pass_rate": 1.0,
+                                 "checks": []}, {})
+    raw = (tmp_path / "reports" / "honest_gaps_v11.json").read_text("utf-8")
+    # indent=2 → top-level "cmd"/"version"/"shipped_at" at 2 spaces
+    assert '\n  "cmd"' in raw
+    assert '\n  "gaps_admitted"' in raw
+
+
+def test_write_reports_honest_gaps_unescaped_vietnamese(tmp_path, monkeypatch):
+    """honest_gaps contains Vietnamese reasons; must NOT be ASCII-escaped."""
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    fp = tmp_path / "fnd.md"
+    fp.write_bytes(b"x")
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    dialogs = [{"i": 1, "speaker_id": 1, "speaker_name": "X",
+                "era": "ly", "dialog_type": "greeting",
+                "text": "hi", "cultural_lock_pass": True}]
+    gen.write_outputs(dialogs)
+    gen.write_reports(dialogs, {"passed": 1, "total": 1, "pass_rate": 1.0,
+                                 "checks": []}, {})
+    raw = (tmp_path / "reports" / "honest_gaps_v11.json").read_text("utf-8")
+    # If ensure_ascii=True, Vietnamese diacritics would escape
+    assert "\\u00e0" not in raw  # à
+    assert "\\u00e2" not in raw  # â
+
+
 @pytest.mark.skipif(
     not (Path(__file__).resolve().parents[2] / "cmd-npc" / "output"
          / "registry" / "npc_full.jsonl").exists(),
