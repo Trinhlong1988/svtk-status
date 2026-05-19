@@ -1,0 +1,14 @@
+{
+  "severity": "HIGH",
+  "issue_id": "dialog_tam_quoc_ref",
+  "evidence": {
+    "type": "tam_quoc_ref",
+    "first_index": 4115,
+    "total": 15,
+    "scanned": 50000,
+    "worker": "dialog"
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-145910",
+  "target_worker": "dialog"
+}

@@ -1,0 +1,14 @@
+{
+  "severity": "HIGH",
+  "issue_id": "npc_tam_quoc_ref",
+  "evidence": {
+    "type": "tam_quoc_ref",
+    "first_index": 4091,
+    "total": 2,
+    "scanned": 10000,
+    "worker": "npc"
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-145903",
+  "target_worker": "npc"
+}

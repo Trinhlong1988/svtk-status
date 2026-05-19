@@ -1,0 +1,4 @@
+{"type": "tam_quoc_ref", "first_index": 4091, "total": 2, "scanned": 10000, "worker": "npc"}
+{"type": "anti_snowball_stat_cap_exceeded", "rarity": "epic", "stat": "sat_luc", "ratio": 2.67, "cap": 2.5, "common_max": 30, "tier_max": 80, "worker": "item"}
+{"type": "anti_snowball_stat_cap_exceeded", "rarity": "mythic", "stat": "phap_luc", "ratio": 4.0, "cap": 2.5, "common_max": 15, "tier_max": 60, "worker": "item"}
+{"type": "tam_quoc_ref", "first_index": 4115, "total": 15, "scanned": 50000, "worker": "dialog"}
