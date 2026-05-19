@@ -1,0 +1,18 @@
+{
+  "R5a_npc_can_event": {
+    "bugs": 592,
+    "fixed": 592
+  },
+  "R5b_map_npc_ids_contains": {
+    "bugs": 599,
+    "fixed": 599
+  },
+  "R5c_lore_dialog_npc_match": {
+    "bugs": 100,
+    "fixed": 3
+  },
+  "R5d_wb_boss_event_flag": {
+    "bugs": 50,
+    "fixed": 50
+  }
+}

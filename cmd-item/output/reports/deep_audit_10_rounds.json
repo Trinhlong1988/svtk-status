@@ -15,76 +15,76 @@
     },
     {
       "round": 2,
-      "checks_run": 76,
-      "passed": 76,
+      "checks_run": 70,
+      "passed": 70,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 3,
-      "checks_run": 115,
-      "passed": 115,
+      "checks_run": 103,
+      "passed": 103,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 4,
-      "checks_run": 151,
-      "passed": 151,
+      "checks_run": 133,
+      "passed": 133,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 5,
-      "checks_run": 182,
-      "passed": 182,
+      "checks_run": 158,
+      "passed": 158,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 6,
-      "checks_run": 215,
-      "passed": 215,
+      "checks_run": 186,
+      "passed": 186,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 7,
-      "checks_run": 231,
-      "passed": 231,
+      "checks_run": 201,
+      "passed": 201,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 8,
-      "checks_run": 249,
-      "passed": 249,
+      "checks_run": 219,
+      "passed": 219,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 9,
-      "checks_run": 267,
-      "passed": 267,
+      "checks_run": 237,
+      "passed": 237,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     },
     {
       "round": 10,
-      "checks_run": 275,
-      "passed": 275,
+      "checks_run": 245,
+      "passed": 245,
       "pass_rate": 1.0,
       "failures": [],
       "items_count": 4006
     }
   ],
-  "timestamp": "2026-05-19 12:46:46"
+  "timestamp": "2026-05-19 12:06:42"
 }

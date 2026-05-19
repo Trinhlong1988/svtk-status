@@ -1,0 +1,628 @@
+{
+  "R8a_era_mismatches_total": 38,
+  "R8a_fixed": 38,
+  "R8a_samples": [
+    {
+      "event_id": 31,
+      "name": "Lễ tế trời ở Đàn Nam Giao",
+      "kw": "Đàn Nam Giao",
+      "kw_era": "nguyen",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 35,
+      "name": "Lễ Khai ấn Hoàng Thành Huế",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "nguyen"
+    },
+    {
+      "event_id": 39,
+      "name": "Hội đua voi Tây Nguyên",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 44,
+      "name": "Lễ rước nước Sông Hương",
+      "kw": "Sông Hương",
+      "kw_era": "nguyen",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 50,
+      "name": "Hội đua ngựa Bình Định",
+      "kw": "Bình Định",
+      "kw_era": "tay_son",
+      "event_era": "nguyen"
+    },
+    {
+      "event_id": 73,
+      "name": "Lễ rước thần Tô Hiến Thành",
+      "kw": "Tô Hiến Thành",
+      "kw_era": "ly",
+      "event_era": "le"
+    },
+    {
+      "event_id": 106,
+      "name": "Lễ tế trời ở Đàn Nam Giao lần 2",
+      "kw": "Đàn Nam Giao",
+      "kw_era": "nguyen",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 110,
+      "name": "Lễ Khai ấn Hoàng Thành Huế lần 2",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "nguyen"
+    },
+    {
+      "event_id": 114,
+      "name": "Hội đua voi Tây Nguyên lần 2",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 119,
+      "name": "Lễ rước nước Sông Hương lần 2",
+      "kw": "Sông Hương",
+      "kw_era": "nguyen",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 125,
+      "name": "Hội đua ngựa Bình Định lần 2",
+      "kw": "Bình Định",
+      "kw_era": "tay_son",
+      "event_era": "nguyen"
+    },
+    {
+      "event_id": 148,
+      "name": "Lễ rước thần Tô Hiến Thành lần 2",
+      "kw": "Tô Hiến Thành",
+      "kw_era": "ly",
+      "event_era": "le"
+    },
+    {
+      "event_id": 159,
+      "name": "Đột kích sào huyệt giặc Tống ải Chi Lăng",
+      "kw": "Chi Lăng",
+      "kw_era": "le",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 164,
+      "name": "Tiến công cứ điểm Châu Quảng Nguyên",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 168,
+      "name": "Tập kích nhóm hải tặc Côn Sơn",
+      "kw": "Côn Sơn",
+      "kw_era": "le",
+      "event_era": "nguyen"
+    },
+    {
+      "event_id": 187,
+      "name": "Đột phá Hoàng Thành Thăng Long",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 209,
+      "name": "Đột kích sào huyệt giặc Tống ải Chi Lăng (chu kỳ 2)",
+      "kw": "Chi Lăng",
+      "kw_era": "le",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 214,
+      "name": "Tiến công cứ điểm Châu Quảng Nguyên (chu kỳ 2)",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 218,
+      "name": "Tập kích nhóm hải tặc Côn Sơn (chu kỳ 2)",
+      "kw": "Côn Sơn",
+      "kw_era": "le",
+      "event_era": "nguyen"
+    },
+    {
+      "event_id": 237,
+      "name": "Đột phá Hoàng Thành Thăng Long (chu kỳ 2)",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 265,
+      "name": "Thế giới Boss Hắc Long Sông Hương",
+      "kw": "Sông Hương",
+      "kw_era": "nguyen",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 267,
+      "name": "Thế giới Boss Yêu vương Núi Tam Đảo",
+      "kw": "Tam Đảo",
+      "kw_era": "nguyen",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 275,
+      "name": "Thế giới Boss Đại Bàng Núi Ngự Bình",
+      "kw": "Ngự Bình",
+      "kw_era": "nguyen",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 290,
+      "name": "Thế giới Boss Hắc Long Sông Hương kiếp 2",
+      "kw": "Sông Hương",
+      "kw_era": "nguyen",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 292,
+      "name": "Thế giới Boss Yêu vương Núi Tam Đảo kiếp 2",
+      "kw": "Tam Đảo",
+      "kw_era": "nguyen",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 300,
+      "name": "Thế giới Boss Đại Bàng Núi Ngự Bình kiếp 2",
+      "kw": "Ngự Bình",
+      "kw_era": "nguyen",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 448,
+      "name": "Giải Đua Ngựa Bắc Sơn thời Ly",
+      "kw": "Bắc Sơn",
+      "kw_era": "nguyen",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 449,
+      "name": "Giải Đua Ngựa Bắc Sơn thời Tran",
+      "kw": "Bắc Sơn",
+      "kw_era": "nguyen",
+      "event_era": "tran"
+    },
+    {
+      "event_id": 450,
+      "name": "Giải Đua Ngựa Bắc Sơn thời Le",
+      "kw": "Bắc Sơn",
+      "kw_era": "nguyen",
+      "event_era": "le"
+    },
+    {
+      "event_id": 451,
+      "name": "Giải Đua Ngựa Bắc Sơn thời Tay_son",
+      "kw": "Bắc Sơn",
+      "kw_era": "nguyen",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 469,
+      "name": "Đại hội Pháo Hoa Đêm Hoàng Thành thời Tran",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "tran"
+    },
+    {
+      "event_id": 470,
+      "name": "Đại hội Pháo Hoa Đêm Hoàng Thành thời Le",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "le"
+    },
+    {
+      "event_id": 471,
+      "name": "Đại hội Pháo Hoa Đêm Hoàng Thành thời Tay_son",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 472,
+      "name": "Đại hội Pháo Hoa Đêm Hoàng Thành thời Nguyen",
+      "kw": "Hoàng Thành",
+      "kw_era": "ly",
+      "event_era": "nguyen"
+    },
+    {
+      "event_id": 478,
+      "name": "Giải Đua Voi Tây Nguyên thời Ly",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "ly"
+    },
+    {
+      "event_id": 480,
+      "name": "Giải Đua Voi Tây Nguyên thời Le",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "le"
+    },
+    {
+      "event_id": 481,
+      "name": "Giải Đua Voi Tây Nguyên thời Tay_son",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "tay_son"
+    },
+    {
+      "event_id": 482,
+      "name": "Giải Đua Voi Tây Nguyên thời Nguyen",
+      "kw": "Nguyên",
+      "kw_era": "tran",
+      "event_era": "nguyen"
+    }
+  ],
+  "R8b_biome_mismatches_total": 207,
+  "R8b_fixed": 137,
+  "R8b_samples": [
+    {
+      "event_id": 1,
+      "name": "Lễ hội mùa xuân Hoa Lư",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "dungeon"
+    },
+    {
+      "event_id": 2,
+      "name": "Lễ hội đua thuyền Bạch Đằng",
+      "kw": "Bạch Đằng",
+      "expected_biome": "sea",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 3,
+      "name": "Raid Cấm thành cuối tháng",
+      "kw": "Cấm thành",
+      "expected_biome": "palace",
+      "actual_biome": "village"
+    },
+    {
+      "event_id": 11,
+      "name": "Lễ hội Hoa Lư tưởng nhớ Đinh Tiên Hoàng",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 12,
+      "name": "Lễ hội Bạch Đằng tưởng niệm chiến thắng",
+      "kw": "Bạch Đằng",
+      "expected_biome": "sea",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 13,
+      "name": "Lễ hội Lam Kinh tế Lê Lợi",
+      "kw": "Lam Kinh",
+      "expected_biome": "city",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 14,
+      "name": "Lễ hội Đống Đa tưởng niệm chiến thắng",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 15,
+      "name": "Lễ hội Huế cố đô",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 16,
+      "name": "Lễ rước nước Thăng Long",
+      "kw": "Thăng Long",
+      "expected_biome": "city",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 18,
+      "name": "Hội Côn Sơn tưởng nhớ Nguyễn Trãi",
+      "kw": "Sơn",
+      "expected_biome": "mountain",
+      "actual_biome": "village"
+    },
+    {
+      "event_id": 19,
+      "name": "Hội Phú Xuân quy tụ anh hùng",
+      "kw": "Phú Xuân",
+      "expected_biome": "city",
+      "actual_biome": "town"
+    },
+    {
+      "event_id": 20,
+      "name": "Hội Khánh thành Đàn Nam Giao",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 21,
+      "name": "Hội đèn lồng Hồ Tây",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 24,
+      "name": "Lễ tế Quang Trung Tây Sơn",
+      "kw": "Sơn",
+      "expected_biome": "mountain",
+      "actual_biome": "village"
+    },
+    {
+      "event_id": 26,
+      "name": "Lễ Khai ấn Đền Đô",
+      "kw": "Đền",
+      "expected_biome": "temple",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 28,
+      "name": "Hội Đông Đô khôi phục",
+      "kw": "Đông Đô",
+      "expected_biome": "city",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 30,
+      "name": "Hội đua thuyền Sông Hương",
+      "kw": "Sông",
+      "expected_biome": "river",
+      "actual_biome": "village"
+    },
+    {
+      "event_id": 33,
+      "name": "Lễ tế Hồ Lục Đầu",
+      "kw": "Hồ",
+      "expected_biome": "lake",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 34,
+      "name": "Lễ Khai xuân Phú Xuân",
+      "kw": "Phú Xuân",
+      "expected_biome": "city",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 35,
+      "name": "Lễ Khai ấn Hoàng Thành Huế",
+      "kw": "Hoàng Thành",
+      "expected_biome": "palace",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 37,
+      "name": "Hội Yên Tử tu thiền",
+      "kw": "Yên Tử",
+      "expected_biome": "mountain",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 38,
+      "name": "Hội đua thuyền Phố Hiến",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "river"
+    },
+    {
+      "event_id": 39,
+      "name": "Hội đua voi Tây Nguyên",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "dungeon"
+    },
+    {
+      "event_id": 40,
+      "name": "Hội Festival Huế",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "town"
+    },
+    {
+      "event_id": 42,
+      "name": "Lễ Khai ấn Đền Trần",
+      "kw": "Đền",
+      "expected_biome": "temple",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 44,
+      "name": "Lễ rước nước Sông Hương",
+      "kw": "Sông",
+      "expected_biome": "river",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 47,
+      "name": "Hội thi vật làng Sình",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 48,
+      "name": "Hội thi nông cụ làng Vạn Phúc",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "dungeon"
+    },
+    {
+      "event_id": 50,
+      "name": "Hội đua ngựa Bình Định",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 51,
+      "name": "Lễ hội Chùa Một Cột",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 56,
+      "name": "Hội Lim Quan họ",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 58,
+      "name": "Hội xuân Đường Lâm",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 59,
+      "name": "Hội tưởng niệm Bùi Thị Xuân",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 60,
+      "name": "Hội Đua thuyền Tam Giang",
+      "kw": "Đua thuyền",
+      "expected_biome": "river",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 64,
+      "name": "Lễ hội cờ Tây Sơn",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "river"
+    },
+    {
+      "event_id": 65,
+      "name": "Lễ tế tướng Nguyễn Văn Thành",
+      "kw": "Thành",
+      "expected_biome": "city",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 66,
+      "name": "Lễ tế Sông Hồng cầu mưa",
+      "kw": "Sông",
+      "expected_biome": "river",
+      "actual_biome": "dungeon"
+    },
+    {
+      "event_id": 67,
+      "name": "Hội mở mắt Phật chùa Yên Tử",
+      "kw": "Yên Tử",
+      "expected_biome": "mountain",
+      "actual_biome": "river"
+    },
+    {
+      "event_id": 68,
+      "name": "Hội Cổ Loa cầu mùa",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 69,
+      "name": "Hội đua trải Sông Lam",
+      "kw": "Sông",
+      "expected_biome": "river",
+      "actual_biome": "town"
+    },
+    {
+      "event_id": 70,
+      "name": "Hội tưởng niệm Phan Đình Phùng",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "sea"
+    },
+    {
+      "event_id": 71,
+      "name": "Hội đua trải Bạch Hạc",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 72,
+      "name": "Lễ hội đền Cửa Ông",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "mountain"
+    },
+    {
+      "event_id": 73,
+      "name": "Lễ rước thần Tô Hiến Thành",
+      "kw": "Thành",
+      "expected_biome": "city",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 75,
+      "name": "Lễ hội đền vua Đồng Khánh",
+      "kw": "Lễ hội",
+      "expected_biome": "village",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 78,
+      "name": "Hội đua trải sông Mã",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 79,
+      "name": "Hội xuân Quy Nhơn",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "forest"
+    },
+    {
+      "event_id": 80,
+      "name": "Hội đua trải Sông Đáy",
+      "kw": "Sông",
+      "expected_biome": "river",
+      "actual_biome": "plain"
+    },
+    {
+      "event_id": 81,
+      "name": "Hội xuống đồng đầu năm",
+      "kw": "Hội",
+      "expected_biome": "village",
+      "actual_biome": "river"
+    },
+    {
+      "event_id": 84,
+      "name": "Lễ rước thần Tây Sơn Thượng đạo",
+      "kw": "Sơn",
+      "expected_biome": "mountain",
+      "actual_biome": "plain"
+    }
+  ],
+  "keyword_era_table_size": 110,
+  "keyword_biome_table_size": 36
+}
