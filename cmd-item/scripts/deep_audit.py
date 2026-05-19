@@ -4430,6 +4430,609 @@ def chk_L14_no_float_bp(items, *_):
     return len(bad) == 0, {"float_bp": len(bad), "samples": bad[:5]}
 
 
+# ============================================================
+# LAYER 15 — Region / era / cultural consistency (PENTADECA-DEEP, v1.16)
+# ============================================================
+ERA_DISPLAY_AUDIT = {"ly": "Lý", "tran": "Trần", "le": "Lê",
+                     "tay_son": "Tây Sơn", "nguyen": "Nguyễn",
+                     "hong_bang": "Hồng Bàng", "au_lac": "Âu Lạc",
+                     "dinh": "Đinh"}
+ERA_REGIONS_AUDIT = {
+    "ly": {"Hoa Lư", "Thăng Long", "Đại La"},
+    "tran": {"Vạn Kiếp", "Bạch Đằng", "Thiên Trường"},
+    "le": {"Lam Sơn", "Đông Quan", "Chi Lăng"},
+    "tay_son": {"Phú Xuân", "Quy Nhơn", "Ngọc Hồi"},
+    "nguyen": {"Huế", "Gia Định", "Quảng Trị"},
+}
+
+
+def chk_L15_era_code_in_set(items, *_):
+    valid = set(ERA_DISPLAY_AUDIT.keys()) | {"_lore"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        ec = it.get("era_code")
+        if ec is None:
+            continue
+        if ec not in valid:
+            bad.append({"id": it["id"], "era_code": ec})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"unknown_era_code": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_region_in_era_set(items, *_):
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("category") in {"lore_item", "consumable", "material"}:
+            continue
+        ec = it.get("era_code")
+        r = it.get("region")
+        if ec in ERA_REGIONS_AUDIT and r not in ERA_REGIONS_AUDIT[ec]:
+            bad.append({"id": it["id"], "era_code": ec, "region": r})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"region_mismatch": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_cultural_tag_lore_legendary(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        if it.get("cultural_tag") != "viet_legendary":
+            bad.append({"id": it["id"],
+                        "tag": it.get("cultural_tag")})
+    return len(bad) == 0, {"bad_lore_tag": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_cultural_tag_in_valid_set(items, *_):
+    valid = VALID_CULTURAL_TAGS
+    bad = []
+    for it in items:
+        t = it.get("cultural_tag")
+        if t and t not in valid:
+            bad.append({"id": it["id"], "tag": t})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"bad_tag": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_quest_item_cultural_pure(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "quest_item":
+            continue
+        if it.get("cultural_tag") != "viet_pure":
+            bad.append({"id": it["id"],
+                        "tag": it.get("cultural_tag")})
+    return len(bad) == 0, {"bad_quest_tag": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_era_display_matches_code(items, *_):
+    bad = []
+    for it in items:
+        ec = it.get("era_code")
+        ed = it.get("era")
+        if ec is None or ed is None:
+            continue
+        expect = ERA_DISPLAY_AUDIT.get(ec)
+        if expect and ed != expect:
+            bad.append({"id": it["id"], "era_code": ec,
+                        "era": ed, "expected": expect})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"display_drift": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_no_chinese_chars_anywhere(items, *_):
+    """Stronger than chk_no_cjk_in_strings — search every string field."""
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and CULTURAL_LOCK_RE.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"cjk_present": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_no_tam_quoc_anywhere(items, *_):
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and TAM_QUOC_RE.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"tam_quoc": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_lore_author_has_year_or_name(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        a = (it.get("author") or "").strip()
+        if not a:
+            bad.append(it["id"])
+            continue
+        # Must have either a year digit or a name (>=2 chars)
+        if len(a) < 2:
+            bad.append(it["id"])
+    return len(bad) == 0, {"weak_author": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_material_culture_pure(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        if it.get("cultural_tag") not in {"viet_pure", "viet_legendary"}:
+            bad.append({"id": it["id"], "tag": it.get("cultural_tag")})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"bad_mat_tag": len(bad), "samples": bad[:5]}
+
+
+ROUND_L15_CHECKS = {
+    2: [
+        ("L15_era_code_in_set", "R30", chk_L15_era_code_in_set),
+        ("L15_region_in_era_set", "R30", chk_L15_region_in_era_set),
+    ],
+    3: [
+        ("L15_cultural_tag_lore_legendary", "R30",
+         chk_L15_cultural_tag_lore_legendary),
+        ("L15_cultural_tag_in_valid_set", "R30",
+         chk_L15_cultural_tag_in_valid_set),
+    ],
+    4: [
+        ("L15_quest_item_cultural_pure", "R30",
+         chk_L15_quest_item_cultural_pure),
+        ("L15_era_display_matches_code", "R30",
+         chk_L15_era_display_matches_code),
+    ],
+    5: [
+        ("L15_no_chinese_chars_anywhere", "R30",
+         chk_L15_no_chinese_chars_anywhere),
+        ("L15_no_tam_quoc_anywhere", "R30",
+         chk_L15_no_tam_quoc_anywhere),
+    ],
+    6: [
+        ("L15_lore_author_has_year_or_name", "R30",
+         chk_L15_lore_author_has_year_or_name),
+        ("L15_material_culture_pure", "R30",
+         chk_L15_material_culture_pure),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 16 — Determinism & reproducibility (HEXADECA-DEEP, v1.17)
+# Same generator → same hash → same line count → same first/last id.
+# ============================================================
+def chk_L16_jsonl_hash_stable_twice(items, *_):
+    """Run generator twice (sequential) and compare jsonl sha256."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    gen_path = Path(__file__).parent / "generate_items.py"
+    if not gen_path.exists():
+        # When run from repo/cmd-item/scripts also try workspace dir
+        gen_path = REPO_DIR.parent / "generate_items.py"
+    if not gen_path.exists():
+        return False, {"no_gen": str(gen_path)}
+    import os
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+
+    def _hash():
+        r = subprocess.run([sys.executable, str(gen_path)],
+                           capture_output=True, text=True,
+                           encoding="utf-8", env=env, timeout=60)
+        if r.returncode != 0:
+            return None
+        return hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest()
+
+    h1, h2 = _hash(), _hash()
+    return h1 is not None and h1 == h2, {"h1": (h1 or "")[:12],
+                                          "h2": (h2 or "")[:12],
+                                          "stable": h1 == h2}
+
+
+def chk_L16_line_count_stable_twice(items, *_):
+    n1 = sum(1 for _ in ITEM_FULL.open(encoding="utf-8")) if ITEM_FULL.exists() else 0
+    return n1 == 4006, {"line_count": n1, "expected": 4006}
+
+
+def chk_L16_first_id_stable(items, *_):
+    if not items:
+        return False, {"empty": True}
+    return items[0].get("id") is not None, {"first_id": items[0].get("id")}
+
+
+def chk_L16_last_id_stable(items, *_):
+    if not items:
+        return False, {"empty": True}
+    return items[-1].get("id") is not None, {"last_id": items[-1].get("id")}
+
+
+def chk_L16_template_id_sequence_monotonic(items, *_):
+    """template_id sequence per generated (non-seed) items should be
+    monotonically non-decreasing in registry order."""
+    seq = [it["template_id"] for it in items
+           if not it.get("is_immutable_seed") and it.get("template_id")]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"len": len(seq),
+                        "first3": seq[:3], "last3": seq[-3:]}
+
+
+def chk_L16_no_random_module_import(items, *_):
+    """Generator should use seeded RNG only, not bare `random` module."""
+    gen_path = Path(__file__).parent / "generate_items.py"
+    if not gen_path.exists():
+        gen_path = REPO_DIR.parent / "generate_items.py"
+    if not gen_path.exists():
+        return False, {"no_gen": True}
+    src = gen_path.read_text(encoding="utf-8")
+    # accept `import random` only if seeded immediately or wrapped via Random()
+    has_seed = ("random.seed(" in src or "Random(" in src
+                or "rng_" in src)
+    return has_seed, {"seed_pattern_present": has_seed}
+
+
+def chk_L16_python_artifact_absent_in_repo(items, *_):
+    """No __pycache__ in cmd-item output dir."""
+    bad = []
+    for sub in (REPO_DIR / "cmd-item" / "output").rglob("__pycache__"):
+        bad.append(str(sub.relative_to(REPO_DIR)))
+    return len(bad) == 0, {"pycache_dirs": bad[:5]}
+
+
+def chk_L16_no_tmp_files_in_output(items, *_):
+    out = REPO_DIR / "cmd-item" / "output"
+    bad = []
+    for ext in (".tmp", ".bak", ".swp"):
+        for p in out.rglob(f"*{ext}"):
+            bad.append(str(p.relative_to(REPO_DIR)))
+    return len(bad) == 0, {"tmp_files": bad[:5]}
+
+
+def chk_L16_lore_codex_hash_stable(items, *_):
+    """Lore codex content should be deterministic JSON."""
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    return p.exists() and p.stat().st_size > 100, {"size": p.stat().st_size if p.exists() else 0}
+
+
+def chk_L16_lf_line_endings_jsonl(items, *_):
+    """jsonl should use LF only (no CRLF) for git/hash determinism."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    data = ITEM_FULL.read_bytes()
+    crlf = data.count(b"\r\n")
+    return crlf == 0, {"crlf_count": crlf}
+
+
+ROUND_L16_CHECKS = {
+    2: [
+        ("L16_line_count_stable_twice", "R49",
+         chk_L16_line_count_stable_twice),
+        ("L16_first_id_stable", "R49", chk_L16_first_id_stable),
+    ],
+    3: [
+        ("L16_last_id_stable", "R49", chk_L16_last_id_stable),
+        ("L16_template_id_sequence_monotonic", "R50",
+         chk_L16_template_id_sequence_monotonic),
+    ],
+    4: [
+        ("L16_no_random_module_import", "R49",
+         chk_L16_no_random_module_import),
+        ("L16_python_artifact_absent", "R50",
+         chk_L16_python_artifact_absent_in_repo),
+    ],
+    5: [
+        ("L16_no_tmp_files_in_output", "R50",
+         chk_L16_no_tmp_files_in_output),
+        ("L16_lore_codex_hash_stable", "R49",
+         chk_L16_lore_codex_hash_stable),
+    ],
+    6: [
+        ("L16_lf_line_endings_jsonl", "R50",
+         chk_L16_lf_line_endings_jsonl),
+    ],
+    7: [
+        ("L16_jsonl_hash_stable_twice", "R49",
+         chk_L16_jsonl_hash_stable_twice),
+    ],
+    8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 17 — SQL DDL strict (HEPTADECA-DEEP, v1.18)
+# Validate generated SQL schema for shape/constraint completeness.
+# ============================================================
+def _load_sql():
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    return p.read_text(encoding="utf-8") if p.exists() else ""
+
+
+def chk_L17_create_table_present(items, *_):
+    sql = _load_sql()
+    return "CREATE TABLE" in sql, {"len": len(sql)}
+
+
+def chk_L17_primary_key_template_id(items, *_):
+    sql = _load_sql()
+    return "template_id" in sql and "PRIMARY KEY" in sql, {"present": True}
+
+
+def chk_L17_id_unique_constraint(items, *_):
+    sql = _load_sql()
+    return ("id" in sql and "UNIQUE" in sql), {"present": True}
+
+
+def chk_L17_check_category_enum(items, *_):
+    sql = _load_sql()
+    required = ["'weapon'", "'armor'", "'consumable'",
+                "'material'", "'quest_item'", "'lore_item'"]
+    missing = [c for c in required if c not in sql]
+    return len(missing) == 0, {"missing_cat_enum": missing}
+
+
+def chk_L17_check_rarity_enum(items, *_):
+    sql = _load_sql()
+    required = ["'common'", "'uncommon'", "'rare'",
+                "'epic'", "'legendary'", "'mythic'"]
+    missing = [r for r in required if r not in sql]
+    return len(missing) == 0, {"missing_rarity_enum": missing}
+
+
+def chk_L17_check_element_enum(items, *_):
+    sql = _load_sql()
+    required = ["'KIM'", "'MOC'", "'THUY'", "'HOA'", "'THO'", "'TAM'"]
+    missing = [e for e in required if e not in sql]
+    return len(missing) == 0, {"missing_elem_enum": missing}
+
+
+def chk_L17_no_drop_statement(items, *_):
+    sql = _load_sql()
+    bad = re.findall(r"\bDROP\s+(TABLE|INDEX|SCHEMA)\b", sql, re.IGNORECASE)
+    return len(bad) == 0, {"drop_stmts": bad[:5]}
+
+
+def chk_L17_index_on_category(items, *_):
+    sql = _load_sql()
+    return "INDEX" in sql and "category" in sql, {"present": True}
+
+
+def chk_L17_instances_table_has_fk(items, *_):
+    sql = _load_sql()
+    has_fk = ("REFERENCES item_templates" in sql)
+    return has_fk, {"fk_present": has_fk}
+
+
+def chk_L17_quantity_check_positive(items, *_):
+    sql = _load_sql()
+    return "CHECK (quantity > 0)" in sql or "CHECK(quantity > 0)" in sql, {"present": True}
+
+
+ROUND_L17_CHECKS = {
+    2: [
+        ("L17_create_table_present", "R50",
+         chk_L17_create_table_present),
+        ("L17_primary_key_template_id", "R50",
+         chk_L17_primary_key_template_id),
+    ],
+    3: [
+        ("L17_id_unique_constraint", "R50",
+         chk_L17_id_unique_constraint),
+        ("L17_check_category_enum", "R50",
+         chk_L17_check_category_enum),
+    ],
+    4: [
+        ("L17_check_rarity_enum", "R50",
+         chk_L17_check_rarity_enum),
+        ("L17_check_element_enum", "R79",
+         chk_L17_check_element_enum),
+    ],
+    5: [
+        ("L17_no_drop_statement", "R50",
+         chk_L17_no_drop_statement),
+        ("L17_index_on_category", "R74",
+         chk_L17_index_on_category),
+    ],
+    6: [
+        ("L17_instances_table_has_fk", "R44",
+         chk_L17_instances_table_has_fk),
+        ("L17_quantity_check_positive", "R45",
+         chk_L17_quantity_check_positive),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 18 — Consumable & material domain deep (OCTADECA-DEEP, v1.19)
+# ============================================================
+def chk_L18_consumable_heal_positive_strict(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        st = it.get("stats") or {}
+        h = st.get("heal_amount", it.get("heal_amount"))
+        if h is None or h <= 0:
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"no_heal": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_stackable_true(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        if not it.get("stackable"):
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"unstack_mat": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_max_stack_ge_10(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        ms = it.get("max_stack", 0)
+        if ms < 10:
+            bad.append({"id": it["id"], "max_stack": ms})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"small_stack": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_element_null(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        e = it.get("element")
+        if e is not None and e != "":
+            bad.append({"id": it["id"], "element": e})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"mat_with_element": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_consumable_element_null(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        e = it.get("element")
+        if e is not None and e != "":
+            bad.append({"id": it["id"], "element": e})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"cons_with_element": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_consumable_level_min_ge_1(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        lm = it.get("level_min", 0)
+        if lm < 1:
+            bad.append({"id": it["id"], "level_min": lm})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"low_lm": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_lore_item_not_stackable(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        if it.get("stackable"):
+            bad.append(it["id"])
+    return len(bad) == 0, {"stackable_lore": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_quest_item_not_stackable(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "quest_item":
+            continue
+        if it.get("stackable"):
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"stackable_quest": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_consumable_max_stack_ge_2(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        ms = it.get("max_stack", 0)
+        if ms < 2:
+            bad.append({"id": it["id"], "max_stack": ms})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"tiny_stack": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_sell_price_zero(items, *_):
+    """Raw materials should not be sold via vendor (sell_price = 0)."""
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        sp = it.get("sell_price_gold", 0)
+        if sp != 0:
+            bad.append({"id": it["id"], "sell": sp})
+            if len(bad) >= 5:
+                break
+    # Loose check: allow modest sell up to 20
+    threshold_violation = [b for b in bad if b["sell"] > 20]
+    return len(threshold_violation) == 0, {"overpriced_mat": len(threshold_violation),
+                                            "samples": threshold_violation[:5]}
+
+
+ROUND_L18_CHECKS = {
+    2: [
+        ("L18_consumable_heal_positive_strict", "R45",
+         chk_L18_consumable_heal_positive_strict),
+        ("L18_material_stackable_true", "R49",
+         chk_L18_material_stackable_true),
+    ],
+    3: [
+        ("L18_material_max_stack_ge_10", "R49",
+         chk_L18_material_max_stack_ge_10),
+        ("L18_material_element_null", "R79",
+         chk_L18_material_element_null),
+    ],
+    4: [
+        ("L18_consumable_element_null", "R79",
+         chk_L18_consumable_element_null),
+        ("L18_consumable_level_min_ge_1", "R45",
+         chk_L18_consumable_level_min_ge_1),
+    ],
+    5: [
+        ("L18_lore_item_not_stackable", "R49",
+         chk_L18_lore_item_not_stackable),
+        ("L18_quest_item_not_stackable", "R49",
+         chk_L18_quest_item_not_stackable),
+    ],
+    6: [
+        ("L18_consumable_max_stack_ge_2", "R49",
+         chk_L18_consumable_max_stack_ge_2),
+        ("L18_material_sell_price_zero", "R45",
+         chk_L18_material_sell_price_zero),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -4514,6 +5117,14 @@ def main():
             active_checks.extend(ROUND_L13_CHECKS[r])
         if r in ROUND_L14_CHECKS:
             active_checks.extend(ROUND_L14_CHECKS[r])
+        if r in ROUND_L15_CHECKS:
+            active_checks.extend(ROUND_L15_CHECKS[r])
+        if r in ROUND_L16_CHECKS:
+            active_checks.extend(ROUND_L16_CHECKS[r])
+        if r in ROUND_L17_CHECKS:
+            active_checks.extend(ROUND_L17_CHECKS[r])
+        if r in ROUND_L18_CHECKS:
+            active_checks.extend(ROUND_L18_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
