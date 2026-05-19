@@ -1,0 +1,55 @@
+{
+  "severity": "HIGH",
+  "issue_id": "item_anti_snowball_r10_8_violation",
+  "evidence": {
+    "rule_violated": "R10.8 anti-snowball stat cap",
+    "cap": 2.5,
+    "rarity_counts": {
+      "common": 673,
+      "epic": 674,
+      "rare": 673,
+      "legendary": 665,
+      "mythic": 659,
+      "uncommon": 662
+    },
+    "violations": [
+      {
+        "rarity": "epic",
+        "stat": "sat_luc",
+        "tier_max": 80,
+        "common_max": 30,
+        "ratio": 2.667,
+        "cap_exceeded_by": 0.167,
+        "sample_offenders": [
+          {
+            "id": "item_thuy_kiem_bach_dang",
+            "name": "Kiếm Bạch Đằng",
+            "sat_luc": 80
+          }
+        ]
+      },
+      {
+        "rarity": "mythic",
+        "stat": "phap_luc",
+        "tier_max": 60,
+        "common_max": 15,
+        "ratio": 4.0,
+        "cap_exceeded_by": 1.5,
+        "sample_offenders": [
+          {
+            "id": "item_kim_nhan_long_hua",
+            "name": "Nhẫn Long Hứa",
+            "phap_luc": 60
+          }
+        ]
+      }
+    ],
+    "fix_proposal": "Nerf epic.sat_luc max 75 (ratio 2.5) hoặc bump common.sat_luc min 32. Nerf mythic.phap_luc max 37 (ratio 2.47) hoặc bump common.phap_luc min 24.",
+    "qa_report_ref": "cmd-qa_content/output/registry/qa_report.json",
+    "verdict_ref": "cmd-lead/qa-verdicts/FAIL-qa_content-item-20260519-150338.json"
+  },
+  "cmd_origin": "QA_CONTENT",
+  "target_worker": "item",
+  "timestamp": "20260519-150913",
+  "escalated_by": "Mr.Long approve 19/5"
+}
