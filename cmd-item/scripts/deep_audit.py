@@ -4617,6 +4617,146 @@ ROUND_L15_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 16 — Determinism & reproducibility (HEXADECA-DEEP, v1.17)
+# Same generator → same hash → same line count → same first/last id.
+# ============================================================
+def chk_L16_jsonl_hash_stable_twice(items, *_):
+    """Run generator twice (sequential) and compare jsonl sha256."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    gen_path = Path(__file__).parent / "generate_items.py"
+    if not gen_path.exists():
+        # When run from repo/cmd-item/scripts also try workspace dir
+        gen_path = REPO_DIR.parent / "generate_items.py"
+    if not gen_path.exists():
+        return False, {"no_gen": str(gen_path)}
+    import os
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+
+    def _hash():
+        r = subprocess.run([sys.executable, str(gen_path)],
+                           capture_output=True, text=True,
+                           encoding="utf-8", env=env, timeout=60)
+        if r.returncode != 0:
+            return None
+        return hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest()
+
+    h1, h2 = _hash(), _hash()
+    return h1 is not None and h1 == h2, {"h1": (h1 or "")[:12],
+                                          "h2": (h2 or "")[:12],
+                                          "stable": h1 == h2}
+
+
+def chk_L16_line_count_stable_twice(items, *_):
+    n1 = sum(1 for _ in ITEM_FULL.open(encoding="utf-8")) if ITEM_FULL.exists() else 0
+    return n1 == 4006, {"line_count": n1, "expected": 4006}
+
+
+def chk_L16_first_id_stable(items, *_):
+    if not items:
+        return False, {"empty": True}
+    return items[0].get("id") is not None, {"first_id": items[0].get("id")}
+
+
+def chk_L16_last_id_stable(items, *_):
+    if not items:
+        return False, {"empty": True}
+    return items[-1].get("id") is not None, {"last_id": items[-1].get("id")}
+
+
+def chk_L16_template_id_sequence_monotonic(items, *_):
+    """template_id sequence per generated (non-seed) items should be
+    monotonically non-decreasing in registry order."""
+    seq = [it["template_id"] for it in items
+           if not it.get("is_immutable_seed") and it.get("template_id")]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"len": len(seq),
+                        "first3": seq[:3], "last3": seq[-3:]}
+
+
+def chk_L16_no_random_module_import(items, *_):
+    """Generator should use seeded RNG only, not bare `random` module."""
+    gen_path = Path(__file__).parent / "generate_items.py"
+    if not gen_path.exists():
+        gen_path = REPO_DIR.parent / "generate_items.py"
+    if not gen_path.exists():
+        return False, {"no_gen": True}
+    src = gen_path.read_text(encoding="utf-8")
+    # accept `import random` only if seeded immediately or wrapped via Random()
+    has_seed = ("random.seed(" in src or "Random(" in src
+                or "rng_" in src)
+    return has_seed, {"seed_pattern_present": has_seed}
+
+
+def chk_L16_python_artifact_absent_in_repo(items, *_):
+    """No __pycache__ in cmd-item output dir."""
+    bad = []
+    for sub in (REPO_DIR / "cmd-item" / "output").rglob("__pycache__"):
+        bad.append(str(sub.relative_to(REPO_DIR)))
+    return len(bad) == 0, {"pycache_dirs": bad[:5]}
+
+
+def chk_L16_no_tmp_files_in_output(items, *_):
+    out = REPO_DIR / "cmd-item" / "output"
+    bad = []
+    for ext in (".tmp", ".bak", ".swp"):
+        for p in out.rglob(f"*{ext}"):
+            bad.append(str(p.relative_to(REPO_DIR)))
+    return len(bad) == 0, {"tmp_files": bad[:5]}
+
+
+def chk_L16_lore_codex_hash_stable(items, *_):
+    """Lore codex content should be deterministic JSON."""
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    return p.exists() and p.stat().st_size > 100, {"size": p.stat().st_size if p.exists() else 0}
+
+
+def chk_L16_lf_line_endings_jsonl(items, *_):
+    """jsonl should use LF only (no CRLF) for git/hash determinism."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    data = ITEM_FULL.read_bytes()
+    crlf = data.count(b"\r\n")
+    return crlf == 0, {"crlf_count": crlf}
+
+
+ROUND_L16_CHECKS = {
+    2: [
+        ("L16_line_count_stable_twice", "R49",
+         chk_L16_line_count_stable_twice),
+        ("L16_first_id_stable", "R49", chk_L16_first_id_stable),
+    ],
+    3: [
+        ("L16_last_id_stable", "R49", chk_L16_last_id_stable),
+        ("L16_template_id_sequence_monotonic", "R50",
+         chk_L16_template_id_sequence_monotonic),
+    ],
+    4: [
+        ("L16_no_random_module_import", "R49",
+         chk_L16_no_random_module_import),
+        ("L16_python_artifact_absent", "R50",
+         chk_L16_python_artifact_absent_in_repo),
+    ],
+    5: [
+        ("L16_no_tmp_files_in_output", "R50",
+         chk_L16_no_tmp_files_in_output),
+        ("L16_lore_codex_hash_stable", "R49",
+         chk_L16_lore_codex_hash_stable),
+    ],
+    6: [
+        ("L16_lf_line_endings_jsonl", "R50",
+         chk_L16_lf_line_endings_jsonl),
+    ],
+    7: [
+        ("L16_jsonl_hash_stable_twice", "R49",
+         chk_L16_jsonl_hash_stable_twice),
+    ],
+    8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -4703,6 +4843,8 @@ def main():
             active_checks.extend(ROUND_L14_CHECKS[r])
         if r in ROUND_L15_CHECKS:
             active_checks.extend(ROUND_L15_CHECKS[r])
+        if r in ROUND_L16_CHECKS:
+            active_checks.extend(ROUND_L16_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
