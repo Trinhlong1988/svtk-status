@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.1",
+  "generated_by": "cmd-dialog gen_dialog_tree_v11.mjs",
+  "generated_at": "2026-05-19T03:00:00Z",
+  "quest_input_count": 3000,
+  "dialog_tree_count": 3000,
+  "unique_dialog_id": 3000,
+  "orphan_quest_refs": 0,
+  "undefined_text_lines": 0,
+  "nodes_per_tree": 3,
+  "total_node_lines": 9000
+}

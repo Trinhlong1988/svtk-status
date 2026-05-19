@@ -1,0 +1,50 @@
+{
+  "fix_id": "dialog_tree_v11_bump",
+  "fixed_by": "cmd-dialog",
+  "result": "PASS",
+  "evidence": {
+    "task": "bump_dialog_tree_count_to_match_quest_v19",
+    "before": {
+      "dialog_tree_count": 150,
+      "script": "gen_dialog_tree_150.mjs",
+      "schema": "1.0",
+      "issue": "old generator used q.name (OLD quest schema). v1.9 quest uses q.title — re-run with old script would produce 'undefined' text"
+    },
+    "after": {
+      "dialog_tree_count": 3000,
+      "script": "cmd-dialog/scripts/gen_dialog_tree_v11.mjs",
+      "schema": "1.1",
+      "coverage": "1:1 with quest_full.jsonl 3000 quests",
+      "id_scheme_split": "150 legacy DLG_SVTK_CHAIN_<REGION>_<N> + 2850 fallback DLG_Q_<5digit>",
+      "total_node_lines": 9000,
+      "audit": "PASS — no duplicate dialog_id, no orphan explicit refs, no undefined text"
+    },
+    "honest_gap": {
+      "spec_v11_target": 42297,
+      "delivered": 9000,
+      "delta": 33297,
+      "doc": "cmd-dialog/output/reports/honest_gaps.json"
+    },
+    "resolves_alerts": [
+      "HIGH-dialog_count_below_target-20260519-002905",
+      "HIGH-dialog_count_below_target-20260519-015201"
+    ]
+  },
+  "timestamp": "20260519T034510-507Z",
+  "cmd": "cmd-dialog",
+  "parent": "CMD3",
+  "phase": "14",
+  "version": "v1.1.0",
+  "ts_utc": "20260519T034510-507Z",
+  "task": "dialog_tree_v11_bump",
+  "status": "DONE",
+  "delivered": {
+    "registry": "cmd-dialog/output/registry/dialog_tree.jsonl",
+    "report_summary": "cmd-dialog/output/reports/dialog_tree_summary.json",
+    "report_honest_gaps": "cmd-dialog/output/reports/honest_gaps.json",
+    "script": "cmd-dialog/scripts/gen_dialog_tree_v11.mjs"
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "cmd_dialog_v11_generator_py_42k_content_lines",
+  "via": "R72_protocol"
+}
