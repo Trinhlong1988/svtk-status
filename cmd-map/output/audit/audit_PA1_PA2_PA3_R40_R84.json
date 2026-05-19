@@ -1,0 +1,397 @@
+{
+  "audit_ts": "20260519T055640Z",
+  "cmd": "MAP",
+  "audit_type": "PA1_PA2_PA3_45round_R40_R84",
+  "rounds_total": 45,
+  "manifest_sha256_post": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+  "state_checksum_post": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+  "fixed_total": 0,
+  "pa1_symmetric_orphan_summary": {
+    "npc_orphan": 28,
+    "quest_map_orphan": 23,
+    "quest_npc_orphan": 0,
+    "dialog_map_orphan": 23,
+    "dialog_npc_orphan": 0,
+    "dialog_quest_orphan": 0,
+    "event_map_orphan": 0,
+    "event_npc_orphan": 0,
+    "event_item_orphan": 0,
+    "npc_skill_orphan": 0,
+    "sprite_oor": 0
+  },
+  "rounds": [
+    {
+      "r": 40,
+      "rule": "R47-sym",
+      "subj": "npc_sceneId_in_map",
+      "orphan": 28,
+      "sample": [
+        37,
+        41,
+        43,
+        44,
+        45
+      ],
+      "alert": null
+    },
+    {
+      "r": 41,
+      "rule": "R47-sym",
+      "subj": "quest_giver_scene_in_map",
+      "orphan": 23,
+      "sample": [
+        152,
+        153,
+        568,
+        569,
+        570
+      ],
+      "alert": null
+    },
+    {
+      "r": 42,
+      "rule": "R47-sym",
+      "subj": "quest_giver_npc_in_npc",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 43,
+      "rule": "R47-sym",
+      "subj": "quest_objective_target_npc",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 44,
+      "rule": "R47-sym",
+      "subj": "dialog_giver_scene_in_map",
+      "orphan": 23,
+      "sample": [
+        "DLG_Q_00152",
+        "DLG_Q_00153",
+        "DLG_Q_00568",
+        "DLG_Q_00569",
+        "DLG_Q_00570"
+      ],
+      "alert": null
+    },
+    {
+      "r": 45,
+      "rule": "R47-sym",
+      "subj": "dialog_giver_npc_in_npc",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 46,
+      "rule": "R47-sym",
+      "subj": "dialog_quest_in_quest",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 47,
+      "rule": "R47-sym",
+      "subj": "event_cross_ref_map_in_map",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 48,
+      "rule": "R47-sym",
+      "subj": "event_giver_npc_in_npc",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 49,
+      "rule": "R47-sym",
+      "subj": "event_reward_items_in_item",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 50,
+      "rule": "R47-sym",
+      "subj": "npc_skill_ids_in_skill",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 51,
+      "rule": "R75-sym",
+      "subj": "npc_sprite_template_in_range",
+      "orphan": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 52,
+      "rule": "R47-sym-rev",
+      "subj": "map_npc_ids_subset_npc",
+      "orphan_pre": 0,
+      "fix": 0,
+      "alert": null
+    },
+    {
+      "r": 53,
+      "rule": "R47-sym-rev",
+      "subj": "map_quest_giver_ids_subset_npc",
+      "orphan_pre": 0,
+      "fix": 0,
+      "alert": null
+    },
+    {
+      "r": 54,
+      "rule": "R47-sym-rev",
+      "subj": "map_event_ids_subset_event",
+      "orphan_pre": 0,
+      "fix": 0,
+      "alert": null
+    },
+    {
+      "r": 55,
+      "rule": "R50-type",
+      "subj": "image_id_int",
+      "bad": 0,
+      "fix": 0
+    },
+    {
+      "r": 56,
+      "rule": "R83",
+      "subj": "era_enum_strict",
+      "bad": 0,
+      "sample": []
+    },
+    {
+      "r": 57,
+      "rule": "R75",
+      "subj": "biome_enum_strict",
+      "bad": 0,
+      "sample": []
+    },
+    {
+      "r": 58,
+      "rule": "R50-type",
+      "subj": "width_height_int_positive",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 59,
+      "rule": "R50-type",
+      "subj": "list_typed_fields",
+      "bad_pre": {},
+      "fix": 0
+    },
+    {
+      "r": 60,
+      "rule": "R50-type",
+      "subj": "dialog_refs_str",
+      "coerced": 0,
+      "dropped_null": 0
+    },
+    {
+      "r": 61,
+      "rule": "R50-type",
+      "subj": "event_ids_int_list",
+      "coerced_or_repaired": 0
+    },
+    {
+      "r": 62,
+      "rule": "R50-type",
+      "subj": "item_pool_str_list",
+      "fix": 0
+    },
+    {
+      "r": 63,
+      "rule": "R8.4",
+      "subj": "uuid_v4_format",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 64,
+      "rule": "R50",
+      "subj": "image_filename_pattern",
+      "fix": 0
+    },
+    {
+      "r": 65,
+      "rule": "R50-inv",
+      "subj": "mapId_eq_image_id",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 66,
+      "rule": "R50-inv",
+      "subj": "markId_eq_image_id_x100",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 67,
+      "rule": "R68",
+      "subj": "seed_non_empty",
+      "fix": 0
+    },
+    {
+      "r": 68,
+      "rule": "R50",
+      "subj": "name_non_empty",
+      "fix": 0
+    },
+    {
+      "r": 69,
+      "rule": "R49",
+      "subj": "region_valid",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 70,
+      "rule": "R50-range",
+      "subj": "target_size_kb_30_100",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 71,
+      "rule": "R50-range",
+      "subj": "image_quality_60_75",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 72,
+      "rule": "R50-spec",
+      "subj": "resolution_832x640",
+      "bad_pre": 0,
+      "fix": 0
+    },
+    {
+      "r": 73,
+      "rule": "R8-roundtrip",
+      "subj": "json_roundtrip_stable",
+      "pass": true
+    },
+    {
+      "r": 74,
+      "rule": "R50-keyset",
+      "subj": "key_set_normalize_to_union",
+      "union_keys_count": 30,
+      "odd_entries_pre": 0,
+      "fields_added_total": 0,
+      "canonical_keys": [
+        "_index",
+        "biome",
+        "dialog_tree_refs",
+        "element_primary",
+        "era",
+        "event_count_actual",
+        "event_ids",
+        "height_tiles",
+        "image_filename",
+        "image_id",
+        "image_quality",
+        "image_resolution_h",
+        "image_resolution_w",
+        "item_drop_era_pool",
+        "item_drop_pool_fallback_applied",
+        "item_drop_pool_size",
+        "mapId_at_0x00",
+        "markId_at_0x104",
+        "name",
+        "npc_count_actual",
+        "npc_density_max",
+        "npc_density_min",
+        "npc_ids",
+        "quest_count_actual",
+        "quest_giver_ids",
+        "region",
+        "seed",
+        "target_size_kb",
+        "uuid",
+        "width_tiles"
+      ],
+      "alert": null
+    },
+    {
+      "r": 75,
+      "rule": "R30-locale",
+      "subj": "utf8_nfc_normalization",
+      "fix": 0
+    },
+    {
+      "r": 76,
+      "rule": "R30-encoding",
+      "subj": "no_bom",
+      "bom": false
+    },
+    {
+      "r": 77,
+      "rule": "R30-encoding",
+      "subj": "lf_only_no_crlf",
+      "cr_count": 0,
+      "alert": null
+    },
+    {
+      "r": 78,
+      "rule": "R30",
+      "subj": "no_trailing_ws_compact_dumps",
+      "enforced_by_serializer": true
+    },
+    {
+      "r": 79,
+      "rule": "R50-determinism",
+      "subj": "json_keys_sorted",
+      "enforced_by_serializer": true
+    },
+    {
+      "r": 80,
+      "rule": "R30-locale",
+      "subj": "no_cyrillic_lookalike",
+      "hits": 0,
+      "sample": [],
+      "alert": null
+    },
+    {
+      "r": 81,
+      "rule": "R30",
+      "subj": "name_no_double_ws_trim",
+      "fix": 0
+    },
+    {
+      "r": 82,
+      "rule": "R68-sort",
+      "subj": "id_based_sort_deterministic",
+      "enforced_by_writer": true
+    },
+    {
+      "r": 83,
+      "rule": "R68-determinism",
+      "subj": "bit_by_bit_reproducible",
+      "pass": true,
+      "sha256_run1": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+      "sha256_run2": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd"
+    },
+    {
+      "r": 84,
+      "rule": "R68-final",
+      "subj": "final_state_checksum",
+      "manifest_sha256": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+      "map_count": 8500,
+      "audit_passes": 4
+    }
+  ]
+}

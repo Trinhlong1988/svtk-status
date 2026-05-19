@@ -1,0 +1,70 @@
+{
+  "fix_id": "map_PA1_PA2_PA3_45round_R40_R84",
+  "fixed_by": "map",
+  "result": "PASS",
+  "timestamp": "20260519-055828",
+  "trigger": "Mr.Long lệnh PA1+PA2+PA3 tuần tự fix bug ẨN toàn diện triệt để",
+  "rounds_executed": 45,
+  "rounds_range": "R40..R84",
+  "passes_run": 3,
+  "passes_until_idempotent": 3,
+  "fixed_total_cumulative": 22862,
+  "evidence": {
+    "manifest_count": 8500,
+    "manifest_sha256_post": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+    "state_checksum_post": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+    "bit_by_bit_reproducible": true,
+    "idempotent_pass3_fixed": 0,
+    "pa1_symmetric_clean": {
+      "all_15_rounds_passed_except_known_cross_cmd_orphans": true,
+      "npc_orphan_alert_filed_to_cmd_npc": 28,
+      "quest_giver_scene_id_orphan_minor": 23,
+      "dialog_giver_scene_id_orphan_minor": 23,
+      "all_other_pa1_rounds_zero_orphan": true
+    },
+    "pa2_property_mutation_clean": {
+      "all_20_rounds_passed": true,
+      "image_id_type_int_strict": true,
+      "era_enum_strict": true,
+      "biome_enum_strict": true,
+      "width_height_int_positive": true,
+      "list_typed_fields_consistent": true,
+      "uuid_v4_format": true,
+      "image_filename_pattern": true,
+      "mapId_eq_image_id_invariant": true,
+      "markId_eq_image_id_x100_invariant": true,
+      "seed_non_empty": true,
+      "name_non_empty": true,
+      "region_valid_3_enum": true,
+      "target_size_kb_30_100": true,
+      "image_quality_60_75": true,
+      "resolution_832x640_strict": true,
+      "json_roundtrip_stable": true
+    },
+    "pa3_encoding_locale_determinism_clean": {
+      "all_10_rounds_passed": true,
+      "utf8_nfc_normalized": true,
+      "no_bom": true,
+      "lf_only_no_crlf": true,
+      "json_keys_sorted_deterministic": true,
+      "no_cyrillic_lookalike": true,
+      "name_no_double_whitespace": true,
+      "id_based_sort_deterministic": true,
+      "bit_by_bit_reproducible_2_consecutive_runs": true
+    },
+    "hidden_bugs_found_and_fixed": {
+      "schema_keyset_drift_4_variants": "2000/8500 entries had 27/28/29-key schema vs canonical 30-key. Normalized to UNION 30 keys.",
+      "missing_item_drop_pool_fallback_applied": 1442,
+      "missing_event_ids_field": 7960,
+      "missing_event_count_actual_field": 7960,
+      "wrong_item_id_field_lookup_audit_script_bug": "item.id not item.item_id — script fixed pass 1 → pass 2 detected 1369 false orphans cleared",
+      "event_reward_items_orphan_post_fix": 0
+    }
+  },
+  "honest_gaps_remaining_cross_cmd": [
+    "28 NPC.sceneId orphan — CMD_NPC scope",
+    "23 quest_giver_scene_id orphan — CMD_QUEST scope (99.2% link OK)",
+    "boss_full.jsonl chưa tồn tại — CMD_BOSS scope"
+  ],
+  "exit_code": 0
+}
