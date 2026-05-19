@@ -1,0 +1,145 @@
+{
+  "cmd": "DIALOG",
+  "version": "1.1.0",
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "generated_at": "2026-05-19T04:00:00Z",
+  "total_dialog": 50000,
+  "target_full": 50000,
+  "spec_target_baseline": 42297,
+  "count_by_type": {
+    "greeting": 9500,
+    "quest": 14200,
+    "lore": 5900,
+    "bark": 8500,
+    "combat": 5900,
+    "trade": 3400,
+    "story": 2600
+  },
+  "count_by_era": {
+    "ly": 3281,
+    "f1": 15763,
+    "tay_son": 5086,
+    "g1": 9588,
+    "tran": 4831,
+    "f5": 557,
+    "nguyen": 2496,
+    "f2": 1681,
+    "le": 5407,
+    "f3": 822,
+    "f4": 488
+  },
+  "unique_dialog_id": 50000,
+  "audit": {
+    "passed": 15,
+    "total": 15,
+    "pass_rate": 1.0,
+    "checks": [
+      {
+        "name": "count_50000",
+        "pass": true,
+        "actual": 50000,
+        "target": 50000
+      },
+      {
+        "name": "greeting_8000",
+        "pass": true,
+        "actual": 9500
+      },
+      {
+        "name": "quest_12000",
+        "pass": true,
+        "actual": 14200
+      },
+      {
+        "name": "lore_5000",
+        "pass": true,
+        "actual": 5900
+      },
+      {
+        "name": "bark_7000",
+        "pass": true,
+        "actual": 8500
+      },
+      {
+        "name": "combat_5000",
+        "pass": true,
+        "actual": 5900
+      },
+      {
+        "name": "trade_3000",
+        "pass": true,
+        "actual": 3400
+      },
+      {
+        "name": "story_2297",
+        "pass": true,
+        "actual": 2600
+      },
+      {
+        "name": "unique_dialog_id",
+        "pass": true,
+        "dup": 0
+      },
+      {
+        "name": "no_cjk",
+        "pass": true,
+        "violations": 0
+      },
+      {
+        "name": "no_tam_quoc",
+        "pass": true,
+        "violations": 0
+      },
+      {
+        "name": "5_main_eras_present",
+        "pass": true,
+        "present": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5",
+          "g1",
+          "le",
+          "ly",
+          "nguyen",
+          "tay_son",
+          "tran"
+        ]
+      },
+      {
+        "name": "speaker_id_linked",
+        "pass": true
+      },
+      {
+        "name": "schema_sql_exists",
+        "pass": true
+      },
+      {
+        "name": "split_by_type_files",
+        "pass": true
+      }
+    ]
+  },
+  "write_meta": {
+    "full": 50000,
+    "by_type": {
+      "greeting": 9500,
+      "quest": 14200,
+      "lore": 5900,
+      "bark": 8500,
+      "combat": 5900,
+      "trade": 3400,
+      "story": 2600
+    },
+    "by_era": {
+      "ly": 3281,
+      "tay_son": 5086,
+      "tran": 4831,
+      "nguyen": 2496,
+      "le": 5407
+    },
+    "schema": true,
+    "tests": true
+  }
+}

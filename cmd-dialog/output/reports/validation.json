@@ -1,0 +1,92 @@
+{
+  "passed": 15,
+  "total": 15,
+  "pass_rate": 1.0,
+  "checks": [
+    {
+      "name": "count_50000",
+      "pass": true,
+      "actual": 50000,
+      "target": 50000
+    },
+    {
+      "name": "greeting_8000",
+      "pass": true,
+      "actual": 9500
+    },
+    {
+      "name": "quest_12000",
+      "pass": true,
+      "actual": 14200
+    },
+    {
+      "name": "lore_5000",
+      "pass": true,
+      "actual": 5900
+    },
+    {
+      "name": "bark_7000",
+      "pass": true,
+      "actual": 8500
+    },
+    {
+      "name": "combat_5000",
+      "pass": true,
+      "actual": 5900
+    },
+    {
+      "name": "trade_3000",
+      "pass": true,
+      "actual": 3400
+    },
+    {
+      "name": "story_2297",
+      "pass": true,
+      "actual": 2600
+    },
+    {
+      "name": "unique_dialog_id",
+      "pass": true,
+      "dup": 0
+    },
+    {
+      "name": "no_cjk",
+      "pass": true,
+      "violations": 0
+    },
+    {
+      "name": "no_tam_quoc",
+      "pass": true,
+      "violations": 0
+    },
+    {
+      "name": "5_main_eras_present",
+      "pass": true,
+      "present": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "g1",
+        "le",
+        "ly",
+        "nguyen",
+        "tay_son",
+        "tran"
+      ]
+    },
+    {
+      "name": "speaker_id_linked",
+      "pass": true
+    },
+    {
+      "name": "schema_sql_exists",
+      "pass": true
+    },
+    {
+      "name": "split_by_type_files",
+      "pass": true
+    }
+  ]
+}

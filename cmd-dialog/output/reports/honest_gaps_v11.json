@@ -1,0 +1,35 @@
+{
+  "cmd": "DIALOG",
+  "version": "1.1.0",
+  "shipped_at": "2026-05-19T04:00:00Z",
+  "gaps_admitted": [
+    {
+      "severity": "MED",
+      "item": "Template-based dialog repetition",
+      "reason": "50000 lines synthesized from ~326 base templates × tone prefix × era locale suffix. Lore depth low; mass categories (bark, combat, trade) recycle short templates.",
+      "mitigation": "Phase 14 Week 4 enrichment — feed NPC personality/era richer suffix pools, consider LLM-augmented enrichment pass on subset."
+    },
+    {
+      "severity": "MED",
+      "item": "Speaker context not always coherent",
+      "reason": "NPC pool filtered loosely by dialog type (e.g. trade prefers merchant/townsmen but falls back to full pool if subset empty). Lore monk could speak combat barks if era distribution dictates.",
+      "mitigation": "Tighten filter_speaker_pool predicates per category; introduce 'tone' attribute on NPC for finer match."
+    },
+    {
+      "severity": "LOW",
+      "item": "No emotion/tone variation per speaker",
+      "reason": "Tone prefix is dialog_id-seeded, not personality-seeded; same NPC could greet warmly in one line and curtly in another.",
+      "mitigation": "Hash speaker_id into tone pick to lock NPC voice persona."
+    },
+    {
+      "severity": "LOW",
+      "item": "No audio/voice acting hints",
+      "reason": "audio_id mapping not populated — CMD AUDIO (Phase 15) will build.",
+      "mitigation": "Defer to CMD AUDIO; dialog schema already has room for audio_id."
+    }
+  ],
+  "resolves_alerts": [
+    "HIGH-dialog_count_below_target-20260519-002905",
+    "HIGH-dialog_count_below_target-20260519-015201"
+  ]
+}
