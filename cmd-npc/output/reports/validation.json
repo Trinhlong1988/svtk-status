@@ -1,6 +1,6 @@
 {
-  "passed": 140,
-  "total": 140,
+  "passed": 145,
+  "total": 145,
   "pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -343,6 +343,7 @@
           "round_221_230",
           "round_231_240",
           "round_241_250",
+          "round_251_260",
           "round_31_40",
           "round_41_50",
           "round_51_60",
@@ -553,7 +554,7 @@
       "name": "heartbeat_file_present_R111",
       "ok": true,
       "evidence": {
-        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-143315.json",
+        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-150453.json",
         "exists": true
       }
     },
@@ -563,7 +564,7 @@
       "evidence": {
         "count": 1,
         "files": [
-          "BUILDING-npc_extend_to_10000-20260519-143315.json"
+          "BUILDING-npc_extend_to_10000-20260519-150453.json"
         ]
       }
     },
@@ -940,8 +941,8 @@
       "name": "metrics_ts_self_R214",
       "ok": true,
       "evidence": {
-        "build_ts": "20260519-143315",
-        "metrics_ts": "20260519-143137"
+        "build_ts": "20260519-150453",
+        "metrics_ts": "20260519-150450"
       }
     },
     {
@@ -1063,10 +1064,45 @@
       }
     },
     {
+      "name": "name_no_control_char_R251",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "static_analysis_present_R252",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
+      "name": "property_fuzz_zero_gaps_R253",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
+      "name": "stress_test_5x_pass_R254",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
+      "name": "dep_missing_all_pass_R255",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
       "name": "audit_history_round_count_R215",
       "ok": true,
       "evidence": {
-        "prior_count": 25,
+        "prior_count": 26,
         "post_build_expected": 22
       }
     },

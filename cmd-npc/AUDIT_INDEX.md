@@ -34,10 +34,11 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 211-220 | 2026-05-19 | 120→125 | 10 | [AUDIT_REPORT_ROUND_211_220_20260519-132930.md](status/AUDIT_REPORT_ROUND_211_220_20260519-132930.md) |
 | 221-230 | 2026-05-19 | 125→130 | 10 | [AUDIT_REPORT_ROUND_221_230_20260519-135544.md](status/AUDIT_REPORT_ROUND_221_230_20260519-135544.md) ⭐ **mutation-discovered** |
 | 231-240 | 2026-05-19 | 130→135 | 10 | [AUDIT_REPORT_ROUND_231_240_20260519-141535.md](status/AUDIT_REPORT_ROUND_231_240_20260519-141535.md) ⭐ 5 phương án advanced |
-| **241-250** | **2026-05-19** | **135→140** | **10** | [AUDIT_REPORT_ROUND_241_250_20260519-143315.md](status/AUDIT_REPORT_ROUND_241_250_20260519-143315.md) ⭐ **3 phương án cuối** |
+| 241-250 | 2026-05-19 | 135→140 | 10 | [AUDIT_REPORT_ROUND_241_250_20260519-143315.md](status/AUDIT_REPORT_ROUND_241_250_20260519-143315.md) ⭐ 3 phương án cuối |
+| **251-260** | **2026-05-19** | **140→145** | **10** | [AUDIT_REPORT_ROUND_251_260_20260519-150453.md](status/AUDIT_REPORT_ROUND_251_260_20260519-150453.md) ⭐ **5 phương án edge** |
 
-**Cumulative total: 250 hidden bugs fixed.**
-**Test suites: Mutation 30/30 ✓ | Replay 3/3 ✓ | Differential seed ✓ | Snapshot ✓ | Cross-CMD ✓ | SQL exec ✓ | Performance ✓ | Runtime sim ✓ | Formal 10/10 ✓.**
+**Cumulative total: 260 hidden bugs fixed.**
+**Test suites: 15/15 phương án ALL EXHAUSTED**. Validator 145/145 + per-NPC 540k + property fuzz 1000/1000 + mutation 30/30 + 4 dep_missing + stress 5x + 10 formal invariants.
 **Per-NPC deep verification: 540,000 individual checks PASS** (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ---
@@ -143,6 +144,7 @@ Trigger Mr.Long — verify từng NPC chi tiết cross-ref MAP/ITEM/QUEST/EVENT 
 | Mutation-discovered gap fixes (name BOM/trim_ws/class-type semantic) | 126-130 | R221-R230 |
 | 5 advanced testing phương án (replay/seed/snapshot/contract/SQL) | 131-135 | R231-R240 |
 | 3 final phương án (performance/runtime/formal) + Nguyễn hist fix | 136-140 | R241-R250 |
+| 5 edge phương án (static/property fuzz/stress/dep missing) + V58 ctrl char | 141-145 | R251-R260 |
 
 ---
 

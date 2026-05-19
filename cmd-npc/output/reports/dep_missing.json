@@ -1,0 +1,26 @@
+{
+  "test": "dep_missing",
+  "verdict": "PASS",
+  "scenarios": [
+    {
+      "name": "A_foundation_missing",
+      "pass": true,
+      "evidence": "exit=99"
+    },
+    {
+      "name": "B_existing_source_missing",
+      "pass": true,
+      "evidence": "exit=2"
+    },
+    {
+      "name": "C_skill_165_missing",
+      "pass": true,
+      "evidence": "errors=['per_npc_verification_clean_R121', 'skill_165_count_R185']"
+    },
+    {
+      "name": "D_corrupt_source",
+      "pass": true,
+      "evidence": "exit=1"
+    }
+  ]
+}

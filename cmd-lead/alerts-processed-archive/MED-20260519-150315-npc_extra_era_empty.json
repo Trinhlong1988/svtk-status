@@ -1,0 +1,29 @@
+{
+  "severity": "MED",
+  "issue_id": "npc_extra_era_empty",
+  "evidence": {
+    "rule_anchor": "Brief target: 5 main era + 9 extra eras",
+    "empty_extra_eras": [
+      "pre_lich_su",
+      "bac_thuoc_g1",
+      "hau_le_trinh_nguyen",
+      "phap_thuoc_g1",
+      "khang_chien_f3",
+      "doi_moi_f4",
+      "current_f5",
+      "tuong_lai_f5",
+      "hoa_lu_968_origin"
+    ],
+    "count_empty": 9,
+    "main_era_fill": {
+      "ly": 647,
+      "tran": 987,
+      "le": 1038,
+      "tay_son": 1055,
+      "nguyen": 549
+    },
+    "remediation": "Generator currently fills only 5 main eras + procedural f1/f2/f3/f4/f5/g1. Adding extra-era NPCs requires per-era key_figures + name pool curation. Defer to future round when content data available."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-150315"
+}

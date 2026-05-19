@@ -1,0 +1,9 @@
+{
+  "test": "property_fuzz",
+  "verdict": "PASS",
+  "trials": 1000,
+  "caught": 880,
+  "no_bug": 120,
+  "unexpected_pass": 0,
+  "unexpected_samples": []
+}

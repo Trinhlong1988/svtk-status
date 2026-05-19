@@ -3,9 +3,9 @@
 NPC registry for SVTK Sử Việt Truyền Kỳ — 10000 NPCs sử Việt.
 
 **Version:** 1.1.0  
-**Audit state:** 25 deep audit rounds completed (R1-R250, cumulative 250 hidden bugs fixed).  
-**Validator:** 140/140 PASS (rate 1.0).  
-**Test suites:** Mutation 30/30 ✓ | Replay 3/3 ✓ | Differential seed ✓ | Snapshot ✓ | Cross-CMD ✓ | SQL exec 100/100 ✓ | Performance OK | Runtime sim ✓ | **Formal invariants 10/10 ✓**.  
+**Audit state:** 26 deep audit rounds completed (R1-R260, cumulative 260 hidden bugs fixed).  
+**Validator:** 145/145 PASS (rate 1.0).  
+**Test suites:** ALL 15 phương án exhausted. Mutation 30/30 ✓ | Replay 3/3 ✓ | Diff seed ✓ | Snapshot ✓ | Cross-CMD ✓ | SQL 100/100 ✓ | Perf 65MB ✓ | Runtime ✓ | Formal 10/10 ✓ | Static OK | **Property fuzz 1000/1000 ✓** | Stress 5x ✓ | Dep missing 4/4 ✓.  
 **Per-NPC deep verification:** 540,000 individual checks PASS (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ## Quick links
@@ -42,10 +42,10 @@ cmd-npc/
 
 ## Cumulative audit status
 
-- **250 hidden bugs fixed** across 25 audit rounds (R1-R250).
-- **Validator: 140/140 PASS** (rate 1.0).
-- **Mutation testing: 30/30 caught, 0 survived.**
-- **All 8 advanced phương án: PASS** (replay determinism, differential seed, snapshot, cross-CMD, SQL exec, performance, runtime sim, formal invariants 10/10).
+- **260 hidden bugs fixed** across 26 audit rounds (R1-R260).
+- **Validator: 145/145 PASS** (rate 1.0).
+- **ALL 15 phương án bug-hunting EXHAUSTED.**
+- 9 dedicated test scripts ở `Desktop/CMD_NPC_WORK/` (mutation, replay, diff_seed, snapshot, cross_cmd, sql_exec, perf, runtime, formal, static, property fuzz, stress, dep_missing).
 - **Per-NPC deep: 540,000 / 540,000 checks PASS** (54 schema × 10000 NPCs) + cross-CMD 5/5 invariants (quest/skill/historical).
 - **Active ex-side alerts: 20** (R71.1 immutable + ecosystem cross-ref + content-gap + flag-design + foundation-version-mismatch).
 - **Generated-side: 0 violations.**
