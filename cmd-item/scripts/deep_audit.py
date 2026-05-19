@@ -8381,6 +8381,94 @@ ROUND_L39_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 40 — Output file presence & integrity (v1.35)
+# ============================================================
+def _file_present(rel: str, min_size: int = 1) -> tuple:
+    p = REPO_DIR / rel
+    return p.exists() and p.stat().st_size >= min_size, str(p)
+
+
+def chk_L40_item_weapon_jsonl(items, *_):
+    ok, p = _file_present("cmd-item/output/registry/item_weapon.jsonl", 1000)
+    return ok, {"path": p.split("\\")[-1] if "\\" in p else p}
+
+
+def chk_L40_item_armor_jsonl(items, *_):
+    ok, p = _file_present("cmd-item/output/registry/item_armor.jsonl", 1000)
+    return ok, {"ok": ok}
+
+
+def chk_L40_item_consumable_jsonl(items, *_):
+    ok, _ = _file_present("cmd-item/output/registry/item_consumable.jsonl",
+                           500)
+    return ok, {"ok": ok}
+
+
+def chk_L40_item_material_jsonl(items, *_):
+    ok, _ = _file_present("cmd-item/output/registry/item_material.jsonl", 500)
+    return ok, {"ok": ok}
+
+
+def chk_L40_item_quest_jsonl(items, *_):
+    ok, _ = _file_present("cmd-item/output/registry/item_quest.jsonl", 500)
+    return ok, {"ok": ok}
+
+
+def chk_L40_item_lore_jsonl(items, *_):
+    ok, _ = _file_present("cmd-item/output/registry/item_lore.jsonl", 500)
+    return ok, {"ok": ok}
+
+
+def chk_L40_lore_codex_present(items, *_):
+    ok, _ = _file_present("cmd-item/output/lore_codex/lore_items.json", 1000)
+    return ok, {"ok": ok}
+
+
+def chk_L40_sql_ddl_present(items, *_):
+    ok, _ = _file_present("cmd-item/output/schema/item_table.sql", 1000)
+    return ok, {"ok": ok}
+
+
+def chk_L40_sha256_present(items, *_):
+    ok, _ = _file_present(
+        "cmd-item/output/registry/item_full.jsonl.sha256", 60)
+    return ok, {"ok": ok}
+
+
+def chk_L40_cross_ref_present(items, *_):
+    ok, _ = _file_present("cmd-item/output/reports/cross_ref_quest.json", 10)
+    return ok, {"ok": ok}
+
+
+ROUND_L40_CHECKS = {
+    2: [
+        ("L40_item_weapon_jsonl", "R50", chk_L40_item_weapon_jsonl),
+        ("L40_item_armor_jsonl", "R50", chk_L40_item_armor_jsonl),
+    ],
+    3: [
+        ("L40_item_consumable_jsonl", "R50",
+         chk_L40_item_consumable_jsonl),
+        ("L40_item_material_jsonl", "R50",
+         chk_L40_item_material_jsonl),
+    ],
+    4: [
+        ("L40_item_quest_jsonl", "R50", chk_L40_item_quest_jsonl),
+        ("L40_item_lore_jsonl", "R50", chk_L40_item_lore_jsonl),
+    ],
+    5: [
+        ("L40_lore_codex_present", "R50",
+         chk_L40_lore_codex_present),
+        ("L40_sql_ddl_present", "R50", chk_L40_sql_ddl_present),
+    ],
+    6: [
+        ("L40_sha256_present", "R50", chk_L40_sha256_present),
+        ("L40_cross_ref_present", "R47", chk_L40_cross_ref_present),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -8547,6 +8635,8 @@ def main():
             active_checks.extend(ROUND_L38_CHECKS[r])
         if r in ROUND_L39_CHECKS:
             active_checks.extend(ROUND_L39_CHECKS[r])
+        if r in ROUND_L40_CHECKS:
+            active_checks.extend(ROUND_L40_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
