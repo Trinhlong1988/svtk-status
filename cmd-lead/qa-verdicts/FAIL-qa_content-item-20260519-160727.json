@@ -1,0 +1,27 @@
+{
+  "qa": "qa_content",
+  "target": "item",
+  "verdict": "FAIL",
+  "evidence": {
+    "issues": [
+      {
+        "type": "buff_cap_5pct_exceeded",
+        "worker": "item",
+        "cap_bp": 500,
+        "count": 1,
+        "sample_top5": [
+          {
+            "id": "item_kim_nhan_long_hua",
+            "name_vi": "Nhẫn Long Hứa",
+            "passive_type": "crit_after_burn",
+            "value_bp": 1500,
+            "cap_bp": 500,
+            "over_by_bp": 1000
+          }
+        ]
+      }
+    ],
+    "count": 4006
+  },
+  "timestamp": "20260519-160727"
+}
