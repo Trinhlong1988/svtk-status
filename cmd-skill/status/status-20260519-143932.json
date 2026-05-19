@@ -1,0 +1,30 @@
+{
+  "cmd": "SKILL",
+  "version": "1.0.1-audit15",
+  "timestamp": "20260519-143932",
+  "audit_rounds": 15,
+  "audit_rounds_pass": 15,
+  "audit_idempotent": true,
+  "existing_count": 165,
+  "new_count": 135,
+  "total_count": 300,
+  "bugs_fixed_round_summary": {
+    "R06_target_range": 0,
+    "R08_class_element": 0,
+    "R09_name_unique": 10,
+    "R11_desc_coherence": 0,
+    "R13_cost_ratio": 69
+  },
+  "mutation_fuzz_total": 4050,
+  "mutation_fuzz_caught": 4050,
+  "test_count": 30,
+  "test_pass": 30,
+  "validation_score": 1.0,
+  "honest_gaps_remaining": [
+    "Skill animation hint = name only (no sprite/FX manifest)",
+    "TS migration map sample 60/200 (full PKT cross-ref pending CMD_QA)",
+    "No combo chains v1.0 (cooldown_lock + 6-chain pending CMD1 wire)",
+    "Cooldown not playtested"
+  ],
+  "exit_code": 0
+}

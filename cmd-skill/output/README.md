@@ -43,6 +43,33 @@ foundation file is `SVTK_FOUNDATION_v2.8.0.md`, CRLF canonical hash
 `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b` —
 matches `foundation/INDEX.sha256` and memory rule (2026-05-19 cycle 93).
 
+## Deep audit (15 rounds, 2026-05-19 14:39)
+
+| Round | Bugs found | Fixed | Remain (new) | Existing advisory |
+|---|---|---|---|---|
+| R01 schema_strict | 0 | 0 | 0 | 0 |
+| R02 id_unique_dense | 0 | 0 | 0 | 0 |
+| R03 element_lock | 0 | 0 | 0 | 0 |
+| R04 tier_consistency | 0 | 0 | 0 | 0 |
+| R05 numeric_bounds | 0 | 0 | 0 | 0 |
+| R06 target_range | 0 | 0 | 0 | 0 |
+| R07 era_lock | 0 | 0 | 0 | 0 |
+| R08 class_element_compat (R4) | 0 | 0 | 0 | 0 |
+| R09 name_unique | 10 | 10 | 0 | 0 |
+| R10 cultural_lock_deep | 0 | 0 | 0 | 0 |
+| R11 desc_coherence | 0 | 0 | 0 | 0 |
+| R12 power_monotonic | 0 | 0 | 0 | 0 |
+| R13 cost_ratio_balance | 22 | 69 | 0 | 0 |
+| R14 mutation_fuzz_30x (4050 mutations) | 0 miss | – | 0 | – |
+| R15 engine_xref R47 | 0 | 0 | 0 | 0 |
+
+Idempotent: second pass yielded 0 init / 0 fix on every round.
+Test suite: **30/30 pass** (10 deep-audit tests added on top of original 20).
+
+Fix details:
+- **R09:** 10 duplicate names disambiguated with Vietnamese suffix `(Hậu)/(Tả)/(Hữu)/(Trung)/(Thượng)/(Hạ)` …
+- **R13:** 69 cost bumps to keep `power/cost_sp ≤ 12` (single) or `≤ 9` (aoe) on new skills.
+
 ## Honest gaps (per brief audit, 4 MED)
 
 1. Skill animation hint = name only — no sprite/timing FX manifest yet.
