@@ -5175,6 +5175,145 @@ ROUND_L19_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 20 — slot_cap + stat_budget JSON parity (ICOSA-DEEP, v1.21)
+# ============================================================
+def _load_slot_cap():
+    p = SLOT_CAP
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8")).get("caps_per_slot", {})
+
+
+def _load_stat_budget():
+    p = REPO_DIR / "cmd-item" / "data" / "stat_budget.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def chk_L20_slot_cap_covers_eq_slots(items, *_):
+    caps = _load_slot_cap()
+    missing = [s for s in EQUIPMENT_SLOTS if s not in caps]
+    return len(missing) == 0, {"missing_slot_caps": missing}
+
+
+def chk_L20_item_stats_within_slot_cap(items, *_):
+    caps = _load_slot_cap()
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        slot = it.get("slot")
+        cap = caps.get(slot)
+        if not cap:
+            continue
+        st = it.get("stats") or {}
+        for k, v in st.items():
+            if k in cap and isinstance(v, (int, float)) and v > cap[k]:
+                bad.append({"id": it["id"], "slot": slot, "key": k,
+                            "val": v, "cap": cap[k]})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"over_cap": len(bad), "samples": bad[:5]}
+
+
+def chk_L20_stat_budget_present(items, *_):
+    sb = _load_stat_budget()
+    return "rarity_budget" in sb, {"keys": list(sb.keys())[:5]}
+
+
+def chk_L20_rarity_budget_complete(items, *_):
+    sb = _load_stat_budget().get("rarity_budget", [])
+    rarities = {b.get("rarity") for b in sb}
+    # spec uses 5 buckets here (common/rare/epic/legendary/mythic)
+    expected = {"common", "rare", "epic", "legendary", "mythic"}
+    missing = expected - rarities
+    return len(missing) == 0, {"missing": sorted(missing)}
+
+
+def chk_L20_max_affix_count_ascending(items, *_):
+    sb = _load_stat_budget().get("rarity_budget", [])
+    order = ["common", "rare", "epic", "legendary", "mythic"]
+    by_r = {b.get("rarity"): b.get("max_affix_count", 0) for b in sb}
+    seq = [by_r.get(r, 0) for r in order]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"seq": seq}
+
+
+def chk_L20_max_stat_power_ascending(items, *_):
+    sb = _load_stat_budget().get("rarity_budget", [])
+    order = ["common", "rare", "epic", "legendary", "mythic"]
+    by_r = {b.get("rarity"): b.get("max_stat_power", 0) for b in sb}
+    seq = [by_r.get(r, 0) for r in order]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"seq": seq}
+
+
+def chk_L20_companion_ratio_bp_present(items, *_):
+    sb = _load_stat_budget()
+    cr = sb.get("companion_budget_ratio_bp")
+    return cr is not None and 0 < cr <= 10000, {"value": cr}
+
+
+def chk_L20_slot_cap_locked_by_present(items, *_):
+    p = SLOT_CAP
+    if not p.exists():
+        return False, {"missing": True}
+    raw = p.read_text(encoding="utf-8")
+    return "_locked_by" in raw, {"present": "_locked_by" in raw}
+
+
+def chk_L20_affix_pool_locked_by_present(items, *_):
+    p = AFFIX_POOL
+    if not p.exists():
+        return False, {"missing": True}
+    raw = p.read_text(encoding="utf-8")
+    return "_locked_by" in raw, {"present": "_locked_by" in raw}
+
+
+def chk_L20_affix_pool_covers_eq_slots(items, *_):
+    pools = _load_affix_pool()
+    missing = [s for s in EQUIPMENT_SLOTS if s not in pools]
+    return len(missing) == 0, {"missing_slot_pools": missing}
+
+
+ROUND_L20_CHECKS = {
+    2: [
+        ("L20_slot_cap_covers_eq_slots", "R45",
+         chk_L20_slot_cap_covers_eq_slots),
+        ("L20_item_stats_within_slot_cap", "R45",
+         chk_L20_item_stats_within_slot_cap),
+    ],
+    3: [
+        ("L20_stat_budget_present", "R45",
+         chk_L20_stat_budget_present),
+        ("L20_rarity_budget_complete", "R45",
+         chk_L20_rarity_budget_complete),
+    ],
+    4: [
+        ("L20_max_affix_count_ascending", "R45",
+         chk_L20_max_affix_count_ascending),
+        ("L20_max_stat_power_ascending", "R45",
+         chk_L20_max_stat_power_ascending),
+    ],
+    5: [
+        ("L20_companion_ratio_bp_present", "R45",
+         chk_L20_companion_ratio_bp_present),
+        ("L20_slot_cap_locked_by_present", "R30",
+         chk_L20_slot_cap_locked_by_present),
+    ],
+    6: [
+        ("L20_affix_pool_locked_by_present", "R30",
+         chk_L20_affix_pool_locked_by_present),
+        ("L20_affix_pool_covers_eq_slots", "R49",
+         chk_L20_affix_pool_covers_eq_slots),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -5280,6 +5419,8 @@ def main():
             active_checks.extend(ROUND_L18_CHECKS[r])
         if r in ROUND_L19_CHECKS:
             active_checks.extend(ROUND_L19_CHECKS[r])
+        if r in ROUND_L20_CHECKS:
+            active_checks.extend(ROUND_L20_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
