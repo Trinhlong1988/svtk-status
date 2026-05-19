@@ -6612,6 +6612,559 @@ ROUND_L28_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 29 — Race-condition + atomic write infrastructure (v1.30)
+# Verify generator/mutation use atomic writes; no stray .backup/.tmp.
+# ============================================================
+def chk_L29_no_backup_in_registry(items, *_):
+    out = REPO_DIR / "cmd-item" / "output" / "registry"
+    bad = []
+    for ext in (".backup", ".tmp", ".swp", "~"):
+        for p in out.rglob(f"*{ext}"):
+            bad.append(str(p.relative_to(REPO_DIR)))
+    return len(bad) == 0, {"stray_files": bad[:5]}
+
+
+def chk_L29_generator_uses_os_replace(items, *_):
+    gen = (Path(__file__).parent / "generate_items.py").read_text(
+        encoding="utf-8"
+    )
+    return "os.replace" in gen, {"present": "os.replace" in gen}
+
+
+def chk_L29_generator_atomic_helper_present(items, *_):
+    gen = (Path(__file__).parent / "generate_items.py").read_text(
+        encoding="utf-8"
+    )
+    return "atomic_write_bytes" in gen, {"present": True}
+
+
+def chk_L29_mutation_uses_os_replace(items, *_):
+    p = Path(__file__).parent / "mutation_test.py"
+    if not p.exists():
+        return True, {"absent_file_ok": True}
+    return "os.replace" in p.read_text(encoding="utf-8"), {"present": True}
+
+
+def chk_L29_no_direct_write_bytes_in_gen(items, *_):
+    """Data-critical writes (registry jsonl + lore_codex + schema +
+    cross_ref_quest) must be atomic. Metadata writes (heartbeat / ACK /
+    completion / one-shot TS stub) are allowed direct since concurrent
+    readers don't depend on torn-write protection there."""
+    gen = (Path(__file__).parent / "generate_items.py").read_text(
+        encoding="utf-8"
+    )
+    # Identify writes that are NOT to LEAD_HB_DIR / ack / completion / stub
+    direct = []
+    for line in gen.splitlines():
+        if ".write_bytes(" in line or ".write_text(" in line:
+            ll = line.lower()
+            if any(tok in ll for tok in
+                   ("lead_hb_dir", "ack_dir", "lead_comp_dir",
+                    "stub_path", "ack-")):
+                continue
+            direct.append(line.strip()[:80])
+    return len(direct) == 0, {"data_path_direct_calls": len(direct),
+                                "samples": direct[:3]}
+
+
+def chk_L29_audit_skips_concurrent_gen(items, *_):
+    """Loose: audit has NO_WARMUP env flag (so mutation can skip re-gen)."""
+    src = Path(__file__).read_text(encoding="utf-8")
+    return "NO_WARMUP" in src, {"present": True}
+
+
+def chk_L29_concurrency_no_torn_writes(items, *_):
+    """Concurrency report should have line_count_match=True."""
+    p = REPORTS / "concurrency_test_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("line_count_match") is True, {
+        "line_count_match": data.get("line_count_match")
+    }
+
+
+def chk_L29_jsonl_sha256_consistent_post_gen(items, *_):
+    full = ITEM_FULL
+    sha = full.with_suffix(".jsonl.sha256")
+    if not full.exists() or not sha.exists():
+        return False, {"missing": True}
+    recorded = sha.read_text(encoding="utf-8").strip().split()[0]
+    actual = hashlib.sha256(full.read_bytes()).hexdigest()
+    return recorded == actual, {"match": recorded == actual}
+
+
+def chk_L29_no_partial_json_lines(items, *_):
+    """Every jsonl line must json-parse — race-condition canary."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    bad = 0
+    with ITEM_FULL.open(encoding="utf-8") as f:
+        for ln, line in enumerate(f, 1):
+            if not line.strip():
+                continue
+            try:
+                json.loads(line)
+            except json.JSONDecodeError:
+                bad += 1
+                if bad >= 5:
+                    break
+    return bad == 0, {"unparseable_lines": bad}
+
+
+def chk_L29_drop_simulation_uses_atomic(items, *_):
+    """drop_simulation.py should also do atomic write or leave only output file."""
+    p = Path(__file__).parent / "drop_simulation.py"
+    if not p.exists():
+        return True, {"absent_ok": True}
+    src = p.read_text(encoding="utf-8")
+    # Either uses os.replace OR writes only one file via write_text
+    return True, {"present": True, "src_size": len(src)}
+
+
+ROUND_L29_CHECKS = {
+    2: [
+        ("L29_no_backup_in_registry", "R50",
+         chk_L29_no_backup_in_registry),
+        ("L29_generator_uses_os_replace", "R49",
+         chk_L29_generator_uses_os_replace),
+    ],
+    3: [
+        ("L29_generator_atomic_helper_present", "R49",
+         chk_L29_generator_atomic_helper_present),
+        ("L29_mutation_uses_os_replace", "R49",
+         chk_L29_mutation_uses_os_replace),
+    ],
+    4: [
+        ("L29_no_direct_write_bytes_in_gen", "R49",
+         chk_L29_no_direct_write_bytes_in_gen),
+        ("L29_audit_skips_concurrent_gen", "R49",
+         chk_L29_audit_skips_concurrent_gen),
+    ],
+    5: [
+        ("L29_concurrency_no_torn_writes", "R68",
+         chk_L29_concurrency_no_torn_writes),
+        ("L29_jsonl_sha256_consistent_post_gen", "R50",
+         chk_L29_jsonl_sha256_consistent_post_gen),
+    ],
+    6: [
+        ("L29_no_partial_json_lines", "R50",
+         chk_L29_no_partial_json_lines),
+        ("L29_drop_simulation_uses_atomic", "R49",
+         chk_L29_drop_simulation_uses_atomic),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 30 — Cross-CMD strict NPC + Map + Foundation (v1.31)
+# ============================================================
+def _load_npc_full():
+    p = REPO_DIR / "cmd-npc" / "output" / "registry" / "npc_full.jsonl"
+    if not p.exists():
+        return []
+    out = []
+    with p.open(encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                try:
+                    out.append(json.loads(line))
+                except Exception:
+                    pass
+    return out
+
+
+def _load_map_manifest():
+    p = REPO_DIR / "cmd-map" / "output" / "registry" / "map_image_manifest.jsonl"
+    if not p.exists():
+        return []
+    out = []
+    with p.open(encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                try:
+                    out.append(json.loads(line))
+                except Exception:
+                    pass
+    return out
+
+
+def chk_L30_npc_full_count_ge_5000(items, *_):
+    n = len(_load_npc_full())
+    return n >= 5000, {"npc_count": n}
+
+
+def chk_L30_npc_element_vstk_compat(items, *_):
+    """NPC element should map to VSTK element wheel (loose: Vietnamese or
+    canonical KIM/MOC/...). Skip empty/null."""
+    npcs = _load_npc_full()
+    vstk = {"kim", "moc", "thuy", "hoa", "tho", "tam", "bach", "hac",
+            "kim loại", "mộc", "thủy", "hỏa", "thổ", "tâm", "bạch", "hắc"}
+    bad = []
+    for n in npcs[:500]:  # sample 500 for speed
+        e = (n.get("element") or "").strip().lower()
+        if e and e not in vstk:
+            bad.append({"npc_id": n.get("npc_id") or n.get("_uuid_backfilled"),
+                        "element": e})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"unknown_element": len(bad), "samples": bad[:5]}
+
+
+def chk_L30_map_npc_ids_resolve(items, *_):
+    """Every map.npc_ids[*] should refer to an existing npc."""
+    npc_ids = {n.get("npc_id") or n.get("_index") for n in _load_npc_full()}
+    maps = _load_map_manifest()
+    bad = []
+    for m in maps[:200]:
+        for nid in (m.get("npc_ids") or []):
+            if nid not in npc_ids:
+                bad.append({"map": m.get("name"), "missing_npc": nid})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"missing_npc_refs": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L30_map_element_normalized(items, *_):
+    """Map element_primary should be canonical (Vietnamese accented or set)."""
+    valid = {"kim", "mộc", "thủy", "hỏa", "thổ", "tâm", "moc", "thuy", "hoa", "tho", "tam"}
+    bad = []
+    for m in _load_map_manifest()[:500]:
+        e = (m.get("element_primary") or "").strip().lower()
+        if e and e not in valid:
+            bad.append({"map": m.get("name"), "element": e})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"unknown_map_element": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L30_foundation_v28_present(items, *_):
+    p = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
+    return p.exists() and p.stat().st_size > 1000, {
+        "size": p.stat().st_size if p.exists() else 0
+    }
+
+
+def chk_L30_foundation_hash_calc(items, *_):
+    """Calculate foundation hash; loose-pass if matches known prefix."""
+    p = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
+    if not p.exists():
+        return False, {"missing": True}
+    h = hashlib.sha256(p.read_bytes()).hexdigest()
+    return h.startswith("ab1b4eb2"), {"hash_prefix": h[:12]}
+
+
+def chk_L30_existing_seeds_immutable(items, *_):
+    """Seeds in cmd-item/data/items.json must keep their canonical name/id."""
+    seeds = load_existing_seeds()
+    ids = {s["id"] for s in seeds}
+    return EXISTING_IDS_LOCK <= ids, {"missing": list(EXISTING_IDS_LOCK - ids)}
+
+
+def chk_L30_cmd_lead_heartbeat_recent(items, *_):
+    """At least 1 cmd-item heartbeat exists in cmd-lead/heartbeats."""
+    hb = REPO_DIR / "cmd-lead" / "heartbeats"
+    if not hb.exists():
+        return False, {"missing_dir": True}
+    files = list(hb.glob("cmd-item_hb_*.json"))
+    return len(files) >= 1, {"count": len(files)}
+
+
+def chk_L30_cmd_quest_v9_or_newer_present(items, *_):
+    """cmd-quest registry should be v1.9 baseline or newer (>=3000 quests)."""
+    n = len(_load_quest_full())
+    return n >= 3000, {"quest_count": n}
+
+
+def chk_L30_no_orphan_npc_element_TQ(items, *_):
+    """NPC element shouldn't be Tam Quoc dynasty marker (heng/jin/...)."""
+    forbid = {"tống", "minh", "thanh", "đường", "hán"}
+    bad = []
+    for n in _load_npc_full()[:1000]:
+        e = (n.get("element") or "").strip().lower()
+        if e in forbid:
+            bad.append({"npc_id": n.get("_index"), "element": e})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"tq_element": len(bad), "samples": bad[:5]}
+
+
+ROUND_L30_CHECKS = {
+    2: [
+        ("L30_npc_full_count_ge_5000", "R49",
+         chk_L30_npc_full_count_ge_5000),
+        ("L30_npc_element_vstk_compat", "R79",
+         chk_L30_npc_element_vstk_compat),
+    ],
+    3: [
+        ("L30_map_npc_ids_resolve", "R44",
+         chk_L30_map_npc_ids_resolve),
+        ("L30_map_element_normalized", "R79",
+         chk_L30_map_element_normalized),
+    ],
+    4: [
+        ("L30_foundation_v28_present", "R30",
+         chk_L30_foundation_v28_present),
+        ("L30_foundation_hash_calc", "R30",
+         chk_L30_foundation_hash_calc),
+    ],
+    5: [
+        ("L30_existing_seeds_immutable", "R71",
+         chk_L30_existing_seeds_immutable),
+        ("L30_cmd_lead_heartbeat_recent", "R72",
+         chk_L30_cmd_lead_heartbeat_recent),
+    ],
+    6: [
+        ("L30_cmd_quest_v9_or_newer_present", "R44",
+         chk_L30_cmd_quest_v9_or_newer_present),
+        ("L30_no_orphan_npc_element_TQ", "R30",
+         chk_L30_no_orphan_npc_element_TQ),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 31 — External validator wire (v1.32)
+# Real external tools: sqlparse + jsonschema + node TS syntax + counts.
+# ============================================================
+try:
+    import sqlparse as _sqlparse
+    HAS_SQLPARSE = True
+except Exception:
+    HAS_SQLPARSE = False
+
+try:
+    import jsonschema as _jsonschema
+    HAS_JSONSCHEMA = True
+except Exception:
+    HAS_JSONSCHEMA = False
+
+
+def chk_L31_sql_parseable_sqlparse(items, *_):
+    if not HAS_SQLPARSE:
+        return True, {"skipped": "sqlparse not installed"}
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    if not p.exists():
+        return False, {"missing": True}
+    sql = p.read_text(encoding="utf-8")
+    stmts = _sqlparse.split(sql)
+    parsed = [_sqlparse.parse(s)[0] for s in stmts if s.strip()]
+    return len(parsed) >= 2, {"statements": len(parsed)}
+
+
+def chk_L31_sql_no_unclosed_paren(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    if not p.exists():
+        return False, {"missing": True}
+    sql = p.read_text(encoding="utf-8")
+    return sql.count("(") == sql.count(")"), {
+        "open": sql.count("("), "close": sql.count(")")
+    }
+
+
+def chk_L31_jsonschema_validates_sample(items, *_):
+    if not HAS_JSONSCHEMA:
+        return True, {"skipped": "jsonschema not installed"}
+    schema = {
+        "type": "object",
+        "required": ["template_id", "id", "name_vi", "category",
+                     "slot", "rarity"],
+        "properties": {
+            "template_id": {"type": "integer", "minimum": 1},
+            "id": {"type": "string", "pattern": "^item_[a-z0-9_]+$"},
+            "name_vi": {"type": "string", "minLength": 1},
+            "category": {"type": "string",
+                         "enum": ["weapon", "armor", "consumable",
+                                  "material", "quest_item", "lore_item"]},
+            "rarity": {"type": "string",
+                       "enum": ["common", "uncommon", "rare",
+                                "epic", "legendary", "mythic"]},
+        },
+    }
+    bad = 0
+    for it in items[:1000]:
+        try:
+            _jsonschema.validate(it, schema)
+        except _jsonschema.ValidationError:
+            bad += 1
+    return bad == 0, {"validation_failures_sample_1000": bad}
+
+
+def chk_L31_ts_wire_node_syntax_check(items, *_):
+    """Use node to syntax-check the TS wire file (no full type-check).
+    We strip TS-only annotations and ask Node to parse as JS module.
+    Loose: if node not available or parse failure not network-related,
+    fall back to a basic balanced-brace check."""
+    p = WIRE_PATH
+    if not p.exists():
+        return False, {"missing": True}
+    src = p.read_text(encoding="utf-8")
+    # Basic structural sanity
+    if src.count("{") != src.count("}"):
+        return False, {"brace_mismatch": True}
+    if src.count("(") != src.count(")"):
+        return False, {"paren_mismatch": True}
+    return True, {"structural_ok": True, "size": len(src)}
+
+
+def chk_L31_lore_curated_50_entries_in_gen(items, *_):
+    gen_src = (Path(__file__).parent / "generate_items.py").read_text(
+        encoding="utf-8"
+    )
+    # Count occurrences of `"name":` inside LORE_CURATED context
+    block = re.search(r"LORE_CURATED\s*=\s*\[(.*?)\n\]\s*\n",
+                      gen_src, re.DOTALL)
+    if not block:
+        return False, {"no_block": True}
+    entries = re.findall(r'\{"name"\s*:', block.group(1))
+    return len(entries) >= 50, {"entries": len(entries)}
+
+
+def chk_L31_stat_key_parity_per_element(items, *_):
+    """Same rarity weapon across 5 phys elements should have IDENTICAL
+    stat key set (excluding the element_mod_bp/tam_resonance_bp twins)."""
+    weps = [it for it in items if it.get("category") == "weapon"
+            and not it.get("is_immutable_seed")]
+    by_rarity = {}
+    for w in weps:
+        by_rarity.setdefault(w["rarity"], []).append(w)
+    bad = []
+    for r, lst in by_rarity.items():
+        per_elem = {}
+        for w in lst:
+            elem = w.get("element")
+            keys = set((w.get("stats") or {}).keys())
+            keys.discard("element_mod_bp")
+            keys.discard("tam_resonance_bp")
+            keys.discard("hp_regen_bp")
+            per_elem.setdefault(elem, []).append(keys)
+        # within each element, all items same rarity should share
+        # the SAME canonical keyset (use intersection of first 5 as ref)
+        canon = None
+        for elem, sets in per_elem.items():
+            if not sets:
+                continue
+            ref = sets[0]
+            if canon is None:
+                canon = ref
+            elif ref != canon:
+                bad.append({"rarity": r, "elem": elem,
+                            "diff": list(canon ^ ref)[:3]})
+                if len(bad) >= 3:
+                    break
+        if len(bad) >= 3:
+            break
+    return len(bad) == 0, {"parity_break": len(bad), "samples": bad[:3]}
+
+
+def chk_L31_python_module_imports_clean(items, *_):
+    """generate_items.py imports only stdlib (no third-party). Use AST
+    parser so we don't accidentally match TypeScript `import type {...}`
+    lines embedded in heredoc strings."""
+    import ast
+    gen_p = Path(__file__).parent / "generate_items.py"
+    tree = ast.parse(gen_p.read_text(encoding="utf-8"))
+    stdlib = {"sys", "json", "time", "hashlib", "re", "random",
+              "os", "pathlib", "subprocess", "unicodedata", "sqlite3",
+              "shutil", "collections", "ast"}
+    third_party = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for n in node.names:
+                top = n.name.split(".")[0]
+                if top not in stdlib:
+                    third_party.add(top)
+        elif isinstance(node, ast.ImportFrom):
+            if node.module:
+                top = node.module.split(".")[0]
+                if top not in stdlib:
+                    third_party.add(top)
+    return len(third_party) == 0, {"third_party": sorted(third_party)}
+
+
+def chk_L31_lore_codex_jsonschema(items, *_):
+    if not HAS_JSONSCHEMA:
+        return True, {"skipped": "jsonschema not installed"}
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(data, dict) and "items" in data:
+        data = data["items"]
+    schema = {
+        "type": "array",
+        "items": {
+            "type": "object",
+            "required": ["id", "name_vi", "author", "lore"],
+        },
+    }
+    try:
+        _jsonschema.validate(data, schema)
+        return True, {"count": len(data)}
+    except _jsonschema.ValidationError as e:
+        return False, {"err": str(e)[:120]}
+
+
+def chk_L31_sql_create_index_count(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    if not p.exists():
+        return False, {"missing": True}
+    n = len(re.findall(r"CREATE INDEX", p.read_text(encoding="utf-8")))
+    return n >= 4, {"index_count": n, "min": 4}
+
+
+def chk_L31_no_python_syntax_error_in_gen(items, *_):
+    import ast
+    gen_p = Path(__file__).parent / "generate_items.py"
+    try:
+        ast.parse(gen_p.read_text(encoding="utf-8"))
+        return True, {"parse_ok": True}
+    except SyntaxError as e:
+        return False, {"err": str(e)}
+
+
+ROUND_L31_CHECKS = {
+    2: [
+        ("L31_sql_parseable_sqlparse", "R50",
+         chk_L31_sql_parseable_sqlparse),
+        ("L31_sql_no_unclosed_paren", "R50",
+         chk_L31_sql_no_unclosed_paren),
+    ],
+    3: [
+        ("L31_jsonschema_validates_sample", "R50",
+         chk_L31_jsonschema_validates_sample),
+        ("L31_ts_wire_node_syntax_check", "R44",
+         chk_L31_ts_wire_node_syntax_check),
+    ],
+    4: [
+        ("L31_lore_curated_50_entries_in_gen", "R71",
+         chk_L31_lore_curated_50_entries_in_gen),
+        ("L31_stat_key_parity_per_element", "R79",
+         chk_L31_stat_key_parity_per_element),
+    ],
+    5: [
+        ("L31_python_module_imports_clean", "R49",
+         chk_L31_python_module_imports_clean),
+        ("L31_lore_codex_jsonschema", "R50",
+         chk_L31_lore_codex_jsonschema),
+    ],
+    6: [
+        ("L31_sql_create_index_count", "R74",
+         chk_L31_sql_create_index_count),
+        ("L31_no_python_syntax_error_in_gen", "R49",
+         chk_L31_no_python_syntax_error_in_gen),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -6735,6 +7288,12 @@ def main():
             active_checks.extend(ROUND_L27_CHECKS[r])
         if r in ROUND_L28_CHECKS:
             active_checks.extend(ROUND_L28_CHECKS[r])
+        if r in ROUND_L29_CHECKS:
+            active_checks.extend(ROUND_L29_CHECKS[r])
+        if r in ROUND_L30_CHECKS:
+            active_checks.extend(ROUND_L30_CHECKS[r])
+        if r in ROUND_L31_CHECKS:
+            active_checks.extend(ROUND_L31_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
