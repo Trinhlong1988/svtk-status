@@ -8,7 +8,7 @@ REG = ROOT / "registry"
 
 ERAS = ["ly", "tran", "le", "tay_son", "nguyen"]
 BIOMES = ["forest", "mountain", "river", "plain", "sea", "capital", "village"]
-TARGET_MAPS = 7047
+TARGET_MAPS = 10000
 TARGET_SHARDS = 64
 
 CULTURAL_LOCK_REGEX = re.compile(r"[\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]")

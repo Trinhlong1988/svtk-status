@@ -1,6 +1,6 @@
 {
   "version": "deep_23_v1",
-  "timestamp": "20260519T144510",
+  "timestamp": "20260519T150146",
   "total": 23,
   "pass": 23,
   "fail": 0,
@@ -11,8 +11,8 @@
       "status": "PASS",
       "evidence": {
         "min": 1,
-        "max": 7047,
-        "count": 7047
+        "max": 10000,
+        "count": 10000
       }
     },
     {
@@ -65,18 +65,18 @@
       "status": "PASS",
       "evidence": {
         "expected": {
-          "ly": 1410,
-          "tran": 1410,
-          "le": 1409,
-          "tay_son": 1409,
-          "nguyen": 1409
+          "ly": 2000,
+          "tran": 2000,
+          "le": 2000,
+          "tay_son": 2000,
+          "nguyen": 2000
         },
         "actual": {
-          "ly": 1410,
-          "tran": 1410,
-          "le": 1409,
-          "tay_son": 1409,
-          "nguyen": 1409
+          "ly": 2000,
+          "tran": 2000,
+          "le": 2000,
+          "tay_son": 2000,
+          "nguyen": 2000
         }
       }
     },
@@ -94,8 +94,8 @@
       "status": "PASS",
       "evidence": {
         "delta": 1,
-        "min": 110,
-        "max": 111
+        "min": 156,
+        "max": 157
       }
     },
     {

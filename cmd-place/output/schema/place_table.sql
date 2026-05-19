@@ -1,5 +1,5 @@
 -- CMD_PLACE v1.0 schema
--- R8.3 UNIQUE constraints / R45 anti-dupe / R50 schema-strict 1..7047
+-- R8.3 UNIQUE constraints / R45 anti-dupe / R50 schema-strict 1..10000 (extended from 7047 — orphan fix v1.0.1)
 CREATE TABLE IF NOT EXISTS place_items (
     id INT PRIMARY KEY,
     map_id INT NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS place_items (
     UNIQUE(map_id),
     UNIQUE(natural_key),
     UNIQUE(uuid),
-    CHECK (map_id BETWEEN 1 AND 7047),
+    CHECK (map_id BETWEEN 1 AND 10000),
     CHECK (era IN ('ly','tran','le','tay_son','nguyen')),
     CHECK (biome IN ('forest','mountain','river','plain','sea','capital','village')),
     CHECK (shard_id BETWEEN 0 AND 63)
