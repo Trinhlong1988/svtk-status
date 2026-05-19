@@ -290,7 +290,7 @@ CREATE TABLE IF NOT EXISTS place_region (
 );
 """
     schema_path = OUTPUT_DIR / "schema" / "place_table.sql"
-    schema_path.write_text(schema_sql, encoding="utf-8")
+    schema_path.write_bytes(schema_sql.encode("utf-8"))
     write_sha256(schema_path)
 
     tests_code = '''"""CMD_PLACE v1.0 — registry tests (>=15)."""
@@ -437,7 +437,7 @@ if __name__ == "__main__":
     sys.exit(0 if fails == 0 else 1)
 '''
     tests_path = OUTPUT_DIR / "tests" / "place_tests.py"
-    tests_path.write_text(tests_code, encoding="utf-8")
+    tests_path.write_bytes(tests_code.encode("utf-8"))
     write_sha256(tests_path)
 
     return {
@@ -449,21 +449,24 @@ if __name__ == "__main__":
 
 
 def write_jsonl(path: Path, entries: list[dict]):
-    with open(path, "w", encoding="utf-8") as f:
+    # Force LF newline (Windows auto-translate \n → \r\n in text mode → break JSONL spec + skew SHA256)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
         for e in entries:
             f.write(json.dumps(e, ensure_ascii=False) + "\n")
     write_sha256(path)
 
 
 def write_json(path: Path, data: dict):
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    # Force LF for deterministic hash cross-platform
+    text = json.dumps(data, ensure_ascii=False, indent=2)
+    path.write_bytes(text.encode("utf-8") + b"\n")
     write_sha256(path)
 
 
 def write_sha256(path: Path):
     h = hashlib.sha256(path.read_bytes()).hexdigest()
     sp = path.with_suffix(path.suffix + ".sha256")
-    sp.write_text(f"{h}  {path.name}\n", encoding="utf-8")
+    sp.write_bytes(f"{h}  {path.name}\n".encode("utf-8"))
 
 
 def verify_foundation():

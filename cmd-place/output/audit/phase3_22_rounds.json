@@ -1,0 +1,278 @@
+{
+  "version": "phase3_22_v1",
+  "total": 22,
+  "pass": 22,
+  "fail": 0,
+  "high_severity_fail": 0,
+  "results": [
+    {
+      "round": 1,
+      "name": "QUEST.giver_scene_id range ⊆ [1, 10000]",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "total": 3000,
+        "int_count": 3000,
+        "out_of_range": 0,
+        "sample_oor": [],
+        "min": 5,
+        "max": 8991
+      }
+    },
+    {
+      "round": 2,
+      "name": "QUEST orphan giver_scene_id (no map exists)",
+      "status": "PASS",
+      "severity": "HIGH",
+      "evidence": {
+        "orphan_total": 0,
+        "unique_orphans": 0,
+        "top": []
+      }
+    },
+    {
+      "round": 3,
+      "name": "EVENT.giver_scene_id range ⊆ [1, 10000]",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "total": 600,
+        "int_count": 600,
+        "out_of_range": 0,
+        "sample_oor": [],
+        "min": 36,
+        "max": 8991
+      }
+    },
+    {
+      "round": 4,
+      "name": "EVENT orphan giver_scene_id",
+      "status": "PASS",
+      "severity": "HIGH",
+      "evidence": {
+        "orphan_total": 0,
+        "unique_orphans": 0,
+        "top": []
+      }
+    },
+    {
+      "round": 5,
+      "name": "ITEM.region values (info — taxonomy distinct from MAP era/biome)",
+      "status": "PASS",
+      "severity": "INFO",
+      "evidence": {
+        "item_region_unique": 18,
+        "top_regions": [
+          [
+            "Quảng Trị",
+            282
+          ],
+          [
+            "Quy Nhơn",
+            279
+          ],
+          [
+            "Đại La",
+            277
+          ],
+          [
+            "Chi Lăng",
+            276
+          ],
+          [
+            "Lam Sơn",
+            273
+          ],
+          [
+            "Gia Định",
+            273
+          ],
+          [
+            "Thiên Trường",
+            272
+          ],
+          [
+            "Bạch Đằng",
+            265
+          ]
+        ],
+        "overlap_with_era": [],
+        "overlap_with_biome": []
+      }
+    },
+    {
+      "round": 6,
+      "name": "SKILL no scene_id/map_id/location_id ref (confirm)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "violations": 0,
+        "sample": null
+      }
+    },
+    {
+      "round": 7,
+      "name": "DIALOG no scene/map/loc ref (sample 500)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "round": 8,
+      "name": "UUID universe collision MAP × NPC (must be empty)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "collisions": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 9,
+      "name": "RANDOMIZED FUZZ 100 byte-flips: every flip detected by hash change",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "detected": 100,
+        "skipped": 0
+      }
+    },
+    {
+      "round": 10,
+      "name": "SQL FULL INSERT 10000 maps → all CHECK + UNIQUE pass",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "inserted": 10000,
+        "expected": 10000
+      }
+    },
+    {
+      "round": 11,
+      "name": "UTF-8 strict decode (no surrogate/malformed byte)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 12,
+      "name": "shard_code R\\d{2} ↔ shard_id bijection (64 unique)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": [],
+        "unique_codes": 64
+      }
+    },
+    {
+      "round": 13,
+      "name": "Meta-hash of all .sha256 files computed",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "sha256_file_count": 12,
+        "meta_hash": "423dcce159cc0e2c05fe812e964869b9..."
+      }
+    },
+    {
+      "round": 14,
+      "name": "Determinism N=5 replay (1 initial + 4 rebuilds, all hash identical)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "sequences": 5,
+        "all_identical": true,
+        "files": [
+          "region.jsonl",
+          "map_registry.jsonl",
+          "shard_config.json"
+        ]
+      }
+    },
+    {
+      "round": 15,
+      "name": "Type registry strict per map field",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": [],
+        "fields_checked": 15
+      }
+    },
+    {
+      "round": 16,
+      "name": "Shard biome coverage entropy (Shannon) avg high",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "avg_entropy": 2.8067,
+        "H_max_7biomes": 2.8074,
+        "ratio": 0.9998
+      }
+    },
+    {
+      "round": 17,
+      "name": "Chi-square shard distribution (uniform) χ² < 99 (p>0.001)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "chi2": 0.0768,
+        "df": 63,
+        "critical_p_001": 99.23,
+        "expected_per_shard": 156.25
+      }
+    },
+    {
+      "round": 18,
+      "name": "tsonline pool dependency: 1048 unique refs cycled",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "unique_refs": 1048,
+        "min_uses": 9,
+        "max_uses": 10
+      }
+    },
+    {
+      "round": 19,
+      "name": "Idempotent build cycle 3x (R8 hard guarantee)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "diffs": {}
+      }
+    },
+    {
+      "round": 20,
+      "name": "JSONL newline strict (\\n only, end with \\n, no blank line)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 21,
+      "name": "Field order deterministic: json.dumps re-emit == source line",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "mismatches": []
+      }
+    },
+    {
+      "round": 22,
+      "name": "Dense map_id [1..10000] no skip",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "missing": [],
+        "count_missing": 0
+      }
+    }
+  ]
+}

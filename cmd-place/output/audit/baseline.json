@@ -1,6 +1,6 @@
 {
-  "registry/map_registry.jsonl": "e1c0a1251edcba8a819b215fc689b0fae4b011af4e21d0dc1b0e2f753f4fe04d",
-  "registry/region.jsonl": "3a6df026ee0595b46b2bf5dabfb8849c8ec65b89ee13cebf6fafbfcf145f37d2",
-  "registry/shard_config.json": "dfba260a39541d0fe54ca20df7fb37efa64f5531e48c06e22aac224131648b99",
-  "schema/place_table.sql": "335327782941d22a5416be0a916dbe0138e5058246978b64e7b1d89c9b3f3809"
+  "registry/map_registry.jsonl": "c2b4cf2fabebe035eef1317ce11b544a88b9d115488879b29e07331901a0396a",
+  "registry/region.jsonl": "ed9a3b16b2bebd10b1967ba1fb68358f59352c1c50270f9b4c66379f2417907f",
+  "registry/shard_config.json": "f39c169b96c6faf09785a8d8fefe487aa1de6251066a290b29763515ddd1b83a",
+  "schema/place_table.sql": "f3b6a967805737913b935fc2ce55385c60de6cd5b7d9f26b7b65e9ab2bc53a08"
 }
