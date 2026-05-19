@@ -1,0 +1,28 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_existing_era_fprefix_dominance",
+  "evidence": {
+    "rule_anchor": "content distribution — main historical era under-represented in existing source",
+    "total_existing": 438,
+    "fprefix_count": 234,
+    "fprefix_pct": 53.4,
+    "g1_count": 121,
+    "g1_pct": 27.6,
+    "main_era_count": 83,
+    "main_era_pct": 18.9,
+    "per_era": {
+      "f1": 178,
+      "g1": 121,
+      "tran": 47,
+      "ly": 26,
+      "f2": 18,
+      "f3": 16,
+      "f4": 13,
+      "nguyen": 10,
+      "f5": 9
+    },
+    "remediation": "R71.1 source immutable. Generated 9562 NPCs balanced via pick_era_balanced() with main-era forcing. Future source regen should enrich main historical era coverage from 16.7% baseline."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-132930"
+}

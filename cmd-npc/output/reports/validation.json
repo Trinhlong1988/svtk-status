@@ -1,6 +1,6 @@
 {
-  "passed": 110,
-  "total": 110,
+  "passed": 125,
+  "total": 125,
   "pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -335,7 +335,10 @@
           "round_161_170",
           "round_171_180",
           "round_181_190",
+          "round_191_200",
           "round_1_10",
+          "round_201_210",
+          "round_211_220",
           "round_21_30",
           "round_31_40",
           "round_41_50",
@@ -547,7 +550,7 @@
       "name": "heartbeat_file_present_R111",
       "ok": true,
       "evidence": {
-        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-130507.json",
+        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-132930.json",
         "exists": true
       }
     },
@@ -557,7 +560,7 @@
       "evidence": {
         "count": 1,
         "files": [
-          "BUILDING-npc_extend_to_10000-20260519-130507.json"
+          "BUILDING-npc_extend_to_10000-20260519-132930.json"
         ]
       }
     },
@@ -841,6 +844,109 @@
       "evidence": {
         "actual": 165,
         "expected": 165
+      }
+    },
+    {
+      "name": "historical_bg_min_length_R191",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "cmd_skill_output_present_R192",
+      "ok": true,
+      "evidence": {
+        "path": "cmd-skill\\output\\registry\\skill_full.jsonl"
+      }
+    },
+    {
+      "name": "cmd_quest_output_present_R193",
+      "ok": true,
+      "evidence": {
+        "path": "cmd-quest\\output\\registry\\quest_full.jsonl"
+      }
+    },
+    {
+      "name": "pet_master_all_fields_R194",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "quest_giver_can_give_R195",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "sql_create_table_R201",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "sql_primary_key_R202",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "sql_balanced_parens_R203",
+      "ok": true,
+      "evidence": {
+        "open": 50,
+        "close": 50
+      }
+    },
+    {
+      "name": "sql_ends_semicolon_R204",
+      "ok": true,
+      "evidence": {
+        "last_50": "AD','IN_TRANSFER')),\n    UNIQUE (instance_uuid)\n);"
+      }
+    },
+    {
+      "name": "sql_element_check_R205",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "build_duration_nonneg_R211",
+      "ok": true,
+      "evidence": {
+        "duration_sec": 0
+      }
+    },
+    {
+      "name": "npc_full_size_min_R212",
+      "ok": true,
+      "evidence": {
+        "size_bytes": 7549119,
+        "min_threshold": 1000000
+      }
+    },
+    {
+      "name": "validation_checks_count_self_R213",
+      "ok": true,
+      "evidence": {
+        "current_checks_count": 120
+      }
+    },
+    {
+      "name": "metrics_ts_self_R214",
+      "ok": true,
+      "evidence": {
+        "build_ts": "20260519-132930",
+        "metrics_ts": "20260519-132750"
+      }
+    },
+    {
+      "name": "audit_history_round_count_R215",
+      "ok": true,
+      "evidence": {
+        "prior_count": 22,
+        "post_build_expected": 22
       }
     },
     {
