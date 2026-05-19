@@ -119,10 +119,10 @@ def setup():
 
     set_correlation_context(cmd_id='QUEST', cycle_id=str(uuid.uuid4()),
                             trace_id=str(uuid.uuid4()), attempt=0,
-                            foundation_version='v2.6.0')
+                            foundation_version='v2.8.0')
     log.configure(CMD_NAME)
 
-    fp = Path('SVTK_FOUNDATION_v2.6.0.md')
+    fp = Path('foundation/SVTK_FOUNDATION_v2.8.0.md')
     if not fp.exists() or hashlib.sha256(fp.read_bytes()).hexdigest() != EXPECTED_FOUNDATION_HASH:
         log.critical('foundation_verify_failed')
         sys.exit(99)
@@ -444,7 +444,7 @@ def write_outputs(quests, chains):
         json.dumps(chains, indent=2, ensure_ascii=False), encoding='utf-8'
     )
 
-    sql = '''-- Quest schema — Foundation v2.6.0
+    sql = '''-- Quest schema — Foundation v2.8.0
 CREATE TABLE IF NOT EXISTS quests (
     quest_id            INTEGER PRIMARY KEY,
     category            VARCHAR(16) NOT NULL,

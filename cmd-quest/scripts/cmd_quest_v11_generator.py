@@ -28,8 +28,8 @@ TARGET_GENERATED = TARGET_QUEST - TOTAL_CATEGORIZED  # 2412
 ERAS = ['ly', 'tran', 'le', 'tay_son', 'nguyen']
 OBJECTIVE_TYPES = ['kill', 'collect', 'deliver', 'escort', 'talk', 'explore']
 
-# Brief expected hash (drift documented in honest_gaps)
-EXPECTED_FOUNDATION_HASH = "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467"
+# Foundation v2.8.0 actual hash on main (post-rotation 2026-05-19, cycle 50)
+EXPECTED_FOUNDATION_HASH = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
 
 CYCLE_START = time.time()
 
