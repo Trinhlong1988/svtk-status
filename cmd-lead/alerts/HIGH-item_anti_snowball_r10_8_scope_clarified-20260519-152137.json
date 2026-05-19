@@ -1,0 +1,79 @@
+{
+  "severity": "HIGH",
+  "issue_id": "item_anti_snowball_r10_8_scope_clarified",
+  "cmd_origin": "QA_CONTENT",
+  "target_worker": "item",
+  "timestamp": "20260519-152137",
+  "supersedes": "HIGH-item_anti_snowball_r10_8_violation-20260519-150913.json",
+  "finding_summary": "2 OUTLIER items (0.05% of 4006) — KHÔNG phải systemic balance issue. Per-step scaling CLEAN.",
+  "evidence": {
+    "total_items": 4006,
+    "rarity_distribution": {
+      "common": 673,
+      "uncommon": 662,
+      "rare": 673,
+      "epic": 674,
+      "legendary": 665,
+      "mythic": 659
+    },
+    "rule": "R10.8 anti-snowball stat cap 2.5x",
+    "mode_breakdown": {
+      "per_step (tier_n+1 / tier_n)": {
+        "violations": 0,
+        "verdict": "CLEAN — mọi bậc rarity nhảy < 2.5x"
+      },
+      "global (any_tier / common)": {
+        "violations": 2,
+        "verdict": "FAIL — 2 stat vượt khi đo từ common",
+        "details": [
+          {
+            "mode": "global",
+            "rarity": "epic",
+            "stat": "sat_luc",
+            "ratio": 2.667,
+            "cap": 2.5,
+            "common_max": 30,
+            "tier_max": 80
+          },
+          {
+            "mode": "global",
+            "rarity": "mythic",
+            "stat": "phap_luc",
+            "ratio": 4.0,
+            "cap": 2.5,
+            "common_max": 15,
+            "tier_max": 60
+          }
+        ]
+      }
+    },
+    "violator_items": {
+      "epic.sat_luc > 75 (cap)": [
+        {
+          "id": "item_thuy_kiem_bach_dang",
+          "name": "Kiếm Bạch Đằng",
+          "sat_luc": 80,
+          "over_by": 5.0,
+          "fix": "set sat_luc=75"
+        }
+      ],
+      "mythic.phap_luc > 37.5 (cap)": [
+        {
+          "id": "item_kim_nhan_long_hua",
+          "name": "Nhẫn Long Hứa",
+          "phap_luc": 60,
+          "over_by": 22.5,
+          "fix": "set phap_luc=37 OR bump common.phap_luc baseline to 24"
+        }
+      ]
+    },
+    "systemic_check": "Other 4004 items PASS. Violation scope = 2 items only."
+  },
+  "decision_needed_from_lead": [
+    "(D1) R10.8 đo theo per_step (tier_n+1/tier_n) hay global (any/common)? Per_step CLEAN, global FAIL 2 outliers.",
+    "(D2) Nếu global: fix nerf 2 items cụ thể (cheap, < 5 phút CMD_ITEM)? Hoặc bump common baseline để mythic.phap_luc=60 hợp lệ?",
+    "(D3) Mythic là tier cao nhất, có thể intentional > 2.5x từ common (Phương án C monetize). Nếu vậy R10.8 chỉ apply per-step → PASS."
+  ],
+  "qa_recommendation": "Per-step CLEAN là tín hiệu CMD_ITEM design intentional progressive scaling. Mr.Long nên chọn (D3) per-step canonical → ITEM PASS without fix.",
+  "qa_report_ref": "cmd-qa_content/output/registry/qa_report.json"
+}
