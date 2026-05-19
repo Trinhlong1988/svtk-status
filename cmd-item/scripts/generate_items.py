@@ -413,6 +413,19 @@ def load_existing_seeds() -> list:
         "tieu_hao": "consumable", "nguyen_lieu": "material",
         "nhiem_vu": "quest_item", "co_vat": "lore_item",
     }
+    # B39 v1.31 fix: 6 immutable seeds (items.json) khuyết era_code field.
+    # R71 says IMMUTABLE — KHÔNG được sửa items.json. Fix here by deriving
+    # era_code from era display string (1:1 lookup, deterministic).
+    ERA_DISPLAY_TO_CODE = {
+        "Hùng Vương": "hong_bang",
+        "An Dương Vương": "au_lac",
+        "Đinh": "dinh",
+        "Lý": "ly",
+        "Trần": "tran",
+        "Lê": "le",
+        "Tây Sơn": "tay_son",
+        "Nguyễn": "nguyen",
+    }
     normalized = []
     for idx, s in enumerate(seeds, start=1):
         cat = SLOT_TO_CAT.get(s.get("slot", ""), "armor")
@@ -427,6 +440,10 @@ def load_existing_seeds() -> list:
         item.setdefault("sell_price_gold", 50)
         item.setdefault("level_min", 1)
         item.setdefault("affixes", [])
+        # B39: backfill era_code from era display
+        if not item.get("era_code"):
+            era_str = item.get("era", "")
+            item["era_code"] = ERA_DISPLAY_TO_CODE.get(era_str, "ly")
         item["is_immutable_seed"] = True
         normalized.append(item)
     return normalized

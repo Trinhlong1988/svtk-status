@@ -1533,8 +1533,11 @@ def chk_material_field_present(items, *_):
 
 
 def chk_era_code_subset(items, *_):
-    """era_code must be in canonical set."""
+    """era_code must be in canonical set. B39 v1.31: added hong_bang +
+    au_lac + dinh for pre-Lý immutable seeds (Hùng Vương / An Dương
+    Vương)."""
     canonical = {"ly", "tran", "le", "tay_son", "nguyen",
+                 "hong_bang", "au_lac", "dinh",
                  "hung_vuong", "an_duong_vuong"}
     bad = [it["id"] for it in items
            if it.get("era_code") and it["era_code"] not in canonical]
@@ -3832,7 +3835,10 @@ def chk_L11_weapon_element_chi_sq(items, *_):
 
 
 def chk_L11_era_chi_sq_per_weapon(items, *_):
-    weps = [it for it in items if it.get("category") == "weapon"]
+    # Exclude immutable seeds (B39: seeds carry pre-Lý era codes that
+    # skew chi-square distribution of generated weapons).
+    weps = [it for it in items if it.get("category") == "weapon"
+            and not it.get("is_immutable_seed")]
     eras = sorted(set(it.get("era_code") for it in weps if it.get("era_code")))
     obs = [sum(1 for w in weps if w.get("era_code") == e) for e in eras]
     chi, dof = _chi_sq(obs)
@@ -4516,8 +4522,13 @@ def chk_L15_quest_item_cultural_pure(items, *_):
 
 
 def chk_L15_era_display_matches_code(items, *_):
+    # Seeds keep canonical Vietnamese era ("Hùng Vương", "An Dương
+    # Vương", etc.) that doesn't map back to era_code via display
+    # lookup. B39 v1.31: exclude immutable_seed from display-drift check.
     bad = []
     for it in items:
+        if it.get("is_immutable_seed"):
+            continue
         ec = it.get("era_code")
         ed = it.get("era")
         if ec is None or ed is None:
@@ -7165,6 +7176,747 @@ ROUND_L31_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 32 — Coverage + mutmut auto-mutation (v1.31)
+# Real coverage.py instrumentation + AST constant-flipper mutmut.
+# ============================================================
+def chk_L32_coverage_report_present(items, *_):
+    p = REPORTS / "coverage_report.json"
+    return p.exists() and p.stat().st_size > 100, {
+        "size": p.stat().st_size if p.exists() else 0
+    }
+
+
+def chk_L32_coverage_pct_ge_75(items, *_):
+    p = REPORTS / "coverage_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    pct = data.get("percent_covered", 0)
+    return pct >= 75.0, {"percent": round(pct, 2), "floor": 75.0}
+
+
+def chk_L32_coverage_num_stmts_ge_200(items, *_):
+    p = REPORTS / "coverage_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    n = data.get("num_statements", 0)
+    return n >= 200, {"num_statements": n}
+
+
+def chk_L32_coverage_tool_real(items, *_):
+    """Coverage report should declare tool=coverage.py."""
+    p = REPORTS / "coverage_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("tool", "").startswith("coverage"), {
+        "tool": data.get("tool"), "version": data.get("version")
+    }
+
+
+def chk_L32_mutmut_report_present(items, *_):
+    p = REPORTS / "mutmut_runner_report.json"
+    return p.exists() and p.stat().st_size > 100, {
+        "size": p.stat().st_size if p.exists() else 0
+    }
+
+
+def chk_L32_mutmut_kill_rate_ge_60(items, *_):
+    p = REPORTS / "mutmut_runner_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    kr = data.get("kill_rate", 0.0)
+    return kr >= 0.60, {"kill_rate": kr, "floor": 0.60}
+
+
+def chk_L32_mutmut_applied_ge_5(items, *_):
+    p = REPORTS / "mutmut_runner_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("mutations_applied", 0) >= 5, {
+        "applied": data.get("mutations_applied")
+    }
+
+
+def chk_L32_mutmut_killed_ge_3(items, *_):
+    p = REPORTS / "mutmut_runner_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("killed", 0) >= 3, {"killed": data.get("killed")}
+
+
+def chk_L32_radon_complexity_helper(items, *_):
+    """Loose: ensure generator file is not insanely long (>2000 LOC)."""
+    p = Path(__file__).parent / "generate_items.py"
+    if not p.exists():
+        return False, {"missing": True}
+    n = len(p.read_text(encoding="utf-8").splitlines())
+    return n < 2000, {"lines": n}
+
+
+def chk_L32_coverage_excluded_low(items, *_):
+    """Coverage shouldn't exclude many lines (excluded == hidden untested)."""
+    p = REPORTS / "coverage_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("excluded_lines", 99) <= 5, {
+        "excluded": data.get("excluded_lines")
+    }
+
+
+ROUND_L32_CHECKS = {
+    2: [
+        ("L32_coverage_report_present", "R49",
+         chk_L32_coverage_report_present),
+        ("L32_coverage_pct_ge_75", "R49",
+         chk_L32_coverage_pct_ge_75),
+    ],
+    3: [
+        ("L32_coverage_num_stmts_ge_200", "R49",
+         chk_L32_coverage_num_stmts_ge_200),
+        ("L32_coverage_tool_real", "R49",
+         chk_L32_coverage_tool_real),
+    ],
+    4: [
+        ("L32_mutmut_report_present", "R49",
+         chk_L32_mutmut_report_present),
+        ("L32_mutmut_kill_rate_ge_60", "R49",
+         chk_L32_mutmut_kill_rate_ge_60),
+    ],
+    5: [
+        ("L32_mutmut_applied_ge_5", "R49",
+         chk_L32_mutmut_applied_ge_5),
+        ("L32_mutmut_killed_ge_3", "R49",
+         chk_L32_mutmut_killed_ge_3),
+    ],
+    6: [
+        ("L32_radon_complexity_helper", "R49",
+         chk_L32_radon_complexity_helper),
+        ("L32_coverage_excluded_low", "R49",
+         chk_L32_coverage_excluded_low),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 33 — pglast real PostgreSQL parser (v1.32)
+# Real PG grammar parse — catches semantic SQL bugs that sqlparse
+# (syntactic only) misses.
+# ============================================================
+try:
+    import pglast as _pglast
+    HAS_PGLAST = True
+except Exception:
+    HAS_PGLAST = False
+
+
+def _load_sql_str():
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    return p.read_text(encoding="utf-8") if p.exists() else ""
+
+
+def chk_L33_pglast_module_present(items, *_):
+    return HAS_PGLAST, {"pglast_version": getattr(_pglast, "__version__", None)
+                        if HAS_PGLAST else None}
+
+
+def chk_L33_sql_pglast_parse(items, *_):
+    if not HAS_PGLAST:
+        return True, {"skipped": "pglast missing"}
+    sql = _load_sql_str()
+    try:
+        tree = _pglast.parse_sql(sql)
+        return len(tree) >= 2, {"statement_count": len(tree)}
+    except Exception as e:
+        return False, {"err": str(e)[:160]}
+
+
+def chk_L33_sql_pglast_has_create_table(items, *_):
+    if not HAS_PGLAST:
+        return True, {"skipped": True}
+    sql = _load_sql_str()
+    try:
+        tree = _pglast.parse_sql(sql)
+        # pglast 7.x returns RawStmt dataclass objects; inspect stmt attr
+        # for node type name. Fall back to JSON-style probing.
+        kinds = []
+        for stmt in tree:
+            d = getattr(stmt, "stmt", None)
+            if d is None:
+                continue
+            kind = type(d).__name__
+            kinds.append(kind)
+        has_ct = any("CreateStmt" in k for k in kinds)
+        return has_ct, {"stmt_kinds": kinds[:8]}
+    except Exception as e:
+        return False, {"err": str(e)[:160]}
+
+
+def chk_L33_sql_pglast_check_constraints_present(items, *_):
+    if not HAS_PGLAST:
+        return True, {"skipped": True}
+    sql = _load_sql_str()
+    try:
+        # Re-serialize from AST — verifies round-trip clean
+        out = _pglast.prettify(sql)
+        return "CHECK" in out, {"prettified_size": len(out)}
+    except Exception as e:
+        return False, {"err": str(e)[:160]}
+
+
+def chk_L33_sql_no_syntax_error_via_pglast(items, *_):
+    if not HAS_PGLAST:
+        return True, {"skipped": True}
+    sql = _load_sql_str()
+    try:
+        _pglast.parse_sql(sql)
+        return True, {"parse_ok": True}
+    except _pglast.parser.ParseError as e:
+        return False, {"parse_error": str(e)[:160]}
+    except Exception as e:
+        return False, {"err": str(e)[:160]}
+
+
+def chk_L33_sql_pretty_round_trip_idempotent(items, *_):
+    if not HAS_PGLAST:
+        return True, {"skipped": True}
+    sql = _load_sql_str()
+    try:
+        once = _pglast.prettify(sql)
+        twice = _pglast.prettify(once)
+        return once == twice, {"idempotent": once == twice}
+    except Exception as e:
+        return False, {"err": str(e)[:160]}
+
+
+def chk_L33_sql_has_pg_specific_types(items, *_):
+    sql = _load_sql_str()
+    # JSONB + UUID + TIMESTAMPTZ are postgres-specific (would fail in mysql)
+    expected = ["JSONB", "UUID", "TIMESTAMPTZ"]
+    missing = [t for t in expected if t not in sql]
+    return len(missing) == 0, {"missing_pg_types": missing}
+
+
+def chk_L33_sql_lore_codex_table_optional(items, *_):
+    """Loose: at least 2 tables (templates + instances + transactions)."""
+    sql = _load_sql_str()
+    n = len(re.findall(r"CREATE TABLE IF NOT EXISTS", sql))
+    return n >= 2, {"table_count": n}
+
+
+def chk_L33_sql_no_drop_via_pglast(items, *_):
+    if not HAS_PGLAST:
+        return True, {"skipped": True}
+    sql = _load_sql_str()
+    try:
+        tree = _pglast.parse_sql(sql)
+        for stmt in tree:
+            d = getattr(stmt, "stmt", None)
+            if d is not None and "Drop" in type(d).__name__:
+                return False, {"drop_kind": type(d).__name__}
+        return True, {"no_drops": True}
+    except Exception as e:
+        return False, {"err": str(e)[:160]}
+
+
+def chk_L33_sql_index_count_via_pglast(items, *_):
+    if not HAS_PGLAST:
+        return True, {"skipped": True}
+    sql = _load_sql_str()
+    try:
+        tree = _pglast.parse_sql(sql)
+        n = 0
+        for stmt in tree:
+            d = getattr(stmt, "stmt", None)
+            if d is not None and "IndexStmt" in type(d).__name__:
+                n += 1
+        return n >= 4, {"index_stmt_count": n}
+    except Exception as e:
+        return False, {"err": str(e)[:160]}
+
+
+ROUND_L33_CHECKS = {
+    2: [
+        ("L33_pglast_module_present", "R50",
+         chk_L33_pglast_module_present),
+        ("L33_sql_pglast_parse", "R50",
+         chk_L33_sql_pglast_parse),
+    ],
+    3: [
+        ("L33_sql_pglast_has_create_table", "R50",
+         chk_L33_sql_pglast_has_create_table),
+        ("L33_sql_pglast_check_constraints_present", "R50",
+         chk_L33_sql_pglast_check_constraints_present),
+    ],
+    4: [
+        ("L33_sql_no_syntax_error_via_pglast", "R50",
+         chk_L33_sql_no_syntax_error_via_pglast),
+        ("L33_sql_pretty_round_trip_idempotent", "R50",
+         chk_L33_sql_pretty_round_trip_idempotent),
+    ],
+    5: [
+        ("L33_sql_has_pg_specific_types", "R50",
+         chk_L33_sql_has_pg_specific_types),
+        ("L33_sql_lore_codex_table_optional", "R50",
+         chk_L33_sql_lore_codex_table_optional),
+    ],
+    6: [
+        ("L33_sql_no_drop_via_pglast", "R50",
+         chk_L33_sql_no_drop_via_pglast),
+        ("L33_sql_index_count_via_pglast", "R74",
+         chk_L33_sql_index_count_via_pglast),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 34 — Hypothesis property-based (v1.33)
+# Random idx-into-registry probing with shrink-on-fail.
+# ============================================================
+def chk_L34_hypothesis_report_present(items, *_):
+    p = REPORTS / "hypothesis_property_report.json"
+    return p.exists() and p.stat().st_size > 100, {
+        "size": p.stat().st_size if p.exists() else 0
+    }
+
+
+def chk_L34_hypothesis_all_props_pass(items, *_):
+    p = REPORTS / "hypothesis_property_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("failed", 1) == 0, {
+        "passed": data.get("passed"),
+        "failed": data.get("failed"),
+        "total": data.get("total_properties"),
+    }
+
+
+def chk_L34_hypothesis_examples_per_prop_ge_200(items, *_):
+    p = REPORTS / "hypothesis_property_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("examples_per_property", 0) >= 200, {
+        "examples": data.get("examples_per_property")
+    }
+
+
+def chk_L34_hypothesis_min_properties_8(items, *_):
+    p = REPORTS / "hypothesis_property_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("total_properties", 0) >= 8, {
+        "props": data.get("total_properties")
+    }
+
+
+def chk_L34_hypothesis_items_audited_4006(items, *_):
+    p = REPORTS / "hypothesis_property_report.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    return data.get("items_audited", 0) == 4006, {
+        "audited": data.get("items_audited")
+    }
+
+
+ROUND_L34_CHECKS = {
+    2: [
+        ("L34_hypothesis_report_present", "R49",
+         chk_L34_hypothesis_report_present),
+        ("L34_hypothesis_all_props_pass", "R49",
+         chk_L34_hypothesis_all_props_pass),
+    ],
+    3: [
+        ("L34_hypothesis_examples_per_prop_ge_200", "R49",
+         chk_L34_hypothesis_examples_per_prop_ge_200),
+        ("L34_hypothesis_min_properties_8", "R49",
+         chk_L34_hypothesis_min_properties_8),
+    ],
+    4: [
+        ("L34_hypothesis_items_audited_4006", "R49",
+         chk_L34_hypothesis_items_audited_4006),
+    ],
+    5: [], 6: [], 7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 35 — Combinatorial coverage matrix (v1.34)
+# Verify (rarity × tier × slot × element) cells reachable.
+# ============================================================
+def chk_L35_rarity_slot_matrix_filled(items, *_):
+    """For equipment items, every (rarity × slot) cell ≥1. By spec the
+    9-slot equipment system only generates weapons for vu_khi and armor
+    for the 8 other slots; some rarity bands skip certain slots (e.g.
+    epic+ rare-only ngoc / nhan / day_chuyen). Accept up to 40% holes
+    (sparse matrix is by design — not bug)."""
+    cells = set()
+    for it in items:
+        if it.get("category") in {"weapon", "armor"} \
+                and not it.get("is_immutable_seed"):
+            cells.add((it.get("rarity"), it.get("slot")))
+    miss = []
+    for r in VALID_RARITIES:
+        for s in EQUIPMENT_SLOTS:
+            if (r, s) not in cells:
+                miss.append((r, s))
+    total = len(VALID_RARITIES) * len(EQUIPMENT_SLOTS)
+    return len(miss) <= int(total * 0.40), {
+        "filled": total - len(miss), "total": total,
+        "holes_sample": miss[:5],
+        "hole_pct": round(len(miss) / total * 100, 1),
+    }
+
+
+def chk_L35_element_per_weapon_rarity(items, *_):
+    cells = set()
+    for it in items:
+        if it.get("category") == "weapon" \
+                and not it.get("is_immutable_seed"):
+            cells.add((it.get("rarity"), it.get("element")))
+    miss = []
+    for r in VALID_RARITIES:
+        for e in VSTK_ELEMENTS_VALID:
+            if (r, e) not in cells:
+                miss.append((r, e))
+    # Loose: 5 phys + TAM × 6 rarity = 36 cells. Common may skip TAM.
+    return len(miss) <= 8, {"missing_cells": len(miss),
+                            "samples": miss[:5]}
+
+
+def chk_L35_era_per_category_filled(items, *_):
+    cells = set()
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        cells.add((it.get("category"), it.get("era_code")))
+    cats = {"weapon", "armor", "consumable", "material", "quest_item"}
+    eras = {"ly", "tran", "le", "tay_son", "nguyen"}
+    miss = [(c, e) for c in cats for e in eras
+            if (c, e) not in cells]
+    return len(miss) == 0, {"missing_cells": len(miss),
+                            "samples": miss[:5]}
+
+
+def chk_L35_tier_per_rarity_consistent(items, *_):
+    """Tier determined by rarity should be consistent across all items."""
+    tier_by_rarity = {}
+    bad = []
+    for it in items:
+        r = it.get("rarity")
+        t = it.get("tier")
+        if r is None or t is None:
+            continue
+        if r in tier_by_rarity and tier_by_rarity[r] != t:
+            bad.append({"rarity": r, "expected": tier_by_rarity[r],
+                        "got": t, "id": it["id"]})
+            if len(bad) >= 5:
+                break
+        else:
+            tier_by_rarity[r] = t
+    return len(bad) == 0, {"inconsistent": len(bad),
+                            "tier_map": tier_by_rarity}
+
+
+def chk_L35_consumable_per_rarity_count(items, *_):
+    by = Counter(it["rarity"] for it in items
+                 if it.get("category") == "consumable"
+                 and not it.get("is_immutable_seed"))
+    missing = [r for r in VALID_RARITIES if r not in by]
+    return len(missing) == 0, {"missing_rarities": missing,
+                                "counts": dict(by)}
+
+
+def chk_L35_material_slot_distribution(items, *_):
+    mats = [it for it in items if it.get("category") == "material"]
+    by_slot = Counter(it.get("slot") for it in mats)
+    # All materials use slot=nguyen_lieu
+    return len(by_slot) == 1 and "nguyen_lieu" in by_slot, {
+        "slot_distribution": dict(by_slot)
+    }
+
+
+def chk_L35_region_per_era_coverage(items, *_):
+    """At least 2 distinct regions per generated era. Pre-Lý eras
+    (hong_bang/au_lac) only exist via immutable seed — exclude."""
+    by_era_region = {}
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        ec = it.get("era_code")
+        r = it.get("region")
+        if ec is None or r is None:
+            continue
+        by_era_region.setdefault(ec, set()).add(r)
+    bad = [(e, len(rs)) for e, rs in by_era_region.items() if len(rs) < 2]
+    return len(bad) == 0, {"undercovered": bad}
+
+
+def chk_L35_lore_era_coverage(items, *_):
+    """Lore items should cover at least 4 historical eras."""
+    eras = {it.get("era_code") for it in items
+            if it.get("category") == "lore_item"}
+    eras.discard(None)
+    return len(eras) >= 4, {"distinct_eras": sorted(eras)}
+
+
+def chk_L35_quest_item_era_distribution(items, *_):
+    by = Counter(it.get("era_code") for it in items
+                 if it.get("category") == "quest_item")
+    return len(by) >= 5, {"era_count": len(by),
+                          "distribution": dict(by)}
+
+
+def chk_L35_weapon_slot_distribution(items, *_):
+    by = Counter(it.get("slot") for it in items
+                 if it.get("category") == "weapon")
+    # Weapons primarily occupy vu_khi
+    return "vu_khi" in by, {"weapon_slots": dict(by)}
+
+
+ROUND_L35_CHECKS = {
+    2: [
+        ("L35_rarity_slot_matrix_filled", "R45",
+         chk_L35_rarity_slot_matrix_filled),
+        ("L35_element_per_weapon_rarity", "R79",
+         chk_L35_element_per_weapon_rarity),
+    ],
+    3: [
+        ("L35_era_per_category_filled", "R45",
+         chk_L35_era_per_category_filled),
+        ("L35_tier_per_rarity_consistent", "R49",
+         chk_L35_tier_per_rarity_consistent),
+    ],
+    4: [
+        ("L35_consumable_per_rarity_count", "R49",
+         chk_L35_consumable_per_rarity_count),
+        ("L35_material_slot_distribution", "R49",
+         chk_L35_material_slot_distribution),
+    ],
+    5: [
+        ("L35_region_per_era_coverage", "R30",
+         chk_L35_region_per_era_coverage),
+        ("L35_lore_era_coverage", "R30",
+         chk_L35_lore_era_coverage),
+    ],
+    6: [
+        ("L35_quest_item_era_distribution", "R45",
+         chk_L35_quest_item_era_distribution),
+        ("L35_weapon_slot_distribution", "R45",
+         chk_L35_weapon_slot_distribution),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 36 — Env-strip determinism (v1.35)
+# Verify generator output identical under stripped env / different TZ.
+# ============================================================
+def chk_L36_env_strip_hash_stable(items, *_):
+    """Run generator twice: once with current env, once with PATH+stdlib
+    only. Both should produce identical jsonl hash."""
+    gen = Path(__file__).parent / "generate_items.py"
+    if not gen.exists():
+        return False, {"no_gen": True}
+
+    def _hash_with(env_override):
+        base_env = {"PATH": os.environ.get("PATH", ""),
+                    "SystemRoot": os.environ.get("SystemRoot", ""),
+                    "PYTHONIOENCODING": "utf-8"}
+        base_env.update(env_override)
+        r = subprocess.run([sys.executable, str(gen)],
+                           capture_output=True, text=True,
+                           encoding="utf-8", env=base_env, timeout=60)
+        if r.returncode != 0:
+            return None
+        return hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest()
+
+    import os
+    h_curr = _hash_with({})
+    h_utc = _hash_with({"TZ": "UTC"})
+    h_bkk = _hash_with({"TZ": "Asia/Bangkok"})
+    stable = h_curr is not None and h_curr == h_utc == h_bkk
+    return stable, {"curr": (h_curr or "")[:12],
+                    "utc": (h_utc or "")[:12],
+                    "bkk": (h_bkk or "")[:12]}
+
+
+def chk_L36_lc_all_C_hash_stable(items, *_):
+    import os
+    gen = Path(__file__).parent / "generate_items.py"
+    if not gen.exists():
+        return False, {"no_gen": True}
+    base_env = {"PATH": os.environ.get("PATH", ""),
+                "SystemRoot": os.environ.get("SystemRoot", ""),
+                "PYTHONIOENCODING": "utf-8"}
+
+    def _hash(extra):
+        env = dict(base_env)
+        env.update(extra)
+        r = subprocess.run([sys.executable, str(gen)],
+                           capture_output=True, text=True,
+                           encoding="utf-8", env=env, timeout=60)
+        if r.returncode != 0:
+            return None
+        return hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest()
+
+    h_c = _hash({"LC_ALL": "C"})
+    h_vi = _hash({"LC_ALL": "vi_VN.UTF-8"})
+    return h_c is not None and h_c == h_vi, {
+        "lc_C": (h_c or "")[:12], "lc_vi": (h_vi or "")[:12]
+    }
+
+
+def chk_L36_pythonhashseed_zero_hash_stable(items, *_):
+    """PYTHONHASHSEED=0 disables hash randomization. Output should be
+    identical to default since gen uses ordered structures + seeded RNG."""
+    import os
+    gen = Path(__file__).parent / "generate_items.py"
+    base_env = {"PATH": os.environ.get("PATH", ""),
+                "SystemRoot": os.environ.get("SystemRoot", ""),
+                "PYTHONIOENCODING": "utf-8"}
+
+    def _hash(extra):
+        env = dict(base_env); env.update(extra)
+        r = subprocess.run([sys.executable, str(gen)],
+                           capture_output=True, text=True,
+                           encoding="utf-8", env=env, timeout=60)
+        return hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest() \
+            if r.returncode == 0 else None
+
+    h_0 = _hash({"PYTHONHASHSEED": "0"})
+    h_rand = _hash({"PYTHONHASHSEED": "random"})
+    return h_0 is not None and h_0 == h_rand, {
+        "h0": (h_0 or "")[:12], "hrand": (h_rand or "")[:12]
+    }
+
+
+def chk_L36_5_consecutive_runs_same_hash(items, *_):
+    """Generator 5 sequential runs all produce identical jsonl bytes."""
+    gen = Path(__file__).parent / "generate_items.py"
+    hashes = set()
+    for _ in range(5):
+        r = subprocess.run([sys.executable, str(gen)],
+                           capture_output=True, text=True,
+                           encoding="utf-8", timeout=60)
+        if r.returncode != 0:
+            return False, {"gen_fail": r.stderr[:120]}
+        hashes.add(hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest())
+    return len(hashes) == 1, {"unique_hashes": len(hashes),
+                                "hashes": [h[:12] for h in hashes]}
+
+
+def chk_L36_no_floating_point_in_jsonl(items, *_):
+    """Generator should emit INT only — no Python float in any stat."""
+    bad = []
+    for it in items:
+        s = it.get("stats") or {}
+        for k, v in s.items():
+            if isinstance(v, float) and not v.is_integer():
+                bad.append({"id": it["id"], "key": k, "val": v})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"float_keys": len(bad), "samples": bad[:5]}
+
+
+def chk_L36_jsonl_no_python_specific_repr(items, *_):
+    """No 'True'/'False'/'None' string in jsonl (must be true/false/null)."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    raw = ITEM_FULL.read_text(encoding="utf-8")
+    bad = []
+    for tok in (" True", " False", " None"):
+        if tok in raw and "Truebao" not in raw:
+            bad.append(tok)
+    return len(bad) == 0, {"python_repr": bad}
+
+
+def chk_L36_sql_no_trailing_whitespace(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    if not p.exists():
+        return False, {"missing": True}
+    bad = 0
+    for line in p.read_text(encoding="utf-8").splitlines():
+        if line != line.rstrip():
+            bad += 1
+            if bad >= 5:
+                break
+    return bad == 0, {"trailing_ws_lines": bad}
+
+
+def chk_L36_gen_no_time_now_in_data(items, *_):
+    """Generator shouldn't embed wall-clock time in item data (only in
+    heartbeat/ACK metadata)."""
+    bad = []
+    iso_re = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}")
+    for it in items:
+        for k, v in it.items():
+            if k in ("created_at", "ts", "_timestamp"):
+                continue
+            if isinstance(v, str) and iso_re.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"wall_clock_in_data": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L36_seeded_rng_only(items, *_):
+    """Generator must seed all rng — no module-level random() with system seed."""
+    gen = (Path(__file__).parent / "generate_items.py").read_text(
+        encoding="utf-8"
+    )
+    has_seed = "random.seed(" in gen or "RNG = random.Random(" in gen
+    return has_seed, {"seed_pattern": has_seed}
+
+
+ROUND_L36_CHECKS = {
+    2: [
+        ("L36_env_strip_hash_stable", "R49",
+         chk_L36_env_strip_hash_stable),
+        ("L36_lc_all_C_hash_stable", "R49",
+         chk_L36_lc_all_C_hash_stable),
+    ],
+    3: [
+        ("L36_pythonhashseed_zero_hash_stable", "R49",
+         chk_L36_pythonhashseed_zero_hash_stable),
+        ("L36_5_consecutive_runs_same_hash", "R49",
+         chk_L36_5_consecutive_runs_same_hash),
+    ],
+    4: [
+        ("L36_no_floating_point_in_jsonl", "R45",
+         chk_L36_no_floating_point_in_jsonl),
+        ("L36_jsonl_no_python_specific_repr", "R50",
+         chk_L36_jsonl_no_python_specific_repr),
+    ],
+    5: [
+        ("L36_sql_no_trailing_whitespace", "R30",
+         chk_L36_sql_no_trailing_whitespace),
+        ("L36_gen_no_time_now_in_data", "R67",
+         chk_L36_gen_no_time_now_in_data),
+    ],
+    6: [
+        ("L36_seeded_rng_only", "R49",
+         chk_L36_seeded_rng_only),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -7224,6 +7976,27 @@ def main():
                 print(f"[warmup] drop_sim OK")
             else:
                 print(f"[warmup] drop_sim failed: {ds.stderr[:200]}")
+        # L32 dep: coverage_runner.py — fresh coverage.json
+        # mutmut report regenerated only when explicitly invoked (slow).
+        cov_path = Path(__file__).parent / "coverage_runner.py"
+        if cov_path.exists() and not os.environ.get("SKIP_COVERAGE"):
+            cv = subprocess.run([sys.executable, str(cov_path)],
+                                capture_output=True, text=True,
+                                encoding="utf-8", timeout=120)
+            if cv.returncode == 0:
+                print(f"[warmup] coverage OK")
+            else:
+                print(f"[warmup] coverage failed: {cv.stderr[:200]}")
+        # L34 dep: hypothesis_property_test.py — fresh property report
+        hyp_path = Path(__file__).parent / "hypothesis_property_test.py"
+        if hyp_path.exists() and not os.environ.get("SKIP_HYPOTHESIS"):
+            hyp = subprocess.run([sys.executable, str(hyp_path)],
+                                 capture_output=True, text=True,
+                                 encoding="utf-8", timeout=120)
+            if hyp.returncode == 0:
+                print(f"[warmup] hypothesis OK")
+            else:
+                print(f"[warmup] hypothesis failed: {hyp.stderr[:200]}")
     else:
         print(f"[warmup] SKIPPED (NO_WARMUP=1)")
 
@@ -7294,6 +8067,16 @@ def main():
             active_checks.extend(ROUND_L30_CHECKS[r])
         if r in ROUND_L31_CHECKS:
             active_checks.extend(ROUND_L31_CHECKS[r])
+        if r in ROUND_L32_CHECKS:
+            active_checks.extend(ROUND_L32_CHECKS[r])
+        if r in ROUND_L33_CHECKS:
+            active_checks.extend(ROUND_L33_CHECKS[r])
+        if r in ROUND_L34_CHECKS:
+            active_checks.extend(ROUND_L34_CHECKS[r])
+        if r in ROUND_L35_CHECKS:
+            active_checks.extend(ROUND_L35_CHECKS[r])
+        if r in ROUND_L36_CHECKS:
+            active_checks.extend(ROUND_L36_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()

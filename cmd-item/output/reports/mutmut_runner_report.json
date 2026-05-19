@@ -1,0 +1,10 @@
+{
+  "tool": "mutmut_runner (AST constant-flipper)",
+  "mutations_attempted": 8,
+  "mutations_applied": 8,
+  "killed": 8,
+  "survived": 0,
+  "kill_rate": 1.0,
+  "survivors": [],
+  "timestamp": "2026-05-19 14:57:09"
+}
