@@ -1,11 +1,11 @@
 {
-  "audit_ts": "20260519T054402Z",
+  "audit_ts": "20260519T070148Z",
   "cmd": "MAP",
   "audit_type": "19_round_deep_verify_R21_R39",
   "manifest_count_pre": 8500,
   "manifest_count_post": 8500,
-  "manifest_sha256_post": "4b6205471f6206609b03f636b8a7447c185249750cf2a3f96e1c2e933974b508",
-  "state_checksum_post": "4b6205471f6206609b03f636b8a7447c185249750cf2a3f96e1c2e933974b508",
+  "manifest_sha256_post": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
+  "state_checksum_post": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
   "fixed_total": 0,
   "rounds": [
     {
@@ -136,7 +136,7 @@
       "rule": "R47",
       "subject": "event_cross_ref_new",
       "event_total": 600,
-      "maps_with_event": 540,
+      "maps_with_event": 248,
       "fixed": 0,
       "alert": null
     },
@@ -181,12 +181,18 @@
       "rule": "R47",
       "subject": "event_density_per_map",
       "top_buckets": {
-        "0": 7960,
-        "1": 487,
-        "2": 46,
-        "3": 7
+        "0": 8252,
+        "1": 109,
+        "2": 63,
+        "3": 27,
+        "4": 17,
+        "5": 11,
+        "6": 8,
+        "7": 6,
+        "9": 3,
+        "10": 2
       },
-      "maps_with_event": 540,
+      "maps_with_event": 248,
       "alert": null
     },
     {
@@ -226,7 +232,7 @@
       "subject": "uuid_uniqueness_+_state_checksum_+_roundtrip",
       "uuid_dup_pre": 0,
       "uuid_assigned_or_replaced": 0,
-      "manifest_state_checksum_post_audit": "4b6205471f6206609b03f636b8a7447c185249750cf2a3f96e1c2e933974b508",
+      "manifest_state_checksum_post_audit": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
       "map_count_post": 8500,
       "alert": null
     }

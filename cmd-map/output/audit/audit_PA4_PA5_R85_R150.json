@@ -1,9 +1,9 @@
 {
-  "audit_ts": "20260519T060954Z",
+  "audit_ts": "20260519T070154Z",
   "cmd": "MAP",
   "audit_type": "PA4_PA5_66round_R85_R150",
   "rounds_total": 66,
-  "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "manifest_sha256": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
   "manifest_unchanged": true,
   "fixed_total": 0,
   "pa4_statistical_summary": {
@@ -17,7 +17,7 @@
   },
   "pa5_layers_summary": {
     "L9_concurrency_atomic": "PASS 10/10 (parallel read same hash, sha companion, no lock)",
-    "L10_performance_scale": "PASS — parse 0.34s, size 9.23MB, mem 6.74MB",
+    "L10_performance_scale": "PASS — parse 0.45s, size 9.23MB, mem 6.74MB",
     "L11_forward_compat": "PASS 10/10 (legacy field preserved, new field default, type stable)",
     "L12_security_injection": "PASS — no path traversal, no XSS, no PII, list bounded",
     "L13_documentation_drift": "PASS — cmd.md current, audit files present, gen_config aligned",
@@ -199,8 +199,8 @@
       "rule": "R8.3",
       "subj": "sha256_companion_matches",
       "pass": true,
-      "expected": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
-      "got": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d"
+      "expected": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
+      "got": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d"
     },
     {
       "r": 102,
@@ -226,7 +226,7 @@
       "r": 105,
       "rule": "R10-perf",
       "subj": "parse_8500_under_5s",
-      "parse_sec": 0.344,
+      "parse_sec": 0.453,
       "pass": true
     },
     {
@@ -240,7 +240,7 @@
       "r": 107,
       "rule": "R10-perf",
       "subj": "avg_entry_size_under_1500b",
-      "avg_bytes": 1138.3,
+      "avg_bytes": 1138.4,
       "pass": true
     },
     {
@@ -261,35 +261,35 @@
       "r": 110,
       "rule": "R10-perf",
       "subj": "sha256_file_under_2s",
-      "sha_sec": 0.062,
+      "sha_sec": 0.068,
       "pass": true
     },
     {
       "r": 111,
       "rule": "R10-perf",
       "subj": "biome_filter_scan_under_500ms",
-      "scan_sec": 0.0047,
+      "scan_sec": 0.0061,
       "match_count": 3681
     },
     {
       "r": 112,
       "rule": "R10-perf",
       "subj": "index_build_under_500ms",
-      "build_sec": 0.0046,
+      "build_sec": 0.0053,
       "index_size": 8500
     },
     {
       "r": 113,
       "rule": "R10-perf",
       "subj": "bulk_write_under_3s",
-      "write_sec": 0.271,
+      "write_sec": 0.298,
       "pass": true
     },
     {
       "r": 114,
       "rule": "R10-perf",
       "subj": "e2e_roundtrip_under_6s",
-      "rt_sec": 0.259,
+      "rt_sec": 0.289,
       "pass": true
     },
     {
@@ -337,17 +337,17 @@
       "rule": "R71.2-enum",
       "subj": "era_enum_stable",
       "current_eras": [
-        "tran",
-        "ly",
-        "f4",
-        "f2",
+        "f3",
+        "le",
         "g1",
+        "ly",
+        "nguyen",
+        "f5",
         "tay_son",
         "f1",
-        "f3",
-        "f5",
-        "nguyen",
-        "le"
+        "f4",
+        "f2",
+        "tran"
       ]
     },
     {
@@ -545,8 +545,8 @@
       "subj": "cross_ref_counts_preserved",
       "maps_with_npc": 5678,
       "maps_with_quest": 789,
-      "maps_with_event": 540,
-      "pass": true
+      "maps_with_event": 248,
+      "pass": false
     },
     {
       "r": 147,
@@ -570,7 +570,7 @@
       "r": 149,
       "rule": "L5_L6-attest",
       "subj": "encoding_roundtrip_stable",
-      "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+      "manifest_sha256": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
       "reproducible": true
     },
     {

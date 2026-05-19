@@ -1,9 +1,9 @@
 {
-  "audit_ts": "20260519T064336Z",
+  "audit_ts": "20260519T070158Z",
   "cmd": "MAP",
   "audit_type": "PA9_semantic_lore_15round_R196_R210",
   "rounds_total": 15,
-  "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "manifest_sha256": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
   "manifest_unchanged": true,
   "fixed_total": 0,
   "summary_status": "ALL_PASS",

@@ -1,10 +1,10 @@
 {
-  "audit_ts": "20260519T055640Z",
+  "audit_ts": "20260519T070151Z",
   "cmd": "MAP",
   "audit_type": "PA1_PA2_PA3_45round_R40_R84",
   "rounds_total": 45,
-  "manifest_sha256_post": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
-  "state_checksum_post": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+  "manifest_sha256_post": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
+  "state_checksum_post": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
   "fixed_total": 0,
   "pa1_symmetric_orphan_summary": {
     "npc_orphan": 28,
@@ -293,7 +293,6 @@
       "odd_entries_pre": 0,
       "fields_added_total": 0,
       "canonical_keys": [
-        "_index",
         "biome",
         "dialog_tree_refs",
         "element_primary",
@@ -319,6 +318,7 @@
         "quest_count_actual",
         "quest_giver_ids",
         "region",
+        "schema_version",
         "seed",
         "target_size_kb",
         "uuid",
@@ -382,14 +382,14 @@
       "rule": "R68-determinism",
       "subj": "bit_by_bit_reproducible",
       "pass": true,
-      "sha256_run1": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
-      "sha256_run2": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd"
+      "sha256_run1": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
+      "sha256_run2": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d"
     },
     {
       "r": 84,
       "rule": "R68-final",
       "subj": "final_state_checksum",
-      "manifest_sha256": "0f723e550bacf42f6e09f8bb86802035ccf236c217e06b6811385fcbd1e23cfd",
+      "manifest_sha256": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
       "map_count": 8500,
       "audit_passes": 4
     }

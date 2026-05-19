@@ -1,9 +1,9 @@
 {
-  "audit_ts": "20260519T063432Z",
+  "audit_ts": "20260519T070157Z",
   "cmd": "MAP",
   "audit_type": "PA6_PA7_PA8_45round_R151_R195",
   "rounds_total": 45,
-  "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "manifest_sha256": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
   "fixed_total": 0,
   "pa6_runtime_simulation_R151_R165": "15 round game-runtime load + cycle detection + anachronism",
   "pa7_combinatorial_pairwise_R166_R180": "15 round 4-way era×biome×region×element coverage + density",
@@ -239,17 +239,17 @@
       "rule": "COMB-density",
       "subj": "event_density_per_era",
       "mean": {
-        "ly": 0.04,
-        "nguyen": 0.09,
-        "le": 0.09,
-        "g1": 0.1,
-        "tay_son": 0.13,
-        "f2": 0.0,
-        "tran": 0.07,
-        "f3": 0.06,
-        "f4": 0.08,
-        "f5": 0.17,
-        "f1": 0.0
+        "ly": 0.08,
+        "nguyen": 0.1,
+        "le": 0.07,
+        "g1": 0.06,
+        "tay_son": 0.08,
+        "f2": 0.07,
+        "tran": 0.06,
+        "f3": 0.03,
+        "f4": 0.04,
+        "f5": 0.09,
+        "f1": 0.01
       }
     },
     {
@@ -440,9 +440,9 @@
       "rule": "ADV-determ",
       "subj": "sha256_stable_3reads",
       "shas": [
-        "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
-        "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
-        "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d"
+        "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
+        "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
+        "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d"
       ],
       "pass": true
     },
@@ -450,8 +450,8 @@
       "r": 195,
       "rule": "ADV-canonical",
       "subj": "canonical_reserialize_same_hash",
-      "current": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
-      "canonical": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+      "current": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
+      "canonical": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
       "pass": true
     }
   ]

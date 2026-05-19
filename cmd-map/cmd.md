@@ -954,3 +954,39 @@ VSTK_ELEMENTS = {
 ---
 
 **END CMD_MAP v1.0**
+
+
+---
+
+## 📋 AUDIT CHANGELOG ngày 2026-05-19 (CMD_MAP autonomous)
+
+| Phase | Round Range | Status | Commit |
+|---|---|---|---|
+| Initial ship | R1-R20 (audit) | PASS 1.0 | c54daf7 + 053b315 |
+| Recover + alert HIGH foundation drift | — | PASS | 40aa254 |
+| 19-round deep verify | R21-R39 | PASS (17760 fix relink) | ea846da |
+| PA1+PA2+PA3 deep audit | R40-R84 | PASS (22862 fix schema normalize) | (commit) |
+| PA4+PA5 statistical + TRIDECA-DEEP L9-L13 | R85-R150 | PASS (shrink 21.8MB→9.23MB) | a127e66 |
+| PA6+PA7+PA8 runtime+combinatorial+adversarial | R151-R195 | PASS 45/45 | 6add71a |
+| PA9 semantic/lore | R196-R210 | PASS 15/15 (0 anachronism) | ae3167e |
+| PA10 time-series + git history | R211-R225 | PASS 15/15 | aad2a67 |
+| **FIX TRIỆT ĐỂ FINAL** — sync canonical | re-verify | idempotent end-to-end ALL PASS | (current) |
+
+### Final state
+
+- **Manifest count:** 8500
+- **Manifest SHA256:** `44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d`
+- **Schema version:** 1.1 (30 fields canonical)
+- **Cross-ref:** 5678 maps with NPC (9972 total NPC), 789 maps with quest (2977), 248 maps with event (600)
+- **Idempotent end-to-end:** ✅ verified all 6 audit scripts pass with fixed_total=0
+- **Reproducible bit-by-bit:** ✅
+- **All 225 rounds R1-R225 PASS** at final state
+
+### Honest gaps remaining (cross-CMD, NOT MAP scope)
+
+1. 28 NPC orphan `sceneId` outside 1..8500 (CMD_NPC scope, MED alert filed)
+2. 23 quest `giver_scene_id` orphan (CMD_QUEST scope, 99.2% link OK)
+3. `cmd-boss/output/registry/boss_full.jsonl` empty (CMD_BOSS scope)
+4. Foundation `SVTK_FOUNDATION_v2.8.0.md` hash drift `ab1b4eb2` vs INDEX `4e9a6d7a` (LEAD scope, HIGH alert filed cycle 62)
+
+CMD_MAP IN-SCOPE = **FIX TRIỆT ĐỂ ✅**.

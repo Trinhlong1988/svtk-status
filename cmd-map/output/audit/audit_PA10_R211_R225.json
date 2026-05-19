@@ -1,9 +1,9 @@
 {
-  "audit_ts": "20260519T064852Z",
+  "audit_ts": "20260519T070201Z",
   "cmd": "MAP",
   "audit_type": "PA10_time_series_15round_R211_R225",
   "rounds_total": 15,
-  "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "manifest_sha256": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
   "summary_status": "ALL_PASS",
   "cumulative_rounds_today_R1_R225": 225,
   "rounds": [
@@ -11,16 +11,16 @@
       "r": 211,
       "rule": "TS-commit",
       "subj": "cmd_map_commits_today",
-      "count": 8,
+      "count": 9,
       "sample_first": [
         "e577a2c CMD_MAP loop cycle 1 heartbeat ts=20260519-035508",
         "053b315 CMD_MAP audit cross-CMD 11-20 pass 10/10 (loop fix no-pull-main, R20 round-trip OK)",
         "c54daf7 CMD_MAP ship ts=20260519-010616 score=1.000 count=8500"
       ],
       "sample_last": [
+        "aad2a67 CMD_MAP PA10 time-series R211-R225 PASS 15/15 — 225 cumulative rounds, 8 audit files, sha cda4cc9d stable",
         "ae3167e CMD_MAP PA9 semantic/lore R196-R210 PASS 15/15 — 0 anachronism, 0 Tam Quoc, 11/11 era represented",
-        "6add71a CMD_MAP PA6+PA7+PA8 deep audit R151-R195 PASS 45/45 — runtime sim + combinatorial + adversarial, 0 fail",
-        "a127e66 CMD_MAP PA4+PA5 deep audit R85-R150 PASS 66/66 — shrink 21.8MB→9.23MB + schema_version 1.1 + sha cda4cc9d"
+        "6add71a CMD_MAP PA6+PA7+PA8 deep audit R151-R195 PASS 45/45 — runtime sim + combinatorial + adversarial, 0 fail"
       ],
       "pass": true
     },
@@ -28,7 +28,7 @@
       "r": 212,
       "rule": "TS-size",
       "subj": "manifest_size_growth_today",
-      "size_now_bytes": 9675766,
+      "size_now_bytes": 9676353,
       "size_at_first_commit_bytes": 5355541,
       "ratio": 1.81,
       "pass": true
@@ -138,8 +138,8 @@
       "r": 218,
       "rule": "TS-msg-convention",
       "subj": "cmd_map_commit_message_prefix",
-      "total": 8,
-      "prefixed": 8,
+      "total": 9,
+      "prefixed": 9,
       "pct": 100.0,
       "pass": true
     },
@@ -147,7 +147,7 @@
       "r": 219,
       "rule": "TS-sha-lineage",
       "subj": "manifest_sha256_history",
-      "chain_length": 8,
+      "chain_length": 9,
       "first_5": [
         [
           "c54daf7",
@@ -172,6 +172,10 @@
       ],
       "last_5": [
         [
+          "aad2a67",
+          "93dd6e608266"
+        ],
+        [
           "ae3167e",
           "93dd6e608266"
         ],
@@ -186,10 +190,6 @@
         [
           "ea846da",
           "dc033d818373"
-        ],
-        [
-          "0b22670",
-          "d0fba9149eca"
         ]
       ]
     },
@@ -225,7 +225,7 @@
       "r": 221,
       "rule": "TS-heartbeat",
       "subj": "heartbeat_cadence_today",
-      "heartbeat_count": 82,
+      "heartbeat_count": 83,
       "pass": true
     },
     {
@@ -240,7 +240,7 @@
       "r": 223,
       "rule": "TS-push-rate",
       "subj": "commit_push_success_rate",
-      "commits_today": 8,
+      "commits_today": 9,
       "pass": true
     },
     {
@@ -256,7 +256,7 @@
       "r": 225,
       "rule": "TS-final",
       "subj": "final_time_series_state",
-      "manifest_sha256": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+      "manifest_sha256": "44aa2708aee096ca32e97c18fa03be755273b6328d2e8c0231454b2db435032d",
       "audit_count": 8,
       "total_rounds_run_today": 225,
       "pass": true
