@@ -9023,6 +9023,152 @@ ROUND_L44_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 45 — Item id namespace (v1.40)
+# ============================================================
+ID_NS = {"weapon": "item_weapon_", "armor": "item_armor_",
+         "consumable": "item_cons_",
+         "material": "item_mat_", "quest_item": "item_quest_",
+         "lore_item": "item_lore_"}
+
+
+def chk_L45_id_ns_weapon(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "weapon" and not it.get("is_immutable_seed"):
+            if not it["id"].startswith("item_weapon_") \
+                    and not it["id"].startswith("item_kim_") \
+                    and not it["id"].startswith("item_thuy_") \
+                    and not it["id"].startswith("item_moc_") \
+                    and not it["id"].startswith("item_tho_") \
+                    and not it["id"].startswith("item_hoa_") \
+                    and not it["id"].startswith("item_kim_"):
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"unexpected_weapon_id": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L45_id_ns_armor(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "armor" and not it.get("is_immutable_seed"):
+            if not it["id"].startswith("item_armor_"):
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"bad_armor_id": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L45_id_ns_consumable(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "consumable":
+            if not it["id"].startswith("item_cons_"):
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"bad_cons_id": len(bad), "samples": bad[:5]}
+
+
+def chk_L45_id_ns_material(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "material":
+            if not it["id"].startswith("item_mat_"):
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"bad_mat_id": len(bad), "samples": bad[:5]}
+
+
+def chk_L45_id_ns_quest(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "quest_item":
+            if not it["id"].startswith("item_quest_"):
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"bad_quest_id": len(bad), "samples": bad[:5]}
+
+
+def chk_L45_id_ns_lore(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "lore_item":
+            if not it["id"].startswith("item_lore_"):
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"bad_lore_id": len(bad), "samples": bad[:5]}
+
+
+def chk_L45_id_len_under_64(items, *_):
+    bad = [it["id"] for it in items if len(it.get("id") or "") > 64]
+    return len(bad) == 0, {"long_id": len(bad), "samples": bad[:5]}
+
+
+def chk_L45_id_starts_item_underscore(items, *_):
+    bad = [it["id"] for it in items
+           if not (it.get("id") or "").startswith("item_")]
+    return len(bad) == 0, {"non_item_prefix": len(bad), "samples": bad[:5]}
+
+
+def chk_L45_namespace_unique_per_cat(items, *_):
+    """No id should overlap namespace of another category."""
+    bad = []
+    cat_by_id = {it["id"]: it["category"] for it in items}
+    for iid, cat in cat_by_id.items():
+        for c2, prefix in ID_NS.items():
+            if c2 != cat and iid.startswith(prefix):
+                if iid.startswith("item_kim_") or iid.startswith("item_thuy_") \
+                        or iid.startswith("item_moc_") or iid.startswith("item_tho_") \
+                        or iid.startswith("item_hoa_"):
+                    continue  # seed
+                bad.append({"id": iid, "cat": cat, "ns_owned_by": c2})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"cross_ns": len(bad), "samples": bad[:5]}
+
+
+def chk_L45_id_lower_only(items, *_):
+    bad = [it["id"] for it in items if (it.get("id") or "") != (it.get("id") or "").lower()]
+    return len(bad) == 0, {"upper_id": len(bad), "samples": bad[:5]}
+
+
+ROUND_L45_CHECKS = {
+    2: [
+        ("L45_id_ns_weapon", "R30", chk_L45_id_ns_weapon),
+        ("L45_id_ns_armor", "R30", chk_L45_id_ns_armor),
+    ],
+    3: [
+        ("L45_id_ns_consumable", "R30", chk_L45_id_ns_consumable),
+        ("L45_id_ns_material", "R30", chk_L45_id_ns_material),
+    ],
+    4: [
+        ("L45_id_ns_quest", "R30", chk_L45_id_ns_quest),
+        ("L45_id_ns_lore", "R30", chk_L45_id_ns_lore),
+    ],
+    5: [
+        ("L45_id_len_under_64", "R50",
+         chk_L45_id_len_under_64),
+        ("L45_id_starts_item_underscore", "R30",
+         chk_L45_id_starts_item_underscore),
+    ],
+    6: [
+        ("L45_namespace_unique_per_cat", "R71",
+         chk_L45_namespace_unique_per_cat),
+        ("L45_id_lower_only", "R30", chk_L45_id_lower_only),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -9199,6 +9345,8 @@ def main():
             active_checks.extend(ROUND_L43_CHECKS[r])
         if r in ROUND_L44_CHECKS:
             active_checks.extend(ROUND_L44_CHECKS[r])
+        if r in ROUND_L45_CHECKS:
+            active_checks.extend(ROUND_L45_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
