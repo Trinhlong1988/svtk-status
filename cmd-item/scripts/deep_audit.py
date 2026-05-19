@@ -9420,6 +9420,191 @@ ROUND_L47_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 48 — Region authenticity per era (v1.43)
+# ============================================================
+def chk_L48_lý_region_authentic(items, *_):
+    """Lý era regions ⊂ {Hoa Lư, Thăng Long, Đại La}."""
+    canonical = {"Hoa Lư", "Thăng Long", "Đại La"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("era_code") == "ly":
+            r = it.get("region")
+            if r and r not in canonical:
+                bad.append({"id": it["id"], "region": r})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"non_canonical": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L48_tran_region_authentic(items, *_):
+    canonical = {"Vạn Kiếp", "Bạch Đằng", "Thiên Trường"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("era_code") == "tran":
+            r = it.get("region")
+            if r and r not in canonical:
+                bad.append({"id": it["id"], "region": r})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"non_canonical": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L48_le_region_authentic(items, *_):
+    canonical = {"Lam Sơn", "Đông Quan", "Chi Lăng"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("era_code") == "le":
+            r = it.get("region")
+            if r and r not in canonical:
+                bad.append({"id": it["id"], "region": r})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"non_canonical": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L48_tay_son_region_authentic(items, *_):
+    canonical = {"Phú Xuân", "Quy Nhơn", "Ngọc Hồi"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("era_code") == "tay_son":
+            r = it.get("region")
+            if r and r not in canonical:
+                bad.append({"id": it["id"], "region": r})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"non_canonical": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L48_nguyen_region_authentic(items, *_):
+    canonical = {"Huế", "Gia Định", "Quảng Trị"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("era_code") == "nguyen":
+            r = it.get("region")
+            if r and r not in canonical:
+                bad.append({"id": it["id"], "region": r})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"non_canonical": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L48_no_modern_provinces(items, *_):
+    """No 'Đà Nẵng', 'Hà Nội', 'TP HCM', 'Sài Gòn'."""
+    forbid = {"Hà Nội", "TP HCM", "Sài Gòn", "Đà Nẵng"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        r = it.get("region")
+        if r in forbid:
+            bad.append({"id": it["id"], "region": r})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"modern_region": len(bad), "samples": bad[:5]}
+
+
+def chk_L48_region_diacritic_present(items, *_):
+    """Most regions are Vietnamese with diacritics."""
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        r = it.get("region") or ""
+        if r and not VN_DIACRITIC_RE.search(r):
+            bad.append({"id": it["id"], "region": r})
+            if len(bad) >= 5:
+                break
+    return len(bad) <= 30, {"no_diacritic_region": len(bad),
+                             "samples": bad[:5]}
+
+
+def chk_L48_region_no_chinese_char(items, *_):
+    bad = []
+    for it in items:
+        r = it.get("region") or ""
+        if r and CULTURAL_LOCK_RE.search(r):
+            bad.append({"id": it["id"], "region": r})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"cjk_region": len(bad), "samples": bad[:5]}
+
+
+def chk_L48_region_no_period_in_name(items, *_):
+    bad = []
+    for it in items:
+        r = it.get("region") or ""
+        if "." in r:
+            bad.append({"id": it["id"], "region": r})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"period_in_region": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L48_region_length_reasonable(items, *_):
+    bad = []
+    for it in items:
+        r = it.get("region") or ""
+        if r and (len(r) < 2 or len(r) > 40):
+            bad.append({"id": it["id"], "region": r,
+                        "len": len(r)})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"bad_len_region": len(bad),
+                            "samples": bad[:5]}
+
+
+ROUND_L48_CHECKS = {
+    2: [
+        ("L48_ly_region_authentic", "R30",
+         chk_L48_lý_region_authentic),
+        ("L48_tran_region_authentic", "R30",
+         chk_L48_tran_region_authentic),
+    ],
+    3: [
+        ("L48_le_region_authentic", "R30",
+         chk_L48_le_region_authentic),
+        ("L48_tay_son_region_authentic", "R30",
+         chk_L48_tay_son_region_authentic),
+    ],
+    4: [
+        ("L48_nguyen_region_authentic", "R30",
+         chk_L48_nguyen_region_authentic),
+        ("L48_no_modern_provinces", "R30",
+         chk_L48_no_modern_provinces),
+    ],
+    5: [
+        ("L48_region_diacritic_present", "R30",
+         chk_L48_region_diacritic_present),
+        ("L48_region_no_chinese_char", "R30",
+         chk_L48_region_no_chinese_char),
+    ],
+    6: [
+        ("L48_region_no_period_in_name", "R30",
+         chk_L48_region_no_period_in_name),
+        ("L48_region_length_reasonable", "R30",
+         chk_L48_region_length_reasonable),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -9602,6 +9787,8 @@ def main():
             active_checks.extend(ROUND_L46_CHECKS[r])
         if r in ROUND_L47_CHECKS:
             active_checks.extend(ROUND_L47_CHECKS[r])
+        if r in ROUND_L48_CHECKS:
+            active_checks.extend(ROUND_L48_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
