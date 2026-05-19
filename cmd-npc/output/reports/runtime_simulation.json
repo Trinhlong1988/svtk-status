@@ -1,0 +1,16 @@
+{
+  "test": "runtime_simulation",
+  "verdict": "FAIL",
+  "sim1_loaded": 10000,
+  "sim2_combat_ticks": 1000,
+  "sim3_quest_pickups": 95,
+  "sim4_pet_bondings": 389,
+  "sim5_mentor_chain_depth": 2,
+  "sim6_populated_scenes": 5659,
+  "violations": [
+    [
+      "sim3_quest_errors",
+      5
+    ]
+  ]
+}

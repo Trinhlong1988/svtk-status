@@ -1,0 +1,8 @@
+{
+  "test": "performance_profile",
+  "duration_sec": 13.945,
+  "peak_memory_mb": 65.0,
+  "current_memory_mb_at_end": 2.31,
+  "hotspots_gt_1pct": [],
+  "verdict": "WARN"
+}

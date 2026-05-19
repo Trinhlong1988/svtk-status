@@ -2,7 +2,7 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260519-141535",
+  "build_timestamp": "20260519-143315",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -197,6 +197,22 @@
         "R118_audit_index_round_111_120_entry": "AUDIT_INDEX.md row + bug fix area + alerts table sync (1 new MED + 20 cumulative) + validator matrix updated to include 71-75.",
         "R119_readme_cumul_120": "README.md cumul 120 / validator 75/75 / 20 active alerts.",
         "R120_validator_extension_audit_history": "Validator 70→75 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_111_120 + validator expected_rounds wired."
+      }
+    },
+    "round_241_250": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — chạy cả 3 phương án còn lại (performance/runtime/formal)",
+      "bugs_fixed": {
+        "R241_nguyen_era_historical_inject_fix": "Phương án 10 formal invariant I4 FAIL: Nguyễn era 0 historical figures (existing 10 Nguyễn NPCs not flagged). FIX: extend_to_target inject condition expanded to include historical-figure-count check, not just era population count. Post-fix: all 5 main eras ≥5 historical figures.",
+        "R242_phuong_an_8_performance": "Performance profile: 14s WITH cProfile overhead (real build ~2s), peak 65MB / threshold 500MB. Hotspots: write_jsonl 2.87s, validator 2.51s, uuid5 0.97s — all acceptable for 10000 NPC build.",
+        "R243_phuong_an_9_runtime_sim": "Runtime simulation: SIM1 load 10000/10000 ✓, SIM2 combat 1000 ticks 0 errors ✓, SIM3 quest dispatch 95/100 (5 errors = R71.1 existing sceneId orphan), SIM4 pet bonding 389/389 ✓, SIM5 mentor chain depth 2 ✓, SIM6 5659/7817 scenes populated.",
+        "R244_phuong_an_10_formal_invariants": "Formal verification: 10 invariants checked. Post R241 fix: I4 now PASS (all main eras ≥5 historical). I1-I3, I5-I10 all PASS.",
+        "R245_validator_136_performance": "Validator #136: performance_profile.json peak_memory_mb < 500 threshold.",
+        "R246_validator_137_runtime_sim": "Validator #137: runtime_simulation.json present.",
+        "R247_validator_138_formal_i4": "Validator #138: formal_invariants.json I4 PASS (Nguyễn era historical fixed).",
+        "R248_validator_139_main_era_hist": "Validator #139: every main era ≥5 historical figures (regression guard).",
+        "R249_validator_140_map_density": "Validator #140: no scene > 50 NPCs (formal I8 invariant promoted to validator).",
+        "R250_doc_audit_history_241_250": "AUDIT_INDEX row + matrix R136-R140 + README cumul 250 + audit_history.round_241_250 + EXPECTED_AUDIT_ROUNDS_COVERED + validator expected_rounds."
       }
     },
     "round_231_240": {

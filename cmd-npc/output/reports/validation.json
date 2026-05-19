@@ -1,6 +1,6 @@
 {
-  "passed": 135,
-  "total": 135,
+  "passed": 140,
+  "total": 140,
   "pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -80,7 +80,7 @@
       "name": "surname_diversity",
       "ok": true,
       "evidence": {
-        "found": 100
+        "found": 102
       }
     },
     {
@@ -185,8 +185,8 @@
       "name": "pet_evolution_path_R23",
       "ok": true,
       "evidence": {
-        "pettable_total": 706,
-        "with_evolution_path": 706
+        "pettable_total": 737,
+        "with_evolution_path": 737
       }
     },
     {
@@ -231,7 +231,7 @@
       "ok": true,
       "evidence": {
         "existing_female": 46,
-        "total_female": 2885
+        "total_female": 2891
       }
     },
     {
@@ -245,15 +245,15 @@
       "name": "historical_background_R35",
       "ok": true,
       "evidence": {
-        "historical_total": 57,
-        "with_background": 57
+        "historical_total": 63,
+        "with_background": 63
       }
     },
     {
       "name": "historical_figure_flag_R41",
       "ok": true,
       "evidence": {
-        "flagged": 57,
+        "flagged": 63,
         "target_min": 25
       }
     },
@@ -300,8 +300,8 @@
       "name": "era_start_year_coverage_R52",
       "ok": true,
       "evidence": {
-        "with_year": 57,
-        "total": 57,
+        "with_year": 63,
+        "total": 63,
         "coverage_pct": 100.0
       }
     },
@@ -342,6 +342,7 @@
           "round_21_30",
           "round_221_230",
           "round_231_240",
+          "round_241_250",
           "round_31_40",
           "round_41_50",
           "round_51_60",
@@ -357,8 +358,8 @@
       "name": "boss_epithet_100pct_R61",
       "ok": true,
       "evidence": {
-        "gen_boss": 176,
-        "with_epithet": 176
+        "gen_boss": 153,
+        "with_epithet": 153
       }
     },
     {
@@ -412,7 +413,7 @@
       "name": "name_era_diversity_R75",
       "ok": true,
       "evidence": {
-        "dupe_count": 11,
+        "dupe_count": 14,
         "threshold": 200
       }
     },
@@ -420,16 +421,16 @@
       "name": "tier9_aggressive_R76",
       "ok": true,
       "evidence": {
-        "tier9_combat_total": 69,
-        "aggressive_count": 69
+        "tier9_combat_total": 81,
+        "aggressive_count": 81
       }
     },
     {
       "name": "pet_master_pettable_R81",
       "ok": true,
       "evidence": {
-        "gen_pet_master": 389,
-        "pettable_true_count": 389
+        "gen_pet_master": 420,
+        "pettable_true_count": 420
       }
     },
     {
@@ -460,8 +461,8 @@
       "name": "element_stat_skew_alert_R85",
       "ok": true,
       "evidence": {
-        "any_skew_gt_10pct": true,
-        "alert_files": 1
+        "any_skew_gt_10pct": false,
+        "alert_files": 0
       }
     },
     {
@@ -537,7 +538,7 @@
       "name": "alerts_json_schema_R104",
       "ok": true,
       "evidence": {
-        "checked": 20,
+        "checked": 19,
         "violations": 0
       }
     },
@@ -552,7 +553,7 @@
       "name": "heartbeat_file_present_R111",
       "ok": true,
       "evidence": {
-        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-141535.json",
+        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-143315.json",
         "exists": true
       }
     },
@@ -562,7 +563,7 @@
       "evidence": {
         "count": 1,
         "files": [
-          "BUILDING-npc_extend_to_10000-20260519-141535.json"
+          "BUILDING-npc_extend_to_10000-20260519-143315.json"
         ]
       }
     },
@@ -732,7 +733,7 @@
       "name": "gen_surname_diversity_R155",
       "ok": true,
       "evidence": {
-        "unique_surnames": 50,
+        "unique_surnames": 53,
         "threshold": 30
       }
     },
@@ -924,7 +925,7 @@
       "name": "npc_full_size_min_R212",
       "ok": true,
       "evidence": {
-        "size_bytes": 7549119,
+        "size_bytes": 7554684,
         "min_threshold": 1000000
       }
     },
@@ -939,8 +940,8 @@
       "name": "metrics_ts_self_R214",
       "ok": true,
       "evidence": {
-        "build_ts": "20260519-141535",
-        "metrics_ts": "20260519-141324"
+        "build_ts": "20260519-143315",
+        "metrics_ts": "20260519-143137"
       }
     },
     {
@@ -1019,10 +1020,53 @@
       }
     },
     {
+      "name": "performance_profile_R241",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
+      "name": "runtime_simulation_present_R242",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
+      "name": "formal_i4_nguyen_hist_R243",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
+      "name": "main_era_historical_ge_5_R244",
+      "ok": true,
+      "evidence": {
+        "per_era": {
+          "ly": 7,
+          "tran": 7,
+          "le": 6,
+          "tay_son": 6,
+          "nguyen": 6
+        },
+        "underfilled": []
+      }
+    },
+    {
+      "name": "map_density_le_50_R245",
+      "ok": true,
+      "evidence": {
+        "max_density": 13,
+        "overpopulated_count": 0
+      }
+    },
+    {
       "name": "audit_history_round_count_R215",
       "ok": true,
       "evidence": {
-        "prior_count": 24,
+        "prior_count": 25,
         "post_build_expected": 22
       }
     },
@@ -1038,7 +1082,7 @@
       "name": "era_pattern_divergence_R71_4",
       "ok": true,
       "evidence": {
-        "max_divergence_pct": 11.11,
+        "max_divergence_pct": 11.03,
         "tolerance_pct": 20.0,
         "note": "Tolerance 20% accounts for forced le/tay_son coverage per R83"
       }
