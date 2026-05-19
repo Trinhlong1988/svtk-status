@@ -190,5 +190,121 @@
     "quest_completion": 100,
     "monthly": 98,
     "limited_time": 99
+  },
+  "cross_validation_round": "15_round_cross_validation_v1.0.2",
+  "cross_validation_timestamp": "20260519-113927",
+  "cross_validation_fixes": 2437,
+  "cross_validation_rounds": [
+    {
+      "round": 1,
+      "name": "R01 reward_items placeholder → real item_id",
+      "before": 1292,
+      "after": 950,
+      "detail": "Δ=342"
+    },
+    {
+      "round": 2,
+      "name": "R02 lore dialog_tree_ref → real dialog_id",
+      "before": 100,
+      "after": 0,
+      "detail": "Δ=100"
+    },
+    {
+      "round": 3,
+      "name": "R03 cross_ref.links_quest_chain → real chain_id",
+      "before": 295,
+      "after": 0,
+      "detail": "Δ=295"
+    },
+    {
+      "round": 4,
+      "name": "R04 giver_npc_id assign (lore/raid/wb/festival)",
+      "before": 600,
+      "after": 0,
+      "detail": "Δ=600"
+    },
+    {
+      "round": 5,
+      "name": "R05 giver_npc_id exists in NPC registry",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 6,
+      "name": "R06 world_boss boss_npc_id assign",
+      "before": 50,
+      "after": 0,
+      "detail": "Δ=50"
+    },
+    {
+      "round": 7,
+      "name": "R07 reward_items dedup per event",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 8,
+      "name": "R08 reward_items ALL exist in item registry",
+      "before": 950,
+      "after": 0,
+      "detail": "Δ=950"
+    },
+    {
+      "round": 9,
+      "name": "R09 reward_items minimum 1 entry",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 10,
+      "name": "R10 cross_ref schema complete (map_era + codex_slug)",
+      "before": 1,
+      "after": 0,
+      "detail": "Δ=1"
+    },
+    {
+      "round": 11,
+      "name": "R11 era consistency event vs NPC",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 12,
+      "name": "R12 lore unlocks_codex flag",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 13,
+      "name": "R13 trigger_condition.requires_quest_chain real",
+      "before": 99,
+      "after": 0,
+      "detail": "Δ=99"
+    },
+    {
+      "round": 14,
+      "name": "R14 cross_ref _cross_validated annotation",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 15,
+      "name": "R15 save + regen SHA256",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    }
+  ],
+  "cross_validation_against": {
+    "npc_full": 10000,
+    "dialog_tree": 3000,
+    "item_full": 4006,
+    "quest_chains": 34
   }
 }
