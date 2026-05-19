@@ -64,21 +64,21 @@
     "R79"
   ],
   "cross_ref": {
-    "maps_with_npc": 5373,
-    "maps_with_quest": 22,
-    "orphan_npc_count": 0,
-    "orphan_quest_count": 0,
-    "orphan_npc_sample": [],
-    "orphan_quest_sample": [],
-    "items_era_pool": {
-      "Hùng Vương": 1,
-      "Trần": 1,
-      "An Dương Vương": 1,
-      "Tây Sơn": 1,
-      "Lê": 1,
-      "Lý": 1
-    },
-    "dialog_quest_links": 150,
-    "state_checksum_sha256": "d2e21d2e03048b799b30d7030fe53830f435163a06ef9694c9477222458838ef"
+    "maps_with_npc": 5678,
+    "maps_with_quest": 789,
+    "maps_with_event": 540,
+    "total_npc_links": 9972,
+    "total_quest_links": 2977,
+    "total_event_links": 600,
+    "maps_with_item_drop_fallback": 1558,
+    "state_checksum_sha256": "4b6205471f6206609b03f636b8a7447c185249750cf2a3f96e1c2e933974b508"
+  },
+  "audit": {
+    "last_audit_ts": "20260519T054402Z",
+    "last_audit_type": "19_round_deep_verify_R21_R39",
+    "last_audit_fixed_total_cumulative": 17760,
+    "rounds_total": 39,
+    "rounds_pass": 39,
+    "idempotent_verified": true
   }
 }

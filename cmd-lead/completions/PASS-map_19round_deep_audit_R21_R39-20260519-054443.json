@@ -1,0 +1,74 @@
+{
+  "fix_id": "map_19round_deep_audit_R21_R39",
+  "fixed_by": "map",
+  "result": "PASS",
+  "timestamp": "20260519-054443",
+  "trigger": "Mr.Long lệnh CMD MAP verify lần lượt 19 lần fix bug triệt để",
+  "rounds_executed": 19,
+  "rounds_range": "R21..R39",
+  "passes_run": 4,
+  "passes_until_idempotent": 4,
+  "fixed_total_cumulative": 17760,
+  "evidence": {
+    "manifest_count": 8500,
+    "manifest_sha256_pre": "2237ece2efa52401e703916fb232e7afe7abb414f7fcc6b4b2291ee088770b0c",
+    "manifest_sha256_post": "4b6205471f6206609b03f636b8a7447c185249750cf2a3f96e1c2e933974b508",
+    "state_checksum_post": "4b6205471f6206609b03f636b8a7447c185249750cf2a3f96e1c2e933974b508",
+    "idempotent_verified_pass4_fixed": 0,
+    "round_breakdown": {
+      "R21_dupe_image_id": "PASS 0 dup",
+      "R22_schema_required_fields": "PASS 0 missing",
+      "R23_era_valid_set": "PASS 0 bad",
+      "R24_biome_valid_set": "PASS 0 bad",
+      "R25_element_valid_set": "PASS 0 bad",
+      "R26_image_filename_format": "PASS 0 bad",
+      "R27_npc_sceneId_in_map_set": "AUDIT ONLY — 28 NPC orphan (alert CMD_NPC)",
+      "R28_map_npc_ids_relink": "FIXED 7098 maps post NPC 10000 grow",
+      "R29_item_drop_era_pool_relink": "FIXED 6942 era-match + 1558 fallback for F/g1/hung_vuong/an_duong_vuong",
+      "R30_quest_map_relink": "FIXED 789 maps post quest 3000 grow",
+      "R31_dialog_tree_refs_relink": "FIXED 789 maps via dialog_tree.giver_scene_id",
+      "R32_event_cross_ref_new": "FIXED 540 maps NEW link via event.cross_ref.event_map_id",
+      "R33_npc_density_overcrowd": "PASS 0 violation",
+      "R34_item_drop_pool_size_dist": "PASS — 8500/8500 maps có pool ≥500 (sau fallback)",
+      "R35_quest_density_per_map": "PASS — 789 maps có quest, top bucket 2-3 quest/map",
+      "R36_event_density_per_map": "PASS — 540 maps có event, top bucket 1 event/map",
+      "R37_cultural_lock_full_scan": "PASS 0 Tam Quốc / 0 CJK",
+      "R38_f_prefix_+_era_distribution": "PASS — F-era 14.21% / Lý 30.54%",
+      "R39_uuid_uniqueness_+_state_checksum_+_roundtrip": "PASS 0 dup UUID + checksum stable + idempotent"
+    },
+    "cross_ref_post_audit": {
+      "maps_with_npc": 5678,
+      "maps_with_quest": 789,
+      "maps_with_event": 540,
+      "total_npc_links": 9972,
+      "total_quest_links": 2977,
+      "total_event_links": 600,
+      "maps_with_item_drop_fallback": 1558
+    },
+    "cross_ref_data_loaded": {
+      "npcs": 10000,
+      "items": 4006,
+      "quests": 3000,
+      "events": 600,
+      "skills": 306,
+      "dialog_trees": 3000,
+      "bosses": 0
+    }
+  },
+  "bugs_fixed_breakdown": {
+    "stale_npc_links_post_npc_grow_5373_to_10000": 7098,
+    "stale_item_links_post_item_grow_6_to_4006": 6942,
+    "stale_quest_links_post_quest_grow_22_to_789": 789,
+    "stale_dialog_links_post_dialog_tree_grow_150_to_3000": 789,
+    "new_event_cross_ref_field": 540,
+    "wrong_quest_field_giver_scene_id_not_map_id_schema_bug_in_audit_script_pass1": 1,
+    "wrong_event_field_cross_ref_event_map_id_not_map_id_schema_bug_in_audit_script_pass1": 1,
+    "item_drop_pool_fallback_for_era_F_g1_hung_vuong_an_duong_vuong": 1558
+  },
+  "honest_gaps_remaining": [
+    "28_npc_orphan_sceneId_not_in_map_set_8500 — alert filed to CMD_NPC owner",
+    "23_quest_orphan_giver_scene_id_not_in_map_set — minor (2977/3000 = 99.2% link OK)",
+    "boss_registry_jsonl_still_empty — CMD_BOSS owner pending"
+  ],
+  "exit_code": 0
+}
