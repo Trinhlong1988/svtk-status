@@ -4256,6 +4256,210 @@ ROUND_L13_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 14 — Stat budget & balance bounds (TETRADECA-DEEP, v1.15)
+# Catch overflow / underbudget stat values that survive shape audit.
+# ============================================================
+STAT_BOUNDS = {
+    "crit_rate_bp": (0, 9000),        # cap 90%
+    "crit_dmg_bp": (0, 30000),        # 300%
+    "lifesteal_bp": (0, 5000),
+    "penetration_bp": (0, 5000),
+    "dodge_bp": (0, 5000),
+    "hp": (0, 100000),
+    "defense": (0, 10000),
+    "sat_luc": (0, 5000),
+    "phap_luc": (0, 5000),
+    # B27: tam_resonance_bp ≡ element_mod_bp parity → cap 30000 (base 10000 × 2.5 mythic mult)
+    "tam_resonance_bp": (0, 30000),
+    "hp_regen_bp": (0, 5000),
+    "heal_amount": (0, 100000),
+    "threat_coef_bp": (0, 10000),
+    "agility": (0, 1000),
+}
+
+
+def chk_L14_stat_within_bounds(items, *_):
+    bad = []
+    for it in items:
+        st = it.get("stats") or {}
+        for k, v in st.items():
+            if not isinstance(v, (int, float)):
+                continue
+            lo, hi = STAT_BOUNDS.get(k, (None, None))
+            if lo is None:
+                continue
+            if v < lo or v > hi:
+                bad.append({"id": it["id"], "key": k, "val": v,
+                            "bounds": [lo, hi]})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"out_of_bounds": len(bad), "samples": bad[:5]}
+
+
+def chk_L14_material_bp_zero(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        bp = it.get("bp")
+        if bp is not None and bp != 0:
+            bad.append({"id": it["id"], "bp": bp})
+    return len(bad) == 0, {"material_with_bp": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L14_lore_bp_zero(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        bp = it.get("bp")
+        if bp is not None and bp != 0:
+            bad.append({"id": it["id"], "bp": bp})
+    return len(bad) == 0, {"lore_with_bp": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L14_quest_item_bp_zero(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "quest_item":
+            continue
+        bp = it.get("bp")
+        if bp is not None and bp != 0:
+            bad.append({"id": it["id"], "bp": bp})
+    return len(bad) == 0, {"quest_with_bp": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L14_weapon_bp_tier_monotonic_median(items, *_):
+    weps = [it for it in items if it.get("category") == "weapon"
+            and it.get("bp") is not None and it.get("tier") is not None]
+    if not weps:
+        return True, {"no_weapons": True}
+    by_tier = {}
+    for w in weps:
+        by_tier.setdefault(w["tier"], []).append(w["bp"])
+    medians = {t: sorted(v)[len(v) // 2] for t, v in by_tier.items()}
+    tier_order = ["Mob", "Elite", "Captain", "Boss", "Myth"]
+    ordered = [t for t in tier_order if t in medians]
+    if len(ordered) < 2:
+        return True, {"medians": medians}
+    seq = [medians[t] for t in ordered]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"medians": medians, "ordered_tiers": ordered}
+
+
+def chk_L14_armor_defense_tier_monotonic(items, *_):
+    """B28 refined: group strictly by slot='ao' so monotonic test isn't
+    skewed by mixed-slot armor (mu/quan/giay/gang_tay use different stats)."""
+    arm = [it for it in items
+           if it.get("category") == "armor" and it.get("slot") == "ao"]
+    by_tier = {}
+    for it in arm:
+        d = (it.get("stats") or {}).get("defense")
+        if d is None:
+            continue
+        by_tier.setdefault(it.get("tier"), []).append(d)
+    if len(by_tier) < 2:
+        return True, {"insufficient": dict(by_tier)}
+    medians = {t: sorted(v)[len(v) // 2] for t, v in by_tier.items()}
+    # Tier order from TIER_BY_RARITY mapping (rarity 1.0→2.5):
+    # common/uncommon→Mob, rare→Elite, epic→Captain, legendary→Boss, mythic→Myth
+    tier_order = ["Mob", "Elite", "Captain", "Boss", "Myth"]
+    ordered = [t for t in tier_order if t in medians]
+    seq = [medians[t] for t in ordered]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"medians": medians, "ordered": ordered}
+
+
+def chk_L14_consumable_heal_positive(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        st = it.get("stats") or {}
+        h = st.get("heal_amount", it.get("heal_amount"))
+        if h is None:
+            continue
+        if h < 0:
+            bad.append({"id": it["id"], "heal": h})
+    return len(bad) == 0, {"neg_heal": len(bad), "samples": bad[:5]}
+
+
+def chk_L14_no_inf_nan_stats(items, *_):
+    bad = []
+    for it in items:
+        st = it.get("stats") or {}
+        for k, v in st.items():
+            if isinstance(v, float):
+                if v != v or v in (float("inf"), float("-inf")):
+                    bad.append({"id": it["id"], "key": k, "val": str(v)})
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"inf_nan": len(bad), "samples": bad[:5]}
+
+
+def chk_L14_stat_keys_lowercase_underscore(items, *_):
+    bad = []
+    pat = re.compile(r"^[a-z][a-z0-9_]*$")
+    for it in items:
+        st = it.get("stats") or {}
+        for k in st.keys():
+            if not pat.match(k):
+                bad.append({"id": it["id"], "key": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"bad_keys": len(bad), "samples": bad[:5]}
+
+
+def chk_L14_no_float_bp(items, *_):
+    """BP must be integer (no fractional battle power)."""
+    bad = []
+    for it in items:
+        bp = it.get("bp")
+        if bp is None:
+            continue
+        if isinstance(bp, float) and not bp.is_integer():
+            bad.append({"id": it["id"], "bp": bp})
+    return len(bad) == 0, {"float_bp": len(bad), "samples": bad[:5]}
+
+
+ROUND_L14_CHECKS = {
+    2: [
+        ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
+        ("L14_material_bp_zero", "R45", chk_L14_material_bp_zero),
+    ],
+    3: [
+        ("L14_lore_bp_zero", "R45", chk_L14_lore_bp_zero),
+        ("L14_quest_item_bp_zero", "R45",
+         chk_L14_quest_item_bp_zero),
+    ],
+    4: [
+        ("L14_weapon_bp_tier_monotonic_median", "R45",
+         chk_L14_weapon_bp_tier_monotonic_median),
+        ("L14_armor_defense_tier_monotonic", "R45",
+         chk_L14_armor_defense_tier_monotonic),
+    ],
+    5: [
+        ("L14_consumable_heal_positive", "R45",
+         chk_L14_consumable_heal_positive),
+        ("L14_no_inf_nan_stats", "R45", chk_L14_no_inf_nan_stats),
+    ],
+    6: [
+        ("L14_stat_keys_lowercase_underscore", "R30",
+         chk_L14_stat_keys_lowercase_underscore),
+        ("L14_no_float_bp", "R45", chk_L14_no_float_bp),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 def main():
     REPORTS.mkdir(parents=True, exist_ok=True)
     audit_log = []
@@ -4308,6 +4512,8 @@ def main():
             active_checks.extend(ROUND_L12_CHECKS[r])
         if r in ROUND_L13_CHECKS:
             active_checks.extend(ROUND_L13_CHECKS[r])
+        if r in ROUND_L14_CHECKS:
+            active_checks.extend(ROUND_L14_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
