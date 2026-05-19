@@ -1,0 +1,43 @@
+{
+  "cmd": "SKILL",
+  "version": "1.0",
+  "timestamp": "20260519-142716",
+  "foundation_hash_actual_crlf": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "foundation_file": "foundation/SVTK_FOUNDATION_v2.8.0.md",
+  "existing_count": 165,
+  "new_count": 135,
+  "total_count": 300,
+  "tier_distribution": {
+    "basic": 100,
+    "advanced": 100,
+    "master": 70,
+    "ultimate": 30
+  },
+  "element_distribution": {
+    "kim": 50,
+    "mộc": 50,
+    "thủy": 50,
+    "hỏa": 50,
+    "thổ": 50,
+    "tâm": 50
+  },
+  "era_distribution": {
+    "ly": 60,
+    "tran": 60,
+    "le": 60,
+    "nguyen": 60,
+    "f1": 60
+  },
+  "validation_score": 1.0,
+  "validation_checks_pass": 15,
+  "validation_checks_total": 15,
+  "test_count": 20,
+  "test_pass": 20,
+  "honest_gaps": [
+    "Skill animation hint name only (per brief gap admit MED)",
+    "TS migration sample 60 entries — full PKT cross-ref pending CMD_QA",
+    "No combo chains (per brief gap admit MED)",
+    "Cooldown not playtested (per brief gap admit MED)"
+  ],
+  "exit_code": 0
+}
