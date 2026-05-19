@@ -4103,6 +4103,159 @@ ROUND_L12_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 13 — Locale & encoding hygiene (TRIDECA-DEEP, v1.14)
+# Detect NFC drift, control chars, emoji, BOM, double-space.
+# ============================================================
+EMOJI_RE = re.compile(
+    "[\U0001F300-\U0001F9FF\U0001FA70-\U0001FAFF☀-➿]"
+)
+CONTROL_RE = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
+
+
+def chk_L13_name_vi_is_nfc(items, *_):
+    bad = []
+    for it in items:
+        n = it.get("name_vi") or ""
+        if isinstance(n, str) and unicodedata.normalize("NFC", n) != n:
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"non_nfc": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_no_control_chars(items, *_):
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and CONTROL_RE.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"control_chars": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_no_emoji_in_name(items, *_):
+    bad = []
+    for it in items:
+        n = it.get("name_vi") or ""
+        if isinstance(n, str) and EMOJI_RE.search(n):
+            bad.append(it["id"])
+    return len(bad) == 0, {"emoji_present": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_no_bom_in_jsonl(items, *_):
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    head = ITEM_FULL.read_bytes()[:3]
+    return head != b"\xef\xbb\xbf", {"bom_present": head == b"\xef\xbb\xbf"}
+
+
+def chk_L13_no_double_space_in_name(items, *_):
+    bad = []
+    for it in items:
+        n = it.get("name_vi") or ""
+        if isinstance(n, str) and "  " in n:
+            bad.append({"id": it["id"], "name": n})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"double_space": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_no_leading_trailing_ws_name(items, *_):
+    bad = []
+    for it in items:
+        n = it.get("name_vi") or ""
+        if isinstance(n, str) and (n != n.strip()):
+            bad.append({"id": it["id"], "repr": repr(n)})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"ws_name": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_id_ascii_only(items, *_):
+    bad = []
+    for it in items:
+        i = it.get("id") or ""
+        try:
+            i.encode("ascii")
+        except UnicodeEncodeError:
+            bad.append(i)
+    return len(bad) == 0, {"non_ascii_id": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_no_tab_in_jsonl(items, *_):
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    bad = []
+    with ITEM_FULL.open(encoding="utf-8") as f:
+        for ln, line in enumerate(f, 1):
+            if "\t" in line:
+                bad.append(ln)
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"tab_lines": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_no_zero_width_chars(items, *_):
+    zw = re.compile(r"[​-‍﻿]")
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and zw.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"zero_width": len(bad), "samples": bad[:5]}
+
+
+def chk_L13_lore_text_no_html_entity(items, *_):
+    ent = re.compile(r"&[a-zA-Z]+;|&#\d+;")
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        for k in ("lore", "description", "story"):
+            v = it.get(k) or ""
+            if isinstance(v, str) and ent.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"html_entity": len(bad), "samples": bad[:5]}
+
+
+ROUND_L13_CHECKS = {
+    2: [
+        ("L13_name_vi_is_nfc", "R30", chk_L13_name_vi_is_nfc),
+        ("L13_no_control_chars", "R30", chk_L13_no_control_chars),
+    ],
+    3: [
+        ("L13_no_emoji_in_name", "R30", chk_L13_no_emoji_in_name),
+        ("L13_no_bom_in_jsonl", "R50", chk_L13_no_bom_in_jsonl),
+    ],
+    4: [
+        ("L13_no_double_space_in_name", "R30",
+         chk_L13_no_double_space_in_name),
+        ("L13_no_leading_trailing_ws_name", "R30",
+         chk_L13_no_leading_trailing_ws_name),
+    ],
+    5: [
+        ("L13_id_ascii_only", "R30", chk_L13_id_ascii_only),
+        ("L13_no_tab_in_jsonl", "R50", chk_L13_no_tab_in_jsonl),
+    ],
+    6: [
+        ("L13_no_zero_width_chars", "R30",
+         chk_L13_no_zero_width_chars),
+        ("L13_lore_text_no_html_entity", "R30",
+         chk_L13_lore_text_no_html_entity),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 def main():
     REPORTS.mkdir(parents=True, exist_ok=True)
     audit_log = []
@@ -4153,6 +4306,8 @@ def main():
             active_checks.extend(ROUND_L11_CHECKS[r])
         if r in ROUND_L12_CHECKS:
             active_checks.extend(ROUND_L12_CHECKS[r])
+        if r in ROUND_L13_CHECKS:
+            active_checks.extend(ROUND_L13_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
