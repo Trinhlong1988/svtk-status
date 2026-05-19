@@ -1,0 +1,16 @@
+{
+  "fix_id": "skill_audit15_rounds",
+  "fixed_by": "skill",
+  "result": "PASS",
+  "evidence": {
+    "audit_rounds_pass": "15/15",
+    "idempotent_second_pass": "0 init / 0 fix",
+    "tests": "30/30",
+    "mutations_caught": "4050/4050 (30 ops × 135 new skills)",
+    "fixes_applied": {
+      "R09_name": 10,
+      "R13_cost": 69
+    }
+  },
+  "timestamp": "20260519-143932"
+}

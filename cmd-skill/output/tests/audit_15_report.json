@@ -1,0 +1,137 @@
+[
+  {
+    "round": "R01 schema_strict",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R02 id_unique_dense",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R03 element_lock",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R04 tier_consistency",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R05 numeric_bounds",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R06 target_range",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R07 era_lock",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R08 class_element_compat",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R09 name_unique",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R10 cultural_lock_deep",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R11 desc_coherence",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R12 power_monotonic",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R13 cost_ratio_balance",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R14 mutation_fuzz_30x",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  },
+  {
+    "round": "R15 engine_xref",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "bugs_remaining_new": 0,
+    "advisory_existing": 0,
+    "sample_new_bugs": [],
+    "sample_existing_advisory": []
+  }
+]

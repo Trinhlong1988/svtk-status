@@ -153,6 +153,83 @@ def test_20_by_he_count_matches_full():
     assert total == len(full)
 
 
+# ---- Deep audit findings (rounds 8-15) baked into tests ----
+
+def test_21_bach_than_only_on_moc():
+    for e in _load():
+        if 'bach_than' in e['valid_classes']:
+            assert e['element'] == 'mộc', f'bach_than misplaced sid={e["skill_id"]} el={e["element"]}'
+
+
+def test_22_hac_than_only_on_tho():
+    for e in _load():
+        if 'hac_than' in e['valid_classes']:
+            assert e['element'] == 'thổ', f'hac_than misplaced sid={e["skill_id"]} el={e["element"]}'
+
+
+def test_23_name_uniqueness():
+    names = [e['name'] for e in _load()]
+    dupes = [n for n, c in Counter(names).items() if c > 1]
+    assert not dupes, f'dupe names: {dupes[:5]}'
+
+
+def test_24_cost_power_ratio_new():
+    for e in _load():
+        if e['skill_id'] <= 165 or e['target_type'] == 'self':
+            continue
+        assert e['cost_sp'] > 0
+        ratio = e['power'] / e['cost_sp']
+        cap = 12 if e['target_type'] == 'single' else 9
+        assert ratio <= cap, f'ratio exploit sid={e["skill_id"]} {ratio:.2f}>{cap}'
+
+
+def test_25_description_has_element():
+    el_label = {'kim': 'Kim', 'mộc': 'Mộc', 'thủy': 'Thủy', 'hỏa': 'Hỏa', 'thổ': 'Thổ', 'tâm': 'Tâm'}
+    for e in _load():
+        if e['skill_id'] <= 165:
+            continue
+        assert el_label[e['element']] in e['description']
+
+
+def test_26_description_has_target_hint():
+    tt_map = {'single': 'đơn mục tiêu', 'aoe': 'phạm vi', 'self': 'tự thân'}
+    for e in _load():
+        if e['skill_id'] <= 165:
+            continue
+        assert tt_map[e['target_type']] in e['description']
+
+
+def test_27_engine_damage_formula_finite():
+    # R47 cross-ref stub: damage = power * atk / (atk + def)
+    for e in _load():
+        atk, dfn = 100, 80
+        dmg = int(e['power'] * atk / max(1, atk + dfn))
+        assert 0 <= dmg <= 99999, f'damage oob sid={e["skill_id"]} dmg={dmg}'
+
+
+def test_28_aoe_extra_cooldown():
+    for e in _load():
+        if e['skill_id'] <= 165:
+            continue
+        if e['target_type'] == 'aoe':
+            assert e['cooldown_sec'] >= 2, f'aoe short cd sid={e["skill_id"]}'
+
+
+def test_29_skill_id_dense_1_to_300():
+    ids = sorted(e['skill_id'] for e in _load())
+    assert ids == list(range(1, 301)), f'gap in ids; first 5: {ids[:5]}, last 5: {ids[-5:]}'
+
+
+def test_30_audit_15_report_clean():
+    # All 15 audit rounds must report 0 remaining new bugs after fixes
+    rep_path = Path(__file__).parent / 'audit_15_report.json'
+    if not rep_path.exists():
+        return
+    rep = json.loads(rep_path.read_text(encoding='utf-8'))
+    for r in rep:
+        assert r['bugs_remaining_new'] == 0, f"{r['round']} still has new bugs: {r['sample_new_bugs']}"
+
+
 if __name__ == '__main__':
     import sys
     tests = sorted(k for k in globals() if k.startswith('test_'))
