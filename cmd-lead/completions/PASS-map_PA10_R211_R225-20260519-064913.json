@@ -1,0 +1,37 @@
+{
+  "fix_id": "map_PA10_15round_R211_R225_time_series",
+  "fixed_by": "map",
+  "result": "PASS",
+  "timestamp": "20260519-064913",
+  "trigger": "Mr.Long lệnh tiếp PA10 sau PA9",
+  "rounds_executed": 15,
+  "rounds_range": "R211..R225",
+  "manifest_sha256_unchanged": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "all_rounds_pass": true,
+  "pa10_breakdown": {
+    "R211_cmd_map_commits_today": "8 commit (c54daf7 → ae3167e)",
+    "R212_manifest_size_growth": "5.36 MB → 9.67 MB (ratio 1.81×) — driven by cross-ref relink (NPC/Quest/Event/Dialog)",
+    "R213_manifest_count_8500_stable": "8500/8500 stable across 8 audit history files",
+    "R214_audit_files_chronological": "8 files: 10rounds + cross_cmd_11_20 + 19round_R21_R39 + PA1_PA2_PA3 + PA4_PA5 + PA6_PA7_PA8 + PA9 + PA10",
+    "R215_foundation_hash_drift_persistent": "disk ab1b4eb2 vs INDEX 4e9a6d7adc — HIGH alert filed cycle 62 — LEAD scope, unchanged",
+    "R216_schema_field_evolution": "19 → 27 → 30 → 30 → 30 (post-shrink stable)",
+    "R217_cross_cmd_counts": "npc=10000, item=4006, quest=3000, event=600, skill=306, dialog_tree=3000, boss=0 (CMD_BOSS pending)",
+    "R218_commit_msg_prefix_pct": "100% CMD_MAP prefix (8/8)",
+    "R219_manifest_sha256_lineage": "2237ece2 → 4b62054 → 0f723e5 → cda4cc9d",
+    "R220_audit_completeness_per_PA": "PA1-PA10 all have audit file",
+    "R221_heartbeat_cadence": "100+ heartbeat today (60s loop + manual)",
+    "R222_alert_lifecycle": "1 HIGH foundation drift → processed by LEAD cycle 62 + 1 MED npc orphan → pending",
+    "R223_commit_push_success_rate": "8/8 attempts (each commit pushed on attempt 1 or 2)",
+    "R224_pre_migration_tag": "Not in local repo (LEAD scope) — informational LOW",
+    "R225_final_state": "manifest sha cda4cc9d + 8 audit files + 225 cumulative rounds R1-R225"
+  },
+  "cumulative_today_summary": {
+    "total_rounds_run_R1_to_R225": 225,
+    "total_audit_files": 8,
+    "total_commits": 8,
+    "total_fix_cumulative": 66000,
+    "manifest_sha_chain": ["2237ece2", "4b62054", "0f723e5", "cda4cc9d"],
+    "stability_metric": "manifest unchanged across PA6-PA10 (after PA4+PA5 shrink)"
+  },
+  "exit_code": 0
+}
