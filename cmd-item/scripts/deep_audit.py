@@ -8469,6 +8469,189 @@ ROUND_L40_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 41 — Lore prose hygiene (v1.36)
+# ============================================================
+VN_DIACRITIC_RE = re.compile(r"[àáảãạâầấẩẫậăằắẳẵặèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]",
+                              re.IGNORECASE)
+
+
+def chk_L41_lore_ends_with_punct(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        t = (it.get("lore") or "").strip()
+        if t and t[-1] not in ".!?…":
+            bad.append({"id": it["id"], "tail": t[-15:]})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"no_punct": len(bad), "samples": bad[:5]}
+
+
+def chk_L41_lore_starts_upper_vn(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        t = (it.get("lore") or "").strip()
+        if t and not t[0].isupper():
+            bad.append({"id": it["id"], "head": t[:15]})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"no_upper_start": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L41_lore_has_vn_diacritic(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        t = it.get("lore") or ""
+        if t and not VN_DIACRITIC_RE.search(t):
+            bad.append({"id": it["id"]})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"no_diacritic": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L41_lore_name_has_vn_diacritic(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        n = it.get("name_vi") or ""
+        if n and not VN_DIACRITIC_RE.search(n):
+            bad.append({"id": it["id"], "name": n})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"no_diacritic_name": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L41_lore_no_pipe_or_quote(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        t = it.get("lore") or ""
+        if "|" in t or '"' in t:
+            bad.append({"id": it["id"]})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"forbidden_punct": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L41_lore_no_ellipsis_only(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        t = (it.get("lore") or "").strip()
+        if t and t.replace(".", "").strip() == "":
+            bad.append(it["id"])
+    return len(bad) == 0, {"dot_only": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L41_lore_word_count_ge_4(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        t = (it.get("lore") or "").strip()
+        if len(t.split()) < 4:
+            bad.append({"id": it["id"], "wc": len(t.split())})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"low_wc": len(bad), "samples": bad[:5]}
+
+
+def chk_L41_author_format_vn(items, *_):
+    """Lore author must contain a Vietnamese diacritic or be 'Khuyết danh'."""
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        a = (it.get("author") or "").strip()
+        if "Khuyết danh" in a:
+            continue
+        if a and not VN_DIACRITIC_RE.search(a):
+            bad.append({"id": it["id"], "author": a})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"non_vn_author": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L41_lore_no_unbalanced_paren(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        t = it.get("lore") or ""
+        if t.count("(") != t.count(")"):
+            bad.append({"id": it["id"], "open": t.count("("),
+                        "close": t.count(")")})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"paren_unbalanced": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L41_lore_no_duplicate_sentences(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        sents = re.split(r"[.!?]\s+", (it.get("lore") or ""))
+        sents = [s.strip() for s in sents if s.strip()]
+        if len(sents) != len(set(sents)):
+            bad.append({"id": it["id"]})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"dupe_sent": len(bad),
+                            "samples": bad[:5]}
+
+
+ROUND_L41_CHECKS = {
+    2: [
+        ("L41_lore_ends_with_punct", "R30",
+         chk_L41_lore_ends_with_punct),
+        ("L41_lore_starts_upper_vn", "R30",
+         chk_L41_lore_starts_upper_vn),
+    ],
+    3: [
+        ("L41_lore_has_vn_diacritic", "R30",
+         chk_L41_lore_has_vn_diacritic),
+        ("L41_lore_name_has_vn_diacritic", "R30",
+         chk_L41_lore_name_has_vn_diacritic),
+    ],
+    4: [
+        ("L41_lore_no_pipe_or_quote", "R30",
+         chk_L41_lore_no_pipe_or_quote),
+        ("L41_lore_no_ellipsis_only", "R30",
+         chk_L41_lore_no_ellipsis_only),
+    ],
+    5: [
+        ("L41_lore_word_count_ge_4", "R30",
+         chk_L41_lore_word_count_ge_4),
+        ("L41_author_format_vn", "R30",
+         chk_L41_author_format_vn),
+    ],
+    6: [
+        ("L41_lore_no_unbalanced_paren", "R30",
+         chk_L41_lore_no_unbalanced_paren),
+        ("L41_lore_no_duplicate_sentences", "R30",
+         chk_L41_lore_no_duplicate_sentences),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -8637,6 +8820,8 @@ def main():
             active_checks.extend(ROUND_L39_CHECKS[r])
         if r in ROUND_L40_CHECKS:
             active_checks.extend(ROUND_L40_CHECKS[r])
+        if r in ROUND_L41_CHECKS:
+            active_checks.extend(ROUND_L41_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
