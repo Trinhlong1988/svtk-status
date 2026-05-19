@@ -1,6 +1,6 @@
 {
   "cmd": "QA_CONTENT",
-  "timestamp": "20260519-154552",
+  "timestamp": "20260519-164300",
   "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
   "targets": {
     "npc": 7817,
@@ -210,10 +210,15 @@
   },
   "issues_total": 3,
   "info_snowball_trend": {
-    "hp": {
-      "common_max": 200,
-      "mythic_max": 500,
+    "agility": {
+      "common_max": 10,
+      "mythic_max": 25,
       "ratio_mythic_over_common": 2.5
+    },
+    "phap_luc": {
+      "common_max": 15,
+      "mythic_max": 60,
+      "ratio_mythic_over_common": 4.0
     },
     "defense": {
       "common_max": 25,
@@ -230,15 +235,10 @@
       "mythic_max": 75,
       "ratio_mythic_over_common": 2.5
     },
-    "agility": {
-      "common_max": 10,
-      "mythic_max": 25,
+    "hp": {
+      "common_max": 200,
+      "mythic_max": 500,
       "ratio_mythic_over_common": 2.5
-    },
-    "phap_luc": {
-      "common_max": 15,
-      "mythic_max": 60,
-      "ratio_mythic_over_common": 4.0
     }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "qa": "qa_content",
+  "target": "skill",
+  "verdict": "PASS",
+  "evidence": {
+    "count": 300,
+    "registry": "cmd-skill\\output\\registry\\skill_full.jsonl"
+  },
+  "timestamp": "20260519-164348"
+}
