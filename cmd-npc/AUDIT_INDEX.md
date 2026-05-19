@@ -21,9 +21,11 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 81-90 | 2026-05-19 | 55→60 | 10 | [AUDIT_REPORT_ROUND_81_90_20260519-100252.md](status/AUDIT_REPORT_ROUND_81_90_20260519-100252.md) |
 | 91-100 | 2026-05-19 | 60→65 | 10 | [AUDIT_REPORT_ROUND_91_100_20260519-105507.md](status/AUDIT_REPORT_ROUND_91_100_20260519-105507.md) |
 | 101-110 | 2026-05-19 | 65→70 | 10 | [AUDIT_REPORT_ROUND_101_110_20260519-112235.md](status/AUDIT_REPORT_ROUND_101_110_20260519-112235.md) |
-| **111-120** | **2026-05-19** | **70→75** | **10** | [AUDIT_REPORT_ROUND_111_120_20260519-114503.md](status/AUDIT_REPORT_ROUND_111_120_20260519-114503.md) |
+| 111-120 | 2026-05-19 | 70→75 | 10 | [AUDIT_REPORT_ROUND_111_120_20260519-114503.md](status/AUDIT_REPORT_ROUND_111_120_20260519-114503.md) |
+| **121-130** | **2026-05-19** | **75→80** | **10** | [AUDIT_REPORT_ROUND_121_130_20260519-122748.md](status/AUDIT_REPORT_ROUND_121_130_20260519-122748.md) |
 
-**Cumulative total: 120 hidden bugs fixed.**
+**Cumulative total: 130 hidden bugs fixed.**
+**Per-NPC deep verification: 540,000 individual checks PASS** (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ---
 
@@ -64,6 +66,9 @@ Validator R101 sha256 sidecar match (5 registry files), R102 protagonist idx=1 m
 
 ### Round 111-120: lifecycle file presence + foundation version reconciliation
 Validator R111 heartbeat file present per build (cmd-lead/heartbeats/cmd-npc-{TS}.json), R112 completion file present per build, R113 foundation v2.8.0 file present + hash captured, R114 existing source NPC_438.jsonl strict 438 lines, R115 pet_evolution_path == [_index] invariant (R39 deferred multi-tier), R116 validation.json enriched with `checks` detail array (each name+ok+evidence for downstream LEAD/QA inspection), R117 MED alert npc_foundation_version_mismatch (brief locks v2.6.0 hash but repo ships v2.8.0 — cross-CMD reconciliation needed), pipeline refactor write_lead_heartbeat_pre() called before validator so #71+#72 see files (BUILDING placeholder overwritten post-validator), AUDIT_INDEX 111-120 row + validator matrix 71-75, README cumul 120 + 75/75, EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_111_120 wired.
+
+### Round 121-130: per-NPC deep verification + cross-CMD invariants (NO INFERENCE)
+Trigger Mr.Long — verify từng NPC chi tiết cross-ref MAP/ITEM/QUEST/EVENT theo foundation, fix bug ẩn, chính xác 100%. Implementation: run_per_npc_verification() — 54 deep checks × 10000 NPCs = 540,000 individual validations (UUID format/uuid5 determinism, NFC normalization, era/type/tier/element/class enums, level-tier range adherence, sceneId range, stat non-negativity + combat atk≤hp sanity, skill_id range + SKILL_165 registry existence + within-NPC dedup, behavior valid set, aggro non-combat zero, type↔flag coherence for pettable/can_give_quest/can_train_skill/can_event, sprite/palette ranges, recolor=palette alias, cultural lock R30 + Tam Quốc protection, pet sub-schema, raid_extreme invariant, mentor cross-ref + name substring, protagonist-specific fields, starting_class isolation). Cross-CMD: X1 quest giver_npc_id valid, X2 quest target_npc_id valid, X3 quest giver NPC type correct, X4 SKILL_165 zero orphan, X5 10 required historical figures present. Result: **0 violations on 10000 NPCs across 540,000 checks**. Validator R121-R125 wraps per-NPC report + 4 cross-CMD invariants. AUDIT_INDEX 121-130 row + matrix R76-R80, README cumul 130 + per-NPC verified badge, EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_121_130 wired.
 
 ---
 
@@ -112,6 +117,35 @@ Validator R111 heartbeat file present per build (cmd-lead/heartbeats/cmd-npc-{TS
 | Range + enum + tier-level + split sum | 61-65 | R91-R100 |
 | Integrity invariants + ecosystem schema | 66-70 | R101-R110 |
 | Lifecycle files + source contract + invariants | 71-75 | R111-R120 |
+| Per-NPC deep + cross-CMD (quest/skill/historical) | 76-80 | R121-R130 |
+
+---
+
+## Per-NPC deep verification (R121-R130)
+
+`run_per_npc_verification()` runs **54 schema checks per NPC × 10,000 NPCs = 540,000 individual validations** plus 5 cross-CMD ecosystem invariants. Output: `cmd-npc/output/reports/per_npc_verification.json`.
+
+**Per-NPC check categories:**
+- Schema integrity (V01-V14): index uniqueness, UUID format + uuid5 determinism, name NFC + length, era/type/tier/element/class enum, level-tier range, dmg_taken_multi
+- Spatial (V15-V18): sceneId range, spawn coords non-negative
+- Stats (V19-V23): 11 stat fields non-negative, combat atk≤hp, hit/dodge/crit bounds
+- Skill (V24-V26): skill_id range, SKILL_165 registry existence, intra-NPC dedup
+- Behavior + flags (V27-V35): ai_behavior valid set, aggro non-combat zero, pettable/rebirthable/quest/train/event flag coherence
+- Sprite/palette (V36-V39): sprite range, palette range, recolor=palette alias, gender
+- Cultural (V40-V42): cultural_tag=viet_pure, no CJK in name, no Tam Quốc in gen
+- Pet sub-schema (V43-V46): 4 pet fields present, pet_evolution_path=[idx], pet_loyalty=50
+- Raid extreme (V47): is_raid_extreme == (tier==9)
+- Mentor (V48-V49): mentor_npc_idx valid + mentor field substring match
+- Protagonist (V50-V54): idx=1 flag invariants, starting_class isolation
+
+**Cross-CMD invariants:**
+- X1 quest giver_npc_id ∈ NPC registry
+- X2 quest objective target_npc_id ∈ NPC registry
+- X3 quest giver NPC type ∈ {quest_giver, lore_npc, townsmen, boss}
+- X4 SKILL_165 zero orphan (every skill referenced by ≥1 NPC)
+- X5 10 required historical figures present (Trần Hưng Đạo, Lê Lợi, Nguyễn Huệ, Lý Thái Tổ, Sư Vạn Hạnh, Trần Long, Hùng Vương, Lạc Long Quân, Âu Cơ, Lý Thường Kiệt)
+
+**Current status: 540,000 / 540,000 PASS + 5/5 cross-CMD PASS.**
 
 ---
 

@@ -1,0 +1,19 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_protagonist_dual_flag",
+  "evidence": {
+    "rule_anchor": "schema design — is_protagonist vs is_player semantic separation",
+    "count": 1,
+    "samples": [
+      {
+        "_index": 1,
+        "name": "Trần Long (player default)",
+        "is_protagonist": true,
+        "is_player": true
+      }
+    ],
+    "remediation": "Current v1.1 design: Trần Long (idx=1) is both. v2 multiplayer may diverge — keep both flags but document semantic: is_protagonist = story-canon hero, is_player = client-controllable. No code change needed unless v2 contracts force collapse."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-122748"
+}

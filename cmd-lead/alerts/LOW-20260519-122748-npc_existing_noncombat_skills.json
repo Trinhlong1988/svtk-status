@@ -1,0 +1,24 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_existing_noncombat_skills",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "count": 327,
+    "sample_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "rule_violated": "Semantic: non-combat NPC (townsmen/shopkeeper/quest_giver/lore_npc) should have empty skill_ids",
+    "remediation": "R71.1 immutable. Generated NPC comply."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-122748"
+}
