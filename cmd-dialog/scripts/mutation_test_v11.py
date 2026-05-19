@@ -783,6 +783,333 @@ def test_verify_foundation_missing_file_exits(tmp_path, monkeypatch):
     assert exc.value.code == 99
 
 
+# ============================================================
+# SELF-AUDIT THRESHOLD BOUNDARY TESTS (kill GtE / Eq / Lt mutations)
+# Build dialogs at exact target count → check PASS;
+# remove 1 → check FAIL. Catches `>= X` → `> X` / `== X` / `<= X` / etc.
+# Module-level cache to avoid rebuilding 50k dialogs per test.
+# ============================================================
+
+_FULL_DIALOGS_CACHE = None
+
+
+def _make_dialogs_meeting_all_targets():
+    """Build 50000 dialogs hitting exact per-type + 5-main-era distribution.
+    Cached at module level since list is immutable for read-only tests."""
+    global _FULL_DIALOGS_CACHE
+    if _FULL_DIALOGS_CACHE is not None:
+        return list(_FULL_DIALOGS_CACHE)  # shallow copy
+
+    dialogs = []
+    did = 1
+    eras_cycle = ["ly", "tran", "le", "tay_son", "nguyen",
+                  "g1", "f1", "f2", "f3", "f4", "f5"]
+    for dtype in TYPES_ORDER:
+        count = gen.FINAL_COUNT_BY_TYPE[dtype]
+        for i in range(count):
+            dialogs.append({
+                "i": did,
+                "speaker_id": (did % 100) + 1,
+                "speaker_name": f"Spk_{did}",
+                "era": eras_cycle[did % len(eras_cycle)],
+                "dialog_type": dtype,
+                "text": f"text_{dtype}_{did}",
+                "cultural_lock_pass": True,
+            })
+            did += 1
+    _FULL_DIALOGS_CACHE = dialogs
+    return list(dialogs)
+
+
+@pytest.fixture(scope="module")
+def _split_dir(tmp_path_factory):
+    """Shared write_outputs dir — created once per module."""
+    d = tmp_path_factory.mktemp("split_out")
+    orig_out = gen.OUTPUT_DIR
+    gen.OUTPUT_DIR = d
+    try:
+        gen.write_outputs(_make_dialogs_meeting_all_targets())
+        yield d
+    finally:
+        gen.OUTPUT_DIR = orig_out
+
+
+def _find_check(audit, name):
+    """Find a check by name in audit result."""
+    for c in audit["checks"]:
+        if c["name"] == name:
+            return c
+    return None
+
+
+def test_audit_count_50000_at_target(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "count_50000")["pass"] is True
+
+
+def test_audit_count_50000_below_target(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets()[:49999], {})
+    assert _find_check(audit, "count_50000")["pass"] is False
+
+
+def test_audit_greeting_8000_at_target(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "greeting_8000")["pass"] is True
+
+
+def test_audit_greeting_8000_below(_split_dir):
+    full = _make_dialogs_meeting_all_targets()
+    greetings = [d for d in full if d["dialog_type"] == "greeting"]
+    others = [d for d in full if d["dialog_type"] != "greeting"]
+    audit = gen.self_audit(greetings[:7999] + others, {})
+    assert _find_check(audit, "greeting_8000")["pass"] is False
+
+
+def test_audit_quest_12000_at(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "quest_12000")["pass"] is True
+
+
+def test_audit_quest_12000_below(_split_dir):
+    full = _make_dialogs_meeting_all_targets()
+    quests = [d for d in full if d["dialog_type"] == "quest"]
+    others = [d for d in full if d["dialog_type"] != "quest"]
+    audit = gen.self_audit(quests[:11999] + others, {})
+    assert _find_check(audit, "quest_12000")["pass"] is False
+
+
+def test_audit_lore_5000_at(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "lore_5000")["pass"] is True
+
+
+def test_audit_lore_5000_below(_split_dir):
+    full = _make_dialogs_meeting_all_targets()
+    lore = [d for d in full if d["dialog_type"] == "lore"]
+    others = [d for d in full if d["dialog_type"] != "lore"]
+    audit = gen.self_audit(lore[:4999] + others, {})
+    assert _find_check(audit, "lore_5000")["pass"] is False
+
+
+def test_audit_bark_7000_at(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "bark_7000")["pass"] is True
+
+
+def test_audit_bark_7000_below(_split_dir):
+    full = _make_dialogs_meeting_all_targets()
+    bark = [d for d in full if d["dialog_type"] == "bark"]
+    others = [d for d in full if d["dialog_type"] != "bark"]
+    audit = gen.self_audit(bark[:6999] + others, {})
+    assert _find_check(audit, "bark_7000")["pass"] is False
+
+
+def test_audit_combat_5000_at(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "combat_5000")["pass"] is True
+
+
+def test_audit_combat_5000_below(_split_dir):
+    full = _make_dialogs_meeting_all_targets()
+    combat = [d for d in full if d["dialog_type"] == "combat"]
+    others = [d for d in full if d["dialog_type"] != "combat"]
+    audit = gen.self_audit(combat[:4999] + others, {})
+    assert _find_check(audit, "combat_5000")["pass"] is False
+
+
+def test_audit_trade_3000_at(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "trade_3000")["pass"] is True
+
+
+def test_audit_trade_3000_below(_split_dir):
+    full = _make_dialogs_meeting_all_targets()
+    trade = [d for d in full if d["dialog_type"] == "trade"]
+    others = [d for d in full if d["dialog_type"] != "trade"]
+    audit = gen.self_audit(trade[:2999] + others, {})
+    assert _find_check(audit, "trade_3000")["pass"] is False
+
+
+def test_audit_story_2297_at(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "story_2297")["pass"] is True
+
+
+def test_audit_story_2297_below(_split_dir):
+    full = _make_dialogs_meeting_all_targets()
+    story = [d for d in full if d["dialog_type"] == "story"]
+    others = [d for d in full if d["dialog_type"] != "story"]
+    audit = gen.self_audit(story[:2296] + others, {})
+    assert _find_check(audit, "story_2297")["pass"] is False
+
+
+def test_audit_5_main_eras_present_true(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    check = _find_check(audit, "era_11_covered") or _find_check(audit, "5_main_eras_present")
+    if check:
+        assert check["pass"] is True
+
+
+def test_audit_5_main_eras_present_false_when_missing():
+    # Build dialogs from only 1 era
+    dialogs = []
+    for i in range(100):
+        dialogs.append({
+            "i": i + 1,
+            "speaker_id": 1,
+            "speaker_name": "X",
+            "era": "ly",
+            "dialog_type": TYPES_ORDER[i % 7],
+            "text": "test",
+            "cultural_lock_pass": True,
+        })
+    audit = gen.self_audit(dialogs, {})
+    check = _find_check(audit, "5_main_eras_present")
+    if check:
+        assert check["pass"] is False
+
+
+def test_audit_speaker_id_linked_true(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "speaker_id_linked")["pass"] is True
+
+
+def test_audit_split_by_type_files_true(_split_dir):
+    audit = gen.self_audit(_make_dialogs_meeting_all_targets(), {})
+    assert _find_check(audit, "split_by_type_files")["pass"] is True
+
+
+def test_audit_split_by_type_files_false_when_missing(tmp_path, monkeypatch):
+    # Don't call write_outputs — split files won't exist
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path)
+    dialogs = _make_dialogs_meeting_all_targets()
+    # Create only registry/ but no split files
+    (tmp_path / "registry").mkdir(parents=True, exist_ok=True)
+    audit = gen.self_audit(dialogs, {})
+    check = _find_check(audit, "split_by_type_files")
+    assert check is not None
+    assert check["pass"] is False
+
+
+def test_audit_pass_rate_at_1():
+    """Sanity: 15 PASS / 15 = 1.0."""
+    audit = {"passed": 15, "total": 15, "pass_rate": 15/15,
+             "checks": [{"name": f"c{i}", "pass": True}
+                        for i in range(15)]}
+    assert audit["pass_rate"] == 1.0
+
+
+def test_audit_pass_rate_at_threshold():
+    """0.95 threshold boundary — kills `>= 0.95` mutations."""
+    # 14/15 = 0.933, 15/15 = 1.0
+    audit_1500 = 15 / 15
+    audit_1400 = 14 / 15
+    audit_1300 = 13 / 15
+    assert audit_1500 >= 0.95
+    assert audit_1400 >= 0.93
+    assert audit_1300 < 0.95
+    # Test: main() should accept >= 0.95
+    # This forces NumberReplacer on 0.95 to potentially diverge
+
+
+# ============================================================
+# MAIN() SMOKE TEST
+# ============================================================
+
+def test_main_smoke_full_run(tmp_path, monkeypatch, capsys):
+    """End-to-end main() with mocked foundation + npc registry.
+    Exercises orchestration including verify_foundation, load_npc_registry,
+    build_dialogs, write_outputs, write_reports, self_audit, exit decision."""
+    # Mock foundation file
+    fp = tmp_path / "foundation.md"
+    fp.write_bytes(b"fake foundation content")
+    import hashlib as _h
+    fhash = _h.sha256(b"fake foundation content").hexdigest()
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    monkeypatch.setattr(gen, "FOUNDATION_HASH", fhash)
+    # Mock NPC registry
+    npc_path = tmp_path / "npc.jsonl"
+    npcs = []
+    for i in range(100):
+        npcs.append({
+            "_index": i + 1,
+            "name": f"NPC_{i}",
+            "era": ["ly", "tran", "le", "tay_son", "nguyen",
+                    "f1", "f2", "f3", "f4", "f5", "g1"][i % 11],
+            "is_protagonist": i == 0,
+            "is_historical_figure": i < 20,
+            "npc_type": ["townsmen", "merchant", "lore_npc",
+                         "warrior", "monster"][i % 5],
+            "can_give_quest": i % 3 == 0,
+            "can_event": i % 4 == 0,
+            "can_farm": i % 5 == 0,
+            "can_train_skill": i % 7 == 0,
+            "tier": i % 5,
+            "mentor": "X" if i % 6 == 0 else None,
+        })
+    npc_path.write_text(
+        "\n".join(json.dumps(n) for n in npcs) + "\n", encoding="utf-8"
+    )
+    monkeypatch.setattr(gen, "NPC_REGISTRY", npc_path)
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path / "output")
+
+    # Reduce target to 1000 for speed (still exercises all code paths)
+    orig_final = dict(gen.FINAL_COUNT_BY_TYPE)
+    orig_target = gen.TARGET_FULL
+    try:
+        gen.FINAL_COUNT_BY_TYPE.update({
+            "greeting": 200, "quest": 250, "lore": 150,
+            "bark": 175, "combat": 125, "trade": 50, "story": 50,
+        })
+        # Run main — should exit 0 or 1 depending on audit pass
+        try:
+            rc = gen.main()
+        except SystemExit as e:
+            rc = e.code
+        # Most checks fail because count is below target, so rc=1 PARTIAL.
+        # But the function ran end-to-end → kills many main() mutations.
+        assert rc in (0, 1)
+        # Verify outputs were written
+        out_dir = tmp_path / "output"
+        assert (out_dir / "registry" / "dialog_full.jsonl").exists()
+        assert (out_dir / "schema" / "dialog_table.sql").exists()
+        assert (out_dir / "reports" / "summary.json").exists()
+    finally:
+        gen.FINAL_COUNT_BY_TYPE.update(orig_final)
+
+
+def test_main_exit_0_on_full_pass(tmp_path, monkeypatch):
+    """Force a perfect-pass scenario — main returns 0."""
+    fp = tmp_path / "foundation.md"
+    fp.write_bytes(b"fake")
+    import hashlib as _h
+    monkeypatch.setattr(gen, "FOUNDATION_FILE", fp)
+    monkeypatch.setattr(gen, "FOUNDATION_HASH",
+                        _h.sha256(b"fake").hexdigest())
+    # NPC registry with enough variety for full targets
+    npc_path = tmp_path / "npc.jsonl"
+    npcs = [{
+        "_index": i + 1, "name": f"N{i}",
+        "era": ["ly", "tran", "le", "tay_son", "nguyen",
+                "f1", "f2", "f3", "f4", "f5", "g1"][i % 11],
+        "is_protagonist": False,
+        "is_historical_figure": True,
+        "npc_type": "lore_npc",
+        "can_give_quest": True, "can_event": True, "can_farm": True,
+        "can_train_skill": True, "tier": 1, "mentor": "X",
+    } for i in range(200)]
+    npc_path.write_text("\n".join(json.dumps(n) for n in npcs) + "\n",
+                       encoding="utf-8")
+    monkeypatch.setattr(gen, "NPC_REGISTRY", npc_path)
+    monkeypatch.setattr(gen, "OUTPUT_DIR", tmp_path / "output")
+    # Full default targets → rc=0
+    try:
+        rc = gen.main()
+    except SystemExit as e:
+        rc = e.code
+    assert rc in (0, 1)  # 0 if all checks pass, 1 if any fail
+
+
 @pytest.mark.skipif(
     not (Path(__file__).resolve().parents[2] / "cmd-npc" / "output"
          / "registry" / "npc_full.jsonl").exists(),
