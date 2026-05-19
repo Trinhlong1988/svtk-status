@@ -1,0 +1,11 @@
+[cosmic-ray]
+module-path = "scripts/cmd_dialog_v11_generator.py"
+timeout = 60
+excluded-modules = []
+test-command = "python -X utf8 -m pytest scripts/mutation_test_v11.py -x --tb=no -q"
+
+[cosmic-ray.distributor]
+name = "local"
+
+[cosmic-ray.interceptors]
+enabled = ["spor", "pragma_no_mutate"]
