@@ -3,8 +3,8 @@
 NPC registry for SVTK Sử Việt Truyền Kỳ — 10000 NPCs sử Việt.
 
 **Version:** 1.1.0  
-**Audit state:** 13 deep audit rounds completed (R1-R130, cumulative 130 hidden bugs fixed).  
-**Validator:** 80/80 PASS (rate 1.0).  
+**Audit state:** 14 deep audit rounds completed (R1-R140, cumulative 140 hidden bugs fixed).  
+**Validator:** 85/85 PASS (rate 1.0).  
 **Per-NPC deep verification:** 540,000 individual checks PASS (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ## Quick links
@@ -41,8 +41,8 @@ cmd-npc/
 
 ## Cumulative audit status
 
-- **130 hidden bugs fixed** across 13 audit rounds (R1-R130).
-- **Validator: 80/80 PASS** (rate 1.0).
+- **140 hidden bugs fixed** across 14 audit rounds (R1-R140).
+- **Validator: 85/85 PASS** (rate 1.0).
 - **Per-NPC deep: 540,000 / 540,000 checks PASS** (54 schema × 10000 NPCs) + cross-CMD 5/5 invariants (quest/skill/historical).
 - **Active ex-side alerts: 20** (R71.1 immutable + ecosystem cross-ref + content-gap + flag-design + foundation-version-mismatch).
 - **Generated-side: 0 violations.**

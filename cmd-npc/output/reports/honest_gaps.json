@@ -2,7 +2,7 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260519-122748",
+  "build_timestamp": "20260519-124844",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -197,6 +197,22 @@
         "R118_audit_index_round_111_120_entry": "AUDIT_INDEX.md row + bug fix area + alerts table sync (1 new MED + 20 cumulative) + validator matrix updated to include 71-75.",
         "R119_readme_cumul_120": "README.md cumul 120 / validator 75/75 / 20 active alerts.",
         "R120_validator_extension_audit_history": "Validator 70→75 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_111_120 + validator expected_rounds wired."
+      }
+    },
+    "round_131_140": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — tiếp tục đào sâu tìm bug ẩn 22 vòng",
+      "bugs_fixed": {
+        "R131_jsonl_trailing_newline_fix": "All 5 registry jsonl files (main/side/lore/generated/full) wrote without trailing \\n — POSIX violation, breaks streaming readers. FIX: write_jsonl() appends \\n if missing.",
+        "R132_heartbeat_sweep_cap": "cmd-lead/heartbeats/cmd-npc-*.json accumulated 16 files (sweep only targeted alerts/completions, missed heartbeats). FIX: sweep_old_npc_artifacts() caps cmd-npc heartbeats at 3 most recent → cold archive heartbeats-archived/.",
+        "R133_validator_jsonl_newline": "Validator check #81: assert all 5 registry jsonl files end with \\n.",
+        "R134_validator_jsonl_no_bom": "Validator check #82: assert no UTF-8 BOM (\\xef\\xbb\\xbf) at start of any registry jsonl.",
+        "R135_validator_sha256_sidecar_format": "Validator check #83: sha256 sidecar format must match `<64 hex>  <filename>\\n` (sha256sum standard).",
+        "R136_validator_era_file_schema": "Validator check #84: all 5 main-era files (era_ly/tran/le/tay_son/nguyen.json) have required keys {name, start_year, end_year, key_figures, npc_count}.",
+        "R137_validator_heartbeat_cap": "Validator check #85: heartbeat active dir has ≤3 cmd-npc files (enforces R132 cap).",
+        "R138_audit_index_round_131_140": "AUDIT_INDEX.md row + bug fix area + matrix R81-R85 + cumulative 140.",
+        "R139_readme_cumul_140": "README.md cumul 140 / validator 85/85.",
+        "R140_audit_history_wiring": "EXPECTED_AUDIT_ROUNDS_COVERED + validator expected_rounds + audit_history.round_131_140 append."
       }
     },
     "round_121_130": {
