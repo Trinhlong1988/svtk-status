@@ -1,0 +1,10 @@
+{
+  "test": "cross_cmd_contract",
+  "verdict": "PASS",
+  "cmd_boss_consumers": 203,
+  "cmd_quest_consumers": 1502,
+  "cmd_map_scenes": 5702,
+  "cmd_db_not_null_cols": 25,
+  "cmd_skill_invalid_refs": 0,
+  "violations": []
+}

@@ -1,0 +1,70 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_existing_myth_tier_hp",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "myth_tier_count": 7,
+    "samples": [
+      {
+        "_index": 2,
+        "name": "Hùng Vương 18 (Hùng Duệ Vương)",
+        "hp": 8000,
+        "level": 80,
+        "tier": 0,
+        "npc_type": "lore_npc"
+      },
+      {
+        "_index": 3,
+        "name": "Lạc Long Quân",
+        "hp": 9999,
+        "level": 80,
+        "tier": 0,
+        "npc_type": "lore_npc"
+      },
+      {
+        "_index": 4,
+        "name": "Âu Cơ",
+        "hp": 8888,
+        "level": 80,
+        "tier": 0,
+        "npc_type": "lore_npc"
+      },
+      {
+        "_index": 5,
+        "name": "Sơn Tinh",
+        "hp": 7500,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 6,
+        "name": "Thủy Tinh",
+        "hp": 7000,
+        "level": 100,
+        "tier": 0,
+        "npc_type": "boss"
+      },
+      {
+        "_index": 18,
+        "name": "Rùa Thần (Kim Quy / Rùa Vàng)",
+        "hp": 6000,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      },
+      {
+        "_index": 19,
+        "name": "Rồng Lạc (Long thần Lạc Việt)",
+        "hp": 9999,
+        "level": 100,
+        "tier": 0,
+        "npc_type": "boss"
+      }
+    ],
+    "rule_anchor": "R78 stat formula coherence + mythic figure honoring",
+    "remediation": "Mythic Vietnamese figures (Lạc Long Quân, Âu Cơ, Hùng Vương) have ceremonial 'mythic' hp values. R71.1 immutable. Document as intentional design override of R78 for legendary status, OR regenerate with proper boss class + tier 9."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-141324"
+}

@@ -1,0 +1,104 @@
+{
+  "severity": "MED",
+  "issue_id": "npc_existing_type_tier_violation_R76_R80",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "violation_count": 111,
+    "samples": [
+      {
+        "_index": 6,
+        "type": "boss",
+        "tier": 0,
+        "allowed": [
+          5,
+          9
+        ]
+      },
+      {
+        "_index": 15,
+        "type": "guard",
+        "tier": 0,
+        "allowed": [
+          1,
+          6
+        ]
+      },
+      {
+        "_index": 17,
+        "type": "boss",
+        "tier": 0,
+        "allowed": [
+          5,
+          9
+        ]
+      },
+      {
+        "_index": 19,
+        "type": "boss",
+        "tier": 0,
+        "allowed": [
+          5,
+          9
+        ]
+      },
+      {
+        "_index": 21,
+        "type": "guard",
+        "tier": 0,
+        "allowed": [
+          1,
+          6
+        ]
+      },
+      {
+        "_index": 22,
+        "type": "guard",
+        "tier": 0,
+        "allowed": [
+          1,
+          6
+        ]
+      },
+      {
+        "_index": 23,
+        "type": "boss",
+        "tier": 0,
+        "allowed": [
+          5,
+          9
+        ]
+      },
+      {
+        "_index": 29,
+        "type": "guard",
+        "tier": 0,
+        "allowed": [
+          1,
+          6
+        ]
+      },
+      {
+        "_index": 30,
+        "type": "guard",
+        "tier": 0,
+        "allowed": [
+          1,
+          6
+        ]
+      },
+      {
+        "_index": 31,
+        "type": "guard",
+        "tier": 0,
+        "allowed": [
+          1,
+          6
+        ]
+      }
+    ],
+    "rule_violated": "R76+R80 — npc_type must have tier in allowed range",
+    "remediation": "R71.1 immutable. Generated NPCs comply."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-141311"
+}

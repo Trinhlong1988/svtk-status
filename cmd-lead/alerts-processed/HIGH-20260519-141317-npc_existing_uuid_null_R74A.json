@@ -1,0 +1,12 @@
+{
+  "severity": "HIGH",
+  "issue_id": "npc_existing_uuid_null_R74A",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "null_uuid_count": 438,
+    "rule_violated": "R74.A — UUID per instance",
+    "remediation": "OUTPUT backfilled per round-1-10 audit; source immutable per R71.1."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-141317"
+}

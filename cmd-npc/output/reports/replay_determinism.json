@@ -1,0 +1,28 @@
+{
+  "test": "replay_determinism",
+  "runs": 3,
+  "verdict": "PASS",
+  "shas_per_run": [
+    {
+      "main": "d892def9c82fb1840e1eb56593eca421ee9b669326cb2ac779352e9061f6325e",
+      "side": "cb27b96ff604e3d7896c0d985993976aab62fb3b77c9d9b65645f89ad041e3e3",
+      "lore": "f968450663e09633769db8c5d2a61e5d767d1410ebead797d51a3df980ed6481",
+      "generated": "a13d7bf2e7bf4ad5bfd5b11f1cec4116e3d373767ebcd1d8aa93d29764cd3362",
+      "full": "7c791432b10edec434b57bba42561b28e486ae6c8df379765238b4c535d3c83a"
+    },
+    {
+      "main": "d892def9c82fb1840e1eb56593eca421ee9b669326cb2ac779352e9061f6325e",
+      "side": "cb27b96ff604e3d7896c0d985993976aab62fb3b77c9d9b65645f89ad041e3e3",
+      "lore": "f968450663e09633769db8c5d2a61e5d767d1410ebead797d51a3df980ed6481",
+      "generated": "a13d7bf2e7bf4ad5bfd5b11f1cec4116e3d373767ebcd1d8aa93d29764cd3362",
+      "full": "7c791432b10edec434b57bba42561b28e486ae6c8df379765238b4c535d3c83a"
+    },
+    {
+      "main": "d892def9c82fb1840e1eb56593eca421ee9b669326cb2ac779352e9061f6325e",
+      "side": "cb27b96ff604e3d7896c0d985993976aab62fb3b77c9d9b65645f89ad041e3e3",
+      "lore": "f968450663e09633769db8c5d2a61e5d767d1410ebead797d51a3df980ed6481",
+      "generated": "a13d7bf2e7bf4ad5bfd5b11f1cec4116e3d373767ebcd1d8aa93d29764cd3362",
+      "full": "7c791432b10edec434b57bba42561b28e486ae6c8df379765238b4c535d3c83a"
+    }
+  ]
+}

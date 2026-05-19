@@ -1,0 +1,54 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_existing_boss_no_epithet",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "count": 27,
+    "samples": [
+      {
+        "_index": 6,
+        "name": "Thủy Tinh"
+      },
+      {
+        "_index": 17,
+        "name": "Trọng Thủy"
+      },
+      {
+        "_index": 19,
+        "name": "Rồng Lạc (Long thần Lạc Việt)"
+      },
+      {
+        "_index": 23,
+        "name": "Triệu Đà (Triệu Vũ Đế)"
+      },
+      {
+        "_index": 36,
+        "name": "Tô Định"
+      },
+      {
+        "_index": 37,
+        "name": "Mã Viện"
+      },
+      {
+        "_index": 140,
+        "name": "Toa Đô"
+      },
+      {
+        "_index": 141,
+        "name": "Ô Mã Nhi"
+      },
+      {
+        "_index": 142,
+        "name": "Thoát Hoan (Thân Vương Nguyên)"
+      },
+      {
+        "_index": 143,
+        "name": "A Thích Ước Di"
+      }
+    ],
+    "rule_anchor": "naming convention — boss class deserves epithet (Đại Vương etc.)",
+    "remediation": "R71.1 immutable. Generated bosses 100% have class-appropriate epithet."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-140152"
+}

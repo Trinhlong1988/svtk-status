@@ -1,0 +1,8 @@
+{
+  "test": "sql_execution",
+  "verdict": "PASS",
+  "ddl_executed": true,
+  "ddl_error": null,
+  "sample_inserts": 100,
+  "insert_errors": []
+}
