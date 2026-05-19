@@ -1,0 +1,171 @@
+{
+  "cmd": "PLACE",
+  "version": "1.0",
+  "timestamp": "20260519-143327",
+  "validation_score": 1.0,
+  "stats": {
+    "region_count": 64,
+    "map_count": 7047,
+    "shard_balance_delta": 1,
+    "actual_shard_counts": {
+      "0": 111,
+      "1": 111,
+      "2": 111,
+      "3": 111,
+      "4": 111,
+      "5": 111,
+      "6": 111,
+      "7": 110,
+      "8": 110,
+      "9": 110,
+      "10": 110,
+      "11": 110,
+      "12": 110,
+      "13": 110,
+      "14": 110,
+      "15": 110,
+      "16": 110,
+      "17": 110,
+      "18": 110,
+      "19": 110,
+      "20": 110,
+      "21": 110,
+      "22": 110,
+      "23": 110,
+      "24": 110,
+      "25": 110,
+      "26": 110,
+      "27": 110,
+      "28": 110,
+      "29": 110,
+      "30": 110,
+      "31": 110,
+      "32": 110,
+      "33": 110,
+      "34": 110,
+      "35": 110,
+      "36": 110,
+      "37": 110,
+      "38": 110,
+      "39": 110,
+      "40": 110,
+      "41": 110,
+      "42": 110,
+      "43": 110,
+      "44": 110,
+      "45": 110,
+      "46": 110,
+      "47": 110,
+      "48": 110,
+      "49": 110,
+      "50": 110,
+      "51": 110,
+      "52": 110,
+      "53": 110,
+      "54": 110,
+      "55": 110,
+      "56": 110,
+      "57": 110,
+      "58": 110,
+      "59": 110,
+      "60": 110,
+      "61": 110,
+      "62": 110,
+      "63": 110
+    }
+  },
+  "checks": [
+    {
+      "name": "foundation_checked",
+      "pass": true
+    },
+    {
+      "name": "output_dir_exists",
+      "pass": true
+    },
+    {
+      "name": "registry_dir_exists",
+      "pass": true
+    },
+    {
+      "name": "schema_sql_exists",
+      "pass": true
+    },
+    {
+      "name": "tests_dir_exists",
+      "pass": true
+    },
+    {
+      "name": "region_count_64",
+      "pass": true
+    },
+    {
+      "name": "map_count_7047",
+      "pass": true
+    },
+    {
+      "name": "shard_balance_le_2",
+      "pass": true
+    },
+    {
+      "name": "cultural_lock_active",
+      "pass": true
+    },
+    {
+      "name": "tsonline_cross_ref_present",
+      "pass": true
+    },
+    {
+      "name": "schema_unique_constraint",
+      "pass": true
+    },
+    {
+      "name": "tests_15_present",
+      "pass": true
+    },
+    {
+      "name": "era_5_covered",
+      "pass": true
+    },
+    {
+      "name": "biome_7_covered",
+      "pass": true
+    },
+    {
+      "name": "sha256_companion_files",
+      "pass": true
+    }
+  ],
+  "tests_pass": true,
+  "foundation_hash_status": "CANONICAL_CRLF",
+  "foundation_hash_actual": "ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0",
+  "foundation_hash_expected": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+  "honest_gaps": [
+    {
+      "id": 1,
+      "severity": "MED",
+      "desc": "Map metadata simplified (name+era+biome+coord, no terrain detail)"
+    },
+    {
+      "id": 2,
+      "severity": "MED",
+      "desc": "Shard config tĩnh (no dynamic load balancing)"
+    },
+    {
+      "id": 3,
+      "severity": "MED",
+      "desc": "TS Online cross-ref deterministic round-robin 1..1048 (not visual match)"
+    },
+    {
+      "id": 4,
+      "severity": "MED",
+      "desc": "2D plane only (no 3D/elevation)"
+    },
+    {
+      "id": 5,
+      "severity": "INFO",
+      "desc": "Foundation hash brief=2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467 actual=ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0 (CANONICAL_CRLF)"
+    }
+  ],
+  "exit_code": 0
+}
