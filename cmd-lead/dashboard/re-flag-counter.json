@@ -5,9 +5,9 @@
   "qa_boss_missing": 2,
   "qa_event_missing": 2,
   "qa_item_missing": 2,
-  "npc_existing_scene_id_orphan_R75": 9,
-  "npc_existing_systemic_hp_anomaly_R78": 9,
-  "npc_existing_uuid_null_R74A": 9,
+  "npc_existing_scene_id_orphan_R75": 10,
+  "npc_existing_systemic_hp_anomaly_R78": 10,
+  "npc_existing_uuid_null_R74A": 10,
   "boss_count_below_target": 1,
   "event_count_below_target": 1
 }
