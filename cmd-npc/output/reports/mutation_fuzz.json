@@ -1,0 +1,191 @@
+{
+  "test_type": "mutation_fuzz",
+  "ts": "20260519",
+  "total_mutations": 30,
+  "caught": 30,
+  "caught_by_other": 0,
+  "survived": 0,
+  "no_op": 0,
+  "results": [
+    {
+      "mutation": "M01_negative_hp",
+      "status": "CAUGHT",
+      "expected": "V19_hp",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M02_invalid_type",
+      "status": "CAUGHT",
+      "expected": "V09_npc_type",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M03_tier_15",
+      "status": "CAUGHT",
+      "expected": "V10_tier_range",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M04_no_uuid",
+      "status": "CAUGHT",
+      "expected": "V03_uuid_format",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M05_invalid_uuid",
+      "status": "CAUGHT",
+      "expected": "V03_uuid_format",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M06_cjk_name",
+      "status": "CAUGHT",
+      "expected": "V41_no_cjk",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M07_tam_quoc_gen",
+      "status": "CAUGHT",
+      "expected": "V42_no_tam_quoc",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M08_invalid_element",
+      "status": "CAUGHT",
+      "expected": "V12_element_valid",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M09_invalid_era",
+      "status": "CAUGHT",
+      "expected": "V08_era_valid",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M10_invalid_class",
+      "status": "CAUGHT",
+      "expected": "V13_class_hierarchy",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M11_skill_999",
+      "status": "CAUGHT",
+      "expected": "V24_skill_id_range",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M12_sprite_200",
+      "status": "CAUGHT",
+      "expected": "V36_sprite_id_range",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M13_neg_spawn_x",
+      "status": "CAUGHT",
+      "expected": "V16_spawn_x_nonneg",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M14_recolor_mismatch",
+      "status": "CAUGHT",
+      "expected": "V38_recolor_palette_alias",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M15_pet_master_no_pettable",
+      "status": "CAUGHT",
+      "expected": "V30_pet_master_pettable",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M16_dup_skill_ids",
+      "status": "CAUGHT",
+      "expected": "V26_skill_ids_unique",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M17_invalid_behavior",
+      "status": "CAUGHT",
+      "expected": "V27_ai_behavior_valid",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M18_aggro_townsmen",
+      "status": "CAUGHT",
+      "expected": "V28_aggro_noncombat_zero",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M19_palette_99",
+      "status": "CAUGHT",
+      "expected": "V37_palette_range",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M20_gender_robot",
+      "status": "CAUGHT",
+      "expected": "V39_gender_valid",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M21_combat_atk_gt_hp",
+      "status": "CAUGHT",
+      "expected": "V20_combat_atk_le_hp",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M22_cultural_tag_wrong",
+      "status": "CAUGHT",
+      "expected": "V40_cultural_tag",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M23_pet_evolution_wrong",
+      "status": "CAUGHT",
+      "expected": "V44_pet_evolution_invariant",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M24_pet_loyalty_wrong",
+      "status": "CAUGHT",
+      "expected": "V45_pet_loyalty_50",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M25_raid_extreme_wrong",
+      "status": "CAUGHT",
+      "expected": "V47_raid_extreme_invariant",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M26_name_with_BOM",
+      "status": "CAUGHT",
+      "expected": "V55_name_no_bom",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M27_name_trailing_ws",
+      "status": "CAUGHT",
+      "expected": "V56_name_no_trim_ws",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M28_class_townsmen_god",
+      "status": "CAUGHT",
+      "expected": "V57_class_type_semantic",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M29_can_give_no_type",
+      "status": "CAUGHT",
+      "expected": "V32_can_give_quest_match",
+      "actual": "✓"
+    },
+    {
+      "mutation": "M30_tier9_no_raid",
+      "status": "CAUGHT",
+      "expected": "V47_raid_extreme_invariant",
+      "actual": "✓"
+    }
+  ]
+}

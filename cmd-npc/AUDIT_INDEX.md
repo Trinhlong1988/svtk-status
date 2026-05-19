@@ -31,9 +31,10 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 181-190 | 2026-05-19 | 105→110 | 10 | [AUDIT_REPORT_ROUND_181_190_20260519-130507.md](status/AUDIT_REPORT_ROUND_181_190_20260519-130507.md) |
 | 191-200 | 2026-05-19 | 110→115 | 10 | [AUDIT_REPORT_ROUND_191_200_20260519-132930.md](status/AUDIT_REPORT_ROUND_191_200_20260519-132930.md) |
 | 201-210 | 2026-05-19 | 115→120 | 10 | [AUDIT_REPORT_ROUND_201_210_20260519-132930.md](status/AUDIT_REPORT_ROUND_201_210_20260519-132930.md) |
-| **211-220** | **2026-05-19** | **120→125** | **10** | [AUDIT_REPORT_ROUND_211_220_20260519-132930.md](status/AUDIT_REPORT_ROUND_211_220_20260519-132930.md) |
+| 211-220 | 2026-05-19 | 120→125 | 10 | [AUDIT_REPORT_ROUND_211_220_20260519-132930.md](status/AUDIT_REPORT_ROUND_211_220_20260519-132930.md) |
+| **221-230** | **2026-05-19** | **125→130** | **10** | [AUDIT_REPORT_ROUND_221_230_20260519-135544.md](status/AUDIT_REPORT_ROUND_221_230_20260519-135544.md) ⭐ **mutation-discovered** |
 
-**Cumulative total: 220 hidden bugs fixed.** ✅ **22 vòng đã hoàn thành**.
+**Cumulative total: 230 hidden bugs fixed.** Mutation testing: 30/30 caught (0 survived).
 **Per-NPC deep verification: 540,000 individual checks PASS** (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ---
@@ -136,6 +137,7 @@ Trigger Mr.Long — verify từng NPC chi tiết cross-ref MAP/ITEM/QUEST/EVENT 
 | Deep ecosystem (historical bg/cmd-skill+quest/pet_master/quest_giver) | 111-115 | R191-R200 |
 | SQL DDL integrity (CREATE TABLE/PRIMARY KEY/parens/semicolon/CHECK) | 116-120 | R201-R210 |
 | Build determinism (duration/file size/metrics/audit_history count) | 121-125 | R211-R220 |
+| Mutation-discovered gap fixes (name BOM/trim_ws/class-type semantic) | 126-130 | R221-R230 |
 
 ---
 
