@@ -8652,6 +8652,139 @@ ROUND_L41_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 42 — Quest registry FK deeper (v1.37)
+# ============================================================
+def chk_L42_quest_reward_gold_pos(items, *_):
+    """Loose: at least 70% of sampled quests reward gold. Dialog/lore
+    quests legitimately reward 0 gold."""
+    sample = _load_quest_full()[:500]
+    if not sample:
+        return True, {"empty": True}
+    pos = sum(1 for q in sample if (q.get("reward_gold") or 0) > 0)
+    ratio = pos / len(sample)
+    return ratio >= 0.70, {"positive_ratio": round(ratio, 3),
+                            "sample": len(sample)}
+
+
+def chk_L42_quest_reward_exp_pos(items, *_):
+    sample = _load_quest_full()[:500]
+    if not sample:
+        return True, {"empty": True}
+    pos = sum(1 for q in sample if (q.get("reward_exp") or 0) > 0)
+    ratio = pos / len(sample)
+    return ratio >= 0.70, {"positive_ratio": round(ratio, 3),
+                            "sample": len(sample)}
+
+
+def chk_L42_quest_level_min_ge_1(items, *_):
+    bad = [q.get("quest_id") for q in _load_quest_full()[:500]
+           if (q.get("level_min") or 0) < 1]
+    return len(bad) == 0, {"low_level_count": len(bad)}
+
+
+def chk_L42_quest_category_enum(items, *_):
+    valid = {"main", "side", "raid", "event", "lore", "reborn",
+             "generated"}
+    bad = []
+    for q in _load_quest_full()[:500]:
+        c = q.get("category")
+        if c and c not in valid:
+            bad.append({"qid": q.get("quest_id"), "cat": c})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"unknown_cat": len(bad), "samples": bad[:5]}
+
+
+def chk_L42_quest_unique_quest_id(items, *_):
+    ids = [q.get("quest_id") for q in _load_quest_full()]
+    return len(ids) == len(set(ids)), {
+        "total": len(ids), "unique": len(set(ids))
+    }
+
+
+def chk_L42_quest_title_non_empty(items, *_):
+    bad = [q.get("quest_id") for q in _load_quest_full()[:500]
+           if not (q.get("title") or "").strip()]
+    return len(bad) == 0, {"empty_title": len(bad)}
+
+
+def chk_L42_quest_objective_present(items, *_):
+    valid = {"explore", "kill", "collect", "talk", "deliver",
+             "escort", "defend", "investigate", "craft", "trade",
+             "duel", "puzzle", "hunt", "fetch"}
+    bad = []
+    for q in _load_quest_full()[:500]:
+        ot = q.get("objective_type")
+        if ot and ot not in valid:
+            bad.append({"qid": q.get("quest_id"), "ot": ot})
+            if len(bad) >= 5:
+                break
+    return len(bad) <= 30, {"unknown_objective": len(bad),
+                             "samples": bad[:5]}
+
+
+def chk_L42_quest_full_count_3000(items, *_):
+    return len(_load_quest_full()) == 3000, {
+        "count": len(_load_quest_full())
+    }
+
+
+def chk_L42_quest_chain_id_present_when_chained(items, *_):
+    """Quest in chain must have chain_id."""
+    chained = sum(1 for q in _load_quest_full()
+                  if q.get("chain_id"))
+    return chained >= 200, {"chained_count": chained}
+
+
+def chk_L42_quest_no_self_reference(items, *_):
+    """Prerequisites shouldn't include the quest's own id."""
+    bad = []
+    for q in _load_quest_full():
+        qid = q.get("quest_id")
+        prereqs = q.get("prerequisites") or []
+        if qid in prereqs:
+            bad.append(qid)
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"self_ref": len(bad), "samples": bad[:5]}
+
+
+ROUND_L42_CHECKS = {
+    2: [
+        ("L42_quest_reward_gold_pos", "R44",
+         chk_L42_quest_reward_gold_pos),
+        ("L42_quest_reward_exp_pos", "R44",
+         chk_L42_quest_reward_exp_pos),
+    ],
+    3: [
+        ("L42_quest_level_min_ge_1", "R45",
+         chk_L42_quest_level_min_ge_1),
+        ("L42_quest_category_enum", "R49",
+         chk_L42_quest_category_enum),
+    ],
+    4: [
+        ("L42_quest_unique_quest_id", "R50",
+         chk_L42_quest_unique_quest_id),
+        ("L42_quest_title_non_empty", "R30",
+         chk_L42_quest_title_non_empty),
+    ],
+    5: [
+        ("L42_quest_objective_present", "R49",
+         chk_L42_quest_objective_present),
+        ("L42_quest_full_count_3000", "R49",
+         chk_L42_quest_full_count_3000),
+    ],
+    6: [
+        ("L42_quest_chain_id_present_when_chained", "R49",
+         chk_L42_quest_chain_id_present_when_chained),
+        ("L42_quest_no_self_reference", "R44",
+         chk_L42_quest_no_self_reference),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -8822,6 +8955,8 @@ def main():
             active_checks.extend(ROUND_L40_CHECKS[r])
         if r in ROUND_L41_CHECKS:
             active_checks.extend(ROUND_L41_CHECKS[r])
+        if r in ROUND_L42_CHECKS:
+            active_checks.extend(ROUND_L42_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
