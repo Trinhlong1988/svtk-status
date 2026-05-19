@@ -70,5 +70,5 @@
     "remediation": "R71.1 immutable. New NPCs avoid existing positions in OUTPUT."
   },
   "cmd_origin": "cmd-npc",
-  "timestamp": "20260519-112235"
+  "timestamp": "20260519-114503"
 }

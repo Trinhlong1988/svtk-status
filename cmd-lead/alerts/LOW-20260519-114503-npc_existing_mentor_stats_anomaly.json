@@ -1,0 +1,23 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_existing_mentor_stats_anomaly",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "count": 1,
+    "samples": [
+      {
+        "_index": 84,
+        "name": "Sư Vạn Hạnh",
+        "hp": 2000,
+        "expected_formula": 50,
+        "level": 10,
+        "tier": 0,
+        "npc_type": "townsmen"
+      }
+    ],
+    "rule_violated": "R78 stat formula coherence — hp >> 3× formula value",
+    "remediation": "R71.1 immutable. Mentor stats may have been overridden in source."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-114503"
+}

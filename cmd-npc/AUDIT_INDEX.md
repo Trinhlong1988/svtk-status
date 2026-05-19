@@ -20,9 +20,10 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 71-80 | 2026-05-19 | 50→55 | 10 | [AUDIT_REPORT_ROUND_71_80_20260519-021300.md](status/AUDIT_REPORT_ROUND_71_80_20260519-021300.md) |
 | 81-90 | 2026-05-19 | 55→60 | 10 | [AUDIT_REPORT_ROUND_81_90_20260519-100252.md](status/AUDIT_REPORT_ROUND_81_90_20260519-100252.md) |
 | 91-100 | 2026-05-19 | 60→65 | 10 | [AUDIT_REPORT_ROUND_91_100_20260519-105507.md](status/AUDIT_REPORT_ROUND_91_100_20260519-105507.md) |
-| **101-110** | **2026-05-19** | **65→70** | **10** | [AUDIT_REPORT_ROUND_101_110_20260519-112235.md](status/AUDIT_REPORT_ROUND_101_110_20260519-112235.md) |
+| 101-110 | 2026-05-19 | 65→70 | 10 | [AUDIT_REPORT_ROUND_101_110_20260519-112235.md](status/AUDIT_REPORT_ROUND_101_110_20260519-112235.md) |
+| **111-120** | **2026-05-19** | **70→75** | **10** | [AUDIT_REPORT_ROUND_111_120_20260519-114503.md](status/AUDIT_REPORT_ROUND_111_120_20260519-114503.md) |
 
-**Cumulative total: 110 hidden bugs fixed.**
+**Cumulative total: 120 hidden bugs fixed.**
 
 ---
 
@@ -61,6 +62,9 @@ Protagonist dual flag INFO alert (is_protagonist+is_player both True trên Trầ
 ### Round 101-110: integrity invariants + ecosystem schema validation
 Validator R101 sha256 sidecar match (5 registry files), R102 protagonist idx=1 must appear in npc_main split, R103 SQL CHECK element + npc_type allowed sets must contain all JSON values (no DDL drift), R104 alerts JSON schema 5 required fields (severity/issue_id/evidence/cmd_origin/timestamp), R105 recolor_index == palette_seed invariant (R21 alias verified), R106 LOW INFO alert npc_existing_era_fprefix_dominance (existing 40.6% f1 + 27.6% g1 dominate, only 16.7% main era — R71.1 immutable enrich next regen), validator coverage matrix section in AUDIT_INDEX, AUDIT_INDEX 101-110 row + alerts table sync (19 cumulative alerts), README cumul 110 + 70/70, EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_101_110 wired.
 
+### Round 111-120: lifecycle file presence + foundation version reconciliation
+Validator R111 heartbeat file present per build (cmd-lead/heartbeats/cmd-npc-{TS}.json), R112 completion file present per build, R113 foundation v2.8.0 file present + hash captured, R114 existing source NPC_438.jsonl strict 438 lines, R115 pet_evolution_path == [_index] invariant (R39 deferred multi-tier), R116 validation.json enriched with `checks` detail array (each name+ok+evidence for downstream LEAD/QA inspection), R117 MED alert npc_foundation_version_mismatch (brief locks v2.6.0 hash but repo ships v2.8.0 — cross-CMD reconciliation needed), pipeline refactor write_lead_heartbeat_pre() called before validator so #71+#72 see files (BUILDING placeholder overwritten post-validator), AUDIT_INDEX 111-120 row + validator matrix 71-75, README cumul 120 + 75/75, EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_111_120 wired.
+
 ---
 
 ## Active ex-side alerts (R71.1 immutable — source NPC_438.jsonl untouched)
@@ -85,13 +89,14 @@ Validator R101 sha256 sidecar match (5 registry files), R102 protagonist idx=1 m
 | LOW | npc_protagonist_stats_anomaly | 1 |
 | LOW | npc_protagonist_dual_flag | 1 |
 | LOW | npc_main_era_gender_gap | 2 eras zero-female |
-| LOW | npc_existing_era_fprefix_dominance | 68.2% combined (NEW Round 101-110) |
+| LOW | npc_existing_era_fprefix_dominance | 68.2% combined |
+| MED | npc_foundation_version_mismatch | brief v2.6.0 vs repo v2.8.0 (NEW Round 111-120) |
 
-**19 cumulative alerts** (1 new Round 101-110).
+**20 cumulative alerts** (1 new Round 111-120).
 
 ---
 
-## Validator coverage matrix (70 checks)
+## Validator coverage matrix (75 checks)
 
 | Area | Check range | Notes |
 |---|---|---|
@@ -106,6 +111,7 @@ Validator R101 sha256 sidecar match (5 registry files), R102 protagonist idx=1 m
 | Type↔flag + content gap + element skew | 56-60 | R81-R90 |
 | Range + enum + tier-level + split sum | 61-65 | R91-R100 |
 | Integrity invariants + ecosystem schema | 66-70 | R101-R110 |
+| Lifecycle files + source contract + invariants | 71-75 | R111-R120 |
 
 ---
 
