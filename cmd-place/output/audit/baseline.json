@@ -1,6 +1,6 @@
 {
   "registry/map_registry.jsonl": "c2b4cf2fabebe035eef1317ce11b544a88b9d115488879b29e07331901a0396a",
-  "registry/region.jsonl": "ed9a3b16b2bebd10b1967ba1fb68358f59352c1c50270f9b4c66379f2417907f",
+  "registry/region.jsonl": "3d0cc6bc8184a73eda033645d112fe6ec0610a6909602065b21644f7c54eae21",
   "registry/shard_config.json": "f39c169b96c6faf09785a8d8fefe487aa1de6251066a290b29763515ddd1b83a",
   "schema/place_table.sql": "f3b6a967805737913b935fc2ce55385c60de6cd5b7d9f26b7b65e9ab2bc53a08"
 }

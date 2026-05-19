@@ -1,0 +1,213 @@
+{
+  "version": "phase4_22_v1",
+  "total": 22,
+  "pass": 22,
+  "fail": 0,
+  "high_severity_fail": 0,
+  "results": [
+    {
+      "round": 1,
+      "name": "SQL CHECK rejects invalid era ('XXX')",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "rejected": true
+      }
+    },
+    {
+      "round": 2,
+      "name": "SQL CHECK rejects invalid biome ('lava')",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "rejected": true
+      }
+    },
+    {
+      "round": 3,
+      "name": "SQL CHECK rejects shard_id=64 (out of 0..63)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "rejected": true
+      }
+    },
+    {
+      "round": 4,
+      "name": "SQL CHECK rejects map_id=10001 (out of 1..10000)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "rejected": true
+      }
+    },
+    {
+      "round": 5,
+      "name": "SQL UNIQUE rejects duplicate uuid",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "rejected": true
+      }
+    },
+    {
+      "round": 6,
+      "name": "Every shard contains all 5 eras (rotation coverage)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "missing": {},
+        "count": 0
+      }
+    },
+    {
+      "round": 7,
+      "name": "name unique per (era, biome) bucket",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_buckets": {},
+        "count": 0
+      }
+    },
+    {
+      "round": 8,
+      "name": "era_label_vi NFC ↔ era bijection",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 9,
+      "name": "tags contains 3 distinct elements (no internal dup)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 10,
+      "name": "f_prefix injective by era class (R31)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 11,
+      "name": "region.primary_era vs majority-era (soft, <50% drift)",
+      "status": "PASS",
+      "severity": "INFO",
+      "evidence": {
+        "mismatch_count": 0,
+        "tolerance": 32,
+        "sample": []
+      }
+    },
+    {
+      "round": 12,
+      "name": "JSONL parse 10000 maps < 5s",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "elapsed_sec": 0.146
+      }
+    },
+    {
+      "round": 13,
+      "name": "SHA256 4 files < 1s",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "elapsed_sec": 0.0541
+      }
+    },
+    {
+      "round": 14,
+      "name": "SQL bulk INSERT 10000 < 5s",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "elapsed_sec": 0.275
+      }
+    },
+    {
+      "round": 15,
+      "name": "JSON roundtrip identical (parse → dumps → parse, sample 1000)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": 0
+      }
+    },
+    {
+      "round": 16,
+      "name": "All text artefacts LF-only (cross-platform portability)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 17,
+      "name": "All filenames NFC-normalized (Mac/Win portability)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 18,
+      "name": "Determinism N=10 rebuild stable (extreme)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "failed_iters": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 19,
+      "name": "Builder source no non-deterministic API (env/SystemRandom/secrets/datetime.now)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 20,
+      "name": "JSON safe: no __proto__/constructor/prototype keys + no <script> in values",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 21,
+      "name": "SQL injection safe (parametrized): malicious name stored literal, table intact",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "stored_matches": true,
+        "row_count_after": 1
+      }
+    },
+    {
+      "round": 22,
+      "name": "tsonline_cross_ref path-traversal safe (no ../, no abs, no scheme)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    }
+  ]
+}

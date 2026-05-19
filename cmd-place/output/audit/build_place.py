@@ -15,7 +15,7 @@ NOTE — foundation hash divergence:
 from __future__ import annotations
 import json, hashlib, time, sys, re, random, logging, uuid
 from pathlib import Path
-from collections import Counter
+from collections import Counter, defaultdict
 
 CMD_NAME = "PLACE"
 ROOT = Path(r"C:\Users\Administrator\Desktop\CMD_PLACE_WORK\svtk-status")
@@ -225,8 +225,24 @@ def build_registry():
     assert len(map_entries) == TARGET_MAP_COUNT, f"Got {len(map_entries)}"
 
     actual_shard_counts: Counter = Counter(m["shard_id"] for m in map_entries)
+    # Post-compute majority era + biome per shard (was rotational seed → mismatched reality 48/64)
+    shard_era_counter: dict[int, Counter] = defaultdict(Counter)
+    shard_biome_counter: dict[int, Counter] = defaultdict(Counter)
+    for m in map_entries:
+        shard_era_counter[m["shard_id"]][m["era"]] += 1
+        shard_biome_counter[m["shard_id"]][m["biome"]] += 1
     for r in region_entries:
         r["actual_map_count"] = actual_shard_counts[r["shard_id"]]
+        # Override declared primary_era + biome_focus with actual majority (deterministic tie-break by ERAS order)
+        era_counts = shard_era_counter[r["shard_id"]]
+        max_count = max(era_counts.values())
+        r["primary_era"] = next(e for e in ERAS if era_counts[e] == max_count)
+        biome_counts = shard_biome_counter[r["shard_id"]]
+        max_b = max(biome_counts.values())
+        r["biome_focus"] = next(b for b in BIOMES if biome_counts[b] == max_b)
+        # Refresh derived fields (name + natural_key) for consistency
+        r["name"] = f"Vùng {ERA_LABEL_VI[r['primary_era']]} {r['shard_id'] + 1:02d}"
+        r["natural_key"] = f"vstk_region_{r['shard_id']:02d}_{r['primary_era']}"
 
     region_path = OUTPUT_DIR / "registry" / "region.jsonl"
     write_jsonl(region_path, region_entries)
