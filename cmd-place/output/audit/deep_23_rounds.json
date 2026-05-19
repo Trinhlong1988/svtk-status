@@ -1,0 +1,225 @@
+{
+  "version": "deep_23_v1",
+  "timestamp": "20260519T144510",
+  "total": 23,
+  "pass": 23,
+  "fail": 0,
+  "results": [
+    {
+      "round": 1,
+      "name": "map_id range strict [1..7047]",
+      "status": "PASS",
+      "evidence": {
+        "min": 1,
+        "max": 7047,
+        "count": 7047
+      }
+    },
+    {
+      "round": 2,
+      "name": "map_id contiguous no gap (R50)",
+      "status": "PASS",
+      "evidence": {
+        "gap_count": 0,
+        "first_gaps": []
+      }
+    },
+    {
+      "round": 3,
+      "name": "map_id unique (R45 anti-dupe)",
+      "status": "PASS",
+      "evidence": {
+        "dup_count": 0,
+        "dups_sample": []
+      }
+    },
+    {
+      "round": 4,
+      "name": "natural_key unique (R45/R50)",
+      "status": "PASS",
+      "evidence": {
+        "dup_count": 0,
+        "dups_sample": []
+      }
+    },
+    {
+      "round": 5,
+      "name": "uuid unique (R8.4 traceability)",
+      "status": "PASS",
+      "evidence": {
+        "dup_count": 0
+      }
+    },
+    {
+      "round": 6,
+      "name": "name unique (display dedup)",
+      "status": "PASS",
+      "evidence": {
+        "dup_count": 0,
+        "dups_sample": []
+      }
+    },
+    {
+      "round": 7,
+      "name": "era distribution exact match split_block (R49)",
+      "status": "PASS",
+      "evidence": {
+        "expected": {
+          "ly": 1410,
+          "tran": 1410,
+          "le": 1409,
+          "tay_son": 1409,
+          "nguyen": 1409
+        },
+        "actual": {
+          "ly": 1410,
+          "tran": 1410,
+          "le": 1409,
+          "tay_son": 1409,
+          "nguyen": 1409
+        }
+      }
+    },
+    {
+      "round": 8,
+      "name": "each era covers all 7 biomes (R49)",
+      "status": "PASS",
+      "evidence": {
+        "missing": "none"
+      }
+    },
+    {
+      "round": 9,
+      "name": "shard balance delta <= 2",
+      "status": "PASS",
+      "evidence": {
+        "delta": 1,
+        "min": 110,
+        "max": 111
+      }
+    },
+    {
+      "round": 10,
+      "name": "shard_id == (map_id-1) % 64 (formula determinism)",
+      "status": "PASS",
+      "evidence": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 11,
+      "name": "shard_code format R\\d{2} + match shard_id",
+      "status": "PASS",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 12,
+      "name": "f_prefix per era mapping (R31)",
+      "status": "PASS",
+      "evidence": {
+        "violations": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 13,
+      "name": "no CJK Han characters (R30)",
+      "status": "PASS",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 14,
+      "name": "no Hiragana/Katakana (R30)",
+      "status": "PASS",
+      "evidence": {
+        "hiragana": [],
+        "katakana": []
+      }
+    },
+    {
+      "round": 15,
+      "name": "no Tam Quoc references (R30)",
+      "status": "PASS",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 16,
+      "name": "coord_x/y in [0,99999]",
+      "status": "PASS",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 17,
+      "name": "tsonline_cross_ref format (R47)",
+      "status": "PASS",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 18,
+      "name": "SHA256 companion match actual (R8 idempotent)",
+      "status": "PASS",
+      "evidence": {
+        "violations": []
+      }
+    },
+    {
+      "round": 19,
+      "name": "schema UNIQUE + CHECK constraints (R8.3/R44/R50)",
+      "status": "PASS",
+      "evidence": {
+        "missing": []
+      }
+    },
+    {
+      "round": 20,
+      "name": "region.actual_map_count consistent với map_registry",
+      "status": "PASS",
+      "evidence": {
+        "mismatches": [],
+        "count": 0
+      }
+    },
+    {
+      "round": 21,
+      "name": "shard_config consistent + sum=7047",
+      "status": "PASS",
+      "evidence": {
+        "mismatches": [],
+        "total_ok": true
+      }
+    },
+    {
+      "round": 22,
+      "name": "JSONL strict parseability",
+      "status": "PASS",
+      "evidence": {
+        "errors": []
+      }
+    },
+    {
+      "round": 23,
+      "name": "deterministic rebuild same hash (R68.6)",
+      "status": "PASS",
+      "evidence": {
+        "rebuild_exit": 0,
+        "diffs": {}
+      }
+    }
+  ]
+}
