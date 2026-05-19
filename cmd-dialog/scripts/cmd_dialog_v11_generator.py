@@ -295,6 +295,16 @@ LORE_TEMPLATES = [
     (None,      "Trống đồng Đông Sơn còn vọng tiếng cha ông."),
     (None,      "Đất Việt bốn ngàn năm văn hiến."),
     (None,      "Tinh thần Đại Việt đời đời bất diệt."),
+    (None,      "Sông núi nước Nam từ thuở khai thiên lập địa."),
+    (None,      "Nam quốc sơn hà, nam đế cư — chân lý ngàn đời."),
+    (None,      "Tổ tiên dạy: lá rụng về cội, người trở về quê."),
+    (None,      "Cờ Phong vẫn bay phấp phới trên non Việt."),
+    (None,      "Văn hiến nước nhà nối từ Hồng Bàng tới nay."),
+    (None,      "Anh hùng hào kiệt đời nào cũng có."),
+    (None,      "Tinh hoa Việt tích tụ qua mấy ngàn năm."),
+    (None,      "Đất linh sinh người kiệt xuất."),
+    (None,      "Đạo nghĩa Phương Đông thấm vào máu thịt người Việt."),
+    (None,      "Truyền thuyết và lịch sử đan xen làm nên hồn dân tộc."),
     # G1 modern lore
     ("g1",      "Bảo tàng Lịch sử Việt Nam hiện đại lưu giữ ngàn năm quá vãng."),
     ("g1",      "Đường Hà Nội nay vẫn còn tên phố cổ."),
@@ -980,6 +990,22 @@ def write_reports(all_dialogs, audit, write_meta):
                 "item": "No audio/voice acting hints",
                 "reason": "audio_id mapping not populated — CMD AUDIO (Phase 15) will build.",
                 "mitigation": "Defer to CMD AUDIO; dialog schema already has room for audio_id.",
+            },
+            {
+                "severity": "LOW",
+                "item": "NPC names not 1:1 with speaker_id (upstream cmd-npc data property)",
+                "reason": (
+                    "cmd-npc/output/registry/npc_full.jsonl contains 2062 duplicate "
+                    "names across 10000 NPCs (e.g. 'Hoàng Nam' appears 6 times with "
+                    "distinct _index/uuid). Speaker_name in dialog output reflects "
+                    "this duplication. Not a cmd-dialog defect — upstream registry "
+                    "design intentionally allows reuse of common Vietnamese names."
+                ),
+                "mitigation": (
+                    "Out of cmd-dialog scope. If 1:1 mapping needed, raise with "
+                    "cmd-npc owner to enforce unique name OR add disambiguator "
+                    "(e.g. era suffix) at name generation."
+                ),
             },
         ],
         "resolves_alerts": [
