@@ -1,0 +1,21 @@
+{
+  "cmd": "BOSS",
+  "version": "1.0",
+  "timestamp": "20260519-142438",
+  "total_count": 1200,
+  "existing_count": 13,
+  "new_count": 1187,
+  "target_count": 1200,
+  "distribution_target": {
+    "normal": 600,
+    "elite": 300,
+    "raid": 200,
+    "world": 100
+  },
+  "distribution_actual": {
+    "normal": 600,
+    "elite": 300,
+    "raid": 200,
+    "world": 100
+  }
+}
