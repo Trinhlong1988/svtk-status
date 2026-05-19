@@ -1,0 +1,10 @@
+{
+  "qa": "qa_content",
+  "target": "boss",
+  "verdict": "PASS",
+  "evidence": {
+    "count": 1200,
+    "registry": "cmd-boss\\output\\registry\\boss_full.jsonl"
+  },
+  "timestamp": "20260519-153250"
+}
