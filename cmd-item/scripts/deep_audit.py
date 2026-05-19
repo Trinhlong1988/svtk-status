@@ -9737,6 +9737,130 @@ ROUND_L49_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 50 — Item full JSONL hash dual-check (v1.45)
+# ============================================================
+def chk_L50_hash_recorded_matches_file(items, *_):
+    full = ITEM_FULL
+    sha = full.with_suffix(".jsonl.sha256")
+    if not full.exists() or not sha.exists():
+        return False, {"missing": True}
+    recorded = sha.read_text(encoding="utf-8").strip().split()[0]
+    actual = hashlib.sha256(full.read_bytes()).hexdigest()
+    return recorded == actual, {"match": recorded == actual,
+                                 "recorded_pre": recorded[:12],
+                                 "actual_pre": actual[:12]}
+
+
+def chk_L50_hash_length_64(items, *_):
+    sha = ITEM_FULL.with_suffix(".jsonl.sha256")
+    if not sha.exists():
+        return False, {"missing": True}
+    h = sha.read_text(encoding="utf-8").strip().split()[0]
+    return len(h) == 64, {"length": len(h)}
+
+
+def chk_L50_sha256_line_has_filename(items, *_):
+    sha = ITEM_FULL.with_suffix(".jsonl.sha256")
+    if not sha.exists():
+        return False, {"missing": True}
+    line = sha.read_text(encoding="utf-8").strip()
+    return "item_full.jsonl" in line, {"line_format": line[:40]}
+
+
+def chk_L50_jsonl_no_orphan_bom(items, *_):
+    head = ITEM_FULL.read_bytes()[:3] if ITEM_FULL.exists() else b""
+    return head != b"\xef\xbb\xbf", {"bom": head == b"\xef\xbb\xbf"}
+
+
+def chk_L50_jsonl_ends_with_newline(items, *_):
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    data = ITEM_FULL.read_bytes()
+    return data.endswith(b"\n"), {"tail": repr(data[-3:])}
+
+
+def chk_L50_per_cat_files_end_with_newline(items, *_):
+    bad = []
+    for fname in ("item_weapon.jsonl", "item_armor.jsonl",
+                  "item_consumable.jsonl", "item_material.jsonl",
+                  "item_quest.jsonl", "item_lore.jsonl"):
+        p = ITEM_FULL.parent / fname
+        if p.exists() and not p.read_bytes().endswith(b"\n"):
+            bad.append(fname)
+    return len(bad) == 0, {"no_newline_tail": bad}
+
+
+def chk_L50_hash_lowercase_hex(items, *_):
+    sha = ITEM_FULL.with_suffix(".jsonl.sha256")
+    if not sha.exists():
+        return False, {"missing": True}
+    h = sha.read_text(encoding="utf-8").strip().split()[0]
+    return re.match(r"^[0-9a-f]{64}$", h) is not None, {
+        "hex_lower": True
+    }
+
+
+def chk_L50_hash_idempotent(items, *_):
+    """Compute twice, expect same."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    h1 = hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest()
+    h2 = hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest()
+    return h1 == h2, {"stable": h1 == h2}
+
+
+def chk_L50_no_dupe_object_in_jsonl(items, *_):
+    """Two lines with identical content = duplicate."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    lines = ITEM_FULL.read_text(encoding="utf-8").splitlines()
+    return len(lines) == len(set(lines)), {
+        "n": len(lines), "u": len(set(lines))
+    }
+
+
+def chk_L50_sha256_file_size_lt_200(items, *_):
+    sha = ITEM_FULL.with_suffix(".jsonl.sha256")
+    if not sha.exists():
+        return False, {"missing": True}
+    return sha.stat().st_size < 200, {"size": sha.stat().st_size}
+
+
+ROUND_L50_CHECKS = {
+    2: [
+        ("L50_hash_recorded_matches_file", "R50",
+         chk_L50_hash_recorded_matches_file),
+        ("L50_hash_length_64", "R50", chk_L50_hash_length_64),
+    ],
+    3: [
+        ("L50_sha256_line_has_filename", "R50",
+         chk_L50_sha256_line_has_filename),
+        ("L50_jsonl_no_orphan_bom", "R50",
+         chk_L50_jsonl_no_orphan_bom),
+    ],
+    4: [
+        ("L50_jsonl_ends_with_newline", "R50",
+         chk_L50_jsonl_ends_with_newline),
+        ("L50_per_cat_files_end_with_newline", "R50",
+         chk_L50_per_cat_files_end_with_newline),
+    ],
+    5: [
+        ("L50_hash_lowercase_hex", "R50",
+         chk_L50_hash_lowercase_hex),
+        ("L50_hash_idempotent", "R50",
+         chk_L50_hash_idempotent),
+    ],
+    6: [
+        ("L50_no_dupe_object_in_jsonl", "R71",
+         chk_L50_no_dupe_object_in_jsonl),
+        ("L50_sha256_file_size_lt_200", "R50",
+         chk_L50_sha256_file_size_lt_200),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -9923,6 +10047,8 @@ def main():
             active_checks.extend(ROUND_L48_CHECKS[r])
         if r in ROUND_L49_CHECKS:
             active_checks.extend(ROUND_L49_CHECKS[r])
+        if r in ROUND_L50_CHECKS:
+            active_checks.extend(ROUND_L50_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
