@@ -9964,6 +9964,179 @@ ROUND_L51_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 52 — Stats key parity per slot (v1.47)
+# ============================================================
+def chk_L52_ao_stats_have_hp(items, *_):
+    bad = []
+    for it in items:
+        if it.get("slot") == "ao" and not it.get("is_immutable_seed"):
+            s = it.get("stats") or {}
+            if "hp" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_hp_in_ao": len(bad), "samples": bad[:5]}
+
+
+def chk_L52_quan_stats_have_dodge(items, *_):
+    bad = []
+    for it in items:
+        if it.get("slot") == "quan" and not it.get("is_immutable_seed"):
+            s = it.get("stats") or {}
+            if "dodge_bp" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_dodge_in_quan": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L52_giay_stats_have_agility(items, *_):
+    bad = []
+    for it in items:
+        if it.get("slot") == "giay" and not it.get("is_immutable_seed"):
+            s = it.get("stats") or {}
+            if "agility" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_agility_in_giay": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L52_gang_tay_have_sat_luc(items, *_):
+    bad = []
+    for it in items:
+        if it.get("slot") == "gang_tay" and not it.get("is_immutable_seed"):
+            s = it.get("stats") or {}
+            if "sat_luc" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_satluc_in_gangtay": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L52_mu_have_phap_luc(items, *_):
+    bad = []
+    for it in items:
+        if it.get("slot") == "mu" and not it.get("is_immutable_seed"):
+            s = it.get("stats") or {}
+            if "phap_luc" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_phapluc_in_mu": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L52_weapon_have_sat_luc(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "weapon" \
+                and not it.get("is_immutable_seed") \
+                and it.get("slot") == "vu_khi":
+            s = it.get("stats") or {}
+            if "sat_luc" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_satluc_in_weapon": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L52_weapon_have_crit_rate(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "weapon" \
+                and not it.get("is_immutable_seed"):
+            s = it.get("stats") or {}
+            if "crit_rate_bp" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_crit_in_weapon": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L52_weapon_has_crit_bool(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "weapon":
+            s = it.get("stats") or {}
+            if "has_crit" not in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"no_has_crit": len(bad), "samples": bad[:5]}
+
+
+def chk_L52_armor_no_sat_luc_in_ao(items, *_):
+    """Armor (ao slot) shouldn't have sat_luc (attack stat)."""
+    bad = []
+    for it in items:
+        if it.get("slot") == "ao":
+            s = it.get("stats") or {}
+            if "sat_luc" in s:
+                bad.append(it["id"])
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"satluc_in_ao": len(bad), "samples": bad[:5]}
+
+
+def chk_L52_consumable_only_heal_stat(items, *_):
+    """Consumable should only have heal_amount + has_crit."""
+    bad = []
+    allowed = {"heal_amount", "has_crit"}
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        if it.get("is_immutable_seed"):
+            continue
+        s = it.get("stats") or {}
+        extra = set(s.keys()) - allowed
+        if extra:
+            bad.append({"id": it["id"], "extra": list(extra)})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"extra_keys": len(bad), "samples": bad[:5]}
+
+
+ROUND_L52_CHECKS = {
+    2: [
+        ("L52_ao_stats_have_hp", "R49", chk_L52_ao_stats_have_hp),
+        ("L52_quan_stats_have_dodge", "R49",
+         chk_L52_quan_stats_have_dodge),
+    ],
+    3: [
+        ("L52_giay_stats_have_agility", "R49",
+         chk_L52_giay_stats_have_agility),
+        ("L52_gang_tay_have_sat_luc", "R49",
+         chk_L52_gang_tay_have_sat_luc),
+    ],
+    4: [
+        ("L52_mu_have_phap_luc", "R49",
+         chk_L52_mu_have_phap_luc),
+        ("L52_weapon_have_sat_luc", "R49",
+         chk_L52_weapon_have_sat_luc),
+    ],
+    5: [
+        ("L52_weapon_have_crit_rate", "R49",
+         chk_L52_weapon_have_crit_rate),
+        ("L52_weapon_has_crit_bool", "R49",
+         chk_L52_weapon_has_crit_bool),
+    ],
+    6: [
+        ("L52_armor_no_sat_luc_in_ao", "R49",
+         chk_L52_armor_no_sat_luc_in_ao),
+        ("L52_consumable_only_heal_stat", "R49",
+         chk_L52_consumable_only_heal_stat),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -10154,6 +10327,8 @@ def main():
             active_checks.extend(ROUND_L50_CHECKS[r])
         if r in ROUND_L51_CHECKS:
             active_checks.extend(ROUND_L51_CHECKS[r])
+        if r in ROUND_L52_CHECKS:
+            active_checks.extend(ROUND_L52_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
