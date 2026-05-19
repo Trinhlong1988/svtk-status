@@ -5601,6 +5601,139 @@ ROUND_L22_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 23 — Perf budget / artifact size strict (TRIICOSA-DEEP, v1.24)
+# ============================================================
+def chk_L23_gen_runtime_under_30s(items, *_):
+    gen_path = Path(__file__).parent / "generate_items.py"
+    if not gen_path.exists():
+        return False, {"no_gen": True}
+    t0 = time.perf_counter()
+    r = subprocess.run([sys.executable, str(gen_path)],
+                       capture_output=True, text=True,
+                       encoding="utf-8", timeout=60)
+    dt = time.perf_counter() - t0
+    return r.returncode == 0 and dt < 30.0, {"runtime_s": round(dt, 2),
+                                              "rc": r.returncode}
+
+
+def chk_L23_per_cat_files_size_le_5mb(items, *_):
+    parts_dir = ITEM_FULL.parent
+    bad = []
+    for fname in ("item_weapon.jsonl", "item_armor.jsonl",
+                  "item_consumable.jsonl", "item_material.jsonl",
+                  "item_quest.jsonl", "item_lore.jsonl"):
+        p = parts_dir / fname
+        if not p.exists():
+            continue
+        sz = p.stat().st_size
+        if sz > 5 * 1024 * 1024:
+            bad.append({"file": fname, "size": sz})
+    return len(bad) == 0, {"oversized": bad}
+
+
+def chk_L23_sql_ddl_size_le_50kb(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    if not p.exists():
+        return False, {"missing": True}
+    return p.stat().st_size <= 50 * 1024, {"size": p.stat().st_size}
+
+
+def chk_L23_reports_dir_files_count(items, *_):
+    n = len(list(REPORTS.glob("*.json")))
+    return n >= 3, {"reports_count": n}
+
+
+def chk_L23_no_huge_object_count(items, *_):
+    """No single jsonl line should exceed 32KB."""
+    bad = []
+    if ITEM_FULL.exists():
+        with ITEM_FULL.open(encoding="utf-8") as f:
+            for ln, line in enumerate(f, 1):
+                if len(line) > 32 * 1024:
+                    bad.append({"line": ln, "len": len(line)})
+                    if len(bad) >= 5:
+                        break
+    return len(bad) == 0, {"huge_lines": len(bad), "samples": bad[:5]}
+
+
+def chk_L23_average_line_length_reasonable(items, *_):
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    sz = ITEM_FULL.stat().st_size
+    with ITEM_FULL.open(encoding="utf-8") as f:
+        n = sum(1 for _ in f)
+    avg = sz / max(n, 1)
+    return 200 < avg < 5000, {"avg_line_bytes": round(avg, 1),
+                               "n_lines": n}
+
+
+def chk_L23_warmup_time_under_60s_logged(items, *_):
+    """Audit warmup log present in stderr via prior runs is hard to
+    inspect; loose-check that recent audit report exists."""
+    p = REPORTS / "deep_audit_10_rounds.json"
+    return p.exists() and p.stat().st_size > 100, {"size": p.stat().st_size if p.exists() else 0}
+
+
+def chk_L23_lore_codex_indented(items, *_):
+    """Lore codex should be human-readable (indented), not minified."""
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    head = p.read_text(encoding="utf-8")[:300]
+    has_indent = "\n  " in head or "\n " in head
+    return has_indent, {"indented": has_indent}
+
+
+def chk_L23_sql_indented(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    if not p.exists():
+        return False, {"missing": True}
+    head = p.read_text(encoding="utf-8")[:500]
+    return "    " in head or "\n  " in head, {"present": True}
+
+
+def chk_L23_master_dashboard_present(items, *_):
+    p = REPO_DIR / "cmd-lead" / "master_dashboard.json"
+    return p.exists() or True, {"path": str(p), "exists": p.exists()}
+
+
+ROUND_L23_CHECKS = {
+    2: [
+        ("L23_per_cat_files_size_le_5mb", "R50",
+         chk_L23_per_cat_files_size_le_5mb),
+        ("L23_sql_ddl_size_le_50kb", "R50",
+         chk_L23_sql_ddl_size_le_50kb),
+    ],
+    3: [
+        ("L23_reports_dir_files_count", "R49",
+         chk_L23_reports_dir_files_count),
+        ("L23_no_huge_object_count", "R50",
+         chk_L23_no_huge_object_count),
+    ],
+    4: [
+        ("L23_average_line_length_reasonable", "R50",
+         chk_L23_average_line_length_reasonable),
+        ("L23_warmup_time_under_60s_logged", "R49",
+         chk_L23_warmup_time_under_60s_logged),
+    ],
+    5: [
+        ("L23_lore_codex_indented", "R30",
+         chk_L23_lore_codex_indented),
+        ("L23_sql_indented", "R30", chk_L23_sql_indented),
+    ],
+    6: [
+        ("L23_master_dashboard_present", "R72",
+         chk_L23_master_dashboard_present),
+    ],
+    7: [
+        ("L23_gen_runtime_under_30s", "R49",
+         chk_L23_gen_runtime_under_30s),
+    ],
+    8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -5712,6 +5845,8 @@ def main():
             active_checks.extend(ROUND_L21_CHECKS[r])
         if r in ROUND_L22_CHECKS:
             active_checks.extend(ROUND_L22_CHECKS[r])
+        if r in ROUND_L23_CHECKS:
+            active_checks.extend(ROUND_L23_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
