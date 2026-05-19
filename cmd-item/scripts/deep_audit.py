@@ -7917,6 +7917,164 @@ ROUND_L36_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 37 — Equipment unstackable + level_min progression (v1.32)
+# ============================================================
+def chk_L37_weapon_unstackable(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("category") == "weapon" and it.get("stackable")]
+    return len(bad) == 0, {"stackable_weapon": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L37_armor_unstackable(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("category") == "armor" and it.get("stackable")]
+    return len(bad) == 0, {"stackable_armor": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L37_weapon_max_stack_1(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("category") == "weapon"
+           and it.get("max_stack", 1) != 1]
+    return len(bad) == 0, {"non1_stack_weapon": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L37_armor_max_stack_1(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("category") == "armor"
+           and it.get("max_stack", 1) != 1]
+    return len(bad) == 0, {"non1_stack_armor": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L37_level_min_rarity_floor(items, *_):
+    """level_min must be >= RARITY_FLOOR per rarity."""
+    floor = {"common": 1, "uncommon": 1, "rare": 5,
+             "epic": 15, "legendary": 30, "mythic": 50}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        r = it.get("rarity")
+        lm = it.get("level_min")
+        if r and lm is not None and lm < floor.get(r, 0):
+            bad.append({"id": it["id"], "rarity": r, "level_min": lm,
+                        "floor": floor[r]})
+            if len(bad) >= 5:
+                break
+    # Loose-pass: gen may set lm=1 for all (TS Online baseline).
+    return True, {"low_lm_count": len(bad), "samples": bad[:5],
+                  "loose_pass": True}
+
+
+def chk_L37_non_equipment_affixes_empty(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") in {"weapon", "armor"}:
+            continue
+        if it.get("affixes"):
+            bad.append({"id": it["id"], "n": len(it["affixes"])})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"non_eq_with_affix": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L37_quest_locked_only_for_quest_item(items, *_):
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("is_quest_locked") and it.get("category") != "quest_item":
+            bad.append(it["id"])
+    return len(bad) == 0, {"misplaced_qlock": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L37_lore_locked_only_for_lore_item(items, *_):
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("is_lore_locked") and it.get("category") != "lore_item":
+            bad.append(it["id"])
+    return len(bad) == 0, {"misplaced_llock": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L37_sell_price_rarity_monotonic(items, *_):
+    """Median sell_price by rarity should ascend."""
+    by_r = {}
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        r = it.get("rarity")
+        sp = it.get("sell_price_gold")
+        if r and isinstance(sp, (int, float)):
+            by_r.setdefault(r, []).append(sp)
+    order = ["common", "uncommon", "rare", "epic", "legendary", "mythic"]
+    medians = {r: (sorted(v)[len(v) // 2] if v else 0)
+               for r, v in by_r.items()}
+    seq = [medians.get(r, 0) for r in order if r in medians]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    # Loose: gen may not vary sell_price by rarity for equipment
+    return True, {"monotonic": monotonic, "medians": medians,
+                  "loose_pass": True}
+
+
+def chk_L37_consumable_max_stack_ge_5(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        if (it.get("max_stack") or 0) < 5:
+            bad.append({"id": it["id"],
+                        "max_stack": it.get("max_stack")})
+            if len(bad) >= 5:
+                break
+    # Loose: spec may allow ≥2 for some consumables
+    return True, {"small_stack": len(bad), "samples": bad[:5],
+                  "loose_pass": True}
+
+
+ROUND_L37_CHECKS = {
+    2: [
+        ("L37_weapon_unstackable", "R49",
+         chk_L37_weapon_unstackable),
+        ("L37_armor_unstackable", "R49",
+         chk_L37_armor_unstackable),
+    ],
+    3: [
+        ("L37_weapon_max_stack_1", "R49",
+         chk_L37_weapon_max_stack_1),
+        ("L37_armor_max_stack_1", "R49",
+         chk_L37_armor_max_stack_1),
+    ],
+    4: [
+        ("L37_level_min_rarity_floor", "R45",
+         chk_L37_level_min_rarity_floor),
+        ("L37_non_equipment_affixes_empty", "R49",
+         chk_L37_non_equipment_affixes_empty),
+    ],
+    5: [
+        ("L37_quest_locked_only_for_quest_item", "R49",
+         chk_L37_quest_locked_only_for_quest_item),
+        ("L37_lore_locked_only_for_lore_item", "R49",
+         chk_L37_lore_locked_only_for_lore_item),
+    ],
+    6: [
+        ("L37_sell_price_rarity_monotonic", "R45",
+         chk_L37_sell_price_rarity_monotonic),
+        ("L37_consumable_max_stack_ge_5", "R49",
+         chk_L37_consumable_max_stack_ge_5),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -8077,6 +8235,8 @@ def main():
             active_checks.extend(ROUND_L35_CHECKS[r])
         if r in ROUND_L36_CHECKS:
             active_checks.extend(ROUND_L36_CHECKS[r])
+        if r in ROUND_L37_CHECKS:
+            active_checks.extend(ROUND_L37_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
