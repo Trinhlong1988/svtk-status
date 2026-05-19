@@ -3634,6 +3634,169 @@ ROUND_L9_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 10 — Round-trip serialization & SQL parity (DECA-DEEP, v1.11)
+# Detect drift between in-memory items, JSONL on disk, lore_codex,
+# SQL DDL, and sha256 sidecar.
+# ============================================================
+def chk_L10_jsonl_one_obj_per_line(items, *_):
+    bad = []
+    if ITEM_FULL.exists():
+        with ITEM_FULL.open(encoding="utf-8") as f:
+            for ln, line in enumerate(f, 1):
+                s = line.strip()
+                if not s:
+                    continue
+                if s.count("\n") > 0 or not s.startswith("{"):
+                    bad.append({"line": ln})
+                    continue
+                try:
+                    obj = json.loads(s)
+                    if not isinstance(obj, dict):
+                        bad.append({"line": ln, "type": str(type(obj))})
+                except Exception as e:
+                    bad.append({"line": ln, "err": f"{type(e).__name__}"})
+    return len(bad) == 0, {"bad_lines": len(bad), "samples": bad[:5]}
+
+
+def chk_L10_no_trailing_whitespace_jsonl(items, *_):
+    bad = []
+    if ITEM_FULL.exists():
+        with ITEM_FULL.open(encoding="utf-8", newline="") as f:
+            for ln, line in enumerate(f, 1):
+                stripped = line.rstrip("\n").rstrip("\r")
+                if stripped != stripped.rstrip():
+                    bad.append({"line": ln})
+                    if len(bad) >= 5:
+                        break
+    return len(bad) == 0, {"trailing_ws_lines": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L10_jsonl_roundtrip_stable(items, *_):
+    """Load jsonl twice → identical object sequence."""
+    if not ITEM_FULL.exists():
+        return False, {"missing_file": True}
+    a = ITEM_FULL.read_text(encoding="utf-8").splitlines()
+    parsed_a = [json.loads(l) for l in a if l.strip()]
+    serialized = "\n".join(json.dumps(o, ensure_ascii=False,
+                                       sort_keys=False) for o in parsed_a)
+    re_parsed = [json.loads(l) for l in serialized.split("\n") if l.strip()]
+    return parsed_a == re_parsed, {"count": len(parsed_a),
+                                   "stable": parsed_a == re_parsed}
+
+
+def chk_L10_sha256_present(items, *_):
+    p = ITEM_FULL.with_suffix(".jsonl.sha256")
+    return p.exists() and p.stat().st_size > 0, {"path": str(p)}
+
+
+def chk_L10_sha256_matches_content(items, *_):
+    p = ITEM_FULL.with_suffix(".jsonl.sha256")
+    if not p.exists() or not ITEM_FULL.exists():
+        return False, {"missing": True}
+    recorded = p.read_text(encoding="utf-8").strip().split()[0]
+    actual = hashlib.sha256(ITEM_FULL.read_bytes()).hexdigest()
+    return recorded == actual, {"recorded": recorded[:16],
+                                "actual": actual[:16],
+                                "match": recorded == actual}
+
+
+def chk_L10_sql_ddl_has_core_fields(items, *_):
+    sql_path = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    if not sql_path.exists():
+        return False, {"missing_sql": True}
+    sql = sql_path.read_text(encoding="utf-8")
+    required = ["template_id", "id", "name_vi", "category", "slot",
+                "rarity", "tier", "era"]
+    missing = [c for c in required if c not in sql]
+    return len(missing) == 0, {"missing_cols": missing,
+                               "sql_len": len(sql)}
+
+
+def chk_L10_lore_codex_count_50(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(data, dict) and "items" in data:
+        data = data["items"]
+    n = len(data) if isinstance(data, list) else 0
+    return n == 50, {"lore_count": n, "expected": 50}
+
+
+def chk_L10_per_cat_count_matches_full(items, *_):
+    by_cat = Counter(it["category"] for it in items)
+    parts_dir = ITEM_FULL.parent
+    expected = {"weapon": "item_weapon.jsonl", "armor": "item_armor.jsonl",
+                "consumable": "item_consumable.jsonl",
+                "material": "item_material.jsonl",
+                "quest_item": "item_quest.jsonl",
+                "lore_item": "item_lore.jsonl"}
+    mismatch = []
+    for cat, fname in expected.items():
+        p = parts_dir / fname
+        if not p.exists():
+            mismatch.append({"cat": cat, "missing_file": fname})
+            continue
+        with p.open(encoding="utf-8") as f:
+            file_n = sum(1 for ln in f if ln.strip())
+        if file_n != by_cat.get(cat, 0):
+            mismatch.append({"cat": cat, "file": file_n,
+                             "registry": by_cat.get(cat, 0)})
+    return len(mismatch) == 0, {"mismatch": mismatch}
+
+
+def chk_L10_total_count_4006(items, *_):
+    return len(items) == 4006, {"count": len(items), "expected": 4006}
+
+
+def chk_L10_no_duplicate_template_id_strict(items, *_):
+    seen = {}
+    for it in items:
+        t = it.get("template_id")
+        if t in seen:
+            seen[t].append(it["id"])
+        else:
+            seen[t] = [it["id"]]
+    dupes = {k: v for k, v in seen.items() if len(v) > 1}
+    return len(dupes) == 0, {"dupes": len(dupes),
+                             "samples": list(dupes.items())[:3]}
+
+
+ROUND_L10_CHECKS = {
+    2: [
+        ("L10_jsonl_one_obj_per_line", "R50",
+         chk_L10_jsonl_one_obj_per_line),
+        ("L10_no_trailing_whitespace_jsonl", "R50",
+         chk_L10_no_trailing_whitespace_jsonl),
+    ],
+    3: [
+        ("L10_jsonl_roundtrip_stable", "R49",
+         chk_L10_jsonl_roundtrip_stable),
+        ("L10_sha256_present", "R50", chk_L10_sha256_present),
+    ],
+    4: [
+        ("L10_sha256_matches_content", "R50",
+         chk_L10_sha256_matches_content),
+        ("L10_sql_ddl_has_core_fields", "R50",
+         chk_L10_sql_ddl_has_core_fields),
+    ],
+    5: [
+        ("L10_lore_codex_count_50", "R81",
+         chk_L10_lore_codex_count_50),
+        ("L10_per_cat_count_matches_full", "R50",
+         chk_L10_per_cat_count_matches_full),
+    ],
+    6: [
+        ("L10_total_count_4006", "R81", chk_L10_total_count_4006),
+        ("L10_no_duplicate_template_id_strict", "R50",
+         chk_L10_no_duplicate_template_id_strict),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 def main():
     REPORTS.mkdir(parents=True, exist_ok=True)
     audit_log = []
@@ -3678,6 +3841,8 @@ def main():
             active_checks.extend(ROUND_L8_CHECKS[r])
         if r in ROUND_L9_CHECKS:
             active_checks.extend(ROUND_L9_CHECKS[r])
+        if r in ROUND_L10_CHECKS:
+            active_checks.extend(ROUND_L10_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
