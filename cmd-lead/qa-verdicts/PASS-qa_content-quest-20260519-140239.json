@@ -1,0 +1,10 @@
+{
+  "qa": "qa_content",
+  "target": "quest",
+  "verdict": "PASS",
+  "evidence": {
+    "count": 3000,
+    "registry": "cmd-quest\\output\\registry\\quest_full.jsonl"
+  },
+  "timestamp": "20260519-140239"
+}

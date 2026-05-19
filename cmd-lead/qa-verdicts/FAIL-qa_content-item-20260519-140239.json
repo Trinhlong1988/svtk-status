@@ -1,0 +1,17 @@
+{
+  "qa": "qa_content",
+  "target": "item",
+  "verdict": "FAIL",
+  "evidence": {
+    "issues": [
+      {
+        "type": "invalid_era",
+        "index": 0,
+        "era": "Hùng Vương",
+        "worker": "item"
+      }
+    ],
+    "count": 4006
+  },
+  "timestamp": "20260519-140239"
+}
