@@ -1,0 +1,123 @@
+{
+  "event_id": 310,
+  "name": "Hạ Vàng Lúa Đồng Bằng",
+  "category": "season",
+  "era": "ly",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 5099,
+      "npc_name": "Đàm Thành"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "ly",
+      "event_era": "ly",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 1667,
+      "map_name": "rung_trung_bo_ly_01667",
+      "biome": "forest"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 4572
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_mat_4467",
+          "category": "material",
+          "result": "pass"
+        },
+        {
+          "token": "item_mat_4298",
+          "category": "material",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_era",
+      "result": "skip_non_lore"
+    },
+    "R07": {
+      "check": "world_boss_npc_strict",
+      "result": "skip_non_wb"
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_4",
+      "expected": 2,
+      "actual_before": 2,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 310,
+    "name": "Hạ Vàng Lúa Đồng Bằng",
+    "category": "season",
+    "era": "ly",
+    "trigger_type": "monthly",
+    "trigger_condition": {
+      "season_tag": "summer",
+      "lunar_month_range": [
+        4,
+        6
+      ],
+      "recurrence": "seasonal"
+    },
+    "duration_min": 43200,
+    "reward_tier": "tier_4",
+    "reward_gold": 4000,
+    "reward_exp": 12000,
+    "reward_items": [
+      "item_mat_4467",
+      "item_mat_4298"
+    ],
+    "reward_reputation": 200,
+    "min_level": 10,
+    "max_participants": 0,
+    "cross_ref": {
+      "map_era": "ly",
+      "season_tag": "summer",
+      "links_quest_chain": "SVTK_CHAIN_BACTHUOC_B",
+      "_legacy_links_quest_chain": "SVTK_CHAIN_SEASON_LY_SUMMER",
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 1667,
+      "event_map_name": "rung_trung_bo_ly_01667",
+      "event_map_biome": "forest",
+      "event_map_region": "trung_bo",
+      "event_map_era": "ly",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "Mùa summer thời LY — Hạ Vàng Lúa Đồng Bằng. Buff exp/drop toàn map, season pass mở khóa nhiệm vụ.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 5099,
+    "giver_npc_name": "Đàm Thành",
+    "giver_scene_id": 4572
+  }
+}

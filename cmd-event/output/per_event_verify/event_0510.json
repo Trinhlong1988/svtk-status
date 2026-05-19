@@ -1,0 +1,130 @@
+{
+  "event_id": 510,
+  "name": "Nguyễn Huệ Lên Ngôi Quang Trung",
+  "category": "lore",
+  "era": "tay_son",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 7707,
+      "npc_name": "Đinh Anh"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "tay_son",
+      "event_era": "tay_son",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 628,
+      "map_name": "lang_trung_bo_f5_00628",
+      "biome": "village"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 7203
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_quest_4639",
+          "category": "quest_item",
+          "result": "pass"
+        },
+        {
+          "token": "item_quest_4777",
+          "category": "quest_item",
+          "result": "pass"
+        },
+        {
+          "token": "item_quest_4792",
+          "category": "quest_item",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_exists_and_era_match",
+      "result": "pass",
+      "dialog_era": "tay_son"
+    },
+    "R07": {
+      "check": "world_boss_npc_strict",
+      "result": "skip_non_wb"
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_4",
+      "expected": 2,
+      "actual_before": 3,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 510,
+    "name": "Nguyễn Huệ Lên Ngôi Quang Trung",
+    "category": "lore",
+    "era": "tay_son",
+    "trigger_type": "quest_completion",
+    "trigger_condition": {
+      "requires_quest_chain": "SVTK_CHAIN_TIENLY_A",
+      "recurrence": "one_off_per_account",
+      "_legacy_requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2"
+    },
+    "duration_min": 30,
+    "reward_tier": "tier_4",
+    "reward_gold": 800,
+    "reward_exp": 4000,
+    "reward_items": [
+      "item_quest_4639",
+      "item_quest_4777",
+      "item_quest_4792"
+    ],
+    "reward_reputation": 120,
+    "min_level": 20,
+    "max_participants": 1,
+    "cross_ref": {
+      "map_era": "tay_son",
+      "codex_slug": "nguyen_hue_quang_trung",
+      "unlocks_codex": true,
+      "links_quest_chain": "SVTK_CHAIN_TIENLY_A",
+      "dialog_tree_ref": "DLG_Q_01049",
+      "_legacy_dialog_tree_ref": "DLG_SVTK_LORE_NGUYEN_HUE_QUANG_TRUNG",
+      "_legacy_links_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 628,
+      "event_map_name": "lang_trung_bo_f5_00628",
+      "event_map_biome": "village",
+      "event_map_region": "trung_bo",
+      "event_map_era": "f5",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "Lore sử Việt thời TAY_SON — Nguyễn Huệ Lên Ngôi Quang Trung. Solo experience, mở khóa codex, không lặp lại.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 7707,
+    "giver_npc_name": "Đinh Anh",
+    "giver_scene_id": 7203
+  }
+}

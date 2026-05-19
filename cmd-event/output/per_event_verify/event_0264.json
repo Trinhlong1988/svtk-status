@@ -1,0 +1,128 @@
+{
+  "event_id": 264,
+  "name": "Thế giới Boss Yêu vương Côn Sơn",
+  "category": "world_boss",
+  "era": "le",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 3464,
+      "npc_name": "Khúc Quang"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "le",
+      "event_era": "le",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 6819,
+      "map_name": "rung_nam_bo_le_06819",
+      "biome": "forest"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 967
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_weapon_2137",
+          "category": "weapon",
+          "result": "pass"
+        },
+        {
+          "token": "item_weapon_2407",
+          "category": "weapon",
+          "result": "pass"
+        },
+        {
+          "token": "item_armor_1458",
+          "category": "armor",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_era",
+      "result": "skip_non_lore"
+    },
+    "R07": {
+      "check": "world_boss_npc_tier_5_plus",
+      "result": "pass",
+      "tier": 5
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_5",
+      "expected": 3,
+      "actual_before": 3,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 264,
+    "name": "Thế giới Boss Yêu vương Côn Sơn",
+    "category": "world_boss",
+    "era": "le",
+    "trigger_type": "server_time",
+    "trigger_condition": {
+      "spawn_hour_utc7": 21,
+      "recurrence": "biweekly"
+    },
+    "duration_min": 90,
+    "reward_tier": "tier_5",
+    "reward_gold": 5000,
+    "reward_exp": 20000,
+    "reward_items": [
+      "item_weapon_2137",
+      "item_weapon_2407",
+      "item_armor_1458"
+    ],
+    "reward_reputation": 200,
+    "min_level": 60,
+    "max_participants": 100,
+    "boss_hp_billion": 44,
+    "cross_ref": {
+      "map_era": "le",
+      "requires_npc": null,
+      "spawn_map_tag": "wb_arena_le_2",
+      "boss_npc_id": 6217,
+      "boss_npc_name": "Lương Long",
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 6819,
+      "event_map_name": "rung_nam_bo_le_06819",
+      "event_map_biome": "forest",
+      "event_map_region": "nam_bo",
+      "event_map_era": "le",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "World Boss thời LE — Yêu vương Côn Sơn. Toàn server cùng đánh, share damage, top 100 reward.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 3464,
+    "giver_npc_name": "Khúc Quang",
+    "giver_scene_id": 967
+  }
+}

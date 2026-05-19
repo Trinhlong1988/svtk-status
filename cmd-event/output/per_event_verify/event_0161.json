@@ -1,0 +1,121 @@
+{
+  "event_id": 161,
+  "name": "Đột kích cứ điểm quân Minh tại Đông Quan",
+  "category": "raid",
+  "era": "le",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 2192,
+      "npc_name": "Thái Diệu Lan"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "le",
+      "event_era": "le",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 380,
+      "map_name": "hang_dong_bac_bo_le_00380",
+      "biome": "dungeon"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 7684
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_armor_1458",
+          "category": "armor",
+          "result": "pass"
+        },
+        {
+          "token": "item_mat_4073",
+          "category": "material",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_era",
+      "result": "skip_non_lore"
+    },
+    "R07": {
+      "check": "world_boss_npc_strict",
+      "result": "skip_non_wb"
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_3",
+      "expected": 2,
+      "actual_before": 2,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 161,
+    "name": "Đột kích cứ điểm quân Minh tại Đông Quan",
+    "category": "raid",
+    "era": "le",
+    "trigger_type": "weekly",
+    "trigger_condition": {
+      "weekday": "saturday",
+      "hour_start": 19,
+      "recurrence": "weekly"
+    },
+    "duration_min": 120,
+    "reward_tier": "tier_3",
+    "reward_gold": 1500,
+    "reward_exp": 4500,
+    "reward_items": [
+      "item_armor_1458",
+      "item_mat_4073"
+    ],
+    "reward_reputation": 75,
+    "min_level": 50,
+    "max_participants": 5,
+    "min_party_size": 5,
+    "cross_ref": {
+      "map_era": "le",
+      "requires_npc": null,
+      "links_quest_chain": "SVTK_CHAIN_TIENLY_B",
+      "_legacy_links_quest_chain": "SVTK_CHAIN_RAID_LE_1",
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 380,
+      "event_map_name": "hang_dong_bac_bo_le_00380",
+      "event_map_biome": "dungeon",
+      "event_map_region": "bac_bo",
+      "event_map_era": "le",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "Raid dungeon thời LE — Đột kích cứ điểm quân Minh tại Đông Quan. Tổ đội tối thiểu 5 người, phần thưởng cấp 3, lặp lại hàng tuần.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 2192,
+    "giver_npc_name": "Thái Diệu Lan",
+    "giver_scene_id": 7684
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "event_id": 309,
+  "name": "Xuân Huế Cố Đô Mở Hội",
+  "category": "season",
+  "era": "nguyen",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 1665,
+      "npc_name": "Tạ Hữu Nam"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "nguyen",
+      "event_era": "nguyen",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 2120,
+      "map_name": "dong_bang_bac_bo_g1_02120",
+      "biome": "plain"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 3982
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_mat_1690",
+          "category": "material",
+          "result": "pass"
+        },
+        {
+          "token": "item_mat_4288",
+          "category": "material",
+          "result": "pass"
+        },
+        {
+          "token": "item_mat_1652",
+          "category": "material",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_era",
+      "result": "skip_non_lore"
+    },
+    "R07": {
+      "check": "world_boss_npc_strict",
+      "result": "skip_non_wb"
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_5",
+      "expected": 3,
+      "actual_before": 3,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 309,
+    "name": "Xuân Huế Cố Đô Mở Hội",
+    "category": "season",
+    "era": "nguyen",
+    "trigger_type": "monthly",
+    "trigger_condition": {
+      "season_tag": "spring",
+      "lunar_month_range": [
+        1,
+        3
+      ],
+      "recurrence": "seasonal"
+    },
+    "duration_min": 43200,
+    "reward_tier": "tier_5",
+    "reward_gold": 5000,
+    "reward_exp": 15000,
+    "reward_items": [
+      "item_mat_1690",
+      "item_mat_4288",
+      "item_mat_1652"
+    ],
+    "reward_reputation": 250,
+    "min_level": 10,
+    "max_participants": 0,
+    "cross_ref": {
+      "map_era": "nguyen",
+      "season_tag": "spring",
+      "links_quest_chain": "SVTK_CHAIN_HIENDAI_A",
+      "_legacy_links_quest_chain": "SVTK_CHAIN_SEASON_NGUYEN_SPRING",
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 2120,
+      "event_map_name": "dong_bang_bac_bo_g1_02120",
+      "event_map_biome": "plain",
+      "event_map_region": "bac_bo",
+      "event_map_era": "g1",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "Mùa spring thời NGUYEN — Xuân Huế Cố Đô Mở Hội. Buff exp/drop toàn map, season pass mở khóa nhiệm vụ.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 1665,
+    "giver_npc_name": "Tạ Hữu Nam",
+    "giver_scene_id": 3982
+  }
+}

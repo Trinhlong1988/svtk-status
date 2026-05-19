@@ -1,0 +1,121 @@
+{
+  "event_id": 15,
+  "name": "Lễ hội Huế cố đô",
+  "category": "festival",
+  "era": "nguyen",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 4997,
+      "npc_name": "Khúc Đức Hiếu"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "nguyen",
+      "event_era": "nguyen",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 1272,
+      "map_name": "lang_nam_bo_nguyen_01272",
+      "biome": "village"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 3867
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_mat_4159",
+          "category": "material",
+          "result": "pass"
+        },
+        {
+          "token": "item_mat_4451",
+          "category": "material",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_era",
+      "result": "skip_non_lore"
+    },
+    "R07": {
+      "check": "world_boss_npc_strict",
+      "result": "skip_non_wb"
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_4",
+      "expected": 2,
+      "actual_before": 2,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "lunar_day",
+        "lunar_month",
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 15,
+    "name": "Lễ hội Huế cố đô",
+    "category": "festival",
+    "era": "nguyen",
+    "trigger_type": "calendar",
+    "trigger_condition": {
+      "lunar_month": 8,
+      "lunar_day": 1,
+      "recurrence": "annual"
+    },
+    "duration_min": 120,
+    "reward_tier": "tier_4",
+    "reward_gold": 1600,
+    "reward_exp": 3200,
+    "reward_items": [
+      "item_mat_4159",
+      "item_mat_4451"
+    ],
+    "reward_reputation": 40,
+    "min_level": 1,
+    "max_participants": 0,
+    "cross_ref": {
+      "map_era": "nguyen",
+      "requires_npc": null,
+      "links_quest_chain": null,
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 1272,
+      "event_map_name": "lang_nam_bo_nguyen_01272",
+      "event_map_biome": "village",
+      "event_map_region": "nam_bo",
+      "event_map_era": "nguyen",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "Lễ hội truyền thống thời NGUYEN — Lễ hội Huế cố đô. Cộng đồng tham gia, có buff danh tiếng và phần thưởng cấp 4.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 4997,
+    "giver_npc_name": "Khúc Đức Hiếu",
+    "giver_scene_id": 3867
+  }
+}
