@@ -645,7 +645,7 @@
     "is_lore_locked": true,
     "cultural_tag": "viet_legendary",
     "author": "Khuyết danh — Lý",
-    "lore": "Trống tế thần biển.",
+    "lore": "Trống tế thần biển — nghi lễ cầu mưa thuận gió hòa của ngư dân Đại Việt thời Lý, vang vọng nơi cửa biển.",
     "level_min": 1,
     "is_immutable_seed": false
   },
@@ -795,7 +795,7 @@
     "is_lore_locked": true,
     "cultural_tag": "viet_legendary",
     "author": "Khuyết danh — Nguyễn",
-    "lore": "Nhạc cụ dây 16.",
+    "lore": "Nhạc cụ dây mười sáu cung — hồn nhạc cổ điển cung đình Huế triều Nguyễn, âm thanh trong vắt mà sâu lắng.",
     "level_min": 1,
     "is_immutable_seed": false
   },

@@ -5445,6 +5445,162 @@ ROUND_L21_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 22 — Boundary / edge case strict (DOICOSA-DEEP, v1.23)
+# ============================================================
+def chk_L22_template_id_no_gap(items, *_):
+    """Generated template_ids should be contiguous starting from 1001."""
+    gen = sorted(it["template_id"] for it in items
+                 if not it.get("is_immutable_seed")
+                 and it.get("template_id") is not None)
+    if not gen:
+        return True, {"no_generated": True}
+    expected = list(range(gen[0], gen[0] + len(gen)))
+    bad = [(a, b) for a, b in zip(gen, expected) if a != b]
+    return len(bad) == 0, {"first_gap": bad[0] if bad else None,
+                           "gen_min": gen[0], "gen_max": gen[-1],
+                           "count": len(gen)}
+
+
+def chk_L22_no_overflow_int32(items, *_):
+    bad = []
+    INT32_MAX = 2 ** 31 - 1
+    for it in items:
+        st = it.get("stats") or {}
+        for k, v in st.items():
+            if isinstance(v, int) and v > INT32_MAX:
+                bad.append({"id": it["id"], "key": k, "val": v})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"int32_overflow": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L22_name_vi_no_strip_only(items, *_):
+    bad = [it["id"] for it in items
+           if isinstance(it.get("name_vi"), str)
+           and not it["name_vi"].strip()]
+    return len(bad) == 0, {"empty_after_strip": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L22_template_id_starts_1001_or_1(items, *_):
+    """Seeds occupy 1-6, generated start at 1001."""
+    seeds = [it for it in items if it.get("is_immutable_seed")]
+    seed_ids = sorted(it["template_id"] for it in seeds
+                      if it.get("template_id") is not None)
+    if seed_ids and seed_ids[0] != 1:
+        return False, {"seed_first": seed_ids[0]}
+    gen = sorted(it["template_id"] for it in items
+                 if not it.get("is_immutable_seed")
+                 and it.get("template_id") is not None)
+    return gen[0] == 1001 if gen else True, {"gen_first": gen[0] if gen else None}
+
+
+def chk_L22_no_empty_string_fields(items, *_):
+    bad = []
+    critical = {"id", "name_vi", "category", "slot", "rarity"}
+    for it in items:
+        for k in critical:
+            v = it.get(k)
+            if isinstance(v, str) and not v.strip():
+                bad.append({"id": it.get("id"), "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"empty_critical": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L22_max_field_len_reasonable(items, *_):
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and len(v) > 2000:
+                bad.append({"id": it["id"], "field": k, "len": len(v)})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"huge_field": len(bad), "samples": bad[:5]}
+
+
+def chk_L22_lore_text_length_bounds(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        lt = it.get("lore", "")
+        if len(lt) > 0 and len(lt) < 20:
+            bad.append({"id": it["id"], "len": len(lt)})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"too_short": len(bad), "samples": bad[:5]}
+
+
+def chk_L22_max_affixes_le_5(items, *_):
+    bad = []
+    for it in items:
+        n = len(it.get("affixes") or [])
+        if n > 5:
+            bad.append({"id": it["id"], "count": n})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"too_many_affix": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L22_total_jsonl_size_lt_10mb(items, *_):
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    sz = ITEM_FULL.stat().st_size
+    return sz < 10 * 1024 * 1024, {"size_bytes": sz,
+                                    "cap_mb": 10}
+
+
+def chk_L22_lore_codex_size_lt_500kb(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    sz = p.stat().st_size
+    return sz < 500 * 1024, {"size_bytes": sz, "cap_kb": 500}
+
+
+ROUND_L22_CHECKS = {
+    2: [
+        ("L22_template_id_no_gap", "R50",
+         chk_L22_template_id_no_gap),
+        ("L22_no_overflow_int32", "R45",
+         chk_L22_no_overflow_int32),
+    ],
+    3: [
+        ("L22_name_vi_no_strip_only", "R30",
+         chk_L22_name_vi_no_strip_only),
+        ("L22_template_id_starts_1001_or_1", "R50",
+         chk_L22_template_id_starts_1001_or_1),
+    ],
+    4: [
+        ("L22_no_empty_string_fields", "R30",
+         chk_L22_no_empty_string_fields),
+        ("L22_max_field_len_reasonable", "R50",
+         chk_L22_max_field_len_reasonable),
+    ],
+    5: [
+        ("L22_lore_text_length_bounds", "R30",
+         chk_L22_lore_text_length_bounds),
+        ("L22_max_affixes_le_5", "R45",
+         chk_L22_max_affixes_le_5),
+    ],
+    6: [
+        ("L22_total_jsonl_size_lt_10mb", "R50",
+         chk_L22_total_jsonl_size_lt_10mb),
+        ("L22_lore_codex_size_lt_500kb", "R50",
+         chk_L22_lore_codex_size_lt_500kb),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -5554,6 +5710,8 @@ def main():
             active_checks.extend(ROUND_L20_CHECKS[r])
         if r in ROUND_L21_CHECKS:
             active_checks.extend(ROUND_L21_CHECKS[r])
+        if r in ROUND_L22_CHECKS:
+            active_checks.extend(ROUND_L22_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
