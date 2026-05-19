@@ -1,0 +1,87 @@
+{
+  "fix_id": "cmd_dialog_v11_hypothesis_property_test",
+  "fixed_by": "cmd-dialog",
+  "result": "PASS",
+  "evidence": {
+    "task": "property_based_testing_with_hypothesis",
+    "rationale": "84-lens enumerative audit is bounded by what auditor enumerates. Property-based testing exhaustively explores random input space and shrinks failures to minimal repro — surfaces bugs auditor never imagined.",
+    "tool": "hypothesis 6.152.8",
+    "test_file": "cmd-dialog/scripts/hypothesis_test_v11.py",
+    "property_count": 35,
+    "total_examples_run": "~10000 (per-property max_examples 100-500)",
+    "result": "35/35 PASS, 0 real code bugs detected",
+    "findings": [
+      {
+        "type": "false_property_my_mistake",
+        "property": "test_prop_filter_monotonic_add_npc",
+        "minimized_repro": {
+          "base": "[{_index:2, npc_type:'townsmen', can_give_quest:False}]",
+          "extra": "{_index:1, can_give_quest:True}",
+          "dtype": "quest"
+        },
+        "behavior": "pool_before={2} (fallback to full when predicate empty), pool_after={1} (strict subset when predicate finds qualifier). NPC 2 dropped out.",
+        "verdict": "INTENDED DESIGN — R47 fallback semantic. Property monotonicity was the WRONG invariant to assert. Replaced with: (a) test_prop_filter_idempotent — filter(filter(x)) == filter(x), (b) test_prop_filter_monotonic_no_fallback — monotonic only when no fallback triggered.",
+        "severity": "no_bug — auditor's flawed assumption"
+      }
+    ],
+    "properties_inventory": [
+      "gen_dialog_line schema valid for ANY (did, dtype, npc)",
+      "cultural_lock_pass field == actual cultural_lock_check",
+      "output era ∈ ERAS_ALL even for garbage NPC era",
+      "seeded_pick deterministic + pool membership",
+      "seeded_pick empty pool → None",
+      "_resolve_template_pool never empty for any era",
+      "lore template pool era-coherent (None tag or matching era)",
+      "story template pool era-coherent",
+      "cultural_lock_check rejects CJK (Hán-Nhật)",
+      "cultural_lock_check rejects Tam Quốc figures",
+      "cultural_lock_check accepts pure Vietnamese diacritics",
+      "filter_speaker_pool returns subset of input",
+      "filter_speaker_pool never empty (fallback guard)",
+      "filter_speaker_pool deterministic",
+      "gen_dialog_line deterministic (same input → same output)",
+      "text has no ASCII control chars",
+      "text has no '{' or '}' (template leak)",
+      "text doesn't start with whitespace",
+      "speaker_name preserved exactly from NPC",
+      "era output == NPC era when NPC era valid",
+      "dialog_id preserved",
+      "JSON roundtrip preserves all fields",
+      "text contains base template substring",
+      "dialog_id varies → i field varies",
+      "filter_speaker_pool idempotent",
+      "filter monotonic when no fallback path",
+      "trade pool predicate strict match (no fallback case)",
+      "combat pool predicate strict match (no fallback case)",
+      "cultural_lock no false-positive on 14 Vietnamese phrases",
+      "LORE template tag ∈ ERAS_ALL ∪ {None}",
+      "STORY template tag ∈ ERAS_ALL ∪ {None}",
+      "every era has ≥1 lore template",
+      "every era has ≥1 story template",
+      "seeded_pick distribution sanity (uniform-ish over 1000 seeds)",
+      "bad NPC._index handled gracefully"
+    ],
+    "post_state": {
+      "84_lens_audit": "0 findings",
+      "35_hypothesis_properties": "35/35 PASS",
+      "self_audit_15_15": "PASS @ 1.000",
+      "pytest_16_16": "PASS",
+      "determinism_sha": "7949f4a030bc4155f3413afe4b5ab162694e30d7d9d72069710320facf8e214c"
+    }
+  },
+  "timestamp": "20260519T061350-012Z",
+  "cmd": "cmd-dialog",
+  "parent": "CMD3",
+  "phase": "14",
+  "version": "v1.1.3",
+  "ts_utc": "20260519T061350-012Z",
+  "task": "hypothesis_property_test",
+  "status": "DONE",
+  "delivered": {
+    "branch": "staging-dialog-20260519-041613",
+    "tool": "cmd-dialog/scripts/hypothesis_test_v11.py (35 properties)"
+  },
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "next_milestone": "optional: mutation testing (mutmut) to prove audit power",
+  "via": "R72_protocol"
+}
