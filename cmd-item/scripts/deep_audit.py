@@ -8904,6 +8904,125 @@ ROUND_L43_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 44 — Loot table weight sanity (v1.39)
+# ============================================================
+def chk_L44_mob_weights_sum(items, *_):
+    t = _load_loot().get("mob_default", {})
+    rw = t.get("rarity_weights", {})
+    s = sum(rw.values())
+    return s == 10000, {"sum": s, "expected": 10000}
+
+
+def chk_L44_boss_weights_sum(items, *_):
+    t = _load_loot().get("boss_default", {})
+    rw = t.get("rarity_weights", {})
+    s = sum(rw.values())
+    return s == 10000, {"sum": s, "expected": 10000}
+
+
+def chk_L44_all_loot_weights_sum_10000(items, *_):
+    bad = []
+    for name, body in _load_loot().items():
+        rw = body.get("rarity_weights")
+        if rw:
+            s = sum(rw.values())
+            if s != 10000:
+                bad.append({"table": name, "sum": s})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"non_10k_sum": len(bad), "samples": bad[:5]}
+
+
+def chk_L44_loot_weights_descending_rarity(items, *_):
+    """Mob default: common > rare > epic > legendary > mythic."""
+    t = _load_loot().get("mob_default", {})
+    rw = t.get("rarity_weights", {})
+    order = ["common", "rare", "epic", "legendary", "mythic"]
+    seq = [rw.get(r, 0) for r in order if r in rw]
+    monotonic = all(seq[i] >= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"seq": seq}
+
+
+def chk_L44_no_drop_chance_le_50pct(items, *_):
+    """No mob/boss should have no_drop_chance > 50%."""
+    bad = []
+    for name, body in _load_loot().items():
+        nd = body.get("no_drop_chance_bp", 0)
+        if nd > 5000:
+            bad.append({"table": name, "nd_bp": nd})
+    return len(bad) == 0, {"high_no_drop": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L44_boss_drop_count_max_ge_2(items, *_):
+    t = _load_loot().get("boss_default", {})
+    mx = t.get("drop_count_max", 0)
+    return mx >= 2, {"max": mx}
+
+
+def chk_L44_mob_drop_count_min_zero_ok(items, *_):
+    t = _load_loot().get("mob_default", {})
+    mn = t.get("drop_count_min", -1)
+    return mn >= 0, {"min": mn}
+
+
+def chk_L44_set_piece_chance_low_for_mob(items, *_):
+    t = _load_loot().get("mob_default", {})
+    sp = t.get("set_piece_chance_bp", 0)
+    return sp <= 500, {"sp_bp": sp, "cap": 500}
+
+
+def chk_L44_loot_slot_pool_non_empty(items, *_):
+    bad = []
+    for name, body in _load_loot().items():
+        sp = body.get("slot_pool")
+        if sp == []:
+            bad.append(name)
+    return len(bad) == 0, {"empty_pool": bad}
+
+
+def chk_L44_loot_doc_locked_by_present(items, *_):
+    p = REPO_DIR / "cmd-item" / "data" / "loot_tables.json"
+    if not p.exists():
+        return False, {"missing": True}
+    raw = p.read_text(encoding="utf-8")
+    return "_locked_by" in raw, {"ok": True}
+
+
+ROUND_L44_CHECKS = {
+    2: [
+        ("L44_mob_weights_sum", "R45", chk_L44_mob_weights_sum),
+        ("L44_boss_weights_sum", "R45", chk_L44_boss_weights_sum),
+    ],
+    3: [
+        ("L44_all_loot_weights_sum_10000", "R45",
+         chk_L44_all_loot_weights_sum_10000),
+        ("L44_loot_weights_descending_rarity", "R45",
+         chk_L44_loot_weights_descending_rarity),
+    ],
+    4: [
+        ("L44_no_drop_chance_le_50pct", "R45",
+         chk_L44_no_drop_chance_le_50pct),
+        ("L44_boss_drop_count_max_ge_2", "R45",
+         chk_L44_boss_drop_count_max_ge_2),
+    ],
+    5: [
+        ("L44_mob_drop_count_min_zero_ok", "R45",
+         chk_L44_mob_drop_count_min_zero_ok),
+        ("L44_set_piece_chance_low_for_mob", "R45",
+         chk_L44_set_piece_chance_low_for_mob),
+    ],
+    6: [
+        ("L44_loot_slot_pool_non_empty", "R49",
+         chk_L44_loot_slot_pool_non_empty),
+        ("L44_loot_doc_locked_by_present", "R30",
+         chk_L44_loot_doc_locked_by_present),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -9078,6 +9197,8 @@ def main():
             active_checks.extend(ROUND_L42_CHECKS[r])
         if r in ROUND_L43_CHECKS:
             active_checks.extend(ROUND_L43_CHECKS[r])
+        if r in ROUND_L44_CHECKS:
+            active_checks.extend(ROUND_L44_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
