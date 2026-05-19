@@ -5033,6 +5033,148 @@ ROUND_L18_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 19 — Loot tables & drop simulation (NONADECA-DEEP, v1.20)
+# ============================================================
+def _load_loot():
+    p = REPO_DIR / "cmd-item" / "data" / "loot_tables.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8")).get("tables", {})
+
+
+def chk_L19_loot_tables_present(items, *_):
+    t = _load_loot()
+    required = ["mob_default", "boss_default"]
+    missing = [r for r in required if r not in t]
+    return len(missing) == 0, {"missing": missing, "loaded": list(t.keys())}
+
+
+def chk_L19_mob_mythic_rate_low(items, *_):
+    t = _load_loot().get("mob_default", {})
+    rw = t.get("rarity_weights", {})
+    tot = sum(rw.values()) or 1
+    myth_pct = (rw.get("mythic", 0) / tot) * 100
+    return myth_pct <= 1.0, {"mythic_pct": round(myth_pct, 4),
+                              "cap": 1.0}
+
+
+def chk_L19_boss_mythic_rate_low(items, *_):
+    t = _load_loot().get("boss_default", {})
+    rw = t.get("rarity_weights", {})
+    tot = sum(rw.values()) or 1
+    myth_pct = (rw.get("mythic", 0) / tot) * 100
+    return myth_pct <= 5.0, {"mythic_pct": round(myth_pct, 4),
+                              "cap": 5.0}
+
+
+def chk_L19_slot_pool_valid(items, *_):
+    bad = []
+    t = _load_loot()
+    for name, body in t.items():
+        sp = body.get("slot_pool")
+        if not sp:
+            continue
+        for s in sp:
+            if s not in ALL_VALID_SLOTS:
+                bad.append({"table": name, "slot": s})
+    return len(bad) == 0, {"bad_slot_in_pool": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L19_drop_sim_report_present(items, *_):
+    p = REPORTS / "drop_simulation_report.json"
+    return p.exists() and p.stat().st_size > 100, {"size": p.stat().st_size if p.exists() else 0}
+
+
+def chk_L19_drop_count_bounds_sane(items, *_):
+    bad = []
+    for name, body in _load_loot().items():
+        mn = body.get("drop_count_min", 0)
+        mx = body.get("drop_count_max", 0)
+        if mn < 0 or mx < mn:
+            bad.append({"table": name, "min": mn, "max": mx})
+    return len(bad) == 0, {"bad_bounds": len(bad), "samples": bad[:5]}
+
+
+def chk_L19_no_drop_chance_bp_bounds(items, *_):
+    bad = []
+    for name, body in _load_loot().items():
+        nd = body.get("no_drop_chance_bp", 0)
+        if nd < 0 or nd > 10000:
+            bad.append({"table": name, "nd_bp": nd})
+    return len(bad) == 0, {"out_of_bounds": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L19_set_piece_bp_bounds(items, *_):
+    bad = []
+    for name, body in _load_loot().items():
+        sp = body.get("set_piece_chance_bp", 0)
+        if sp < 0 or sp > 10000:
+            bad.append({"table": name, "sp_bp": sp})
+    return len(bad) == 0, {"out_of_bounds": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L19_rarity_weights_complete(items, *_):
+    bad = []
+    expected = {"common", "rare", "epic", "legendary", "mythic"}
+    for name, body in _load_loot().items():
+        rw = body.get("rarity_weights")
+        if rw is None:
+            continue
+        keys = set(rw.keys())
+        missing = expected - keys
+        if missing:
+            bad.append({"table": name, "missing": sorted(missing)})
+    return len(bad) == 0, {"incomplete": len(bad), "samples": bad[:5]}
+
+
+def chk_L19_seed_pattern_present(items, *_):
+    """loot_tables.json must declare its rng seed pattern."""
+    p = REPO_DIR / "cmd-item" / "data" / "loot_tables.json"
+    if not p.exists():
+        return False, {"missing_file": True}
+    raw = p.read_text(encoding="utf-8")
+    return "_seed_pattern" in raw, {"present": "_seed_pattern" in raw}
+
+
+ROUND_L19_CHECKS = {
+    2: [
+        ("L19_loot_tables_present", "R49",
+         chk_L19_loot_tables_present),
+        ("L19_mob_mythic_rate_low", "R45",
+         chk_L19_mob_mythic_rate_low),
+    ],
+    3: [
+        ("L19_boss_mythic_rate_low", "R45",
+         chk_L19_boss_mythic_rate_low),
+        ("L19_slot_pool_valid", "R49",
+         chk_L19_slot_pool_valid),
+    ],
+    4: [
+        ("L19_drop_sim_report_present", "R49",
+         chk_L19_drop_sim_report_present),
+        ("L19_drop_count_bounds_sane", "R45",
+         chk_L19_drop_count_bounds_sane),
+    ],
+    5: [
+        ("L19_no_drop_chance_bp_bounds", "R45",
+         chk_L19_no_drop_chance_bp_bounds),
+        ("L19_set_piece_bp_bounds", "R45",
+         chk_L19_set_piece_bp_bounds),
+    ],
+    6: [
+        ("L19_rarity_weights_complete", "R49",
+         chk_L19_rarity_weights_complete),
+        ("L19_seed_pattern_present", "R49",
+         chk_L19_seed_pattern_present),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -5081,6 +5223,17 @@ def main():
                 print(f"[warmup] gen failed: {warmup.stderr[:200]}")
             else:
                 print(f"[warmup] gen OK — fresh outputs ready")
+        # L19 dep: drop_simulation.py — gen drop_simulation_report.json
+        # so L19 check survives warmup re-run.
+        ds_path = Path(__file__).parent / "drop_simulation.py"
+        if ds_path.exists():
+            ds = subprocess.run([sys.executable, str(ds_path)],
+                                capture_output=True, text=True,
+                                encoding="utf-8", timeout=60)
+            if ds.returncode == 0:
+                print(f"[warmup] drop_sim OK")
+            else:
+                print(f"[warmup] drop_sim failed: {ds.stderr[:200]}")
     else:
         print(f"[warmup] SKIPPED (NO_WARMUP=1)")
 
@@ -5125,6 +5278,8 @@ def main():
             active_checks.extend(ROUND_L17_CHECKS[r])
         if r in ROUND_L18_CHECKS:
             active_checks.extend(ROUND_L18_CHECKS[r])
+        if r in ROUND_L19_CHECKS:
+            active_checks.extend(ROUND_L19_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()

@@ -1,0 +1,263 @@
+{
+  "tables_simulated": 7,
+  "results": [
+    {
+      "table": "mob_default",
+      "samples": 10000,
+      "no_drop_count": 3998,
+      "total_drops": 2993,
+      "drop_counts": {
+        "common": 1902,
+        "epic": 183,
+        "rare": 869,
+        "legendary": 36,
+        "mythic": 3
+      },
+      "expected_pct": {
+        "common": 0.65,
+        "rare": 0.28,
+        "epic": 0.06,
+        "legendary": 0.0095,
+        "mythic": 0.0005
+      },
+      "actual_pct": {
+        "common": 0.6354827931840962,
+        "epic": 0.06114266622118276,
+        "rare": 0.2903441363180755,
+        "legendary": 0.012028065486134313,
+        "mythic": 0.0010023387905111927
+      },
+      "max_deviation": 0.0145,
+      "pool_size_per_rarity": {
+        "common": 360,
+        "uncommon": 360,
+        "rare": 358,
+        "epic": 358,
+        "legendary": 357,
+        "mythic": 357
+      },
+      "slot_pool_count": 2150
+    },
+    {
+      "table": "boss_default",
+      "samples": 10000,
+      "no_drop_count": 0,
+      "total_drops": 24984,
+      "drop_counts": {
+        "rare": 11106,
+        "epic": 7574,
+        "common": 3710,
+        "mythic": 542,
+        "legendary": 2052
+      },
+      "expected_pct": {
+        "common": 0.15,
+        "rare": 0.45,
+        "epic": 0.3,
+        "legendary": 0.08,
+        "mythic": 0.02
+      },
+      "actual_pct": {
+        "rare": 0.44452449567723346,
+        "epic": 0.303154018571886,
+        "common": 0.14849503682356707,
+        "mythic": 0.02169388408581492,
+        "legendary": 0.08213256484149856
+      },
+      "max_deviation": 0.0055,
+      "pool_size_per_rarity": {
+        "common": 360,
+        "uncommon": 360,
+        "rare": 358,
+        "epic": 358,
+        "legendary": 357,
+        "mythic": 357
+      },
+      "slot_pool_count": 2150
+    },
+    {
+      "table": "boss_raid",
+      "samples": 10000,
+      "no_drop_count": 0,
+      "total_drops": 39950,
+      "drop_counts": {
+        "epic": 19801,
+        "legendary": 12055,
+        "rare": 6046,
+        "mythic": 2048
+      },
+      "expected_pct": {
+        "common": 0.0,
+        "rare": 0.15,
+        "epic": 0.5,
+        "legendary": 0.3,
+        "mythic": 0.05
+      },
+      "actual_pct": {
+        "epic": 0.4956445556946183,
+        "legendary": 0.30175219023779726,
+        "rare": 0.15133917396745933,
+        "mythic": 0.051264080100125155
+      },
+      "max_deviation": 0.0044,
+      "pool_size_per_rarity": {
+        "common": 360,
+        "uncommon": 360,
+        "rare": 358,
+        "epic": 358,
+        "legendary": 357,
+        "mythic": 357
+      },
+      "slot_pool_count": 2150
+    },
+    {
+      "table": "dungeon_normal",
+      "samples": 10000,
+      "no_drop_count": 0,
+      "total_drops": 10000,
+      "drop_counts": {
+        "rare": 4454,
+        "common": 4053,
+        "epic": 1286,
+        "legendary": 188,
+        "mythic": 19
+      },
+      "expected_pct": {
+        "common": 0.4,
+        "rare": 0.45,
+        "epic": 0.13,
+        "legendary": 0.018,
+        "mythic": 0.002
+      },
+      "actual_pct": {
+        "rare": 0.4454,
+        "common": 0.4053,
+        "epic": 0.1286,
+        "legendary": 0.0188,
+        "mythic": 0.0019
+      },
+      "max_deviation": 0.0053,
+      "pool_size_per_rarity": {
+        "common": 360,
+        "uncommon": 360,
+        "rare": 358,
+        "epic": 358,
+        "legendary": 357,
+        "mythic": 357
+      },
+      "slot_pool_count": 2150
+    },
+    {
+      "table": "dungeon_elite",
+      "samples": 10000,
+      "no_drop_count": 0,
+      "total_drops": 24984,
+      "drop_counts": {
+        "rare": 11146,
+        "epic": 8765,
+        "common": 2479,
+        "legendary": 2329,
+        "mythic": 265
+      },
+      "expected_pct": {
+        "common": 0.1,
+        "rare": 0.45,
+        "epic": 0.35,
+        "legendary": 0.09,
+        "mythic": 0.01
+      },
+      "actual_pct": {
+        "rare": 0.4461255203330131,
+        "epic": 0.35082452769772654,
+        "common": 0.09922350304194684,
+        "legendary": 0.09321966058277298,
+        "mythic": 0.010606788344540506
+      },
+      "max_deviation": 0.0039,
+      "pool_size_per_rarity": {
+        "common": 360,
+        "uncommon": 360,
+        "rare": 358,
+        "epic": 358,
+        "legendary": 357,
+        "mythic": 357
+      },
+      "slot_pool_count": 2150
+    },
+    {
+      "table": "companion_quest_reward",
+      "samples": 10000,
+      "no_drop_count": 0,
+      "total_drops": 10000,
+      "drop_counts": {
+        "rare": 5067,
+        "legendary": 958,
+        "epic": 3928,
+        "mythic": 47
+      },
+      "expected_pct": {
+        "common": 0.0,
+        "rare": 0.5,
+        "epic": 0.4,
+        "legendary": 0.095,
+        "mythic": 0.005
+      },
+      "actual_pct": {
+        "rare": 0.5067,
+        "legendary": 0.0958,
+        "epic": 0.3928,
+        "mythic": 0.0047
+      },
+      "max_deviation": 0.0072,
+      "pool_size_per_rarity": {
+        "common": 201,
+        "uncommon": 201,
+        "rare": 200,
+        "epic": 200,
+        "legendary": 199,
+        "mythic": 199
+      },
+      "slot_pool_count": 1200
+    },
+    {
+      "table": "event_lunar_new_year",
+      "samples": 10000,
+      "no_drop_count": 974,
+      "total_drops": 13510,
+      "drop_counts": {
+        "common": 6800,
+        "epic": 1641,
+        "rare": 4673,
+        "mythic": 64,
+        "legendary": 332
+      },
+      "expected_pct": {
+        "common": 0.5,
+        "rare": 0.35,
+        "epic": 0.12,
+        "legendary": 0.025,
+        "mythic": 0.005
+      },
+      "actual_pct": {
+        "common": 0.5033308660251665,
+        "epic": 0.12146558105107327,
+        "rare": 0.3458919319022946,
+        "mythic": 0.004737231680236861,
+        "legendary": 0.02457438934122872
+      },
+      "max_deviation": 0.0041,
+      "pool_size_per_rarity": {
+        "common": 360,
+        "uncommon": 360,
+        "rare": 358,
+        "epic": 358,
+        "legendary": 357,
+        "mythic": 357
+      },
+      "slot_pool_count": 2150
+    }
+  ],
+  "max_deviation_overall": 0.0145,
+  "acceptable_threshold": 0.02,
+  "all_within_threshold": true
+}
