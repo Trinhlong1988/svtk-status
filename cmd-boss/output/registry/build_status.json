@@ -1,21 +1,38 @@
 {
   "cmd": "BOSS",
-  "version": "1.0",
-  "timestamp": "20260519-144237",
+  "version": "1.4.0",
+  "ts": "20260519-160859",
+  "foundation_version": "v2.10.0",
+  "foundation_hash_crlf": "e54341efe284ae197a58116a94793c22c638230dc16e11990ec6f38e0a429d2e",
   "total_count": 1200,
-  "existing_count": 13,
-  "new_count": 1187,
-  "target_count": 1200,
-  "distribution_target": {
+  "named_count": 100,
+  "generic_count": 1100,
+  "by_tier": {
     "normal": 600,
     "elite": 300,
     "raid": 200,
     "world": 100
   },
-  "distribution_actual": {
-    "normal": 600,
-    "elite": 300,
-    "raid": 200,
-    "world": 100
+  "by_path": {
+    "none": 1172,
+    "BACH": 4,
+    "HAC": 24
+  },
+  "by_element": {
+    "THUY": 104,
+    "HOA": 98,
+    "MOC": 178,
+    "KIM": 372,
+    "THO": 148,
+    "TAM": 300
+  },
+  "by_faction": {
+    "viet_anhhung": 41,
+    "truyenthuyet": 10,
+    "yeumotruyen": 22,
+    "ngoai_xam": 13,
+    "thap_nhi_su_quan": 10,
+    "thoan_ngoi": 4,
+    "generic": 1100
   }
 }

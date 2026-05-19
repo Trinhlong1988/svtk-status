@@ -1,0 +1,23 @@
+{
+  "fix_id": "boss_v1.4_R84_R85_R86_R87",
+  "fixed_by": "boss",
+  "result": "PASS",
+  "timestamp": "20260519-160934",
+  "evidence": {
+    "foundation_version": "v2.10.0",
+    "foundation_v2_10_hash_crlf": "e54341efe284ae197a58116a94793c22c638230dc16e11990ec6f38e0a429d2e",
+    "foundation_v2_8_unchanged": true,
+    "rules_applied": ["R84", "R85", "R85.1", "R86"],
+    "totals": {"total": 1200, "named": 100, "generic": 1100},
+    "by_tier": {"normal": 600, "elite": 300, "raid": 200, "world": 100},
+    "by_path_R86": {"none": 1172, "BACH": 4, "HAC": 24},
+    "audit": {
+      "self_validate": "23/23 = 1.0",
+      "deployed_tests": "26/26",
+      "independent_audit": "82/82 = 1.0"
+    },
+    "branch": "staging-boss-v14-20260519-160934",
+    "parent_branch": "foundation-v2-10-extension",
+    "supersedes_commits": ["2bad12811cc46b81dcbc10b9b9a55240e6599004 (v1.0)", "4e2a7a5 (v1.1)"]
+  }
+}
