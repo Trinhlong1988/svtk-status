@@ -1,0 +1,31 @@
+{
+  "severity": "INFO",
+  "issue_id": "r10_8_mode_canonical_decision",
+  "cmd_origin": "QA_CONTENT",
+  "target_worker": "item",
+  "timestamp": "20260519-153344",
+  "decision_made_by": "Mr.Long 19/5",
+  "supersedes_alerts": [
+    "HIGH-item_anti_snowball_r10_8_violation-20260519-150913.json",
+    "HIGH-item_anti_snowball_r10_8_scope_clarified-{ts}.json"
+  ],
+  "rule_canonical": {
+    "R10.8 mode": "PER_STEP",
+    "definition": "max(stats[tier_n+1]) / max(stats[tier_n]) ≤ 2.5 cho mỗi cặp rarity kế nhau",
+    "rarity_ladder": [
+      "common",
+      "uncommon",
+      "rare",
+      "epic",
+      "legendary",
+      "mythic"
+    ],
+    "rejected_alternative": "GLOBAL mode (max(any_tier) / max(common) ≤ 2.5) — rejected vì mythic intentional > 2.5x cho monetize Phương án C"
+  },
+  "verdict_update": {
+    "previous": "FAIL — 2 outliers epic.sat_luc + mythic.phap_luc",
+    "current": "PASS — per-step CLEAN (Run 7 commit eef03b4 branch staging-qa_content-20260519-153252)",
+    "cmd_item_action_needed": "None — không cần nerf 2 outliers"
+  },
+  "reasoning": "2 outliers (Kiếm Bạch Đằng epic sat_luc 80, Nhẫn Long Hứa mythic phap_luc 60) thuộc tier ladder smooth scaling — mỗi bậc rarity kế nhau đều ≤ 2.5x. Mythic mạnh 4x common là DESIGN INTENTIONAL cho monetize."
+}
