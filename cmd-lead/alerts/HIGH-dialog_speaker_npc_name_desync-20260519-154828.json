@@ -1,0 +1,48 @@
+{
+  "severity": "HIGH",
+  "issue_id": "dialog_speaker_npc_name_desync",
+  "target_worker": "dialog",
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-154828",
+  "finding": "46225/50000 dialogs (92.5%) có speaker_name không khớp NPC.name (cùng speaker_id)",
+  "evidence": {
+    "mismatch_count": 46225,
+    "total_dialogs": 50000,
+    "percent": 92.5,
+    "sample_mismatches": [
+      {
+        "dialog_i": 1,
+        "speaker_id": 6275,
+        "dialog_name": "Triệu Bích Hồng",
+        "npc_name": "Hà Văn Khải"
+      },
+      {
+        "dialog_i": 2,
+        "speaker_id": 7473,
+        "dialog_name": "Giác Minh Tuấn",
+        "npc_name": "Đàm Hoa"
+      },
+      {
+        "dialog_i": 3,
+        "speaker_id": 4244,
+        "dialog_name": "Đinh Khoa",
+        "npc_name": "Dương Anh"
+      },
+      {
+        "dialog_i": 5,
+        "speaker_id": 8525,
+        "dialog_name": "Đinh Bích Trâm",
+        "npc_name": "Ngô Thúy"
+      },
+      {
+        "dialog_i": 6,
+        "speaker_id": 6154,
+        "dialog_name": "Huyền Hữu Tâm",
+        "npc_name": "Chử Đức Bảo"
+      }
+    ],
+    "pattern": "dialog.speaker_name = random Vietnamese name, dialog.speaker_id = unrelated NPC._index"
+  },
+  "fix_proposal": "CMD_DIALOG sync speaker_name từ NPC registry: for each dialog, lookup NPC._index = speaker_id → set speaker_name = NPC.name. Hoặc nếu speaker là non-NPC entity, đổi speaker_id sang scheme khác (vd negative for NPC-less).",
+  "rule_violated": "R47 cross-reference consistency (Foundation v2.8.0)"
+}

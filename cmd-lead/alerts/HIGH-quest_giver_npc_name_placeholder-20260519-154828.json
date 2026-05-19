@@ -1,0 +1,49 @@
+{
+  "severity": "HIGH",
+  "issue_id": "quest_giver_npc_name_placeholder",
+  "target_worker": "quest",
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-154828",
+  "finding": "2548/3000 quests (84.9%) dùng dummy \"NPC_{id}\" template thay vì NPC.name thật",
+  "evidence": {
+    "placeholder_count": 2548,
+    "real_mismatch_count": 0,
+    "total_quests": 3000,
+    "percent": 84.9,
+    "sample_mismatches": [
+      {
+        "quest_id": 175,
+        "giver_id": 7323,
+        "quest_name": "NPC_7323",
+        "npc_name": "An Đức"
+      },
+      {
+        "quest_id": 176,
+        "giver_id": 7359,
+        "quest_name": "NPC_7359",
+        "npc_name": "Phạm Đức Tâm"
+      },
+      {
+        "quest_id": 177,
+        "giver_id": 7410,
+        "quest_name": "NPC_7410",
+        "npc_name": "Lạc Thư"
+      },
+      {
+        "quest_id": 178,
+        "giver_id": 7455,
+        "quest_name": "NPC_7455",
+        "npc_name": "Trịnh Quang Vinh"
+      },
+      {
+        "quest_id": 179,
+        "giver_id": 7593,
+        "quest_name": "NPC_7593",
+        "npc_name": "Tô Hữu Vinh"
+      }
+    ],
+    "pattern": "quest.giver_npc_name = f\"NPC_{giver_npc_id}\" — placeholder template"
+  },
+  "fix_proposal": "CMD_QUEST sync giver_npc_name từ NPC registry: for each quest, lookup NPC._index → set giver_npc_name = NPC.name",
+  "rule_violated": "R47 cross-reference consistency (Foundation v2.8.0)"
+}

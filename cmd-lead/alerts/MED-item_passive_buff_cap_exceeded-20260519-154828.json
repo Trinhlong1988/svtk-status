@@ -1,0 +1,34 @@
+{
+  "severity": "MED",
+  "issue_id": "item_passive_buff_cap_exceeded",
+  "target_worker": "item",
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-154828",
+  "finding": "1 mythic item có passive utility vượt 5% cap (R10.8 secondary)",
+  "evidence": {
+    "cap_bp": 500,
+    "cap_pct": 5,
+    "violators": [
+      {
+        "id": "item_kim_nhan_long_hua",
+        "name_vi": "Nhẫn Long Hứa",
+        "passive_type": "crit_after_burn",
+        "value_bp": 1500,
+        "cap_bp": 500,
+        "over_by_bp": 1000
+      }
+    ],
+    "utility_buff_types_checked": [
+      "aura_atk_bp",
+      "aura_def_bp",
+      "cooldown_reduction_bp",
+      "crit_after_burn",
+      "faction_buff_bp",
+      "movement_speed_bp",
+      "set_bonus_pct_bp"
+    ]
+  },
+  "fix_proposal": "Nẫn Long Hứa.passives[crit_after_burn] = 1500bp (15%) — nerf về 500bp (5%) HOẶC reclassify crit_after_burn từ utility → damage_modifier (skip cap)",
+  "rule_violated": "R10.8 secondary cap (5% niche utility)",
+  "qa_note": "Mr.Long có thể quyết utility buff cap 5% chỉ apply cho non-mythic, hoặc reclassify crit_after_burn"
+}

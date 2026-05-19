@@ -1,0 +1,44 @@
+{
+  "severity": "INFO",
+  "issue_id": "snowball_trend_mythic_vs_common",
+  "target_worker": "item",
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-154828",
+  "finding": "INFO log: per-step CLEAN (canonical per Mr.Long 19/5) nhưng global mythic/common ratio summary để track snowball trend",
+  "evidence": {
+    "rule_canonical": "PER_STEP (NO FAIL on global)",
+    "trend_table": {
+      "hp": {
+        "common_max": 200,
+        "mythic_max": 500,
+        "ratio_mythic_over_common": 2.5
+      },
+      "defense": {
+        "common_max": 25,
+        "mythic_max": 62,
+        "ratio_mythic_over_common": 2.48
+      },
+      "heal_amount": {
+        "common_max": 50,
+        "mythic_max": 125,
+        "ratio_mythic_over_common": 2.5
+      },
+      "sat_luc": {
+        "common_max": 30,
+        "mythic_max": 75,
+        "ratio_mythic_over_common": 2.5
+      },
+      "agility": {
+        "common_max": 10,
+        "mythic_max": 25,
+        "ratio_mythic_over_common": 2.5
+      },
+      "phap_luc": {
+        "common_max": 15,
+        "mythic_max": 60,
+        "ratio_mythic_over_common": 4.0
+      }
+    },
+    "note": "5/6 stats ratio 2.5 (cap edge), phap_luc 4.0x intentional cho monetize Phương án C"
+  }
+}
