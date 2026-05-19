@@ -19,9 +19,10 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 61-70 | 2026-05-19 | 45→50 | 10 | [AUDIT_REPORT_ROUND_61_70_20260519-015224.md](status/AUDIT_REPORT_ROUND_61_70_20260519-015224.md) |
 | 71-80 | 2026-05-19 | 50→55 | 10 | [AUDIT_REPORT_ROUND_71_80_20260519-021300.md](status/AUDIT_REPORT_ROUND_71_80_20260519-021300.md) |
 | 81-90 | 2026-05-19 | 55→60 | 10 | [AUDIT_REPORT_ROUND_81_90_20260519-100252.md](status/AUDIT_REPORT_ROUND_81_90_20260519-100252.md) |
-| **91-100** | **2026-05-19** | **60→65** | **10** | [AUDIT_REPORT_ROUND_91_100_20260519-105507.md](status/AUDIT_REPORT_ROUND_91_100_20260519-105507.md) |
+| 91-100 | 2026-05-19 | 60→65 | 10 | [AUDIT_REPORT_ROUND_91_100_20260519-105507.md](status/AUDIT_REPORT_ROUND_91_100_20260519-105507.md) |
+| **101-110** | **2026-05-19** | **65→70** | **10** | [AUDIT_REPORT_ROUND_101_110_20260519-112235.md](status/AUDIT_REPORT_ROUND_101_110_20260519-112235.md) |
 
-**Cumulative total: 100 hidden bugs fixed.**
+**Cumulative total: 110 hidden bugs fixed.**
 
 ---
 
@@ -57,6 +58,9 @@ pet_master pettable=True coherence (0/389 pre-fix → 100% post-fix), transactio
 ### Round 91-100: validator hardening + flag/content INFO alerts
 Protagonist dual flag INFO alert (is_protagonist+is_player both True trên Trần Long — v1 single-hero intentional), main-era gender gap INFO alert (Trần 7/0, Nguyễn 5/0, Lê 5/1, Tây Sơn 5/1 male/female historical — content enrich next round), validator R92 sceneId gen range [1, 7817], R93 skill_ids range [1, 165], R94 ai_behavior valid set (8 enum), R95 gen tier→level adherence per NPC_TIER_RANGE, R96 registry split sum (main+side+lore+gen=full=10000), AUDIT_INDEX 91-100 row + alerts table sync (18 cumulative alerts), README cumul 100 + 65/65, EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_91_100 wired.
 
+### Round 101-110: integrity invariants + ecosystem schema validation
+Validator R101 sha256 sidecar match (5 registry files), R102 protagonist idx=1 must appear in npc_main split, R103 SQL CHECK element + npc_type allowed sets must contain all JSON values (no DDL drift), R104 alerts JSON schema 5 required fields (severity/issue_id/evidence/cmd_origin/timestamp), R105 recolor_index == palette_seed invariant (R21 alias verified), R106 LOW INFO alert npc_existing_era_fprefix_dominance (existing 40.6% f1 + 27.6% g1 dominate, only 16.7% main era — R71.1 immutable enrich next regen), validator coverage matrix section in AUDIT_INDEX, AUDIT_INDEX 101-110 row + alerts table sync (19 cumulative alerts), README cumul 110 + 70/70, EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_101_110 wired.
+
 ---
 
 ## Active ex-side alerts (R71.1 immutable — source NPC_438.jsonl untouched)
@@ -79,10 +83,29 @@ Protagonist dual flag INFO alert (is_protagonist+is_player both True trên Trầ
 | LOW | npc_existing_noncombat_skills | 327 |
 | LOW | npc_existing_mentor_stats_anomaly | 2 |
 | LOW | npc_protagonist_stats_anomaly | 1 |
-| LOW | npc_protagonist_dual_flag | 1 (NEW Round 91-100) |
-| LOW | npc_main_era_gender_gap | 2 eras zero-female (NEW Round 91-100) |
+| LOW | npc_protagonist_dual_flag | 1 |
+| LOW | npc_main_era_gender_gap | 2 eras zero-female |
+| LOW | npc_existing_era_fprefix_dominance | 68.2% combined (NEW Round 101-110) |
 
-**18 cumulative alerts** (2 new Round 91-100).
+**19 cumulative alerts** (1 new Round 101-110).
+
+---
+
+## Validator coverage matrix (70 checks)
+
+| Area | Check range | Notes |
+|---|---|---|
+| Foundation (schema/UUID/spawn/class/skill) | 1-15 | R1-R10 |
+| Identity (protagonist/mentor/diacritics/era) | 16-25 | R11-R20 |
+| Brief compliance + tier 9 + lifecycle | 26-30 | R21-R30 |
+| Schema + dedup + gender + bg | 31-35 | R31-R40 |
+| Existing flag + systemic + sweep | 36-40 | R41-R50 |
+| Canonical refs + archive cap | 41-45 | R51-R60 |
+| Epithet semantic + ecosystem + doc freshness | 46-50 | R61-R70 |
+| Determinism + schema completeness + name diversity | 51-55 | R71-R80 |
+| Type↔flag + content gap + element skew | 56-60 | R81-R90 |
+| Range + enum + tier-level + split sum | 61-65 | R91-R100 |
+| Integrity invariants + ecosystem schema | 66-70 | R101-R110 |
 
 ---
 

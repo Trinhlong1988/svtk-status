@@ -25,5 +25,5 @@
     "remediation": "Generator currently fills only 5 main eras + procedural f1/f2/f3/f4/f5/g1. Adding extra-era NPCs requires per-era key_figures + name pool curation. Defer to future round when content data available."
   },
   "cmd_origin": "cmd-npc",
-  "timestamp": "20260519-105507"
+  "timestamp": "20260519-112235"
 }
