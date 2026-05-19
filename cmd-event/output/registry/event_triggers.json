@@ -6,7 +6,9 @@
       "category": "festival",
       "era": "ly",
       "condition": {
-        "recurrence": "tbd"
+        "recurrence": "tbd",
+        "lunar_month": 1,
+        "lunar_day": 15
       },
       "duration_min": 180,
       "reward_tier": "tier_3"
@@ -17,7 +19,9 @@
       "category": "festival",
       "era": "tran",
       "condition": {
-        "recurrence": "tbd"
+        "recurrence": "tbd",
+        "lunar_month": 2,
+        "lunar_day": 15
       },
       "duration_min": 180,
       "reward_tier": "tier_3"
@@ -55,7 +59,7 @@
         "recurrence": "annual"
       },
       "duration_min": 240,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 12,
@@ -68,7 +72,7 @@
         "recurrence": "annual"
       },
       "duration_min": 480,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 13,
@@ -81,7 +85,7 @@
         "recurrence": "annual"
       },
       "duration_min": 180,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 14,
@@ -120,7 +124,7 @@
         "recurrence": "annual"
       },
       "duration_min": 60,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 17,
@@ -146,7 +150,7 @@
         "recurrence": "annual"
       },
       "duration_min": 480,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 19,
@@ -172,7 +176,7 @@
         "recurrence": "annual"
       },
       "duration_min": 480,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 21,
@@ -198,7 +202,7 @@
         "recurrence": "annual"
       },
       "duration_min": 60,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 23,
@@ -237,7 +241,7 @@
         "recurrence": "annual"
       },
       "duration_min": 480,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 26,
@@ -276,7 +280,7 @@
         "recurrence": "annual"
       },
       "duration_min": 360,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 29,
@@ -289,7 +293,7 @@
         "recurrence": "annual"
       },
       "duration_min": 180,
-      "reward_tier": "tier_2"
+      "reward_tier": "tier_1"
     },
     {
       "event_id": 30,
@@ -3267,7 +3271,7 @@
       "reward_tier": "tier_5"
     }
   ],
-  "respawn_24h": [
+  "server_time": [
     {
       "event_id": 5,
       "name": "Thần Long thức tỉnh",
@@ -3289,9 +3293,7 @@
       },
       "duration_min": 120,
       "reward_tier": "tier_3"
-    }
-  ],
-  "manual": [
+    },
     {
       "event_id": 9,
       "name": "Khởi nghĩa Tây Sơn — sự kiện 7 ngày",
@@ -3302,22 +3304,7 @@
       },
       "duration_min": 10080,
       "reward_tier": "tier_3"
-    }
-  ],
-  "quest_complete": [
-    {
-      "event_id": 10,
-      "name": "Bình Ngô đại cáo — Hậu sự kí ức",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "recurrence": "tbd"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    }
-  ],
-  "server_time": [
+    },
     {
       "event_id": 257,
       "name": "Thế giới Boss Bạch Hổ Tản Viên Sơn Vương",
@@ -3893,6 +3880,1207 @@
       },
       "duration_min": 90,
       "reward_tier": "tier_5"
+    }
+  ],
+  "quest_completion": [
+    {
+      "event_id": 10,
+      "name": "Bình Ngô đại cáo — Hậu sự kí ức",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "recurrence": "tbd"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 502,
+      "name": "Lý Công Uẩn Dời Đô Về Thăng Long",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 503,
+      "name": "Trần Hưng Đạo Ba Lần Phá Nguyên",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 504,
+      "name": "Lê Lợi Lam Sơn Khởi Nghĩa",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 505,
+      "name": "Ba Anh Em Tây Sơn Khởi Nghĩa",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 506,
+      "name": "Nguyễn Ánh Lên Ngôi Gia Long",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 507,
+      "name": "Lý Thường Kiệt Phá Tống Tại Như Nguyệt",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 508,
+      "name": "Trần Quốc Toản Bóp Nát Quả Cam",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 509,
+      "name": "Nguyễn Trãi Soạn Bình Ngô Đại Cáo",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 510,
+      "name": "Nguyễn Huệ Lên Ngôi Quang Trung",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 511,
+      "name": "Gia Long Thống Nhất Sơn Hà",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 512,
+      "name": "Vạn Hạnh Thiền Sư Tiên Tri",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 513,
+      "name": "Yết Kiêu Đục Thuyền Giặc",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 514,
+      "name": "Lê Lai Cứu Chúa Liều Thân",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 515,
+      "name": "Quang Trung Đại Phá Quân Thanh",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 516,
+      "name": "Minh Mạng Cải Cách Hành Chính",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 517,
+      "name": "Lý Thái Tổ Lập Triều Lý",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 518,
+      "name": "Trần Nhân Tông Khai Sáng Trúc Lâm",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 519,
+      "name": "Liễu Thăng Bị Chém Tại Chi Lăng",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 520,
+      "name": "Đống Đa Mồng Năm Tết Kỷ Dậu",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 521,
+      "name": "Trương Định Khởi Nghĩa Gò Công",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 522,
+      "name": "Lý Nhân Tông Tự Học Văn Võ",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 523,
+      "name": "Hịch Tướng Sĩ Vạn Kiếp",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 524,
+      "name": "Vương Thông Đầu Hàng Đông Đô",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 525,
+      "name": "Ngọc Hân Công Chúa Khóc Chồng",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 526,
+      "name": "Phan Đình Phùng Cần Vương Hương Khê",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 527,
+      "name": "Mạc Đĩnh Chi Đối Đáp Triều Tống",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 528,
+      "name": "Hội Nghị Diên Hồng Quyết Tử",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 529,
+      "name": "Lê Thái Tổ Lên Ngôi Hoàng Đế",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 530,
+      "name": "Trần Quang Diệu Trung Thần Tử Tiết",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 531,
+      "name": "Hoàng Diệu Tự Vẫn Bảo Vệ Hà Thành",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 532,
+      "name": "Lý Anh Tông Định Quốc Hiệu Đại Việt",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 533,
+      "name": "Trần Bình Trọng Thà Làm Quỷ Nước Nam",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 534,
+      "name": "Lê Thánh Tông Mở Mang Bờ Cõi",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 535,
+      "name": "Bùi Thị Xuân Nữ Tướng Anh Hùng",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 536,
+      "name": "Nguyễn Tri Phương Tử Tiết Đại Đồn",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 537,
+      "name": "Tô Hiến Thành Trị Quốc",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 538,
+      "name": "Phạm Ngũ Lão Đan Sọt Giữa Đường",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 539,
+      "name": "Nguyễn Trãi Án Lệ Chi Viên",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 540,
+      "name": "Nguyễn Nhạc Lên Ngôi Trung Ương Hoàng Đế",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 541,
+      "name": "Cao Bá Quát Khởi Nghĩa Mỹ Lương",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 542,
+      "name": "Lý Cao Tông Suy Tàn Triều Lý",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 543,
+      "name": "Bạch Đằng Giang Khải Hoàn Lần Ba",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 544,
+      "name": "Mạc Đăng Dung Soán Ngôi Lê",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 545,
+      "name": "Tây Sơn Sụp Đổ Nguyễn Ánh Khôi Phục",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 546,
+      "name": "Hàm Nghi Xuất Bôn Ban Chiếu Cần Vương",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 547,
+      "name": "Lý Chiêu Hoàng Nhường Ngôi Trần Cảnh",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 548,
+      "name": "Hồ Quý Ly Lật Đổ Nhà Trần",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 549,
+      "name": "Trịnh Nguyễn Phân Tranh",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 550,
+      "name": "Quang Toản Bị Bắt Tử Tiết",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 551,
+      "name": "Phan Bội Châu Sáng Lập Duy Tân Hội",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 552,
+      "name": "Lý Công Uẩn Dời Đô Về Thăng Long hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 553,
+      "name": "Trần Hưng Đạo Ba Lần Phá Nguyên hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 554,
+      "name": "Lê Lợi Lam Sơn Khởi Nghĩa hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 555,
+      "name": "Ba Anh Em Tây Sơn Khởi Nghĩa hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 556,
+      "name": "Nguyễn Ánh Lên Ngôi Gia Long hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 557,
+      "name": "Lý Thường Kiệt Phá Tống Tại Như Nguyệt hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 558,
+      "name": "Trần Quốc Toản Bóp Nát Quả Cam hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 559,
+      "name": "Nguyễn Trãi Soạn Bình Ngô Đại Cáo hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 560,
+      "name": "Nguyễn Huệ Lên Ngôi Quang Trung hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 561,
+      "name": "Gia Long Thống Nhất Sơn Hà hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 562,
+      "name": "Vạn Hạnh Thiền Sư Tiên Tri hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 563,
+      "name": "Yết Kiêu Đục Thuyền Giặc hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 564,
+      "name": "Lê Lai Cứu Chúa Liều Thân hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 565,
+      "name": "Quang Trung Đại Phá Quân Thanh hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 566,
+      "name": "Minh Mạng Cải Cách Hành Chính hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 567,
+      "name": "Lý Thái Tổ Lập Triều Lý hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 568,
+      "name": "Trần Nhân Tông Khai Sáng Trúc Lâm hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 569,
+      "name": "Liễu Thăng Bị Chém Tại Chi Lăng hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 570,
+      "name": "Đống Đa Mồng Năm Tết Kỷ Dậu hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 571,
+      "name": "Trương Định Khởi Nghĩa Gò Công hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 572,
+      "name": "Lý Nhân Tông Tự Học Văn Võ hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 573,
+      "name": "Hịch Tướng Sĩ Vạn Kiếp hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 574,
+      "name": "Vương Thông Đầu Hàng Đông Đô hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 575,
+      "name": "Ngọc Hân Công Chúa Khóc Chồng hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 576,
+      "name": "Phan Đình Phùng Cần Vương Hương Khê hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 577,
+      "name": "Mạc Đĩnh Chi Đối Đáp Triều Tống hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 578,
+      "name": "Hội Nghị Diên Hồng Quyết Tử hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 579,
+      "name": "Lê Thái Tổ Lên Ngôi Hoàng Đế hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 580,
+      "name": "Trần Quang Diệu Trung Thần Tử Tiết hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 581,
+      "name": "Hoàng Diệu Tự Vẫn Bảo Vệ Hà Thành hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 582,
+      "name": "Lý Anh Tông Định Quốc Hiệu Đại Việt hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 583,
+      "name": "Trần Bình Trọng Thà Làm Quỷ Nước Nam hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 584,
+      "name": "Lê Thánh Tông Mở Mang Bờ Cõi hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 585,
+      "name": "Bùi Thị Xuân Nữ Tướng Anh Hùng hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 586,
+      "name": "Nguyễn Tri Phương Tử Tiết Đại Đồn hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 587,
+      "name": "Tô Hiến Thành Trị Quốc hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 588,
+      "name": "Phạm Ngũ Lão Đan Sọt Giữa Đường hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 589,
+      "name": "Nguyễn Trãi Án Lệ Chi Viên hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 590,
+      "name": "Nguyễn Nhạc Lên Ngôi Trung Ương Hoàng Đế hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 591,
+      "name": "Cao Bá Quát Khởi Nghĩa Mỹ Lương hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 592,
+      "name": "Lý Cao Tông Suy Tàn Triều Lý hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 593,
+      "name": "Bạch Đằng Giang Khải Hoàn Lần Ba hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 594,
+      "name": "Mạc Đăng Dung Soán Ngôi Lê hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 595,
+      "name": "Tây Sơn Sụp Đổ Nguyễn Ánh Khôi Phục hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 596,
+      "name": "Hàm Nghi Xuất Bôn Ban Chiếu Cần Vương hồi 2",
+      "category": "lore",
+      "era": "nguyen",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_4"
+    },
+    {
+      "event_id": 597,
+      "name": "Lý Chiêu Hoàng Nhường Ngôi Trần Cảnh hồi 2",
+      "category": "lore",
+      "era": "ly",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 45,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 598,
+      "name": "Hồ Quý Ly Lật Đổ Nhà Trần hồi 2",
+      "category": "lore",
+      "era": "tran",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_5"
+    },
+    {
+      "event_id": 599,
+      "name": "Trịnh Nguyễn Phân Tranh hồi 2",
+      "category": "lore",
+      "era": "le",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 60,
+      "reward_tier": "tier_3"
+    },
+    {
+      "event_id": 600,
+      "name": "Quang Toản Bị Bắt Tử Tiết hồi 2",
+      "category": "lore",
+      "era": "tay_son",
+      "condition": {
+        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
+        "recurrence": "one_off_per_account"
+      },
+      "duration_min": 30,
+      "reward_tier": "tier_3"
     }
   ],
   "monthly": [
@@ -6652,1196 +7840,6 @@
         "recurrence": "one_off"
       },
       "duration_min": 60,
-      "reward_tier": "tier_3"
-    }
-  ],
-  "quest_completion": [
-    {
-      "event_id": 502,
-      "name": "Lý Công Uẩn Dời Đô Về Thăng Long",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 503,
-      "name": "Trần Hưng Đạo Ba Lần Phá Nguyên",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 504,
-      "name": "Lê Lợi Lam Sơn Khởi Nghĩa",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 505,
-      "name": "Ba Anh Em Tây Sơn Khởi Nghĩa",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 506,
-      "name": "Nguyễn Ánh Lên Ngôi Gia Long",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 507,
-      "name": "Lý Thường Kiệt Phá Tống Tại Như Nguyệt",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 508,
-      "name": "Trần Quốc Toản Bóp Nát Quả Cam",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 509,
-      "name": "Nguyễn Trãi Soạn Bình Ngô Đại Cáo",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 510,
-      "name": "Nguyễn Huệ Lên Ngôi Quang Trung",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 511,
-      "name": "Gia Long Thống Nhất Sơn Hà",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 512,
-      "name": "Vạn Hạnh Thiền Sư Tiên Tri",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 513,
-      "name": "Yết Kiêu Đục Thuyền Giặc",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 514,
-      "name": "Lê Lai Cứu Chúa Liều Thân",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 515,
-      "name": "Quang Trung Đại Phá Quân Thanh",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 516,
-      "name": "Minh Mạng Cải Cách Hành Chính",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 517,
-      "name": "Lý Thái Tổ Lập Triều Lý",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 518,
-      "name": "Trần Nhân Tông Khai Sáng Trúc Lâm",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 519,
-      "name": "Liễu Thăng Bị Chém Tại Chi Lăng",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 520,
-      "name": "Đống Đa Mồng Năm Tết Kỷ Dậu",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 521,
-      "name": "Trương Định Khởi Nghĩa Gò Công",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 522,
-      "name": "Lý Nhân Tông Tự Học Văn Võ",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 523,
-      "name": "Hịch Tướng Sĩ Vạn Kiếp",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 524,
-      "name": "Vương Thông Đầu Hàng Đông Đô",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 525,
-      "name": "Ngọc Hân Công Chúa Khóc Chồng",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 526,
-      "name": "Phan Đình Phùng Cần Vương Hương Khê",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 527,
-      "name": "Mạc Đĩnh Chi Đối Đáp Triều Tống",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 528,
-      "name": "Hội Nghị Diên Hồng Quyết Tử",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 529,
-      "name": "Lê Thái Tổ Lên Ngôi Hoàng Đế",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 530,
-      "name": "Trần Quang Diệu Trung Thần Tử Tiết",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 531,
-      "name": "Hoàng Diệu Tự Vẫn Bảo Vệ Hà Thành",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 532,
-      "name": "Lý Anh Tông Định Quốc Hiệu Đại Việt",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 533,
-      "name": "Trần Bình Trọng Thà Làm Quỷ Nước Nam",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 534,
-      "name": "Lê Thánh Tông Mở Mang Bờ Cõi",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 535,
-      "name": "Bùi Thị Xuân Nữ Tướng Anh Hùng",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 536,
-      "name": "Nguyễn Tri Phương Tử Tiết Đại Đồn",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 537,
-      "name": "Tô Hiến Thành Trị Quốc",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 538,
-      "name": "Phạm Ngũ Lão Đan Sọt Giữa Đường",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 539,
-      "name": "Nguyễn Trãi Án Lệ Chi Viên",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 540,
-      "name": "Nguyễn Nhạc Lên Ngôi Trung Ương Hoàng Đế",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 541,
-      "name": "Cao Bá Quát Khởi Nghĩa Mỹ Lương",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 542,
-      "name": "Lý Cao Tông Suy Tàn Triều Lý",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 543,
-      "name": "Bạch Đằng Giang Khải Hoàn Lần Ba",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 544,
-      "name": "Mạc Đăng Dung Soán Ngôi Lê",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 545,
-      "name": "Tây Sơn Sụp Đổ Nguyễn Ánh Khôi Phục",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 546,
-      "name": "Hàm Nghi Xuất Bôn Ban Chiếu Cần Vương",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 547,
-      "name": "Lý Chiêu Hoàng Nhường Ngôi Trần Cảnh",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 548,
-      "name": "Hồ Quý Ly Lật Đổ Nhà Trần",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 549,
-      "name": "Trịnh Nguyễn Phân Tranh",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 550,
-      "name": "Quang Toản Bị Bắt Tử Tiết",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 551,
-      "name": "Phan Bội Châu Sáng Lập Duy Tân Hội",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 552,
-      "name": "Lý Công Uẩn Dời Đô Về Thăng Long hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 553,
-      "name": "Trần Hưng Đạo Ba Lần Phá Nguyên hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 554,
-      "name": "Lê Lợi Lam Sơn Khởi Nghĩa hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 555,
-      "name": "Ba Anh Em Tây Sơn Khởi Nghĩa hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 556,
-      "name": "Nguyễn Ánh Lên Ngôi Gia Long hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 557,
-      "name": "Lý Thường Kiệt Phá Tống Tại Như Nguyệt hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 558,
-      "name": "Trần Quốc Toản Bóp Nát Quả Cam hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 559,
-      "name": "Nguyễn Trãi Soạn Bình Ngô Đại Cáo hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 560,
-      "name": "Nguyễn Huệ Lên Ngôi Quang Trung hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 561,
-      "name": "Gia Long Thống Nhất Sơn Hà hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 562,
-      "name": "Vạn Hạnh Thiền Sư Tiên Tri hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 563,
-      "name": "Yết Kiêu Đục Thuyền Giặc hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 564,
-      "name": "Lê Lai Cứu Chúa Liều Thân hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 565,
-      "name": "Quang Trung Đại Phá Quân Thanh hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 566,
-      "name": "Minh Mạng Cải Cách Hành Chính hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 567,
-      "name": "Lý Thái Tổ Lập Triều Lý hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 568,
-      "name": "Trần Nhân Tông Khai Sáng Trúc Lâm hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 569,
-      "name": "Liễu Thăng Bị Chém Tại Chi Lăng hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 570,
-      "name": "Đống Đa Mồng Năm Tết Kỷ Dậu hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 571,
-      "name": "Trương Định Khởi Nghĩa Gò Công hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 572,
-      "name": "Lý Nhân Tông Tự Học Văn Võ hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 573,
-      "name": "Hịch Tướng Sĩ Vạn Kiếp hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 574,
-      "name": "Vương Thông Đầu Hàng Đông Đô hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 575,
-      "name": "Ngọc Hân Công Chúa Khóc Chồng hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 576,
-      "name": "Phan Đình Phùng Cần Vương Hương Khê hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 577,
-      "name": "Mạc Đĩnh Chi Đối Đáp Triều Tống hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 578,
-      "name": "Hội Nghị Diên Hồng Quyết Tử hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 579,
-      "name": "Lê Thái Tổ Lên Ngôi Hoàng Đế hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 580,
-      "name": "Trần Quang Diệu Trung Thần Tử Tiết hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 581,
-      "name": "Hoàng Diệu Tự Vẫn Bảo Vệ Hà Thành hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_1",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 582,
-      "name": "Lý Anh Tông Định Quốc Hiệu Đại Việt hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 583,
-      "name": "Trần Bình Trọng Thà Làm Quỷ Nước Nam hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 584,
-      "name": "Lê Thánh Tông Mở Mang Bờ Cõi hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 585,
-      "name": "Bùi Thị Xuân Nữ Tướng Anh Hùng hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 586,
-      "name": "Nguyễn Tri Phương Tử Tiết Đại Đồn hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_2",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 587,
-      "name": "Tô Hiến Thành Trị Quốc hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 588,
-      "name": "Phạm Ngũ Lão Đan Sọt Giữa Đường hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 589,
-      "name": "Nguyễn Trãi Án Lệ Chi Viên hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 590,
-      "name": "Nguyễn Nhạc Lên Ngôi Trung Ương Hoàng Đế hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 591,
-      "name": "Cao Bá Quát Khởi Nghĩa Mỹ Lương hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_3",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 592,
-      "name": "Lý Cao Tông Suy Tàn Triều Lý hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 593,
-      "name": "Bạch Đằng Giang Khải Hoàn Lần Ba hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 594,
-      "name": "Mạc Đăng Dung Soán Ngôi Lê hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 595,
-      "name": "Tây Sơn Sụp Đổ Nguyễn Ánh Khôi Phục hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 596,
-      "name": "Hàm Nghi Xuất Bôn Ban Chiếu Cần Vương hồi 2",
-      "category": "lore",
-      "era": "nguyen",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_NGUYEN_4",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_4"
-    },
-    {
-      "event_id": 597,
-      "name": "Lý Chiêu Hoàng Nhường Ngôi Trần Cảnh hồi 2",
-      "category": "lore",
-      "era": "ly",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LY_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 45,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 598,
-      "name": "Hồ Quý Ly Lật Đổ Nhà Trần hồi 2",
-      "category": "lore",
-      "era": "tran",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_5"
-    },
-    {
-      "event_id": 599,
-      "name": "Trịnh Nguyễn Phân Tranh hồi 2",
-      "category": "lore",
-      "era": "le",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_LE_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 60,
-      "reward_tier": "tier_3"
-    },
-    {
-      "event_id": 600,
-      "name": "Quang Toản Bị Bắt Tử Tiết hồi 2",
-      "category": "lore",
-      "era": "tay_son",
-      "condition": {
-        "requires_quest_chain": "SVTK_CHAIN_LORE_TAY_SON_5",
-        "recurrence": "one_off_per_account"
-      },
-      "duration_min": 30,
       "reward_tier": "tier_3"
     }
   ]
