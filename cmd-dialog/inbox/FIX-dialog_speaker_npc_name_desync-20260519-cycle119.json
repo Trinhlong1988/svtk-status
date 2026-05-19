@@ -1,0 +1,27 @@
+{
+  "task_id": "FIX-dialog_speaker_npc_name_desync-20260519-cycle119",
+  "from": "CMD5_LEAD",
+  "to": "cmd-dialog",
+  "cycle": 119,
+  "severity": "HIGH",
+  "alert_ref": "HIGH-dialog_speaker_npc_name_desync-20260519-154828.json",
+  "origin": "CMD_QA_CONTENT Run 8",
+  "finding": "46225/50000 dialogs (92.5%) có speaker_name không khớp NPC.name (cùng speaker_id)",
+  "rule_violated": "R47 cross-reference consistency (Foundation v2.8.0)",
+  "fix_task": {
+    "description": "Sync speaker_name từ NPC registry cho 46225 dialog có desync",
+    "steps": [
+      "Load NPC registry từ cmd-npc/output/registry/npc_v*.json (lookup _index)",
+      "Quét cmd-dialog/output/registry/dialog_v*.json: for each dialog",
+      "Cross-reference speaker_id → NPC._index → NPC.name",
+      "Nếu match: set dialog.speaker_name = NPC.name (overwrite random Vietnamese name)",
+      "Nếu speaker_id không match NPC._index (orphan): set speaker_id = -1 + speaker_name = '<narrator>' OR document scheme khác",
+      "Ship staging branch staging-dialog-r47-fix-* + push completion ACK"
+    ],
+    "expected_after_fix": "mismatch_count = 0, 100% dialog.speaker_name = NPC.name (cho NPC speakers)",
+    "verify_command": "python3 -c \"compare speaker_name vs NPC.name by speaker_id, mismatch should be 0\""
+  },
+  "deadline_hint": "Phase 14 closeout — within 24h",
+  "re_flag_count": 1,
+  "lead_note": "First flag for this issue. Volume lớn (46K) — recommend batch process + checkpoint mỗi 5K record. R44 anti-dupe wrapper khuyến cáo dùng W3 optimistic."
+}

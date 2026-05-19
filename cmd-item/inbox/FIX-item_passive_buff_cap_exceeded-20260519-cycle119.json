@@ -1,0 +1,25 @@
+{
+  "task_id": "FIX-item_passive_buff_cap_exceeded-20260519-cycle119",
+  "from": "CMD5_LEAD",
+  "to": "cmd-item",
+  "cycle": 119,
+  "severity": "MED",
+  "alert_ref": "MED-item_passive_buff_cap_exceeded-20260519-154828.json",
+  "origin": "CMD_QA_CONTENT Run 8",
+  "finding": "1 mythic item (Nhẫn Long Hứa) có passive utility crit_after_burn = 1500bp (15%) vượt 5% cap (R10.8 secondary)",
+  "rule_violated": "R10.8 secondary cap (5% niche utility)",
+  "fix_task": {
+    "description": "Resolve cap violation cho item_kim_nhan_long_hua",
+    "steps": [
+      "Option A (recommended LEAD): Nerf crit_after_burn 1500bp → 500bp (đúng cap 5%)",
+      "Option B: Reclassify crit_after_burn từ utility (cap 5%) → damage_modifier (skip cap)",
+      "LEAD recommend Option A để giữ consistency cap secondary",
+      "Apply fix → re-run audit verify item_passive_buff_cap_exceeded = 0",
+      "Ship staging branch staging-item-r10.8-secondary-fix-*"
+    ],
+    "expected_after_fix": "violators = [], passive utility cap 100% compliant"
+  },
+  "deadline_hint": "Phase 14 closeout — within 24h",
+  "re_flag_count": 1,
+  "lead_note": "Only 1 violator. Nếu cmd-item muốn Option B (reclassify) cần ping LEAD escalate Mr.Long quyết schema utility vs damage_modifier."
+}

@@ -1,0 +1,26 @@
+{
+  "task_id": "FIX-quest_giver_npc_name_placeholder-20260519-cycle119",
+  "from": "CMD5_LEAD",
+  "to": "cmd-quest",
+  "cycle": 119,
+  "severity": "HIGH",
+  "alert_ref": "HIGH-quest_giver_npc_name_placeholder-20260519-154828.json",
+  "origin": "CMD_QA_CONTENT Run 8",
+  "finding": "2548/3000 quests (84.9%) dùng dummy 'NPC_{id}' template thay vì NPC.name thật",
+  "rule_violated": "R47 cross-reference consistency (Foundation v2.8.0)",
+  "fix_task": {
+    "description": "Sync giver_npc_name từ NPC registry cho 2548 quest có placeholder pattern",
+    "steps": [
+      "Load NPC registry từ cmd-npc/output/registry/npc_v*.json (lookup _index)",
+      "Quét cmd-quest/output/registry/quest_v*.json: for each quest có giver_npc_name match pattern /^NPC_\\d+$/",
+      "Cross-reference giver_npc_id → NPC._index → NPC.name",
+      "Set quest.giver_npc_name = NPC.name",
+      "Ship staging branch staging-quest-r47-fix-* + push completion ACK"
+    ],
+    "expected_after_fix": "placeholder_count = 0, 100% quest.giver_npc_name = NPC.name",
+    "verify_command": "grep -c 'NPC_[0-9]' cmd-quest/output/registry/quest_v*.json (should be 0)"
+  },
+  "deadline_hint": "Phase 14 closeout — within 24h",
+  "re_flag_count": 1,
+  "lead_note": "First flag for this issue. R44 anti-dupe wrapper khuyến cáo dùng W3 optimistic khi batch update."
+}

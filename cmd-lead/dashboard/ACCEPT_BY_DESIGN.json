@@ -4,6 +4,19 @@
   "accepted_issues": {
     "npc_existing_scene_id_orphan_R75": "R71.1 immutable NPC data — Mr.Long locked 14/5. sceneId orphans expected.",
     "npc_existing_systemic_hp_anomaly_R78": "R71.1 immutable NPC data. HP distribution by design.",
-    "npc_existing_uuid_null_R74A": "R71.1 immutable legacy NPC seeds (Phase 7). UUID null acceptable for non-runtime entries."
+    "npc_existing_uuid_null_R74A": "R71.1 immutable legacy NPC seeds (Phase 7). UUID null acceptable for non-runtime entries.",
+    "npc_existing_mentor_type_mismatch_R83": "R71.1 immutable. Mentor type fix only on registry regen.",
+    "npc_existing_rebirthable_non_boss_R74": "R71.1 immutable legacy NPC.",
+    "npc_existing_spawn_collision_R75": "R71.1 immutable. Spawn collisions in legacy data accepted.",
+    "npc_existing_type_tier_violation_R76_R80": "R71.1 immutable. Type/tier violations grandfathered.",
+    "npc_existing_boss_no_epithet": "R71.1 immutable legacy boss naming.",
+    "npc_existing_era_fprefix_dominance": "R71.1 immutable era distribution.",
+    "npc_existing_mentor_stats_anomaly": "R71.1 immutable mentor stats.",
+    "npc_existing_myth_tier_hp": "R71.1 immutable myth-tier HP.",
+    "npc_existing_noncombat_skills": "R71.1 immutable skill assignments.",
+    "npc_existing_tier_level_anomaly": "R71.1 immutable tier/level distribution.",
+    "npc_extra_era_empty": "Phase 14 scope: 9 extra eras stub for Phase 15+ content. Empty intentional.",
+    "npc_ecosystem_cross_ref_missing": "Phase 14 gap: adjacent CMDs (quest/item/boss/map) chưa ship /existing. Partial cross-ref accepted.",
+    "npc_foundation_version_mismatch": "Brief stale v2.6.0; canonical = v2.8.0 CRLF Windows hash 4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b (per cycle 93 chốt). Reissue brief Phase 15 prep."
   }
 }

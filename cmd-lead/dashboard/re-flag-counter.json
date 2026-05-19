@@ -3,5 +3,8 @@
   "quest_count_below_target": 2,
   "qa_event_missing": 2,
   "qa_item_missing": 2,
-  "event_count_below_target": 1
+  "event_count_below_target": 1,
+  "quest_giver_npc_name_placeholder": 1,
+  "dialog_speaker_npc_name_desync": 1,
+  "item_passive_buff_cap_exceeded": 1
 }
