@@ -9605,6 +9605,138 @@ ROUND_L48_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 49 — Material domain + lore_codex order (v1.44)
+# ============================================================
+def chk_L49_material_uses_vat_nguyen_lieu(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        m = (it.get("material") or "").strip()
+        if not m:
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"empty_mat": len(bad), "samples": bad[:5]}
+
+
+def chk_L49_lore_codex_starts_with_array(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    head = p.read_text(encoding="utf-8").lstrip()[:1]
+    return head in ("[", "{"), {"first_char": head}
+
+
+def chk_L49_material_id_no_collision(items, *_):
+    mats = [it["id"] for it in items if it.get("category") == "material"]
+    return len(mats) == len(set(mats)), {
+        "count": len(mats), "unique": len(set(mats))
+    }
+
+
+def chk_L49_lore_codex_array_form(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        if isinstance(data, dict):
+            data = data.get("items", [])
+        return isinstance(data, list), {"is_array": isinstance(data, list)}
+    except Exception as e:
+        return False, {"err": str(e)[:120]}
+
+
+def chk_L49_lore_codex_has_id_field(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(data, dict):
+        data = data.get("items", [])
+    bad = [i for i, x in enumerate(data) if "id" not in x]
+    return len(bad) == 0, {"missing_id_count": len(bad)}
+
+
+def chk_L49_loot_table_has_doc(items, *_):
+    p = REPO_DIR / "cmd-item" / "data" / "loot_tables.json"
+    if not p.exists():
+        return False, {"missing": True}
+    raw = p.read_text(encoding="utf-8")
+    return "_doc" in raw, {"present": True}
+
+
+def chk_L49_material_name_unique(items, *_):
+    mats = [it.get("name_vi") for it in items
+            if it.get("category") == "material"]
+    return len(mats) == len(set(mats)), {
+        "n": len(mats), "u": len(set(mats))
+    }
+
+
+def chk_L49_quest_item_name_unique(items, *_):
+    qi = [it.get("name_vi") for it in items
+          if it.get("category") == "quest_item"]
+    return len(qi) == len(set(qi)), {
+        "n": len(qi), "u": len(set(qi))
+    }
+
+
+def chk_L49_weapon_name_unique(items, *_):
+    w = [it.get("name_vi") for it in items
+         if it.get("category") == "weapon"
+         and not it.get("is_immutable_seed")]
+    return len(w) == len(set(w)), {
+        "n": len(w), "u": len(set(w))
+    }
+
+
+def chk_L49_armor_name_unique(items, *_):
+    a = [it.get("name_vi") for it in items
+         if it.get("category") == "armor"
+         and not it.get("is_immutable_seed")]
+    return len(a) == len(set(a)), {
+        "n": len(a), "u": len(set(a))
+    }
+
+
+ROUND_L49_CHECKS = {
+    2: [
+        ("L49_material_uses_vat_nguyen_lieu", "R30",
+         chk_L49_material_uses_vat_nguyen_lieu),
+        ("L49_lore_codex_starts_with_array", "R50",
+         chk_L49_lore_codex_starts_with_array),
+    ],
+    3: [
+        ("L49_material_id_no_collision", "R71",
+         chk_L49_material_id_no_collision),
+        ("L49_lore_codex_array_form", "R50",
+         chk_L49_lore_codex_array_form),
+    ],
+    4: [
+        ("L49_lore_codex_has_id_field", "R50",
+         chk_L49_lore_codex_has_id_field),
+        ("L49_loot_table_has_doc", "R30",
+         chk_L49_loot_table_has_doc),
+    ],
+    5: [
+        ("L49_material_name_unique", "R71",
+         chk_L49_material_name_unique),
+        ("L49_quest_item_name_unique", "R71",
+         chk_L49_quest_item_name_unique),
+    ],
+    6: [
+        ("L49_weapon_name_unique", "R71",
+         chk_L49_weapon_name_unique),
+        ("L49_armor_name_unique", "R71",
+         chk_L49_armor_name_unique),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -9789,6 +9921,8 @@ def main():
             active_checks.extend(ROUND_L47_CHECKS[r])
         if r in ROUND_L48_CHECKS:
             active_checks.extend(ROUND_L48_CHECKS[r])
+        if r in ROUND_L49_CHECKS:
+            active_checks.extend(ROUND_L49_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
