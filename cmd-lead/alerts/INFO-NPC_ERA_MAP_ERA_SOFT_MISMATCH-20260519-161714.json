@@ -1,0 +1,131 @@
+{
+  "severity": "INFO",
+  "issue_id": "NPC_ERA_MAP_ERA_SOFT_MISMATCH",
+  "evidence": {
+    "count": 3302,
+    "sample": [
+      {
+        "npc_idx": 80,
+        "npc_era": "ly",
+        "sid": 4347,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 81,
+        "npc_era": "ly",
+        "sid": 4348,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 82,
+        "npc_era": "tran",
+        "sid": 4349,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 84,
+        "npc_era": "ly",
+        "sid": 8991,
+        "map_era": "nguyen"
+      },
+      {
+        "npc_idx": 86,
+        "npc_era": "ly",
+        "sid": 4350,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 87,
+        "npc_era": "ly",
+        "sid": 4351,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 88,
+        "npc_era": "ly",
+        "sid": 4352,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 89,
+        "npc_era": "ly",
+        "sid": 4353,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 90,
+        "npc_era": "ly",
+        "sid": 4354,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 91,
+        "npc_era": "ly",
+        "sid": 4355,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 92,
+        "npc_era": "ly",
+        "sid": 4377,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 93,
+        "npc_era": "ly",
+        "sid": 4378,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 94,
+        "npc_era": "ly",
+        "sid": 4379,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 95,
+        "npc_era": "ly",
+        "sid": 4380,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 96,
+        "npc_era": "ly",
+        "sid": 4381,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 97,
+        "npc_era": "ly",
+        "sid": 4382,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 98,
+        "npc_era": "ly",
+        "sid": 4383,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 99,
+        "npc_era": "ly",
+        "sid": 4384,
+        "map_era": "le"
+      },
+      {
+        "npc_idx": 100,
+        "npc_era": "tran",
+        "sid": 570,
+        "map_era": "ly"
+      },
+      {
+        "npc_idx": 101,
+        "npc_era": "tran",
+        "sid": 570,
+        "map_era": "ly"
+      }
+    ]
+  },
+  "cmd_origin": "PLACE",
+  "timestamp": "20260519-161714"
+}

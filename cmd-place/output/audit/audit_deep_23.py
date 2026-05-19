@@ -293,7 +293,6 @@ def main():
     print(f"TOTAL 23 rounds — PASS {23 - len(fails)} FAIL {len(fails)}")
     out = {
         "version": "deep_23_v1",
-        "timestamp": time.strftime("%Y%m%dT%H%M%S"),
         "total": 23,
         "pass": 23 - len(fails),
         "fail": len(fails),

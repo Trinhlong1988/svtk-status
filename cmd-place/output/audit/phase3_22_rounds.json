@@ -174,8 +174,8 @@
       "status": "PASS",
       "severity": "ERROR",
       "evidence": {
-        "sha256_file_count": 14,
-        "meta_hash": "7c7992235f3cf4d2603c050f29ef51f7..."
+        "sha256_file_count": 16,
+        "meta_hash": "1c1f2168de0e605be4d1ee3bd545678c..."
       }
     },
     {

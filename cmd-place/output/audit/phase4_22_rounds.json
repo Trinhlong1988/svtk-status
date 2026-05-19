@@ -114,7 +114,7 @@
       "status": "PASS",
       "severity": "ERROR",
       "evidence": {
-        "elapsed_sec": 0.146
+        "elapsed_sec": 0.122
       }
     },
     {
@@ -123,7 +123,7 @@
       "status": "PASS",
       "severity": "ERROR",
       "evidence": {
-        "elapsed_sec": 0.0541
+        "elapsed_sec": 0.016
       }
     },
     {
@@ -132,7 +132,7 @@
       "status": "PASS",
       "severity": "ERROR",
       "evidence": {
-        "elapsed_sec": 0.275
+        "elapsed_sec": 0.206
       }
     },
     {

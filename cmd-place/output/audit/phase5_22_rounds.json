@@ -1,0 +1,296 @@
+{
+  "version": "phase5_22_v1",
+  "total": 22,
+  "pass": 22,
+  "fail": 0,
+  "results": [
+    {
+      "round": 1,
+      "name": "Shard adjacency graph: adjacent shards share ≥3 eras",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": [],
+        "count": 0
+      }
+    },
+    {
+      "round": 2,
+      "name": "Biome×era clique covers all 64 shards",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "clusters_lt_full": {},
+        "missing_count": 0
+      }
+    },
+    {
+      "round": 3,
+      "name": "Era transitions exactly 4 boundaries (5 era contiguous blocks)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "transition_count": 4,
+        "transitions": [
+          [
+            2000,
+            2001,
+            "ly",
+            "tran"
+          ],
+          [
+            4000,
+            4001,
+            "tran",
+            "le"
+          ],
+          [
+            6000,
+            6001,
+            "le",
+            "tay_son"
+          ],
+          [
+            8000,
+            8001,
+            "tay_son",
+            "nguyen"
+          ]
+        ]
+      }
+    },
+    {
+      "round": 4,
+      "name": "Bipartite (era × biome) connectivity: all 35 pairs present",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "missing_pairs": [],
+        "expected": 35,
+        "actual": 35
+      }
+    },
+    {
+      "round": 5,
+      "name": "Pre-condition: total_maps>0 ∧ total_shards>0",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "total_maps": 10000,
+        "total_shards": 64
+      }
+    },
+    {
+      "round": 6,
+      "name": "Post-condition: len(maps) == TARGET (no off-by-one)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "got": 10000,
+        "want": 10000
+      }
+    },
+    {
+      "round": 7,
+      "name": "Pre-condition: era list + biome list non-empty + match canonical",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "eras": [
+          "ly",
+          "tran",
+          "le",
+          "tay_son",
+          "nguyen"
+        ],
+        "biomes": [
+          "forest",
+          "mountain",
+          "river",
+          "plain",
+          "sea",
+          "capital",
+          "village"
+        ]
+      }
+    },
+    {
+      "round": 8,
+      "name": "Post-condition: every shard has ≥1 map (no empty)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "empty_shards": []
+      }
+    },
+    {
+      "round": 9,
+      "name": "Invariant: shard_id = (map_id-1) % 64 pure (no side effect)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 10,
+      "name": "Fault: truncate JSONL mid-stream → line count drops (detected)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "original_lines": 64,
+        "truncated_lines": 33
+      }
+    },
+    {
+      "round": 11,
+      "name": "Fault: 1-byte corruption → SHA256 detects mismatch",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "baseline_match": true,
+        "corruption_detected": true
+      }
+    },
+    {
+      "round": 12,
+      "name": "Fault: all required files have .sha256 companion (audit detection capability)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "missing": []
+      }
+    },
+    {
+      "round": 13,
+      "name": "Regression: registry SHA256 stable across 3 rebuilds",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "runs": 3,
+        "stable": true
+      }
+    },
+    {
+      "round": 14,
+      "name": "Regression: schema SQL byte-stable across rebuild",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "before": "f3b6a96780573791",
+        "after": "f3b6a96780573791"
+      }
+    },
+    {
+      "round": 15,
+      "name": "Regression: deep_23 audit report byte-stable across re-run",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "before": "de72f9a2418874ca",
+        "after": "de72f9a2418874ca"
+      }
+    },
+    {
+      "round": 16,
+      "name": "Random sample 100 maps satisfy ALL 6 properties",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "sample_size": 100,
+        "violations": []
+      }
+    },
+    {
+      "round": 17,
+      "name": "Pairwise distinct: same (era,biome) → distinct name + map_id",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "violations": []
+      }
+    },
+    {
+      "round": 18,
+      "name": "Closure: tags ⊆ ERAS ∪ BIOMES ∪ shard_NN",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 19,
+      "name": "Cardinality: ∑(era × biome cells) = TARGET_MAPS",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "total": 10000,
+        "want": 10000,
+        "cells_filled": 35,
+        "expected_cells": 35
+      }
+    },
+    {
+      "round": 20,
+      "name": "3-way bijection: map_id ↔ uuid ↔ natural_key all 1-1",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "n": 10000,
+        "unique_map_id": 10000,
+        "unique_uuid": 10000,
+        "unique_nk": 10000
+      }
+    },
+    {
+      "round": 21,
+      "name": "Pigeonhole: ∃ shard with count ≥ ceil(N/S) = 157",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "max_count": 157,
+        "threshold": 157
+      }
+    },
+    {
+      "round": 22,
+      "name": "Inverse map f_prefix → era set matches R31 rule",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "actual": {
+          "f1": [
+            "ly",
+            "tran"
+          ],
+          "f2": [
+            "le"
+          ],
+          "f3": [
+            "tay_son"
+          ],
+          "g1": [
+            "nguyen"
+          ]
+        },
+        "expected": {
+          "f1": [
+            "ly",
+            "tran"
+          ],
+          "f2": [
+            "le"
+          ],
+          "f3": [
+            "tay_son"
+          ],
+          "g1": [
+            "nguyen"
+          ]
+        }
+      }
+    }
+  ]
+}
