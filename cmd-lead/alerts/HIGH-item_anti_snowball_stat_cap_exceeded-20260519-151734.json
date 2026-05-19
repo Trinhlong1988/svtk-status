@@ -1,0 +1,68 @@
+{
+  "severity": "HIGH",
+  "issue_id": "item_anti_snowball_stat_cap_exceeded",
+  "evidence": {
+    "type": "anti_snowball_stat_cap_exceeded",
+    "worker": "item",
+    "rarity_counts": {
+      "common": 673,
+      "uncommon": 662,
+      "rare": 673,
+      "epic": 674,
+      "legendary": 665,
+      "mythic": 659
+    },
+    "global_violations": [
+      {
+        "mode": "global",
+        "rarity": "epic",
+        "stat": "sat_luc",
+        "ratio": 2.667,
+        "cap": 2.5,
+        "common_max": 30,
+        "tier_max": 80
+      },
+      {
+        "mode": "global",
+        "rarity": "mythic",
+        "stat": "phap_luc",
+        "ratio": 4.0,
+        "cap": 2.5,
+        "common_max": 15,
+        "tier_max": 60
+      }
+    ],
+    "step_violations": [],
+    "violator_breakdown": {
+      "epic__sat_luc": {
+        "threshold": 75.0,
+        "count": 1,
+        "top_5": [
+          {
+            "id": "item_thuy_kiem_bach_dang",
+            "name_vi": "Kiếm Bạch Đằng",
+            "value": 80,
+            "over_by": 5.0
+          }
+        ]
+      },
+      "mythic__phap_luc": {
+        "threshold": 37.5,
+        "count": 1,
+        "top_5": [
+          {
+            "id": "item_kim_nhan_long_hua",
+            "name_vi": "Nhẫn Long Hứa",
+            "value": 60,
+            "over_by": 22.5
+          }
+        ]
+      }
+    },
+    "total_global_violations": 2,
+    "total_step_violations": 0
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-151734",
+  "target_worker": "item"
+}
