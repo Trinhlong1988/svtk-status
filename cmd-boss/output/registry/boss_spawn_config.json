@@ -1693,8 +1693,8 @@
       ]
     },
     {
-      "boss_id": 908,
-      "name": "boss_t8_thanh_le_0908",
+      "boss_id": 917,
+      "name": "boss_t8_thanh_nguyen_0917",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1703,48 +1703,8 @@
       ]
     },
     {
-      "boss_id": 914,
-      "name": "boss_t8_thanh_ly_0914",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 920,
-      "name": "boss_t8_thanh_ly_0920",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 923,
-      "name": "boss_t8_thanh_tay_son_0923",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 924,
-      "name": "boss_t8_thanh_tran_0924",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 931,
-      "name": "boss_t8_thanh_ly_0931",
+      "boss_id": 929,
+      "name": "boss_t8_thanh_ly_0929",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1763,8 +1723,18 @@
       ]
     },
     {
+      "boss_id": 936,
+      "name": "boss_t8_thanh_tay_son_0936",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
       "boss_id": 939,
-      "name": "boss_t8_thanh_ly_0939",
+      "name": "boss_t8_thanh_tran_0939",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1773,8 +1743,8 @@
       ]
     },
     {
-      "boss_id": 941,
-      "name": "boss_t8_thanh_nguyen_0941",
+      "boss_id": 952,
+      "name": "boss_t8_thanh_ly_0952",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1783,8 +1753,8 @@
       ]
     },
     {
-      "boss_id": 948,
-      "name": "boss_t8_thanh_le_0948",
+      "boss_id": 960,
+      "name": "boss_t8_thanh_tran_0960",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1793,8 +1763,8 @@
       ]
     },
     {
-      "boss_id": 950,
-      "name": "boss_t8_thanh_tay_son_0950",
+      "boss_id": 961,
+      "name": "boss_t8_thanh_nguyen_0961",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1803,8 +1773,8 @@
       ]
     },
     {
-      "boss_id": 953,
-      "name": "boss_t8_thanh_tran_0953",
+      "boss_id": 962,
+      "name": "boss_t8_thanh_tay_son_0962",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1813,8 +1783,8 @@
       ]
     },
     {
-      "boss_id": 971,
-      "name": "boss_t8_thanh_ly_0971",
+      "boss_id": 963,
+      "name": "boss_t8_thanh_tay_son_0963",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1823,8 +1793,8 @@
       ]
     },
     {
-      "boss_id": 972,
-      "name": "boss_t8_thanh_tay_son_0972",
+      "boss_id": 975,
+      "name": "boss_t8_thanh_le_0975",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1833,18 +1803,8 @@
       ]
     },
     {
-      "boss_id": 976,
-      "name": "boss_t8_thanh_tran_0976",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 985,
-      "name": "boss_t8_thanh_le_0985",
+      "boss_id": 983,
+      "name": "boss_t8_thanh_nguyen_0983",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1854,7 +1814,7 @@
     },
     {
       "boss_id": 987,
-      "name": "boss_t8_thanh_nguyen_0987",
+      "name": "boss_t8_thanh_ly_0987",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1863,8 +1823,8 @@
       ]
     },
     {
-      "boss_id": 988,
-      "name": "boss_t8_thanh_nguyen_0988",
+      "boss_id": 995,
+      "name": "boss_t8_thanh_ly_0995",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1873,8 +1833,8 @@
       ]
     },
     {
-      "boss_id": 1006,
-      "name": "boss_t8_thanh_tay_son_1006",
+      "boss_id": 1013,
+      "name": "boss_t8_thanh_ly_1013",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1883,8 +1843,8 @@
       ]
     },
     {
-      "boss_id": 1011,
-      "name": "boss_t8_thanh_tay_son_1011",
+      "boss_id": 1017,
+      "name": "boss_t8_thanh_tran_1017",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1893,8 +1853,8 @@
       ]
     },
     {
-      "boss_id": 1012,
-      "name": "boss_t8_thanh_tran_1012",
+      "boss_id": 1024,
+      "name": "boss_t8_thanh_nguyen_1024",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1903,8 +1863,8 @@
       ]
     },
     {
-      "boss_id": 1026,
-      "name": "boss_t8_thanh_nguyen_1026",
+      "boss_id": 1035,
+      "name": "boss_t8_thanh_nguyen_1035",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1913,8 +1873,8 @@
       ]
     },
     {
-      "boss_id": 1034,
-      "name": "boss_t8_thanh_ly_1034",
+      "boss_id": 1037,
+      "name": "boss_t8_thanh_tay_son_1037",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1923,8 +1883,8 @@
       ]
     },
     {
-      "boss_id": 1040,
-      "name": "boss_t8_thanh_tay_son_1040",
+      "boss_id": 1045,
+      "name": "boss_t8_thanh_tran_1045",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1933,8 +1893,8 @@
       ]
     },
     {
-      "boss_id": 1042,
-      "name": "boss_t8_thanh_nguyen_1042",
+      "boss_id": 1053,
+      "name": "boss_t8_thanh_tay_son_1053",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1943,8 +1903,8 @@
       ]
     },
     {
-      "boss_id": 1043,
-      "name": "boss_t8_thanh_tran_1043",
+      "boss_id": 1060,
+      "name": "boss_t8_thanh_tran_1060",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1953,8 +1913,8 @@
       ]
     },
     {
-      "boss_id": 1052,
-      "name": "boss_t8_thanh_le_1052",
+      "boss_id": 1063,
+      "name": "boss_t8_thanh_tay_son_1063",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -1963,108 +1923,8 @@
       ]
     },
     {
-      "boss_id": 1054,
-      "name": "boss_t8_thanh_nguyen_1054",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1062,
-      "name": "boss_t8_thanh_nguyen_1062",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1065,
-      "name": "boss_t8_thanh_le_1065",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1069,
-      "name": "boss_t8_thanh_ly_1069",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1076,
-      "name": "boss_t8_thanh_tran_1076",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1077,
-      "name": "boss_t8_thanh_ly_1077",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1084,
-      "name": "boss_t8_thanh_tran_1084",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1090,
-      "name": "boss_t8_thanh_le_1090",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1099,
-      "name": "boss_t8_thanh_nguyen_1099",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1101,
-      "name": "boss_t8_thanh_nguyen_1101",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1103,
-      "name": "boss_t8_thanh_tay_son_1103",
+      "boss_id": 1085,
+      "name": "boss_t8_thanh_nguyen_1085",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3635,8 +3495,28 @@
       ]
     },
     {
-      "boss_id": 915,
-      "name": "boss_t8_thanh_tay_son_0915",
+      "boss_id": 909,
+      "name": "boss_t8_thanh_le_0909",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 913,
+      "name": "boss_t8_thanh_ly_0913",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 914,
+      "name": "boss_t8_thanh_le_0914",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3646,7 +3526,7 @@
     },
     {
       "boss_id": 919,
-      "name": "boss_t8_thanh_ly_0919",
+      "name": "boss_t8_thanh_le_0919",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3655,8 +3535,28 @@
       ]
     },
     {
-      "boss_id": 921,
-      "name": "boss_t8_thanh_ly_0921",
+      "boss_id": 920,
+      "name": "boss_t8_thanh_le_0920",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 924,
+      "name": "boss_t8_thanh_ly_0924",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 930,
+      "name": "boss_t8_thanh_tran_0930",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3675,8 +3575,8 @@
       ]
     },
     {
-      "boss_id": 937,
-      "name": "boss_t8_thanh_ly_0937",
+      "boss_id": 944,
+      "name": "boss_t8_thanh_ly_0944",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3685,8 +3585,8 @@
       ]
     },
     {
-      "boss_id": 949,
-      "name": "boss_t8_thanh_ly_0949",
+      "boss_id": 946,
+      "name": "boss_t8_thanh_le_0946",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3695,8 +3595,8 @@
       ]
     },
     {
-      "boss_id": 951,
-      "name": "boss_t8_thanh_tran_0951",
+      "boss_id": 955,
+      "name": "boss_t8_thanh_nguyen_0955",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3705,8 +3605,8 @@
       ]
     },
     {
-      "boss_id": 967,
-      "name": "boss_t8_thanh_ly_0967",
+      "boss_id": 956,
+      "name": "boss_t8_thanh_tay_son_0956",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3715,8 +3615,8 @@
       ]
     },
     {
-      "boss_id": 968,
-      "name": "boss_t8_thanh_le_0968",
+      "boss_id": 959,
+      "name": "boss_t8_thanh_tran_0959",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3725,8 +3625,8 @@
       ]
     },
     {
-      "boss_id": 980,
-      "name": "boss_t8_thanh_le_0980",
+      "boss_id": 964,
+      "name": "boss_t8_thanh_le_0964",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3735,8 +3635,8 @@
       ]
     },
     {
-      "boss_id": 982,
-      "name": "boss_t8_thanh_ly_0982",
+      "boss_id": 973,
+      "name": "boss_t8_thanh_tay_son_0973",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3745,8 +3645,8 @@
       ]
     },
     {
-      "boss_id": 986,
-      "name": "boss_t8_thanh_ly_0986",
+      "boss_id": 977,
+      "name": "boss_t8_thanh_ly_0977",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3755,8 +3655,8 @@
       ]
     },
     {
-      "boss_id": 993,
-      "name": "boss_t8_thanh_ly_0993",
+      "boss_id": 984,
+      "name": "boss_t8_thanh_tay_son_0984",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3765,8 +3665,8 @@
       ]
     },
     {
-      "boss_id": 1003,
-      "name": "boss_t8_thanh_le_1003",
+      "boss_id": 997,
+      "name": "boss_t8_thanh_tay_son_0997",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3775,8 +3675,8 @@
       ]
     },
     {
-      "boss_id": 1004,
-      "name": "boss_t8_thanh_le_1004",
+      "boss_id": 1002,
+      "name": "boss_t8_thanh_le_1002",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3785,18 +3685,8 @@
       ]
     },
     {
-      "boss_id": 1008,
-      "name": "boss_t8_thanh_tay_son_1008",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1009,
-      "name": "boss_t8_thanh_nguyen_1009",
+      "boss_id": 1006,
+      "name": "boss_t8_thanh_nguyen_1006",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3806,7 +3696,7 @@
     },
     {
       "boss_id": 1015,
-      "name": "boss_t8_thanh_le_1015",
+      "name": "boss_t8_thanh_tran_1015",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3815,8 +3705,8 @@
       ]
     },
     {
-      "boss_id": 1020,
-      "name": "boss_t8_thanh_tay_son_1020",
+      "boss_id": 1016,
+      "name": "boss_t8_thanh_tay_son_1016",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3825,8 +3715,8 @@
       ]
     },
     {
-      "boss_id": 1021,
-      "name": "boss_t8_thanh_tran_1021",
+      "boss_id": 1029,
+      "name": "boss_t8_thanh_tay_son_1029",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3835,8 +3725,8 @@
       ]
     },
     {
-      "boss_id": 1039,
-      "name": "boss_t8_thanh_tran_1039",
+      "boss_id": 1030,
+      "name": "boss_t8_thanh_nguyen_1030",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3846,7 +3736,7 @@
     },
     {
       "boss_id": 1041,
-      "name": "boss_t8_thanh_le_1041",
+      "name": "boss_t8_thanh_nguyen_1041",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3855,18 +3745,8 @@
       ]
     },
     {
-      "boss_id": 1044,
-      "name": "boss_t8_thanh_tay_son_1044",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1046,
-      "name": "boss_t8_thanh_ly_1046",
+      "boss_id": 1047,
+      "name": "boss_t8_thanh_le_1047",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3876,7 +3756,7 @@
     },
     {
       "boss_id": 1051,
-      "name": "boss_t8_thanh_ly_1051",
+      "name": "boss_t8_thanh_nguyen_1051",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3885,8 +3765,8 @@
       ]
     },
     {
-      "boss_id": 1063,
-      "name": "boss_t8_thanh_le_1063",
+      "boss_id": 1062,
+      "name": "boss_t8_thanh_tran_1062",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3895,8 +3775,8 @@
       ]
     },
     {
-      "boss_id": 1064,
-      "name": "boss_t8_thanh_tran_1064",
+      "boss_id": 1075,
+      "name": "boss_t8_thanh_tay_son_1075",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3905,8 +3785,8 @@
       ]
     },
     {
-      "boss_id": 1073,
-      "name": "boss_t8_thanh_le_1073",
+      "boss_id": 1093,
+      "name": "boss_t8_thanh_le_1093",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3915,8 +3795,8 @@
       ]
     },
     {
-      "boss_id": 1078,
-      "name": "boss_t8_thanh_nguyen_1078",
+      "boss_id": 1099,
+      "name": "boss_t8_thanh_tran_1099",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -3925,8 +3805,18 @@
       ]
     },
     {
-      "boss_id": 1082,
-      "name": "boss_t8_thanh_ly_1082",
+      "boss_id": 1101,
+      "name": "boss_t8_thanh_tay_son_1101",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1102,
+      "name": "boss_t8_thanh_tay_son_1102",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5417,8 +5307,8 @@
       ]
     },
     {
-      "boss_id": 910,
-      "name": "boss_t8_thanh_nguyen_0910",
+      "boss_id": 916,
+      "name": "boss_t8_thanh_le_0916",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5427,8 +5317,8 @@
       ]
     },
     {
-      "boss_id": 911,
-      "name": "boss_t8_thanh_tran_0911",
+      "boss_id": 918,
+      "name": "boss_t8_thanh_tran_0918",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5437,8 +5327,8 @@
       ]
     },
     {
-      "boss_id": 913,
-      "name": "boss_t8_thanh_tran_0913",
+      "boss_id": 922,
+      "name": "boss_t8_thanh_nguyen_0922",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5447,8 +5337,8 @@
       ]
     },
     {
-      "boss_id": 917,
-      "name": "boss_t8_thanh_le_0917",
+      "boss_id": 931,
+      "name": "boss_t8_thanh_le_0931",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5457,8 +5347,8 @@
       ]
     },
     {
-      "boss_id": 940,
-      "name": "boss_t8_thanh_nguyen_0940",
+      "boss_id": 937,
+      "name": "boss_t8_thanh_nguyen_0937",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5467,8 +5357,8 @@
       ]
     },
     {
-      "boss_id": 943,
-      "name": "boss_t8_thanh_nguyen_0943",
+      "boss_id": 949,
+      "name": "boss_t8_thanh_ly_0949",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5477,8 +5367,8 @@
       ]
     },
     {
-      "boss_id": 944,
-      "name": "boss_t8_thanh_tran_0944",
+      "boss_id": 951,
+      "name": "boss_t8_thanh_tran_0951",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5487,58 +5377,8 @@
       ]
     },
     {
-      "boss_id": 954,
-      "name": "boss_t8_thanh_tran_0954",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 955,
-      "name": "boss_t8_thanh_nguyen_0955",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 958,
-      "name": "boss_t8_thanh_tay_son_0958",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 960,
-      "name": "boss_t8_thanh_tay_son_0960",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 961,
-      "name": "boss_t8_thanh_le_0961",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 964,
-      "name": "boss_t8_thanh_nguyen_0964",
+      "boss_id": 957,
+      "name": "boss_t8_thanh_nguyen_0957",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5548,7 +5388,7 @@
     },
     {
       "boss_id": 966,
-      "name": "boss_t8_thanh_nguyen_0966",
+      "name": "boss_t8_thanh_ly_0966",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5557,8 +5397,8 @@
       ]
     },
     {
-      "boss_id": 979,
-      "name": "boss_t8_thanh_tran_0979",
+      "boss_id": 969,
+      "name": "boss_t8_thanh_ly_0969",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5567,18 +5407,8 @@
       ]
     },
     {
-      "boss_id": 989,
-      "name": "boss_t8_thanh_tay_son_0989",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 992,
-      "name": "boss_t8_thanh_tay_son_0992",
+      "boss_id": 970,
+      "name": "boss_t8_thanh_tay_son_0970",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5588,7 +5418,17 @@
     },
     {
       "boss_id": 996,
-      "name": "boss_t8_thanh_tay_son_0996",
+      "name": "boss_t8_thanh_ly_0996",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 998,
+      "name": "boss_t8_thanh_nguyen_0998",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5598,7 +5438,7 @@
     },
     {
       "boss_id": 1001,
-      "name": "boss_t8_thanh_tay_son_1001",
+      "name": "boss_t8_thanh_tran_1001",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5607,8 +5447,8 @@
       ]
     },
     {
-      "boss_id": 1010,
-      "name": "boss_t8_thanh_nguyen_1010",
+      "boss_id": 1003,
+      "name": "boss_t8_thanh_le_1003",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5617,8 +5457,8 @@
       ]
     },
     {
-      "boss_id": 1013,
-      "name": "boss_t8_thanh_ly_1013",
+      "boss_id": 1007,
+      "name": "boss_t8_thanh_le_1007",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5627,8 +5467,8 @@
       ]
     },
     {
-      "boss_id": 1014,
-      "name": "boss_t8_thanh_nguyen_1014",
+      "boss_id": 1011,
+      "name": "boss_t8_thanh_tay_son_1011",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5637,8 +5477,8 @@
       ]
     },
     {
-      "boss_id": 1016,
-      "name": "boss_t8_thanh_tran_1016",
+      "boss_id": 1020,
+      "name": "boss_t8_thanh_le_1020",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5647,8 +5487,8 @@
       ]
     },
     {
-      "boss_id": 1018,
-      "name": "boss_t8_thanh_nguyen_1018",
+      "boss_id": 1021,
+      "name": "boss_t8_thanh_le_1021",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5657,8 +5497,8 @@
       ]
     },
     {
-      "boss_id": 1029,
-      "name": "boss_t8_thanh_le_1029",
+      "boss_id": 1032,
+      "name": "boss_t8_thanh_le_1032",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5667,8 +5507,8 @@
       ]
     },
     {
-      "boss_id": 1030,
-      "name": "boss_t8_thanh_le_1030",
+      "boss_id": 1038,
+      "name": "boss_t8_thanh_nguyen_1038",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5677,8 +5517,8 @@
       ]
     },
     {
-      "boss_id": 1047,
-      "name": "boss_t8_thanh_nguyen_1047",
+      "boss_id": 1039,
+      "name": "boss_t8_thanh_ly_1039",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5687,18 +5527,8 @@
       ]
     },
     {
-      "boss_id": 1049,
-      "name": "boss_t8_thanh_nguyen_1049",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1055,
-      "name": "boss_t8_thanh_nguyen_1055",
+      "boss_id": 1046,
+      "name": "boss_t8_thanh_tran_1046",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5708,7 +5538,7 @@
     },
     {
       "boss_id": 1056,
-      "name": "boss_t8_thanh_le_1056",
+      "name": "boss_t8_thanh_tran_1056",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5717,8 +5547,8 @@
       ]
     },
     {
-      "boss_id": 1066,
-      "name": "boss_t8_thanh_tay_son_1066",
+      "boss_id": 1061,
+      "name": "boss_t8_thanh_tran_1061",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5727,8 +5557,8 @@
       ]
     },
     {
-      "boss_id": 1068,
-      "name": "boss_t8_thanh_tran_1068",
+      "boss_id": 1064,
+      "name": "boss_t8_thanh_tay_son_1064",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5737,8 +5567,8 @@
       ]
     },
     {
-      "boss_id": 1070,
-      "name": "boss_t8_thanh_tay_son_1070",
+      "boss_id": 1069,
+      "name": "boss_t8_thanh_tay_son_1069",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5747,8 +5577,8 @@
       ]
     },
     {
-      "boss_id": 1074,
-      "name": "boss_t8_thanh_le_1074",
+      "boss_id": 1078,
+      "name": "boss_t8_thanh_ly_1078",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5757,8 +5587,8 @@
       ]
     },
     {
-      "boss_id": 1080,
-      "name": "boss_t8_thanh_tran_1080",
+      "boss_id": 1086,
+      "name": "boss_t8_thanh_nguyen_1086",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5767,8 +5597,8 @@
       ]
     },
     {
-      "boss_id": 1089,
-      "name": "boss_t8_thanh_le_1089",
+      "boss_id": 1091,
+      "name": "boss_t8_thanh_nguyen_1091",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -5777,8 +5607,18 @@
       ]
     },
     {
-      "boss_id": 1097,
-      "name": "boss_t8_thanh_nguyen_1097",
+      "boss_id": 1098,
+      "name": "boss_t8_thanh_tran_1098",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1100,
+      "name": "boss_t8_thanh_tran_1100",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7459,8 +7299,8 @@
       ]
     },
     {
-      "boss_id": 909,
-      "name": "boss_t8_thanh_ly_0909",
+      "boss_id": 910,
+      "name": "boss_t8_thanh_tay_son_0910",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7469,8 +7309,38 @@
       ]
     },
     {
-      "boss_id": 922,
-      "name": "boss_t8_thanh_nguyen_0922",
+      "boss_id": 921,
+      "name": "boss_t8_thanh_tran_0921",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 923,
+      "name": "boss_t8_thanh_tran_0923",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 926,
+      "name": "boss_t8_thanh_nguyen_0926",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 927,
+      "name": "boss_t8_thanh_ly_0927",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7480,7 +7350,7 @@
     },
     {
       "boss_id": 928,
-      "name": "boss_t8_thanh_nguyen_0928",
+      "name": "boss_t8_thanh_ly_0928",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7489,8 +7359,8 @@
       ]
     },
     {
-      "boss_id": 935,
-      "name": "boss_t8_thanh_ly_0935",
+      "boss_id": 943,
+      "name": "boss_t8_thanh_nguyen_0943",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7499,8 +7369,8 @@
       ]
     },
     {
-      "boss_id": 936,
-      "name": "boss_t8_thanh_le_0936",
+      "boss_id": 948,
+      "name": "boss_t8_thanh_tay_son_0948",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7509,8 +7379,8 @@
       ]
     },
     {
-      "boss_id": 946,
-      "name": "boss_t8_thanh_nguyen_0946",
+      "boss_id": 950,
+      "name": "boss_t8_thanh_le_0950",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7519,8 +7389,8 @@
       ]
     },
     {
-      "boss_id": 952,
-      "name": "boss_t8_thanh_nguyen_0952",
+      "boss_id": 958,
+      "name": "boss_t8_thanh_tay_son_0958",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7529,8 +7399,8 @@
       ]
     },
     {
-      "boss_id": 957,
-      "name": "boss_t8_thanh_tay_son_0957",
+      "boss_id": 965,
+      "name": "boss_t8_thanh_nguyen_0965",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7539,8 +7409,8 @@
       ]
     },
     {
-      "boss_id": 970,
-      "name": "boss_t8_thanh_nguyen_0970",
+      "boss_id": 967,
+      "name": "boss_t8_thanh_nguyen_0967",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7549,8 +7419,8 @@
       ]
     },
     {
-      "boss_id": 977,
-      "name": "boss_t8_thanh_tran_0977",
+      "boss_id": 979,
+      "name": "boss_t8_thanh_le_0979",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7559,8 +7429,8 @@
       ]
     },
     {
-      "boss_id": 981,
-      "name": "boss_t8_thanh_tran_0981",
+      "boss_id": 985,
+      "name": "boss_t8_thanh_le_0985",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7569,8 +7439,8 @@
       ]
     },
     {
-      "boss_id": 983,
-      "name": "boss_t8_thanh_tran_0983",
+      "boss_id": 989,
+      "name": "boss_t8_thanh_nguyen_0989",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7579,8 +7449,8 @@
       ]
     },
     {
-      "boss_id": 1017,
-      "name": "boss_t8_thanh_tran_1017",
+      "boss_id": 990,
+      "name": "boss_t8_thanh_nguyen_0990",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7589,8 +7459,8 @@
       ]
     },
     {
-      "boss_id": 1019,
-      "name": "boss_t8_thanh_le_1019",
+      "boss_id": 993,
+      "name": "boss_t8_thanh_tay_son_0993",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7599,8 +7469,8 @@
       ]
     },
     {
-      "boss_id": 1022,
-      "name": "boss_t8_thanh_ly_1022",
+      "boss_id": 1000,
+      "name": "boss_t8_thanh_le_1000",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7609,8 +7479,18 @@
       ]
     },
     {
-      "boss_id": 1023,
-      "name": "boss_t8_thanh_tran_1023",
+      "boss_id": 1014,
+      "name": "boss_t8_thanh_le_1014",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1025,
+      "name": "boss_t8_thanh_ly_1025",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7620,7 +7500,7 @@
     },
     {
       "boss_id": 1027,
-      "name": "boss_t8_thanh_le_1027",
+      "name": "boss_t8_thanh_tran_1027",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7629,8 +7509,8 @@
       ]
     },
     {
-      "boss_id": 1032,
-      "name": "boss_t8_thanh_nguyen_1032",
+      "boss_id": 1028,
+      "name": "boss_t8_thanh_le_1028",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7639,8 +7519,38 @@
       ]
     },
     {
-      "boss_id": 1037,
-      "name": "boss_t8_thanh_ly_1037",
+      "boss_id": 1034,
+      "name": "boss_t8_thanh_le_1034",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1036,
+      "name": "boss_t8_thanh_ly_1036",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1043,
+      "name": "boss_t8_thanh_le_1043",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1044,
+      "name": "boss_t8_thanh_ly_1044",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7650,7 +7560,27 @@
     },
     {
       "boss_id": 1048,
-      "name": "boss_t8_thanh_tay_son_1048",
+      "name": "boss_t8_thanh_tran_1048",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1049,
+      "name": "boss_t8_thanh_tay_son_1049",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1055,
+      "name": "boss_t8_thanh_tran_1055",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7660,7 +7590,7 @@
     },
     {
       "boss_id": 1057,
-      "name": "boss_t8_thanh_le_1057",
+      "name": "boss_t8_thanh_nguyen_1057",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7669,8 +7599,8 @@
       ]
     },
     {
-      "boss_id": 1060,
-      "name": "boss_t8_thanh_tran_1060",
+      "boss_id": 1058,
+      "name": "boss_t8_thanh_le_1058",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7679,8 +7609,8 @@
       ]
     },
     {
-      "boss_id": 1075,
-      "name": "boss_t8_thanh_le_1075",
+      "boss_id": 1068,
+      "name": "boss_t8_thanh_tran_1068",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7689,8 +7619,8 @@
       ]
     },
     {
-      "boss_id": 1081,
-      "name": "boss_t8_thanh_nguyen_1081",
+      "boss_id": 1074,
+      "name": "boss_t8_thanh_tay_son_1074",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7699,8 +7629,58 @@
       ]
     },
     {
-      "boss_id": 1086,
-      "name": "boss_t8_thanh_nguyen_1086",
+      "boss_id": 1076,
+      "name": "boss_t8_thanh_tran_1076",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1077,
+      "name": "boss_t8_thanh_tay_son_1077",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1079,
+      "name": "boss_t8_thanh_ly_1079",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1080,
+      "name": "boss_t8_thanh_nguyen_1080",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1082,
+      "name": "boss_t8_thanh_tay_son_1082",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1084,
+      "name": "boss_t8_thanh_le_1084",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7719,8 +7699,8 @@
       ]
     },
     {
-      "boss_id": 1088,
-      "name": "boss_t8_thanh_ly_1088",
+      "boss_id": 1090,
+      "name": "boss_t8_thanh_tran_1090",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7729,8 +7709,8 @@
       ]
     },
     {
-      "boss_id": 1093,
-      "name": "boss_t8_thanh_ly_1093",
+      "boss_id": 1097,
+      "name": "boss_t8_thanh_tran_1097",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -7739,8 +7719,8 @@
       ]
     },
     {
-      "boss_id": 1096,
-      "name": "boss_t8_thanh_tay_son_1096",
+      "boss_id": 1103,
+      "name": "boss_t8_thanh_nguyen_1103",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9491,8 +9471,18 @@
       ]
     },
     {
-      "boss_id": 925,
-      "name": "boss_t8_thanh_ly_0925",
+      "boss_id": 908,
+      "name": "boss_t7_boss_tran_0908",
+      "respawn_min": 45,
+      "raid_window_hours": 0,
+      "level_range": [
+        110,
+        120
+      ]
+    },
+    {
+      "boss_id": 911,
+      "name": "boss_t8_thanh_tay_son_0911",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9501,8 +9491,8 @@
       ]
     },
     {
-      "boss_id": 930,
-      "name": "boss_t8_thanh_le_0930",
+      "boss_id": 912,
+      "name": "boss_t8_thanh_nguyen_0912",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9511,8 +9501,8 @@
       ]
     },
     {
-      "boss_id": 932,
-      "name": "boss_t8_thanh_le_0932",
+      "boss_id": 915,
+      "name": "boss_t8_thanh_tay_son_0915",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9521,8 +9511,8 @@
       ]
     },
     {
-      "boss_id": 947,
-      "name": "boss_t8_thanh_nguyen_0947",
+      "boss_id": 938,
+      "name": "boss_t8_thanh_tay_son_0938",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9531,8 +9521,8 @@
       ]
     },
     {
-      "boss_id": 956,
-      "name": "boss_t8_thanh_tay_son_0956",
+      "boss_id": 942,
+      "name": "boss_t8_thanh_nguyen_0942",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9541,8 +9531,8 @@
       ]
     },
     {
-      "boss_id": 959,
-      "name": "boss_t8_thanh_tay_son_0959",
+      "boss_id": 954,
+      "name": "boss_t8_thanh_tran_0954",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9551,8 +9541,8 @@
       ]
     },
     {
-      "boss_id": 962,
-      "name": "boss_t8_thanh_le_0962",
+      "boss_id": 971,
+      "name": "boss_t8_thanh_nguyen_0971",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9561,8 +9551,8 @@
       ]
     },
     {
-      "boss_id": 963,
-      "name": "boss_t8_thanh_le_0963",
+      "boss_id": 972,
+      "name": "boss_t8_thanh_nguyen_0972",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9571,18 +9561,8 @@
       ]
     },
     {
-      "boss_id": 969,
-      "name": "boss_t8_thanh_nguyen_0969",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 973,
-      "name": "boss_t8_thanh_ly_0973",
+      "boss_id": 976,
+      "name": "boss_t8_thanh_nguyen_0976",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9592,7 +9572,7 @@
     },
     {
       "boss_id": 978,
-      "name": "boss_t8_thanh_tay_son_0978",
+      "name": "boss_t8_thanh_tran_0978",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9601,8 +9581,38 @@
       ]
     },
     {
-      "boss_id": 990,
-      "name": "boss_t8_thanh_nguyen_0990",
+      "boss_id": 980,
+      "name": "boss_t8_thanh_le_0980",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 982,
+      "name": "boss_t8_thanh_tran_0982",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 986,
+      "name": "boss_t8_thanh_nguyen_0986",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 988,
+      "name": "boss_t8_thanh_le_0988",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9612,7 +9622,7 @@
     },
     {
       "boss_id": 991,
-      "name": "boss_t8_thanh_ly_0991",
+      "name": "boss_t8_thanh_tran_0991",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9622,7 +9632,7 @@
     },
     {
       "boss_id": 994,
-      "name": "boss_t8_thanh_ly_0994",
+      "name": "boss_t8_thanh_nguyen_0994",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9631,18 +9641,8 @@
       ]
     },
     {
-      "boss_id": 999,
-      "name": "boss_t8_thanh_le_0999",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1002,
-      "name": "boss_t8_thanh_nguyen_1002",
+      "boss_id": 1004,
+      "name": "boss_t8_thanh_tay_son_1004",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9661,8 +9661,8 @@
       ]
     },
     {
-      "boss_id": 1007,
-      "name": "boss_t8_thanh_le_1007",
+      "boss_id": 1012,
+      "name": "boss_t8_thanh_le_1012",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9671,8 +9671,18 @@
       ]
     },
     {
-      "boss_id": 1024,
-      "name": "boss_t8_thanh_le_1024",
+      "boss_id": 1022,
+      "name": "boss_t8_thanh_ly_1022",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1026,
+      "name": "boss_t8_thanh_tay_son_1026",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9682,7 +9692,7 @@
     },
     {
       "boss_id": 1031,
-      "name": "boss_t8_thanh_tay_son_1031",
+      "name": "boss_t8_thanh_nguyen_1031",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9691,8 +9701,8 @@
       ]
     },
     {
-      "boss_id": 1036,
-      "name": "boss_t8_thanh_nguyen_1036",
+      "boss_id": 1033,
+      "name": "boss_t8_thanh_le_1033",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9701,8 +9711,8 @@
       ]
     },
     {
-      "boss_id": 1038,
-      "name": "boss_t8_thanh_ly_1038",
+      "boss_id": 1040,
+      "name": "boss_t8_thanh_tran_1040",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9711,8 +9721,8 @@
       ]
     },
     {
-      "boss_id": 1045,
-      "name": "boss_t8_thanh_ly_1045",
+      "boss_id": 1042,
+      "name": "boss_t8_thanh_nguyen_1042",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9722,7 +9732,7 @@
     },
     {
       "boss_id": 1050,
-      "name": "boss_t8_thanh_tran_1050",
+      "name": "boss_t8_thanh_nguyen_1050",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9731,18 +9741,8 @@
       ]
     },
     {
-      "boss_id": 1053,
-      "name": "boss_t8_thanh_le_1053",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1058,
-      "name": "boss_t8_thanh_ly_1058",
+      "boss_id": 1059,
+      "name": "boss_t8_thanh_tay_son_1059",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9752,7 +9752,17 @@
     },
     {
       "boss_id": 1067,
-      "name": "boss_t8_thanh_ly_1067",
+      "name": "boss_t8_thanh_le_1067",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1070,
+      "name": "boss_t8_thanh_le_1070",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9762,7 +9772,7 @@
     },
     {
       "boss_id": 1072,
-      "name": "boss_t8_thanh_tran_1072",
+      "name": "boss_t8_thanh_ly_1072",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9771,8 +9781,48 @@
       ]
     },
     {
-      "boss_id": 1091,
-      "name": "boss_t8_thanh_nguyen_1091",
+      "boss_id": 1073,
+      "name": "boss_t8_thanh_tran_1073",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1081,
+      "name": "boss_t8_thanh_tran_1081",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1083,
+      "name": "boss_t8_thanh_tran_1083",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1088,
+      "name": "boss_t8_thanh_le_1088",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1089,
+      "name": "boss_t8_thanh_le_1089",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -9791,48 +9841,8 @@
       ]
     },
     {
-      "boss_id": 1094,
-      "name": "boss_t8_thanh_ly_1094",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1095,
-      "name": "boss_t8_thanh_nguyen_1095",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1098,
-      "name": "boss_t8_thanh_le_1098",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1100,
-      "name": "boss_t8_thanh_nguyen_1100",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1102,
-      "name": "boss_t8_thanh_tay_son_1102",
+      "boss_id": 1096,
+      "name": "boss_t8_thanh_le_1096",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11563,8 +11573,8 @@
       ]
     },
     {
-      "boss_id": 912,
-      "name": "boss_t8_thanh_le_0912",
+      "boss_id": 925,
+      "name": "boss_t8_thanh_tay_son_0925",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11573,8 +11583,8 @@
       ]
     },
     {
-      "boss_id": 916,
-      "name": "boss_t8_thanh_tay_son_0916",
+      "boss_id": 932,
+      "name": "boss_t8_thanh_nguyen_0932",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11583,8 +11593,8 @@
       ]
     },
     {
-      "boss_id": 918,
-      "name": "boss_t8_thanh_ly_0918",
+      "boss_id": 935,
+      "name": "boss_t8_thanh_le_0935",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11593,8 +11603,8 @@
       ]
     },
     {
-      "boss_id": 926,
-      "name": "boss_t8_thanh_le_0926",
+      "boss_id": 940,
+      "name": "boss_t8_thanh_le_0940",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11603,38 +11613,8 @@
       ]
     },
     {
-      "boss_id": 927,
-      "name": "boss_t8_thanh_nguyen_0927",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 929,
-      "name": "boss_t8_thanh_ly_0929",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 938,
-      "name": "boss_t8_thanh_tran_0938",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 942,
-      "name": "boss_t8_thanh_tran_0942",
+      "boss_id": 941,
+      "name": "boss_t8_thanh_nguyen_0941",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11644,7 +11624,7 @@
     },
     {
       "boss_id": 945,
-      "name": "boss_t8_thanh_ly_0945",
+      "name": "boss_t8_thanh_tran_0945",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11653,8 +11633,28 @@
       ]
     },
     {
-      "boss_id": 965,
-      "name": "boss_t8_thanh_le_0965",
+      "boss_id": 947,
+      "name": "boss_t8_thanh_ly_0947",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 953,
+      "name": "boss_t8_thanh_tran_0953",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 968,
+      "name": "boss_t8_thanh_tay_son_0968",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11664,7 +11664,7 @@
     },
     {
       "boss_id": 974,
-      "name": "boss_t8_thanh_ly_0974",
+      "name": "boss_t8_thanh_le_0974",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11673,8 +11673,8 @@
       ]
     },
     {
-      "boss_id": 975,
-      "name": "boss_t8_thanh_tran_0975",
+      "boss_id": 981,
+      "name": "boss_t8_thanh_nguyen_0981",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11683,8 +11683,8 @@
       ]
     },
     {
-      "boss_id": 984,
-      "name": "boss_t8_thanh_tran_0984",
+      "boss_id": 992,
+      "name": "boss_t8_thanh_le_0992",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11693,8 +11693,8 @@
       ]
     },
     {
-      "boss_id": 995,
-      "name": "boss_t8_thanh_nguyen_0995",
+      "boss_id": 999,
+      "name": "boss_t8_thanh_nguyen_0999",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11703,8 +11703,8 @@
       ]
     },
     {
-      "boss_id": 997,
-      "name": "boss_t8_thanh_ly_0997",
+      "boss_id": 1008,
+      "name": "boss_t8_thanh_tay_son_1008",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11713,8 +11713,8 @@
       ]
     },
     {
-      "boss_id": 998,
-      "name": "boss_t8_thanh_nguyen_0998",
+      "boss_id": 1009,
+      "name": "boss_t8_thanh_nguyen_1009",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11723,8 +11723,8 @@
       ]
     },
     {
-      "boss_id": 1000,
-      "name": "boss_t8_thanh_nguyen_1000",
+      "boss_id": 1010,
+      "name": "boss_t8_thanh_nguyen_1010",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11733,8 +11733,8 @@
       ]
     },
     {
-      "boss_id": 1025,
-      "name": "boss_t8_thanh_ly_1025",
+      "boss_id": 1018,
+      "name": "boss_t8_thanh_tran_1018",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11743,8 +11743,8 @@
       ]
     },
     {
-      "boss_id": 1028,
-      "name": "boss_t8_thanh_ly_1028",
+      "boss_id": 1019,
+      "name": "boss_t8_thanh_le_1019",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11753,8 +11753,8 @@
       ]
     },
     {
-      "boss_id": 1033,
-      "name": "boss_t8_thanh_nguyen_1033",
+      "boss_id": 1023,
+      "name": "boss_t8_thanh_tran_1023",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11763,8 +11763,8 @@
       ]
     },
     {
-      "boss_id": 1035,
-      "name": "boss_t8_thanh_tran_1035",
+      "boss_id": 1052,
+      "name": "boss_t8_thanh_le_1052",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11773,8 +11773,8 @@
       ]
     },
     {
-      "boss_id": 1059,
-      "name": "boss_t8_thanh_tran_1059",
+      "boss_id": 1054,
+      "name": "boss_t8_thanh_tay_son_1054",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11783,8 +11783,18 @@
       ]
     },
     {
-      "boss_id": 1061,
-      "name": "boss_t8_thanh_tran_1061",
+      "boss_id": 1065,
+      "name": "boss_t8_thanh_tay_son_1065",
+      "respawn_min": 360,
+      "raid_window_hours": 24,
+      "level_range": [
+        115,
+        125
+      ]
+    },
+    {
+      "boss_id": 1066,
+      "name": "boss_t8_thanh_le_1066",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11803,8 +11813,8 @@
       ]
     },
     {
-      "boss_id": 1079,
-      "name": "boss_t8_thanh_ly_1079",
+      "boss_id": 1094,
+      "name": "boss_t8_thanh_ly_1094",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [
@@ -11813,18 +11823,8 @@
       ]
     },
     {
-      "boss_id": 1083,
-      "name": "boss_t8_thanh_ly_1083",
-      "respawn_min": 360,
-      "raid_window_hours": 24,
-      "level_range": [
-        115,
-        125
-      ]
-    },
-    {
-      "boss_id": 1085,
-      "name": "boss_t8_thanh_tay_son_1085",
+      "boss_id": 1095,
+      "name": "boss_t8_thanh_ly_1095",
       "respawn_min": 360,
       "raid_window_hours": 24,
       "level_range": [

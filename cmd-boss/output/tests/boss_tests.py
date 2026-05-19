@@ -29,7 +29,13 @@ def load_entries():
 
 
 def derive_class(entry):
-    return entry.get("boss_tier_class") or {6: "normal", 7: "elite", 8: "raid", 9: "world"}.get(entry.get("tier"))
+    if entry.get("boss_tier_class"):
+        return entry["boss_tier_class"]
+    tier = entry.get("tier")
+    npc_class = entry.get("npc_class")
+    if tier == 7 and npc_class == "thanh":
+        return "raid"
+    return {6: "normal", 7: "elite", 8: "raid", 9: "world"}.get(tier)
 
 
 def test_01_count_target():
