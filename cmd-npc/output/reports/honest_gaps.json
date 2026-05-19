@@ -2,7 +2,7 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260519-100252",
+  "build_timestamp": "20260519-105507",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -149,6 +149,22 @@
         "R88_audit_index_round_81_90_entry": "AUDIT_INDEX.md added round 81-90 row + bug fix areas section.",
         "R89_validator_R81_R85_checks": "Validator checks 56-60: pet_master_pettable, tx_log_cap, tier_level_anomaly_alert, extra_era_empty_alert, element_stat_skew_alert.",
         "R90_validator_extension_audit_history": "Validator 55→60 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_81_90 wired."
+      }
+    },
+    "round_91_100": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — tiếp tục audit 10 round nữa",
+      "bugs_fixed": {
+        "R91_protagonist_dual_flag_alert": "LOW INFO alert npc_protagonist_dual_flag — Trần Long idx=1 has both is_protagonist=True AND is_player=True. v1.1 design intentional (single hero), v2 multiplayer may diverge. Documented for downstream consumers.",
+        "R92_validator_sceneId_gen_range": "Validator check 61: sceneId gen-side strictly in [1, 7817] (existing 59 orphan covered by separate R75 alert).",
+        "R93_validator_skill_ids_range": "Validator check 62: skill_ids all values in [1, 165] (SKILL_165 registry boundary).",
+        "R94_validator_ai_behavior_valid_set": "Validator check 63: ai_behavior in {idle, wander, aggressive, patrol, defensive, train, event_perform, gather} — closed enum.",
+        "R95_validator_tier_level_adherence": "Validator check 64: gen NPC tier→level pair respects NPC_TIER_RANGE (e.g., tier 0 must be lv 1-10, tier 9 must be lv 115-120).",
+        "R96_validator_registry_split_sum": "Validator check 65: npc_main + npc_side + npc_lore + npc_generated == npc_full == TARGET_NPC (10000). Catches split desync.",
+        "R97_main_era_gender_gap_alert": "LOW INFO alert npc_main_era_gender_gap — main eras with 0 female historical figures (Trần 7/0, Nguyễn 5/0, Lê 5/1, Tây Sơn 5/1). Content team enrich next round.",
+        "R98_audit_index_round_91_100_entry": "AUDIT_INDEX.md round 91-100 row + bug fix area + alerts table sync (2 new LOW alerts).",
+        "R99_readme_cumul_100": "README.md updated to cumul 100 / validator 65/65 / 18 active alerts.",
+        "R100_validator_extension_audit_history": "Validator 60→65 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_91_100 wired."
       }
     }
   },
