@@ -5175,6 +5175,276 @@ ROUND_L19_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 20 — slot_cap + stat_budget JSON parity (ICOSA-DEEP, v1.21)
+# ============================================================
+def _load_slot_cap():
+    p = SLOT_CAP
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8")).get("caps_per_slot", {})
+
+
+def _load_stat_budget():
+    p = REPO_DIR / "cmd-item" / "data" / "stat_budget.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def chk_L20_slot_cap_covers_eq_slots(items, *_):
+    caps = _load_slot_cap()
+    missing = [s for s in EQUIPMENT_SLOTS if s not in caps]
+    return len(missing) == 0, {"missing_slot_caps": missing}
+
+
+def chk_L20_item_stats_within_slot_cap(items, *_):
+    caps = _load_slot_cap()
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        slot = it.get("slot")
+        cap = caps.get(slot)
+        if not cap:
+            continue
+        st = it.get("stats") or {}
+        for k, v in st.items():
+            if k in cap and isinstance(v, (int, float)) and v > cap[k]:
+                bad.append({"id": it["id"], "slot": slot, "key": k,
+                            "val": v, "cap": cap[k]})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"over_cap": len(bad), "samples": bad[:5]}
+
+
+def chk_L20_stat_budget_present(items, *_):
+    sb = _load_stat_budget()
+    return "rarity_budget" in sb, {"keys": list(sb.keys())[:5]}
+
+
+def chk_L20_rarity_budget_complete(items, *_):
+    sb = _load_stat_budget().get("rarity_budget", [])
+    rarities = {b.get("rarity") for b in sb}
+    # spec uses 5 buckets here (common/rare/epic/legendary/mythic)
+    expected = {"common", "rare", "epic", "legendary", "mythic"}
+    missing = expected - rarities
+    return len(missing) == 0, {"missing": sorted(missing)}
+
+
+def chk_L20_max_affix_count_ascending(items, *_):
+    sb = _load_stat_budget().get("rarity_budget", [])
+    order = ["common", "rare", "epic", "legendary", "mythic"]
+    by_r = {b.get("rarity"): b.get("max_affix_count", 0) for b in sb}
+    seq = [by_r.get(r, 0) for r in order]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"seq": seq}
+
+
+def chk_L20_max_stat_power_ascending(items, *_):
+    sb = _load_stat_budget().get("rarity_budget", [])
+    order = ["common", "rare", "epic", "legendary", "mythic"]
+    by_r = {b.get("rarity"): b.get("max_stat_power", 0) for b in sb}
+    seq = [by_r.get(r, 0) for r in order]
+    monotonic = all(seq[i] <= seq[i + 1] for i in range(len(seq) - 1))
+    return monotonic, {"seq": seq}
+
+
+def chk_L20_companion_ratio_bp_present(items, *_):
+    sb = _load_stat_budget()
+    cr = sb.get("companion_budget_ratio_bp")
+    return cr is not None and 0 < cr <= 10000, {"value": cr}
+
+
+def chk_L20_slot_cap_locked_by_present(items, *_):
+    p = SLOT_CAP
+    if not p.exists():
+        return False, {"missing": True}
+    raw = p.read_text(encoding="utf-8")
+    return "_locked_by" in raw, {"present": "_locked_by" in raw}
+
+
+def chk_L20_affix_pool_locked_by_present(items, *_):
+    p = AFFIX_POOL
+    if not p.exists():
+        return False, {"missing": True}
+    raw = p.read_text(encoding="utf-8")
+    return "_locked_by" in raw, {"present": "_locked_by" in raw}
+
+
+def chk_L20_affix_pool_covers_eq_slots(items, *_):
+    pools = _load_affix_pool()
+    missing = [s for s in EQUIPMENT_SLOTS if s not in pools]
+    return len(missing) == 0, {"missing_slot_pools": missing}
+
+
+ROUND_L20_CHECKS = {
+    2: [
+        ("L20_slot_cap_covers_eq_slots", "R45",
+         chk_L20_slot_cap_covers_eq_slots),
+        ("L20_item_stats_within_slot_cap", "R45",
+         chk_L20_item_stats_within_slot_cap),
+    ],
+    3: [
+        ("L20_stat_budget_present", "R45",
+         chk_L20_stat_budget_present),
+        ("L20_rarity_budget_complete", "R45",
+         chk_L20_rarity_budget_complete),
+    ],
+    4: [
+        ("L20_max_affix_count_ascending", "R45",
+         chk_L20_max_affix_count_ascending),
+        ("L20_max_stat_power_ascending", "R45",
+         chk_L20_max_stat_power_ascending),
+    ],
+    5: [
+        ("L20_companion_ratio_bp_present", "R45",
+         chk_L20_companion_ratio_bp_present),
+        ("L20_slot_cap_locked_by_present", "R30",
+         chk_L20_slot_cap_locked_by_present),
+    ],
+    6: [
+        ("L20_affix_pool_locked_by_present", "R30",
+         chk_L20_affix_pool_locked_by_present),
+        ("L20_affix_pool_covers_eq_slots", "R49",
+         chk_L20_affix_pool_covers_eq_slots),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
+# ============================================================
+# LAYER 21 — sets.json + itemization_constants (HENICOSA-DEEP, v1.22)
+# ============================================================
+def _load_sets():
+    p = REPO_DIR / "cmd-item" / "data" / "sets.json"
+    if not p.exists():
+        return []
+    return json.loads(p.read_text(encoding="utf-8")).get("sets", [])
+
+
+def _load_const():
+    p = REPO_DIR / "cmd-item" / "data" / "itemization_constants.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def chk_L21_sets_present(items, *_):
+    s = _load_sets()
+    return len(s) >= 1, {"set_count": len(s)}
+
+
+def chk_L21_set_id_unique(items, *_):
+    s = _load_sets()
+    ids = [x.get("set_id") for x in s]
+    dupes = [k for k, c in Counter(ids).items() if c > 1]
+    return len(dupes) == 0, {"dupe_set_ids": dupes}
+
+
+def chk_L21_set_conflict_policy_valid(items, *_):
+    valid = {"strongest_only", "additive",
+             "exclusive_group", "diminishing_return"}
+    bad = []
+    for x in _load_sets():
+        cp = x.get("conflict_policy")
+        if cp not in valid:
+            bad.append({"set_id": x.get("set_id"), "policy": cp})
+    return len(bad) == 0, {"bad_policy": len(bad), "samples": bad[:5]}
+
+
+def chk_L21_set_bonus_pieces_positive(items, *_):
+    bad = []
+    for x in _load_sets():
+        for b in x.get("bonuses", []):
+            p = b.get("pieces")
+            if not isinstance(p, int) or p < 2 or p > 9:
+                bad.append({"set_id": x.get("set_id"), "pieces": p})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"bad_pieces": len(bad), "samples": bad[:5]}
+
+
+def chk_L21_set_piece_refs_existing(items, *_):
+    out_ids = {it["id"] for it in items}
+    bad = []
+    for x in _load_sets():
+        for pid in x.get("pieces", []):
+            if pid and pid not in out_ids:
+                bad.append({"set_id": x.get("set_id"), "missing_piece": pid})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"missing_piece_refs": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L21_const_formula_version(items, *_):
+    c = _load_const()
+    fv = c.get("formula_version", "")
+    return bool(fv) and "v" in fv.lower(), {"formula_version": fv}
+
+
+def chk_L21_const_recursion_max_depth(items, *_):
+    c = _load_const().get("modifier_recursion", {})
+    md = c.get("max_depth", 0)
+    return 1 <= md <= 32, {"max_depth": md}
+
+
+def chk_L21_const_perf_budget_max_aggregation(items, *_):
+    c = _load_const().get("perf_budget", {})
+    m = c.get("max_aggregation_us", 0)
+    return 0 < m <= 1000, {"max_aggregation_us": m}
+
+
+def chk_L21_const_bao_kich_cap_5000(items, *_):
+    c = _load_const()
+    bk = c.get("bao_kich_global_cap_bp", 0)
+    return bk == 5000, {"bao_kich_global_cap_bp": bk}
+
+
+def chk_L21_const_stat_weight_keys_present(items, *_):
+    c = _load_const().get("stat_weight", {})
+    required = ["hp", "sat_luc", "phap_luc", "defense"]
+    missing = [k for k in required if k not in c]
+    return len(missing) == 0, {"missing": missing}
+
+
+ROUND_L21_CHECKS = {
+    2: [
+        ("L21_sets_present", "R49", chk_L21_sets_present),
+        ("L21_set_id_unique", "R71", chk_L21_set_id_unique),
+    ],
+    3: [
+        ("L21_set_conflict_policy_valid", "R45",
+         chk_L21_set_conflict_policy_valid),
+        ("L21_set_bonus_pieces_positive", "R45",
+         chk_L21_set_bonus_pieces_positive),
+    ],
+    4: [
+        ("L21_set_piece_refs_existing", "R44",
+         chk_L21_set_piece_refs_existing),
+        ("L21_const_formula_version", "R49",
+         chk_L21_const_formula_version),
+    ],
+    5: [
+        ("L21_const_recursion_max_depth", "R45",
+         chk_L21_const_recursion_max_depth),
+        ("L21_const_perf_budget_max_aggregation", "R45",
+         chk_L21_const_perf_budget_max_aggregation),
+    ],
+    6: [
+        ("L21_const_bao_kich_cap_5000", "R45",
+         chk_L21_const_bao_kich_cap_5000),
+        ("L21_const_stat_weight_keys_present", "R49",
+         chk_L21_const_stat_weight_keys_present),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -5280,6 +5550,10 @@ def main():
             active_checks.extend(ROUND_L18_CHECKS[r])
         if r in ROUND_L19_CHECKS:
             active_checks.extend(ROUND_L19_CHECKS[r])
+        if r in ROUND_L20_CHECKS:
+            active_checks.extend(ROUND_L20_CHECKS[r])
+        if r in ROUND_L21_CHECKS:
+            active_checks.extend(ROUND_L21_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
