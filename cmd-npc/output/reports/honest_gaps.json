@@ -2,7 +2,7 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260519-130507",
+  "build_timestamp": "20260519-132930",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -197,6 +197,54 @@
         "R118_audit_index_round_111_120_entry": "AUDIT_INDEX.md row + bug fix area + alerts table sync (1 new MED + 20 cumulative) + validator matrix updated to include 71-75.",
         "R119_readme_cumul_120": "README.md cumul 120 / validator 75/75 / 20 active alerts.",
         "R120_validator_extension_audit_history": "Validator 70→75 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_111_120 + validator expected_rounds wired."
+      }
+    },
+    "round_211_220": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — đào sâu 22 vòng",
+      "bugs_fixed": {
+        "R211_validator_build_duration": "Validator #121: build_duration_sec ≥ 0.",
+        "R212_validator_npc_full_size": "Validator #122: npc_full.jsonl > 1MB.",
+        "R213_validator_checks_count_self": "Validator #123: validation.json `checks` count tracked.",
+        "R214_validator_metrics_ts": "Validator #124: metrics.ts captured.",
+        "R215_validator_audit_history_count": "Validator #125: audit_history ≥21 prior rounds.",
+        "R216_audit_index_211_220": "AUDIT_INDEX row.",
+        "R217_readme_cumul_220": "README cumul 220.",
+        "R218_audit_history_211_220": "round_211_220 block.",
+        "R219_expected_rounds_211_220": "expected_rounds append.",
+        "R220_doc_polish": "Validator matrix updated."
+      }
+    },
+    "round_201_210": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — đào sâu 22 vòng",
+      "bugs_fixed": {
+        "R201_validator_sql_create_table": "Validator #116: SQL has CREATE TABLE.",
+        "R202_validator_sql_primary_key": "Validator #117: SQL has PRIMARY KEY.",
+        "R203_validator_sql_balanced_parens": "Validator #118: SQL ( == ).",
+        "R204_validator_sql_semicolon": "Validator #119: SQL ends with ;.",
+        "R205_validator_sql_element_check": "Validator #120: SQL has element CHECK constraint.",
+        "R206_audit_index_201_210": "AUDIT_INDEX row.",
+        "R207_readme_cumul_210": "README cumul 210.",
+        "R208_audit_history_201_210": "round_201_210 block.",
+        "R209_expected_rounds_201_210": "expected_rounds append.",
+        "R210_doc_polish": "Validator matrix updated."
+      }
+    },
+    "round_191_200": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — đào sâu 22 vòng",
+      "bugs_fixed": {
+        "R191_validator_historical_bg_min": "Validator #111: historical figure background ≥20 chars.",
+        "R192_validator_cmd_skill_present": "Validator #112: cmd-skill output registry exists.",
+        "R193_validator_cmd_quest_present": "Validator #113: cmd-quest output registry exists.",
+        "R194_validator_pet_master_fields": "Validator #114: every pet_master has 4 pet fields.",
+        "R195_validator_quest_giver_can_give": "Validator #115: every quest_giver has can_give_quest=True.",
+        "R196_audit_index_191_200": "AUDIT_INDEX row.",
+        "R197_readme_cumul_200": "README cumul 200.",
+        "R198_audit_history_191_200": "round_191_200 block.",
+        "R199_expected_rounds_191_200": "expected_rounds append.",
+        "R200_doc_polish": "Validator matrix updated."
       }
     },
     "round_181_190": {
