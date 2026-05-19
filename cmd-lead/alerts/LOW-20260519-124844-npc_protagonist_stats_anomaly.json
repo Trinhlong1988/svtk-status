@@ -1,0 +1,16 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_protagonist_stats_anomaly",
+  "evidence": {
+    "source": "cmd-npc/existing/NPC_438.jsonl idx=1",
+    "actual_hp": 100,
+    "formula_expected": 50,
+    "level": 10,
+    "tier": 0,
+    "npc_type": "townsmen",
+    "rule_anchor": "R78 stat formula coherence",
+    "remediation": "R71.1 immutable. Protagonist may need explicit lv/tier override in source."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-124844"
+}
