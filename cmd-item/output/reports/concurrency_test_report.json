@@ -1,12 +1,12 @@
 {
   "concurrent_count": 3,
-  "total_time_sec": 0.43,
+  "total_time_sec": 0.41,
   "all_returncode_zero": true,
   "results": [
     {
       "idx": 0,
       "returncode": 0,
-      "duration_sec": 0.42,
+      "duration_sec": 0.41,
       "stdout_lines": 16,
       "stderr_lines": 1,
       "stderr_snip": ""
@@ -22,7 +22,7 @@
     {
       "idx": 2,
       "returncode": 0,
-      "duration_sec": 0.38,
+      "duration_sec": 0.41,
       "stdout_lines": 16,
       "stderr_lines": 1,
       "stderr_snip": ""
@@ -40,5 +40,5 @@
   },
   "expected_full_lines": 4006,
   "line_count_match": true,
-  "timestamp": "2026-05-19 14:05:59"
+  "timestamp": "2026-05-19 14:35:46"
 }
