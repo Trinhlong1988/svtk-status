@@ -17,9 +17,10 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 41-50 | 2026-05-19 | 35→40 | 10 | [AUDIT_REPORT_ROUND_41_50_20260519-012526.md](status/AUDIT_REPORT_ROUND_41_50_20260519-012526.md) |
 | 51-60 | 2026-05-19 | 40→45 | 10 | [AUDIT_REPORT_ROUND_51_60_20260519-014139.md](status/AUDIT_REPORT_ROUND_51_60_20260519-014139.md) |
 | 61-70 | 2026-05-19 | 45→50 | 10 | [AUDIT_REPORT_ROUND_61_70_20260519-015224.md](status/AUDIT_REPORT_ROUND_61_70_20260519-015224.md) |
-| **71-80** | **2026-05-19** | **50→55** | **10** | (current build) |
+| 71-80 | 2026-05-19 | 50→55 | 10 | [AUDIT_REPORT_ROUND_71_80_20260519-021300.md](status/AUDIT_REPORT_ROUND_71_80_20260519-021300.md) |
+| **81-90** | **2026-05-19** | **55→60** | **10** | [AUDIT_REPORT_ROUND_81_90_20260519-100252.md](status/AUDIT_REPORT_ROUND_81_90_20260519-100252.md) |
 
-**Cumulative total: 80 hidden bugs fixed.**
+**Cumulative total: 90 hidden bugs fixed.**
 
 ---
 
@@ -49,6 +50,9 @@ Boss epithet 100% with class-aware mapping (mini_boss/boss/thanh/than → matchi
 ### Round 71-80: determinism + schema completeness + name diversity
 JSON sort_keys=True for stable JSONL diff, UUID5 deterministic (uuid.uuid5 with DNS namespace + name+_index) replacing uuid4 for R68 replay reproducibility, SQL schema +2 columns (mentor_npc_idx, pet_evolution_path_note), existing boss no-epithet alert (27 entries — R71.1 immutable), name+era duplicate elimination via name_era_tracker (828 dupes pre-fix), tier 9 thần class force-aggressive behavior, AUDIT_INDEX round 71-80 entry, cmd-npc README.md pointer to audit history, validator R71-R76 regression checks (sort_keys/uuid5/schema/dupe/behavior).
 
+### Round 81-90: type↔flag coherence + content-gap alerts + archive caps
+pet_master pettable=True coherence (0/389 pre-fix → 100% post-fix), transaction_log cap 3 most recent (sweep cold archive), existing tier 0 level>10 anomaly alert (195 entries incl. Hùng Vương lv 80 / Lạc Long Quân lv 80 / Thủy Tinh lv 100 — R71.1 immutable), extra-era empty alert (9 declared eras pre_lich_su / bac_thuoc_g1 / hau_le_trinh_nguyen / phap_thuoc_g1 / khang_chien_f3 / doi_moi_f4 / current_f5 / tuong_lai_f5 / hoa_lu_968_origin with 0 NPCs), gen element stat skew alert (tâm +14% atk vs overall — statistical artifact), README.md version+cumul lines, AUDIT_INDEX 71-80 hyperlink fix, AUDIT_INDEX 81-90 entry, validator R81-R85 checks (pettable/tx_cap/tier_anom/extra_era/skew).
+
 ---
 
 ## Active ex-side alerts (R71.1 immutable — source NPC_438.jsonl untouched)
@@ -61,12 +65,18 @@ JSON sort_keys=True for stable JSONL diff, UUID5 deterministic (uuid.uuid5 with 
 | MED | npc_existing_spawn_collision_R75 | 284 pairs |
 | MED | npc_existing_type_tier_violation_R76_R80 | 111 |
 | MED | npc_existing_mentor_type_mismatch_R83 | 2 |
-| MED | npc_existing_rebirthable_non_boss_R74 | 43 (NEW Round 51-60) |
+| MED | npc_existing_rebirthable_non_boss_R74 | 43 |
+| MED | npc_extra_era_empty | 9 (NEW Round 81-90) |
+| LOW | npc_existing_boss_no_epithet | 27 |
+| LOW | npc_existing_myth_tier_hp | 17 |
+| LOW | npc_existing_tier_level_anomaly | 195 (NEW Round 81-90) |
+| LOW | npc_gen_element_stat_skew | 1 element (NEW Round 81-90) |
 | LOW | npc_existing_noncombat_skills | 327 |
 | LOW | npc_existing_mentor_stats_anomaly | 2 |
 | LOW | npc_protagonist_stats_anomaly | 1 |
+| MED | npc_ecosystem_cross_ref_missing | 5 adjacent CMDs |
 
-**10 cumulative alerts** (1 new Round 51-60).
+**16 cumulative alerts** (3 new Round 81-90).
 
 ---
 

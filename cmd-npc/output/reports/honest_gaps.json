@@ -2,7 +2,7 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260519-021259",
+  "build_timestamp": "20260519-100252",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -133,6 +133,22 @@
         "R78_cmd_npc_readme": "Created cmd-npc/README.md pointing to brief + AUDIT_INDEX + output structure.",
         "R79_validator_R71_R76_checks": "Validator checks 51-55: json_sort_keys, uuid_deterministic, schema_columns_full, name_era_diversity, tier9_aggressive.",
         "R80_validator_extension": "Validator 50→55 checks total."
+      }
+    },
+    "round_81_90": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — tiếp tục audit 10 round nữa",
+      "bugs_fixed": {
+        "R81_pet_master_pettable_coherence": "Pre-fix probe: 0/389 gen pet_master had pettable=True (100% incoherence with type). Force pettable=True when npc_type=='pet_master' in gen_one_npc + extend_to_target.",
+        "R82_tx_log_cap_3": "transaction_log accumulated 6 build artifacts. Added sweep cap 3 most recent → cold archive to transaction_log-archived/.",
+        "R83_existing_tier_level_anomaly_alert": "LOW alert npc_existing_tier_level_anomaly for 195 existing tier 0 NPC with level > 10 (myth figures Hùng Vương lv 80, Lạc Long Quân lv 80, Thủy Tinh lv 100). R71.1 immutable.",
+        "R84_extra_era_empty_alert": "MED alert npc_extra_era_empty when any of 9 declared extra eras (pre_lich_su, bac_thuoc_g1, ..., hoa_lu_968_origin) has 0 NPC. Content gap explicit.",
+        "R85_gen_element_stat_skew_alert": "LOW alert npc_gen_element_stat_skew when any element avg atk deviates >10% from overall (probe: tâm +14% via statistical artifact).",
+        "R86_readme_version_cumul": "cmd-npc/README.md updated to include version 1.1.0 + cumul-round count (was missing).",
+        "R87_audit_index_round_71_80_link": "AUDIT_INDEX.md replaced '(current build)' placeholder with real hyperlink to AUDIT_REPORT_ROUND_71_80_*.md.",
+        "R88_audit_index_round_81_90_entry": "AUDIT_INDEX.md added round 81-90 row + bug fix areas section.",
+        "R89_validator_R81_R85_checks": "Validator checks 56-60: pet_master_pettable, tx_log_cap, tier_level_anomaly_alert, extra_era_empty_alert, element_stat_skew_alert.",
+        "R90_validator_extension_audit_history": "Validator 55→60 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_81_90 wired."
       }
     }
   },
