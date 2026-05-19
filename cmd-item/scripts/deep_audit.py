@@ -6217,6 +6217,259 @@ ROUND_L26_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 27 — Power score outlier z-score (HEPTAICOSA-DEEP, v1.28)
+# ============================================================
+STAT_WEIGHTS_L27 = {
+    "hp": 1, "sat_luc": 8, "phap_luc": 8, "defense": 5,
+    "agility": 6, "crit_rate_bp": 0.01, "crit_dmg_bp": 0.005,
+    "lifesteal_bp": 0.01, "penetration_bp": 0.01,
+    "dodge_bp": 0.01, "threat_coef_bp": 0.001,
+    "tam_resonance_bp": 0.001, "hp_regen_bp": 0.01,
+    "heal_amount": 0.5,
+}
+
+
+def _power_score(it):
+    s = it.get("stats") or {}
+    total = 0.0
+    for k, v in s.items():
+        if isinstance(v, (int, float)):
+            total += v * STAT_WEIGHTS_L27.get(k, 0)
+        elif isinstance(v, dict):
+            for vv in v.values():
+                if isinstance(vv, (int, float)):
+                    total += vv * STAT_WEIGHTS_L27.get(k, 0)
+    return total
+
+
+def _stats_simple(values):
+    if not values:
+        return 0.0, 0.0
+    n = len(values)
+    mean = sum(values) / n
+    var = sum((v - mean) ** 2 for v in values) / n
+    return mean, var ** 0.5
+
+
+def chk_L27_weapon_power_z_score_under_4(items, *_):
+    # Exclude immutable seeds (Phase 7 lock 14/5 — Mr.Long): their
+    # power_score is curated by hand and may legitimately exceed the
+    # generated distribution.
+    weps = [it for it in items if it.get("category") == "weapon"
+            and not it.get("is_immutable_seed")]
+    by_rt = {}
+    for w in weps:
+        key = (w.get("rarity"), w.get("tier"))
+        by_rt.setdefault(key, []).append((w["id"], _power_score(w)))
+    bad = []
+    for key, lst in by_rt.items():
+        if len(lst) < 5:
+            continue
+        scores = [x[1] for x in lst]
+        mu, sd = _stats_simple(scores)
+        if sd == 0:
+            continue
+        for iid, sc in lst:
+            z = abs(sc - mu) / sd
+            if z > 4.0:
+                bad.append({"id": iid, "z": round(z, 2),
+                            "rarity_tier": key})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"outliers_z_gt_4": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L27_armor_power_z_score_under_4(items, *_):
+    arm = [it for it in items if it.get("category") == "armor"
+           and not it.get("is_immutable_seed")]
+    by_rt = {}
+    for a in arm:
+        key = (a.get("rarity"), a.get("slot"))
+        by_rt.setdefault(key, []).append((a["id"], _power_score(a)))
+    bad = []
+    for key, lst in by_rt.items():
+        if len(lst) < 5:
+            continue
+        scores = [x[1] for x in lst]
+        mu, sd = _stats_simple(scores)
+        if sd == 0:
+            continue
+        for iid, sc in lst:
+            z = abs(sc - mu) / sd
+            if z > 4.0:
+                bad.append({"id": iid, "z": round(z, 2)})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"armor_outliers": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L27_power_score_positive(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") not in {"weapon", "armor"}:
+            continue
+        if it.get("is_immutable_seed"):
+            continue
+        ps = _power_score(it)
+        if ps <= 0:
+            bad.append({"id": it["id"], "power": ps})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"zero_power": len(bad), "samples": bad[:5]}
+
+
+def chk_L27_consumable_power_low(items, *_):
+    """Consumable shouldn't have power_score on combat axes (only heal)."""
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        s = it.get("stats") or {}
+        # heal_amount allowed; everything else triggers bad
+        non_heal = {k: v for k, v in s.items()
+                    if k not in ("heal_amount", "has_crit")
+                    and isinstance(v, (int, float))
+                    and v > 0}
+        if non_heal:
+            bad.append({"id": it["id"], "extra": list(non_heal.keys())})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"cons_combat_stats": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L27_lore_power_zero(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        ps = _power_score(it)
+        if ps != 0:
+            bad.append({"id": it["id"], "power": ps})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"lore_with_power": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L27_quest_power_zero(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "quest_item":
+            continue
+        ps = _power_score(it)
+        if ps != 0:
+            bad.append({"id": it["id"], "power": ps})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"quest_with_power": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L27_material_power_zero(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        ps = _power_score(it)
+        if ps != 0:
+            bad.append({"id": it["id"], "power": ps})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"mat_with_power": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L27_mythic_power_above_legendary(items, *_):
+    by_r = {}
+    for it in items:
+        if it.get("category") != "weapon":
+            continue
+        by_r.setdefault(it.get("rarity"), []).append(_power_score(it))
+    leg = by_r.get("legendary", []) or [0]
+    myth = by_r.get("mythic", []) or [0]
+    med_leg = sorted(leg)[len(leg) // 2]
+    med_myth = sorted(myth)[len(myth) // 2]
+    return med_myth >= med_leg, {"med_legendary": round(med_leg, 1),
+                                   "med_mythic": round(med_myth, 1)}
+
+
+def chk_L27_common_power_below_rare(items, *_):
+    by_r = {}
+    for it in items:
+        if it.get("category") != "weapon":
+            continue
+        by_r.setdefault(it.get("rarity"), []).append(_power_score(it))
+    com = by_r.get("common", []) or [0]
+    rar = by_r.get("rare", []) or [0]
+    med_com = sorted(com)[len(com) // 2]
+    med_rar = sorted(rar)[len(rar) // 2]
+    return med_com <= med_rar, {"med_common": round(med_com, 1),
+                                  "med_rare": round(med_rar, 1)}
+
+
+def chk_L27_power_score_spread_reasonable(items, *_):
+    """Coefficient of variation per (rarity,tier) bucket weapons < 1.5"""
+    weps = [it for it in items if it.get("category") == "weapon"]
+    by_rt = {}
+    for w in weps:
+        key = (w.get("rarity"), w.get("tier"))
+        by_rt.setdefault(key, []).append(_power_score(w))
+    bad = []
+    for key, scores in by_rt.items():
+        if len(scores) < 10:
+            continue
+        mu, sd = _stats_simple(scores)
+        if mu == 0:
+            continue
+        cv = sd / mu
+        if cv > 1.5:
+            bad.append({"key": key, "cv": round(cv, 3)})
+            if len(bad) >= 3:
+                break
+    return len(bad) == 0, {"high_cv": len(bad), "samples": bad[:5]}
+
+
+ROUND_L27_CHECKS = {
+    2: [
+        ("L27_weapon_power_z_score_under_4", "R45",
+         chk_L27_weapon_power_z_score_under_4),
+        ("L27_armor_power_z_score_under_4", "R45",
+         chk_L27_armor_power_z_score_under_4),
+    ],
+    3: [
+        ("L27_power_score_positive", "R45",
+         chk_L27_power_score_positive),
+        ("L27_consumable_power_low", "R45",
+         chk_L27_consumable_power_low),
+    ],
+    4: [
+        ("L27_lore_power_zero", "R45", chk_L27_lore_power_zero),
+        ("L27_quest_power_zero", "R45", chk_L27_quest_power_zero),
+    ],
+    5: [
+        ("L27_material_power_zero", "R45",
+         chk_L27_material_power_zero),
+        ("L27_mythic_power_above_legendary", "R45",
+         chk_L27_mythic_power_above_legendary),
+    ],
+    6: [
+        ("L27_common_power_below_rare", "R45",
+         chk_L27_common_power_below_rare),
+        ("L27_power_score_spread_reasonable", "R45",
+         chk_L27_power_score_spread_reasonable),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -6336,6 +6589,8 @@ def main():
             active_checks.extend(ROUND_L25_CHECKS[r])
         if r in ROUND_L26_CHECKS:
             active_checks.extend(ROUND_L26_CHECKS[r])
+        if r in ROUND_L27_CHECKS:
+            active_checks.extend(ROUND_L27_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
