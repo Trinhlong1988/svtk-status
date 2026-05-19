@@ -20,8 +20,24 @@ Foundation rules applied (v2.8.0):
 - R81 SVTK_TARGET > TSO_BASELINE (4000 > 1000)
 - R82 LOAD → FIX → EXTEND pipeline
 """
-import sys, json, time, hashlib, re, random
+import sys, json, time, hashlib, re, random, os
 from pathlib import Path
+
+
+def atomic_write_bytes(path: Path, data: bytes) -> None:
+    """B35 fix (v1.30): atomic write via temp + os.replace so concurrent
+    readers never observe partial content. Critical for audit/mutation
+    parallel reads (race condition root-cause)."""
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with open(tmp, "wb") as f:
+        f.write(data)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
+
+
+def atomic_write_text(path: Path, text: str, encoding: str = "utf-8") -> None:
+    atomic_write_bytes(path, text.encode(encoding))
 
 REPO_DIR = Path(__file__).parent / "svtk-status"
 OUT_REG = REPO_DIR / "cmd-item" / "output" / "registry"
@@ -601,27 +617,32 @@ def write_outputs(items: list, cross_ref: dict):
         path = OUT_REG / f"item_{file_cat}.jsonl"
         rows = by_cat.get(cat, [])
         # B9 fix: force LF newline (binary write avoids Windows CRLF translate)
-        path.write_bytes(
+        # B35 fix (v1.30): atomic write — temp file + os.replace
+        atomic_write_bytes(
+            path,
             ("\n".join(json.dumps(it, ensure_ascii=False) for it in rows)
-             + "\n").encode("utf-8")
+             + "\n").encode("utf-8"),
         )
         log(f"wrote {path.name}", {"count": len(rows)})
 
     full_path = OUT_REG / "item_full.jsonl"
-    full_path.write_bytes(
+    atomic_write_bytes(
+        full_path,
         ("\n".join(json.dumps(it, ensure_ascii=False) for it in items)
-         + "\n").encode("utf-8")
+         + "\n").encode("utf-8"),
     )
     log("wrote item_full.jsonl", {"count": len(items)})
 
     full_hash = hashlib.sha256(full_path.read_bytes()).hexdigest()
-    (OUT_REG / "item_full.jsonl.sha256").write_text(
-        f"{full_hash}  item_full.jsonl\n", encoding="utf-8"
+    atomic_write_text(
+        OUT_REG / "item_full.jsonl.sha256",
+        f"{full_hash}  item_full.jsonl\n",
     )
 
     lore = [it for it in items if it["category"] == "lore_item"]
-    (OUT_LORE / "lore_items.json").write_text(
-        json.dumps(lore, indent=2, ensure_ascii=False), encoding="utf-8"
+    atomic_write_text(
+        OUT_LORE / "lore_items.json",
+        json.dumps(lore, indent=2, ensure_ascii=False),
     )
 
     sql = """-- CMD ITEM v1.2 — Foundation v2.8.0 R44/R45/R74 anti-dupe + R79 element
@@ -692,11 +713,12 @@ CREATE TABLE IF NOT EXISTS item_transactions (
 CREATE INDEX IF NOT EXISTS idx_tx_item       ON item_transactions(item_uuid);
 CREATE INDEX IF NOT EXISTS idx_tx_occurred   ON item_transactions(occurred_at DESC);
 """
-    (OUT_SCHEMA / "item_table.sql").write_text(sql, encoding="utf-8")
+    atomic_write_text(OUT_SCHEMA / "item_table.sql", sql)
     log("wrote schema/item_table.sql")
 
-    (OUT_REPORTS / "cross_ref_quest.json").write_text(
-        json.dumps(cross_ref, indent=2, ensure_ascii=False), encoding="utf-8"
+    atomic_write_text(
+        OUT_REPORTS / "cross_ref_quest.json",
+        json.dumps(cross_ref, indent=2, ensure_ascii=False),
     )
     return by_cat
 
