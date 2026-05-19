@@ -1,0 +1,59 @@
+{
+  "test": "formal_invariants",
+  "verdict": "PASS",
+  "invariants_checked": 10,
+  "invariants_pass": 10,
+  "all_pass": true,
+  "results": [
+    {
+      "name": "I1_idx_uuid_bijection",
+      "pass": true,
+      "evidence": "10000 idx ↔ 10000 uuid"
+    },
+    {
+      "name": "I2_mentor_acyclic",
+      "pass": true,
+      "evidence": "1 mentor-owners, cycles: 0"
+    },
+    {
+      "name": "I3_closed_world_type_sum",
+      "pass": true,
+      "evidence": "sum=10000, target=10000, types=10"
+    },
+    {
+      "name": "I4_main_era_historical_ge_5",
+      "pass": true,
+      "evidence": "per_era={'ly': 7, 'tran': 7, 'le': 6, 'tay_son': 6, 'nguyen': 6}"
+    },
+    {
+      "name": "I5_protagonist_not_monster",
+      "pass": true,
+      "evidence": "protagonist type=townsmen"
+    },
+    {
+      "name": "I6_pet_evolution_path_valid",
+      "pass": true,
+      "evidence": "violations: 0"
+    },
+    {
+      "name": "I7_combat_tier5_has_skill",
+      "pass": true,
+      "evidence": "gen monster tier5+ no skills: 0"
+    },
+    {
+      "name": "I8_map_density_le_50",
+      "pass": true,
+      "evidence": "overpopulated: 0 (max: 13)"
+    },
+    {
+      "name": "I9_skill_registry_closure",
+      "pass": true,
+      "evidence": "invalid skill refs: 0"
+    },
+    {
+      "name": "I10_cultural_lock_closure",
+      "pass": true,
+      "evidence": "cjk: 0, tam_quoc_gen: 0"
+    }
+  ]
+}

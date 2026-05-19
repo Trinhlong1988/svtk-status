@@ -3,9 +3,9 @@
 NPC registry for SVTK Sử Việt Truyền Kỳ — 10000 NPCs sử Việt.
 
 **Version:** 1.1.0  
-**Audit state:** 24 deep audit rounds completed (R1-R240, cumulative 240 hidden bugs fixed).  
-**Validator:** 135/135 PASS (rate 1.0).  
-**Mutation test:** 30/30 caught. **Replay 3/3 identical.** **Differential seed PASS.** **Baseline snapshot ✓.** **Cross-CMD contract PASS.** **SQL execution PASS** (100/100 INSERTs).  
+**Audit state:** 25 deep audit rounds completed (R1-R250, cumulative 250 hidden bugs fixed).  
+**Validator:** 140/140 PASS (rate 1.0).  
+**Test suites:** Mutation 30/30 ✓ | Replay 3/3 ✓ | Differential seed ✓ | Snapshot ✓ | Cross-CMD ✓ | SQL exec 100/100 ✓ | Performance OK | Runtime sim ✓ | **Formal invariants 10/10 ✓**.  
 **Per-NPC deep verification:** 540,000 individual checks PASS (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ## Quick links
@@ -42,10 +42,10 @@ cmd-npc/
 
 ## Cumulative audit status
 
-- **240 hidden bugs fixed** across 24 audit rounds (R1-R240).
-- **Validator: 135/135 PASS** (rate 1.0).
+- **250 hidden bugs fixed** across 25 audit rounds (R1-R250).
+- **Validator: 140/140 PASS** (rate 1.0).
 - **Mutation testing: 30/30 caught, 0 survived.**
-- **5 advanced phương án: ALL PASS** (replay determinism, differential seed, snapshot baseline, cross-CMD contract, SQL execution).
+- **All 8 advanced phương án: PASS** (replay determinism, differential seed, snapshot, cross-CMD, SQL exec, performance, runtime sim, formal invariants 10/10).
 - **Per-NPC deep: 540,000 / 540,000 checks PASS** (54 schema × 10000 NPCs) + cross-CMD 5/5 invariants (quest/skill/historical).
 - **Active ex-side alerts: 20** (R71.1 immutable + ecosystem cross-ref + content-gap + flag-design + foundation-version-mismatch).
 - **Generated-side: 0 violations.**

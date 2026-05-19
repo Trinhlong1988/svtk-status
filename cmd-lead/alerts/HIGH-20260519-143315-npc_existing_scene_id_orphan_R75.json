@@ -1,0 +1,24 @@
+{
+  "severity": "HIGH",
+  "issue_id": "npc_existing_scene_id_orphan_R75",
+  "evidence": {
+    "source_file": "cmd-npc/existing/NPC_438.jsonl",
+    "orphan_count": 59,
+    "sample_indices": [
+      15,
+      22,
+      37,
+      41,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ],
+    "rule_violated": "R75 — sceneId must link to MAP.mapId_at_0x00 (1..7817)",
+    "remediation": "Cross-check CMD_MAP registry when ready. R71.1 immutable."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-143315"
+}
