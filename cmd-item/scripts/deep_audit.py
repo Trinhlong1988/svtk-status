@@ -8222,6 +8222,165 @@ ROUND_L38_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 39 — Set bonus + affix bounds (v1.34)
+# ============================================================
+def chk_L39_set_id_starts_set_(items, *_):
+    bad = []
+    for s in _load_sets():
+        if not (s.get("set_id") or "").startswith("set_"):
+            bad.append(s.get("set_id"))
+    return len(bad) == 0, {"bad_set_ids": bad[:5]}
+
+
+def chk_L39_set_archetype_present(items, *_):
+    bad = [s.get("set_id") for s in _load_sets()
+           if not s.get("archetype")]
+    return len(bad) == 0, {"no_archetype": bad[:5]}
+
+
+def chk_L39_set_bonus_value_positive(items, *_):
+    bad = []
+    for s in _load_sets():
+        for b in s.get("bonuses", []):
+            v = b.get("value_bp_or_raw")
+            if v is None or (isinstance(v, (int, float)) and v <= 0):
+                bad.append({"set": s.get("set_id"), "v": v})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"bad_bonus_value": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L39_affix_min_lt_max(items, *_):
+    pools = _load_affix_pool()
+    bad = []
+    for slot, lst in pools.items():
+        for a in lst:
+            mn = a.get("min")
+            mx = a.get("max")
+            if mn is not None and mx is not None and mn >= mx:
+                bad.append({"slot": slot, "affix": a.get("id"),
+                            "min": mn, "max": mx})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"min_ge_max": len(bad), "samples": bad[:5]}
+
+
+def chk_L39_affix_id_unique_global(items, *_):
+    pools = _load_affix_pool()
+    seen = Counter()
+    for slot, lst in pools.items():
+        for a in lst:
+            seen[a.get("id")] += 1
+    dupes = [k for k, v in seen.items() if v > 1]
+    return len(dupes) == 0, {"dupe_affix_ids": dupes[:5]}
+
+
+def chk_L39_affix_type_lowercase_underscore(items, *_):
+    pools = _load_affix_pool()
+    bad = []
+    pat = re.compile(r"^[a-z][a-z0-9_]*$")
+    for slot, lst in pools.items():
+        for a in lst:
+            t = a.get("type") or ""
+            if not pat.match(t):
+                bad.append({"slot": slot, "type": t})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"bad_affix_type": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L39_set_pieces_ref_existing_or_empty(items, *_):
+    out_ids = {it["id"] for it in items}
+    bad = []
+    for s in _load_sets():
+        for pid in (s.get("pieces") or []):
+            if pid and pid not in out_ids:
+                bad.append({"set": s.get("set_id"), "missing": pid})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"missing_pieces": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L39_set_bonus_pieces_ge_2(items, *_):
+    bad = []
+    for s in _load_sets():
+        for b in s.get("bonuses", []):
+            p = b.get("pieces")
+            if p is None or p < 2:
+                bad.append({"set": s.get("set_id"), "pieces": p})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"low_pieces": len(bad), "samples": bad[:5]}
+
+
+def chk_L39_affix_min_positive_or_zero(items, *_):
+    pools = _load_affix_pool()
+    bad = []
+    for slot, lst in pools.items():
+        for a in lst:
+            if (a.get("min") or 0) < 0:
+                bad.append({"slot": slot, "affix": a.get("id")})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"neg_min": len(bad), "samples": bad[:5]}
+
+
+def chk_L39_set_conflict_policy_consistent(items, *_):
+    """sets.json conflict_policy field appears on every set with bonuses."""
+    bad = []
+    for s in _load_sets():
+        if s.get("bonuses") and not s.get("conflict_policy"):
+            bad.append(s.get("set_id"))
+    return len(bad) == 0, {"no_policy": len(bad), "samples": bad[:5]}
+
+
+ROUND_L39_CHECKS = {
+    2: [
+        ("L39_set_id_starts_set_", "R30",
+         chk_L39_set_id_starts_set_),
+        ("L39_set_archetype_present", "R49",
+         chk_L39_set_archetype_present),
+    ],
+    3: [
+        ("L39_set_bonus_value_positive", "R45",
+         chk_L39_set_bonus_value_positive),
+        ("L39_affix_min_lt_max", "R45",
+         chk_L39_affix_min_lt_max),
+    ],
+    4: [
+        ("L39_affix_id_unique_global", "R71",
+         chk_L39_affix_id_unique_global),
+        ("L39_affix_type_lowercase_underscore", "R30",
+         chk_L39_affix_type_lowercase_underscore),
+    ],
+    5: [
+        ("L39_set_pieces_ref_existing_or_empty", "R44",
+         chk_L39_set_pieces_ref_existing_or_empty),
+        ("L39_set_bonus_pieces_ge_2", "R45",
+         chk_L39_set_bonus_pieces_ge_2),
+    ],
+    6: [
+        ("L39_affix_min_positive_or_zero", "R45",
+         chk_L39_affix_min_positive_or_zero),
+        ("L39_set_conflict_policy_consistent", "R49",
+         chk_L39_set_conflict_policy_consistent),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -8386,6 +8545,8 @@ def main():
             active_checks.extend(ROUND_L37_CHECKS[r])
         if r in ROUND_L38_CHECKS:
             active_checks.extend(ROUND_L38_CHECKS[r])
+        if r in ROUND_L39_CHECKS:
+            active_checks.extend(ROUND_L39_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
