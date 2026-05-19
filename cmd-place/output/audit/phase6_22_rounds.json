@@ -1,0 +1,257 @@
+{
+  "version": "phase6_22_v1",
+  "total": 22,
+  "pass": 22,
+  "fail": 0,
+  "results": [
+    {
+      "round": 1,
+      "name": "A1 MUTATION shard_id formula offset → tests detect",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "ok": true,
+        "internal_pass": false,
+        "exit": 0,
+        "stdout_tail": ""
+      }
+    },
+    {
+      "round": 2,
+      "name": "A2 MUTATION TARGET_MAP_COUNT 10000→9000 → tests detect",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "ok": true,
+        "internal_pass": false,
+        "exit": 1,
+        "stdout_tail": ""
+      }
+    },
+    {
+      "round": 3,
+      "name": "A3 MUTATION duplicate era ('ly' twice) → tests detect",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "ok": true,
+        "internal_pass": false,
+        "exit": 1,
+        "stdout_tail": ""
+      }
+    },
+    {
+      "round": 4,
+      "name": "A4 MUTATION biome list len 7→6 → tests detect",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "ok": true,
+        "internal_pass": false,
+        "exit": 1,
+        "stdout_tail": ""
+      }
+    },
+    {
+      "round": 5,
+      "name": "B1 Node.js parse JSONL: count=10000, map_id range [1,10000], type=number",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "count": 10000,
+        "min": 1,
+        "max": 10000,
+        "type_ok": true
+      }
+    },
+    {
+      "round": 6,
+      "name": "B2 Cross-lang JSON canonical Python vs Node sort-keys identical (matched separators)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "python_len": 360,
+        "node_len": 360,
+        "equal": true,
+        "py_head": "{\"biome\":\"forest\",\"biome_label\":\"Rừng\",\"coord_x\":25500,\"coord_y\":87728,\"era\":\"ly",
+        "node_head": "{\"biome\":\"forest\",\"biome_label\":\"Rừng\",\"coord_x\":25500,\"coord_y\":87728,\"era\":\"ly"
+      }
+    },
+    {
+      "round": 7,
+      "name": "B3 Cross-lang SHA256 (Node === Python .sha256 companion)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "node": "c2b4cf2fabebe035",
+        "python": "c2b4cf2fabebe035",
+        "equal": true
+      }
+    },
+    {
+      "round": 8,
+      "name": "B4 Node.js schema validation: all 13 required fields present",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_count": 0,
+        "total": 10000
+      }
+    },
+    {
+      "round": 9,
+      "name": "C1 Parallel 4 workers → identical hash (pure deterministic)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "unique_hashes": 1,
+        "all_exit_0": true,
+        "outs": [
+          {
+            "worker": 0,
+            "exit": 0,
+            "map_hash": "c2b4cf2fabebe035eef1317ce11b544a88b9d115488879b29e07331901a0396a"
+          },
+          {
+            "worker": 1,
+            "exit": 0,
+            "map_hash": "c2b4cf2fabebe035eef1317ce11b544a88b9d115488879b29e07331901a0396a"
+          },
+          {
+            "worker": 2,
+            "exit": 0,
+            "map_hash": "c2b4cf2fabebe035eef1317ce11b544a88b9d115488879b29e07331901a0396a"
+          },
+          {
+            "worker": 3,
+            "exit": 0,
+            "map_hash": "c2b4cf2fabebe035eef1317ce11b544a88b9d115488879b29e07331901a0396a"
+          }
+        ]
+      }
+    },
+    {
+      "round": 10,
+      "name": "C2 Parallel 8 workers → identical hash (stronger N)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "unique_hashes": 1,
+        "workers": 8
+      }
+    },
+    {
+      "round": 11,
+      "name": "C3 Parallel build isolation (independent dirs, equal size)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "dir1_size": 4195315,
+        "dir2_size": 4195315
+      }
+    },
+    {
+      "round": 12,
+      "name": "C4 No shared global state (3 sequential builds identical hash)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "all_same": true
+      }
+    },
+    {
+      "round": 13,
+      "name": "D1 Hypothesis: ∀ map_id ∈ [1,10000], shard_id formula valid (300 examples)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "fails": []
+      }
+    },
+    {
+      "round": 14,
+      "name": "D2 Hypothesis: ∀ era → f_prefix ∈ {f1..f5, g1} (200 examples)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "fails": []
+      }
+    },
+    {
+      "round": 15,
+      "name": "D3 Hypothesis: ∀ coord ∈ [0,99999]² JSON roundtrip identical (300)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "fails": []
+      }
+    },
+    {
+      "round": 16,
+      "name": "D4 Hypothesis: ∀ Vietnamese string → no CJK in alphabet (400)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "fails": []
+      }
+    },
+    {
+      "round": 17,
+      "name": "D5 Hypothesis: ∀ (era,biome,shard) tags triplet ⊆ allowed (300)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "fails": []
+      }
+    },
+    {
+      "round": 18,
+      "name": "E1 pylint score > 7.0/10 (excluding cosmetic)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "score": 9.12,
+        "stdout_tail": "formatting in logging functions (logging-fstring-interpolation)\n\n------------------------------------------------------------------\nYour code has been rated at 9.12/10 (previous run: 9.12/10, +0.00)\n\n"
+      }
+    },
+    {
+      "round": 19,
+      "name": "E2 bandit security: 0 HIGH + 0 MEDIUM",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "high": 0,
+        "medium": 0,
+        "low": 16
+      }
+    },
+    {
+      "round": 20,
+      "name": "E3 mypy errors ≤ 20 (allows dynamic typing)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "error_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 21,
+      "name": "E4 pylint -F (FATAL only) on 5 audit scripts: 0 fatal",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_scripts": []
+      }
+    },
+    {
+      "round": 22,
+      "name": "E5 AST scan: no eval/exec/pickle.loads/marshal.loads CALLS in source",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    }
+  ]
+}
