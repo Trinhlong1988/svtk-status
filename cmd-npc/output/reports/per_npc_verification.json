@@ -1,0 +1,20 @@
+{
+  "verification_ts": "20260519-122748",
+  "total_npc": 10000,
+  "existing_count": 438,
+  "gen_count": 9562,
+  "checks_per_npc": 54,
+  "total_per_npc_violations": 0,
+  "npcs_with_violations": 0,
+  "verified_clean": true,
+  "violation_codes_count": {},
+  "cross_cmd": {
+    "X1_quest_giver_missing": [],
+    "X2_quest_target_missing": [],
+    "X3_quest_giver_wrong_type": [],
+    "X4_skills_unused_count": 0,
+    "X4_skills_unused": [],
+    "X5_required_historical_missing": []
+  },
+  "per_npc_bugs": []
+}

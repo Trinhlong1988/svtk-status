@@ -1,6 +1,6 @@
 {
-  "passed": 75,
-  "total": 75,
+  "passed": 80,
+  "total": 80,
   "pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -328,6 +328,7 @@
           "round_101_110",
           "round_111_120",
           "round_11_20",
+          "round_121_130",
           "round_1_10",
           "round_21_30",
           "round_31_40",
@@ -540,7 +541,7 @@
       "name": "heartbeat_file_present_R111",
       "ok": true,
       "evidence": {
-        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-114503.json",
+        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-122748.json",
         "exists": true
       }
     },
@@ -550,7 +551,7 @@
       "evidence": {
         "count": 1,
         "files": [
-          "BUILDING-npc_extend_to_10000-20260519-114503.json"
+          "BUILDING-npc_extend_to_10000-20260519-122748.json"
         ]
       }
     },
@@ -575,6 +576,44 @@
       "ok": true,
       "evidence": {
         "violations": 0
+      }
+    },
+    {
+      "name": "per_npc_verification_clean_R121",
+      "ok": true,
+      "evidence": {
+        "total_npc": 10000,
+        "total_violations": 0,
+        "checks_per_npc": 54
+      }
+    },
+    {
+      "name": "quest_giver_crossref_R122",
+      "ok": true,
+      "evidence": {
+        "X1_missing": 0,
+        "X3_wrong_type": 0
+      }
+    },
+    {
+      "name": "quest_target_crossref_R123",
+      "ok": true,
+      "evidence": {
+        "X2_missing": 0
+      }
+    },
+    {
+      "name": "skill_165_no_orphan_R124",
+      "ok": true,
+      "evidence": {
+        "skills_unused_count": 0
+      }
+    },
+    {
+      "name": "required_historical_present_R125",
+      "ok": true,
+      "evidence": {
+        "missing": []
       }
     },
     {

@@ -2,7 +2,7 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260519-114503",
+  "build_timestamp": "20260519-122748",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -197,6 +197,22 @@
         "R118_audit_index_round_111_120_entry": "AUDIT_INDEX.md row + bug fix area + alerts table sync (1 new MED + 20 cumulative) + validator matrix updated to include 71-75.",
         "R119_readme_cumul_120": "README.md cumul 120 / validator 75/75 / 20 active alerts.",
         "R120_validator_extension_audit_history": "Validator 70→75 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_111_120 + validator expected_rounds wired."
+      }
+    },
+    "round_121_130": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — em verify từng NPC chi tiết, cross-ref MAP/ITEM/QUEST/EVENT theo foundation, fix bug ẩn, không suy luận chính xác 100%",
+      "bugs_fixed": {
+        "R121_per_npc_verifier_function": "Added run_per_npc_verification() — 54 deep checks × 10000 NPCs (540k validations). Writes cmd-npc/output/reports/per_npc_verification.json with full per-NPC bug trace + cross-CMD invariants.",
+        "R122_quest_giver_crossref_validator": "Validator check 77: cross-CMD X1+X3 — every quest_full.jsonl giver_npc_id exists in NPC registry AND has correct type (quest_giver/lore_npc/townsmen/boss).",
+        "R123_quest_target_crossref_validator": "Validator check 78: cross-CMD X2 — every quest objective target_npc_id exists in NPC registry. Catches dangling references that would break quest progression.",
+        "R124_skill_165_no_orphan_validator": "Validator check 79: cross-CMD X4 — every skill in SKILL_165.jsonl is referenced by ≥1 NPC. 0 orphan skills = every skill has a wielder.",
+        "R125_required_historical_present_validator": "Validator check 80: cross-CMD X5 — 10 required historical figures (Trần Hưng Đạo, Lê Lợi, Nguyễn Huệ, Lý Thái Tổ, Sư Vạn Hạnh, Trần Long, Hùng Vương, Lạc Long Quân, Âu Cơ, Lý Thường Kiệt) present in registry.",
+        "R126_per_npc_validator_check_76": "Validator check 76: per_npc_verification.json present + verified_clean=True (540k individual validations all PASS).",
+        "R127_verifier_pipeline_integration": "run_per_npc_verification() called in main() BEFORE validator so checks 76-80 can read its output. Pattern matches write_lead_heartbeat_pre() (R111+R112).",
+        "R128_audit_index_round_121_130_entry": "AUDIT_INDEX.md row + bug fix area + matrix R76-R80 + per-NPC verification badge section.",
+        "R129_readme_cumul_130_verified_badge": "README.md cumul 130 / validator 80/80 / per-NPC deep verified 540k checks PASS.",
+        "R130_validator_extension_audit_history": "Validator 75→80 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_121_130 + validator expected_rounds wired."
       }
     }
   },
