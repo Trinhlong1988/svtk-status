@@ -23,9 +23,11 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 101-110 | 2026-05-19 | 65→70 | 10 | [AUDIT_REPORT_ROUND_101_110_20260519-112235.md](status/AUDIT_REPORT_ROUND_101_110_20260519-112235.md) |
 | 111-120 | 2026-05-19 | 70→75 | 10 | [AUDIT_REPORT_ROUND_111_120_20260519-114503.md](status/AUDIT_REPORT_ROUND_111_120_20260519-114503.md) |
 | 121-130 | 2026-05-19 | 75→80 | 10 | [AUDIT_REPORT_ROUND_121_130_20260519-122748.md](status/AUDIT_REPORT_ROUND_121_130_20260519-122748.md) |
-| **131-140** | **2026-05-19** | **80→85** | **10** | [AUDIT_REPORT_ROUND_131_140_20260519-124844.md](status/AUDIT_REPORT_ROUND_131_140_20260519-124844.md) |
+| 131-140 | 2026-05-19 | 80→85 | 10 | [AUDIT_REPORT_ROUND_131_140_20260519-124844.md](status/AUDIT_REPORT_ROUND_131_140_20260519-124844.md) |
+| 141-150 | 2026-05-19 | 85→90 | 10 | [AUDIT_REPORT_ROUND_141_150_20260519-125841.md](status/AUDIT_REPORT_ROUND_141_150_20260519-125841.md) |
+| **151-160** | **2026-05-19** | **90→95** | **10** | [AUDIT_REPORT_ROUND_151_160_20260519-125841.md](status/AUDIT_REPORT_ROUND_151_160_20260519-125841.md) |
 
-**Cumulative total: 140 hidden bugs fixed.**
+**Cumulative total: 160 hidden bugs fixed.**
 **Per-NPC deep verification: 540,000 individual checks PASS** (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ---
@@ -120,6 +122,8 @@ Trigger Mr.Long — verify từng NPC chi tiết cross-ref MAP/ITEM/QUEST/EVENT 
 | Lifecycle files + source contract + invariants | 71-75 | R111-R120 |
 | Per-NPC deep + cross-CMD (quest/skill/historical) | 76-80 | R121-R130 |
 | File format hygiene (newline/BOM/sha256 format/era schema/HB cap) | 81-85 | R131-R140 |
+| Registry/report schema (line counts/era_count/metrics/status/honest_gaps) | 86-90 | R141-R150 |
+| Statistical invariants (element/era coverage/boss/surname diversity) | 91-95 | R151-R160 |
 
 ---
 
