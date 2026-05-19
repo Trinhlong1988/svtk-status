@@ -8785,6 +8785,125 @@ ROUND_L42_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 43 — SQL CHECK enforcement match generator constants (v1.38)
+# ============================================================
+def _sql_check_clauses():
+    sql = _load_sql_str()
+    return re.findall(r"CHECK\s*\(\s*([^)]+)\)", sql)
+
+
+def chk_L43_sql_check_category_match(items, *_):
+    clauses = _sql_check_clauses()
+    cat_clause = next((c for c in clauses if "category IN" in c
+                        or "category  IN" in c), None)
+    if not cat_clause:
+        return False, {"no_cat_check": True}
+    expected = {"weapon", "armor", "consumable", "material",
+                "quest_item", "lore_item"}
+    found = set(re.findall(r"'(\w+)'", cat_clause))
+    return found == expected, {"diff": list(found ^ expected)}
+
+
+def chk_L43_sql_check_rarity_match(items, *_):
+    clauses = _sql_check_clauses()
+    r_clause = next((c for c in clauses if "rarity   IN" in c
+                      or "rarity IN" in c), None)
+    if not r_clause:
+        return False, {"no_rarity_check": True}
+    expected = {"common", "uncommon", "rare", "epic",
+                "legendary", "mythic"}
+    found = set(re.findall(r"'(\w+)'", r_clause))
+    return found == expected, {"diff": list(found ^ expected)}
+
+
+def chk_L43_sql_check_element_match(items, *_):
+    clauses = _sql_check_clauses()
+    e_clause = next((c for c in clauses if "element IS NULL OR element IN" in c
+                      or "element IN" in c), None)
+    if not e_clause:
+        return False, {"no_element_check": True}
+    expected = VSTK_ELEMENTS_VALID
+    found = set(re.findall(r"'(\w+)'", e_clause))
+    return found == expected, {"diff": list(found ^ expected)}
+
+
+def chk_L43_sql_check_cultural_tag_match(items, *_):
+    clauses = _sql_check_clauses()
+    c_clause = next((c for c in clauses if "cultural_tag IN" in c), None)
+    if not c_clause:
+        return False, {"no_tag_check": True}
+    found = set(re.findall(r"'(\w+)'", c_clause))
+    return found == VALID_CULTURAL_TAGS, {"diff": list(found ^ VALID_CULTURAL_TAGS)}
+
+
+def chk_L43_sql_max_stack_check_present(items, *_):
+    sql = _load_sql_str()
+    return "max_stack >= 1" in sql or "max_stack>=1" in sql, {"ok": True}
+
+
+def chk_L43_sql_level_min_check_present(items, *_):
+    sql = _load_sql_str()
+    return "level_min >= 1" in sql or "level_min>=1" in sql, {"ok": True}
+
+
+def chk_L43_sql_quantity_check_present(items, *_):
+    sql = _load_sql_str()
+    return "quantity > 0" in sql or "quantity>0" in sql, {"ok": True}
+
+
+def chk_L43_sql_uuid_primary_key(items, *_):
+    sql = _load_sql_str()
+    return "item_uuid           UUID PRIMARY KEY" in sql \
+        or "item_uuid UUID PRIMARY KEY" in sql, {"ok": True}
+
+
+def chk_L43_sql_template_pk_int(items, *_):
+    sql = _load_sql_str()
+    return "template_id         INTEGER PRIMARY KEY" in sql \
+        or "template_id INTEGER PRIMARY KEY" in sql, {"ok": True}
+
+
+def chk_L43_sql_default_cultural_tag(items, *_):
+    sql = _load_sql_str()
+    return "DEFAULT 'viet_pure'" in sql, {"ok": True}
+
+
+ROUND_L43_CHECKS = {
+    2: [
+        ("L43_sql_check_category_match", "R50",
+         chk_L43_sql_check_category_match),
+        ("L43_sql_check_rarity_match", "R50",
+         chk_L43_sql_check_rarity_match),
+    ],
+    3: [
+        ("L43_sql_check_element_match", "R79",
+         chk_L43_sql_check_element_match),
+        ("L43_sql_check_cultural_tag_match", "R30",
+         chk_L43_sql_check_cultural_tag_match),
+    ],
+    4: [
+        ("L43_sql_max_stack_check_present", "R45",
+         chk_L43_sql_max_stack_check_present),
+        ("L43_sql_level_min_check_present", "R45",
+         chk_L43_sql_level_min_check_present),
+    ],
+    5: [
+        ("L43_sql_quantity_check_present", "R45",
+         chk_L43_sql_quantity_check_present),
+        ("L43_sql_uuid_primary_key", "R74",
+         chk_L43_sql_uuid_primary_key),
+    ],
+    6: [
+        ("L43_sql_template_pk_int", "R50",
+         chk_L43_sql_template_pk_int),
+        ("L43_sql_default_cultural_tag", "R30",
+         chk_L43_sql_default_cultural_tag),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -8957,6 +9076,8 @@ def main():
             active_checks.extend(ROUND_L41_CHECKS[r])
         if r in ROUND_L42_CHECKS:
             active_checks.extend(ROUND_L42_CHECKS[r])
+        if r in ROUND_L43_CHECKS:
+            active_checks.extend(ROUND_L43_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
