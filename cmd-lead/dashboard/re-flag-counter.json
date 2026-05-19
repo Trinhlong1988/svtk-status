@@ -1,6 +1,5 @@
 {
   "cmd_db_r44_wire_coverage_0pct": 1,
-  "foundation_hash_three_way_mismatch": 2,
   "quest_count_below_target": 2,
   "qa_boss_missing": 2,
   "qa_event_missing": 2,
