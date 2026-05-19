@@ -1,0 +1,6 @@
+{
+  "test": "stress_test_5x",
+  "scale": 50000,
+  "duration_sec": 14.53,
+  "verdict": "PASS"
+}

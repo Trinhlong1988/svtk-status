@@ -1,0 +1,18 @@
+{
+  "fix_id": "npc_extend_to_50000",
+  "fixed_by": "cmd-npc",
+  "result": "PARTIAL",
+  "evidence": {
+    "total": 50000,
+    "target": 50000,
+    "existing": 438,
+    "new": 49562,
+    "score": 0.9785714285714285,
+    "gaps": [
+      "protagonist_uniqueness_R83",
+      "registry_split_line_counts_R141",
+      "target_npc_constant_R183"
+    ]
+  },
+  "timestamp": "20260519-145826"
+}

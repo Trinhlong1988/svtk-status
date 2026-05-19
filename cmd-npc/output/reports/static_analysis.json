@@ -1,0 +1,58 @@
+{
+  "test": "static_analysis",
+  "verdict": "WARN",
+  "lines": 4286,
+  "functions": 54,
+  "imports": 14,
+  "unused_imports": [
+    "os"
+  ],
+  "longest_functions": [
+    {
+      "name": "validator",
+      "lines": 1384
+    },
+    {
+      "name": "write_honest_gaps",
+      "lines": 458
+    },
+    {
+      "name": "run_per_npc_verification",
+      "lines": 241
+    },
+    {
+      "name": "write_schema",
+      "lines": 160
+    },
+    {
+      "name": "extend_to_target",
+      "lines": 156
+    }
+  ],
+  "complex_functions_gt30": [
+    {
+      "name": "normalize_existing_entry",
+      "complexity": 32
+    },
+    {
+      "name": "validator",
+      "complexity": 213
+    },
+    {
+      "name": "run_per_npc_verification",
+      "complexity": 58
+    },
+    {
+      "name": "sweep_old_npc_artifacts",
+      "complexity": 33
+    }
+  ],
+  "todo_count": 0,
+  "issues": [
+    "function validator too long (1384 lines, threshold 500)",
+    "function normalize_existing_entry high complexity 32",
+    "function validator high complexity 213",
+    "function run_per_npc_verification high complexity 58",
+    "function sweep_old_npc_artifacts high complexity 33"
+  ]
+}

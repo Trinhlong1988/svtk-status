@@ -1,0 +1,14 @@
+{
+  "cmd": "NPC",
+  "cmd_version": "1.1.0",
+  "ts": "20260519-150453",
+  "score": 1.0,
+  "existing_count": 438,
+  "new_count": 9562,
+  "total_count": 10000,
+  "target": 10000,
+  "gaps": [],
+  "foundation": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
+  "exit": 0,
+  "duration_sec": 2.92
+}
