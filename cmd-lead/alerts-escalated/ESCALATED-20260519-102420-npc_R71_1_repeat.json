@@ -1,0 +1,22 @@
+{
+  "severity": "SYSTEMIC_REPEAT_RULE7",
+  "issues": [
+    {
+      "issue_id": "npc_existing_scene_id_orphan_R75",
+      "count": 4
+    },
+    {
+      "issue_id": "npc_existing_systemic_hp_anomaly_R78",
+      "count": 4
+    },
+    {
+      "issue_id": "npc_existing_uuid_null_R74A",
+      "count": 4
+    }
+  ],
+  "cmd_origin": "LEAD_threshold_trigger",
+  "action": "FROZEN per CMD5_LEAD spec Rule 7 — Mr.Long manual review needed",
+  "user": "smartbeevn@gmail.com",
+  "note": "cmd-npc R71.1 immutable layer raises these alerts every audit round by design. Recommend Mr.Long accept-by-design or instruct cmd-npc to skip these checks in future audits.",
+  "timestamp": "20260519-102420"
+}
