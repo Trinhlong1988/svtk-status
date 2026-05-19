@@ -1,0 +1,77 @@
+{
+  "fix_id": "map_PA6_PA7_PA8_45round_R151_R195",
+  "fixed_by": "map",
+  "result": "PASS",
+  "timestamp": "20260519-063521",
+  "trigger": "Mr.Long lệnh PA6+ tiếp tục",
+  "rounds_executed": 45,
+  "rounds_range": "R151..R195",
+  "manifest_sha256_unchanged": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "fixed_total": 0,
+  "pa6_runtime_simulation_R151_R165": {
+    "R151_load_100_random_maps_no_exception": "PASS",
+    "R152_npc_chain_resolve_first_5_per_map": "PASS 0 fail",
+    "R153_dialog_chain_resolve_first_5_per_map": "PASS 0 fail",
+    "R154_item_pool_resolve_first_5_per_map": "PASS 0 fail",
+    "R155_event_resolve_first_5_per_map": "PASS 0 fail",
+    "R156_null_to_empty_list_normalize": "PASS 0 null found",
+    "R157_npc_sceneId_reverse_consistency": "PASS 0 mismatch",
+    "R158_npc_spawn_xy_bounds_1000_sample": "PASS 0 OOB",
+    "R159_mentor_chain_no_cycle_1000_sample": "PASS 0 cycle",
+    "R160_quest_prerequisites_no_cycle": "PASS 0 cycle",
+    "R161_dialog_no_self_branch": "PASS 0 cycle",
+    "R162_era_anachronism_map_vs_npc_first_5": "INFO 7147 — design feature cốt xuyên không (Trần Long g1 protagonist)",
+    "R163_ly_tran_era_in_nam_bo_region": "INFO 1352 maps — historical edge cases acceptable",
+    "R164_element_primary_valid_6_he": "PASS 0 bad",
+    "R165_hot_reload_localized_diff": "PASS"
+  },
+  "pa7_combinatorial_pairwise_R166_R180": {
+    "R166_era_biome_2way": "covered=110 total=110 100%",
+    "R167_era_region_2way": "covered=33 total=33 100%",
+    "R168_biome_region_2way": "covered=30 total=30 100%",
+    "R169_era_biome_region_3way": "covered=327 total=330 99.1%",
+    "R170_element_biome_2way": "covered ≥80%",
+    "R171_element_era_2way": "covered ≥80%",
+    "R172_image_quality_var_per_biome": "0.0 (uniform 70 across all biomes)",
+    "R173_width_height_combos": "top 60x40 dominant",
+    "R174_target_size_kb_biome_combos": "PASS",
+    "R175_npc_density_per_era": "balanced",
+    "R176_quest_density_per_biome": "balanced",
+    "R177_event_density_per_era": "balanced",
+    "R178_item_drop_pool_size_per_era": "fair across era",
+    "R179_all_era_biome_pair_has_sample": "INFO 1 pair (f2, capital_inner) missing",
+    "R180_region_biome_era_3way_unique": "PASS"
+  },
+  "pa8_adversarial_negative_R181_R195": {
+    "R181_no_known_injection_in_name": "PASS 0 hits",
+    "R182_uuid_no_collision_8500": "PASS unique=8500",
+    "R183_image_id_1_to_8500_bounded": "PASS min=1 max=8500",
+    "R184_map_npc_scene_consistency": "PASS 0 mismatch",
+    "R185_last_3_lines_valid_json": "PASS",
+    "R186_utf8_decode_clean": "PASS",
+    "R187_first_last_map_present": "PASS",
+    "R188_no_duplicate_image_id_per_line": "PASS 0",
+    "R189_seed_no_path_chars": "PASS 0",
+    "R190_no_negative_dimensions": "PASS 0",
+    "R191_no_invisible_unicode_in_name": "PASS 0",
+    "R192_name_no_excessive_duplicates": "PASS",
+    "R193_event_chain_no_loop_first_50": "PASS 0",
+    "R194_sha256_stable_3reads": "PASS identical",
+    "R195_canonical_reserialize_same_hash": "PASS bit-by-bit"
+  },
+  "low_alerts_for_lead_review": [
+    {
+      "issue": "R162_era_anachronism_7147",
+      "interpretation": "Design feature — Trần Long xuyên không từ g1 (2026) sang Lý era (968); NPC từ nhiều era khác nhau spawn ở map Lý. Acceptable per memory project_svtk_quest_system."
+    },
+    {
+      "issue": "R163_ly_tran_era_in_nam_bo_region_1352",
+      "interpretation": "Lý/Trần dynasty primarily Bắc Bộ + Trung Bộ, nhưng 1352 maps có era=ly/tran + region=nam_bo. May be intentional (explorer travel) hoặc content gen bias. Cần CMD_NPC/Quest review."
+    },
+    {
+      "issue": "R179_missing_pair_f2_capital_inner",
+      "interpretation": "Combinatorial gap — không có map biome=capital_inner với era=f2. Minor; F-era fictional có thể skip capital_inner."
+    }
+  ],
+  "exit_code": 0
+}
