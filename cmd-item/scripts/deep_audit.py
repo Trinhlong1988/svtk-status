@@ -3797,6 +3797,138 @@ ROUND_L10_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 11 — Distribution & statistical sanity (UNDECA-DEEP, v1.12)
+# Detect skew/outlier in distributions across slot/element/era/rarity.
+# ============================================================
+def _chi_sq(observed, expected_uniform=True):
+    """Pearson chi-square stat against uniform expected."""
+    if not observed:
+        return 0.0, 0
+    n = sum(observed)
+    k = len(observed)
+    e = n / k if expected_uniform else None
+    chi = sum((o - e) ** 2 / e for o in observed if e > 0)
+    return chi, k - 1
+
+
+def chk_L11_rarity_buckets_present(items, *_):
+    by_rarity = Counter(it["rarity"] for it in items
+                        if not it.get("is_immutable_seed"))
+    missing = [r for r in VALID_RARITIES if r not in by_rarity]
+    return len(missing) == 0, {"missing_rarities": missing,
+                               "counts": dict(by_rarity)}
+
+
+def chk_L11_weapon_element_chi_sq(items, *_):
+    weps = [it for it in items if it.get("category") == "weapon"
+            and it.get("element") in VSTK_PHYSICAL]
+    obs = [sum(1 for w in weps if w["element"] == e)
+           for e in sorted(VSTK_PHYSICAL)]
+    chi, dof = _chi_sq(obs)
+    # df=4, p=0.01 critical = 13.28; allow generous 30 for skew tolerance
+    return chi <= 30.0, {"chi_sq": round(chi, 3), "dof": dof,
+                         "obs": obs, "threshold": 30.0}
+
+
+def chk_L11_era_chi_sq_per_weapon(items, *_):
+    weps = [it for it in items if it.get("category") == "weapon"]
+    eras = sorted(set(it.get("era_code") for it in weps if it.get("era_code")))
+    obs = [sum(1 for w in weps if w.get("era_code") == e) for e in eras]
+    chi, dof = _chi_sq(obs)
+    return chi <= 50.0, {"chi_sq": round(chi, 3), "obs": obs,
+                         "threshold": 50.0}
+
+
+def chk_L11_bp_no_negative(items, *_):
+    bad = [it["id"] for it in items
+           if isinstance(it.get("bp"), int) and it["bp"] < 0]
+    return len(bad) == 0, {"neg_bp": len(bad), "samples": bad[:5]}
+
+
+def chk_L11_sell_price_non_negative(items, *_):
+    bad = [it["id"] for it in items
+           if isinstance(it.get("sell_price_gold"), (int, float))
+           and it["sell_price_gold"] < 0]
+    return len(bad) == 0, {"neg_sell": len(bad), "samples": bad[:5]}
+
+
+def chk_L11_max_stack_min_1(items, *_):
+    bad = []
+    for it in items:
+        ms = it.get("max_stack")
+        if ms is not None and ms < 1:
+            bad.append({"id": it["id"], "max_stack": ms})
+    return len(bad) == 0, {"bad_stack": len(bad), "samples": bad[:5]}
+
+
+def chk_L11_consumable_stackable(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") == "consumable" and not it.get("stackable"):
+            bad.append(it["id"])
+    return len(bad) == 0, {"unstackable_consumable": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L11_lore_unique_names(items, *_):
+    lore = [it for it in items if it.get("category") == "lore_item"]
+    names = [it["name_vi"] for it in lore]
+    cnt = Counter(names)
+    dupes = [n for n, c in cnt.items() if c > 1]
+    return len(dupes) == 0, {"dupe_lore_names": len(dupes),
+                             "samples": dupes[:5]}
+
+
+def chk_L11_quest_item_per_rarity_present(items, *_):
+    qi = [it for it in items if it.get("category") == "quest_item"]
+    by_rarity = Counter(it["rarity"] for it in qi)
+    missing = [r for r in VALID_RARITIES if r not in by_rarity]
+    return len(missing) == 0, {"missing_rarities": missing,
+                               "counts": dict(by_rarity)}
+
+
+def chk_L11_material_per_era_present(items, *_):
+    mats = [it for it in items if it.get("category") == "material"]
+    eras = Counter(it.get("era_code") for it in mats)
+    # Expect at least 4 distinct eras
+    return len(eras) >= 4, {"distinct_eras": len(eras),
+                            "counts": dict(eras)}
+
+
+ROUND_L11_CHECKS = {
+    2: [
+        ("L11_rarity_buckets_present", "R49",
+         chk_L11_rarity_buckets_present),
+        ("L11_weapon_element_chi_sq", "R79",
+         chk_L11_weapon_element_chi_sq),
+    ],
+    3: [
+        ("L11_era_chi_sq_per_weapon", "R45",
+         chk_L11_era_chi_sq_per_weapon),
+        ("L11_bp_no_negative", "R45", chk_L11_bp_no_negative),
+    ],
+    4: [
+        ("L11_sell_price_non_negative", "R45",
+         chk_L11_sell_price_non_negative),
+        ("L11_max_stack_min_1", "R45", chk_L11_max_stack_min_1),
+    ],
+    5: [
+        ("L11_consumable_stackable", "R49",
+         chk_L11_consumable_stackable),
+        ("L11_lore_unique_names", "R71",
+         chk_L11_lore_unique_names),
+    ],
+    6: [
+        ("L11_quest_item_per_rarity_present", "R49",
+         chk_L11_quest_item_per_rarity_present),
+        ("L11_material_per_era_present", "R45",
+         chk_L11_material_per_era_present),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 def main():
     REPORTS.mkdir(parents=True, exist_ok=True)
     audit_log = []
@@ -3843,6 +3975,8 @@ def main():
             active_checks.extend(ROUND_L9_CHECKS[r])
         if r in ROUND_L10_CHECKS:
             active_checks.extend(ROUND_L10_CHECKS[r])
+        if r in ROUND_L11_CHECKS:
+            active_checks.extend(ROUND_L11_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
