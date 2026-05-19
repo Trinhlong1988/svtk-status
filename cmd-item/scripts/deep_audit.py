@@ -8075,6 +8075,153 @@ ROUND_L37_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 38 — Numeric precision & rounding (v1.33)
+# ============================================================
+def chk_L38_all_stat_values_int(items, *_):
+    bad = []
+    for it in items:
+        s = it.get("stats") or {}
+        for k, v in s.items():
+            if isinstance(v, float):
+                bad.append({"id": it["id"], "key": k, "type": "float"})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"float_stats": len(bad), "samples": bad[:5]}
+
+
+def chk_L38_bp_round_to_50(items, *_):
+    """element_mod_bp / tam_resonance_bp should be multiple of 50 (precision)."""
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        s = it.get("stats") or {}
+        for k in ("element_mod_bp", "tam_resonance_bp"):
+            v = s.get(k)
+            if isinstance(v, dict):
+                for vv in v.values():
+                    if isinstance(vv, int) and vv % 50 != 0:
+                        bad.append({"id": it["id"], "key": k, "val": vv})
+                        break
+            elif isinstance(v, int) and v % 50 != 0:
+                bad.append({"id": it["id"], "key": k, "val": v})
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"non_round_50": len(bad), "samples": bad[:5]}
+
+
+def chk_L38_template_id_within_range(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("template_id") is not None
+           and (it["template_id"] < 1 or it["template_id"] > 999999)]
+    return len(bad) == 0, {"oob_tid": len(bad), "samples": bad[:5]}
+
+
+def chk_L38_no_negative_int_anywhere(items, *_):
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if k == "sell_price_gold":
+                continue
+            if isinstance(v, int) and v < 0:
+                bad.append({"id": it["id"], "key": k, "val": v})
+                break
+            if isinstance(v, dict):
+                for kk, vv in v.items():
+                    if isinstance(vv, int) and vv < 0:
+                        bad.append({"id": it["id"], "key": f"{k}.{kk}",
+                                    "val": vv})
+                        break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"neg_int": len(bad), "samples": bad[:5]}
+
+
+def chk_L38_sell_price_int(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("sell_price_gold") is not None
+           and not isinstance(it["sell_price_gold"], int)]
+    return len(bad) == 0, {"non_int_sell": len(bad), "samples": bad[:5]}
+
+
+def chk_L38_level_min_int_ge_1(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("level_min") is not None
+           and (not isinstance(it["level_min"], int)
+                or it["level_min"] < 1)]
+    return len(bad) == 0, {"bad_lm": len(bad), "samples": bad[:5]}
+
+
+def chk_L38_max_stack_int(items, *_):
+    bad = [it["id"] for it in items
+           if it.get("max_stack") is not None
+           and not isinstance(it["max_stack"], int)]
+    return len(bad) == 0, {"non_int_stack": len(bad), "samples": bad[:5]}
+
+
+def chk_L38_jsonl_size_record(items, *_):
+    """Item full jsonl size in expected range (200-800 KB)."""
+    if not ITEM_FULL.exists():
+        return False, {"missing": True}
+    sz = ITEM_FULL.stat().st_size
+    return 200000 <= sz <= 4000000, {"size": sz}
+
+
+def chk_L38_template_id_max_bound(items, *_):
+    tids = [it["template_id"] for it in items
+            if it.get("template_id") is not None]
+    if not tids:
+        return False, {"empty": True}
+    return max(tids) <= 100000, {"max_tid": max(tids)}
+
+
+def chk_L38_heal_amount_int(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        s = it.get("stats") or {}
+        h = s.get("heal_amount")
+        if h is not None and not isinstance(h, int):
+            bad.append({"id": it["id"], "type": type(h).__name__})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"non_int_heal": len(bad), "samples": bad[:5]}
+
+
+ROUND_L38_CHECKS = {
+    2: [
+        ("L38_all_stat_values_int", "R31",
+         chk_L38_all_stat_values_int),
+        ("L38_bp_round_to_50", "R31", chk_L38_bp_round_to_50),
+    ],
+    3: [
+        ("L38_template_id_within_range", "R50",
+         chk_L38_template_id_within_range),
+        ("L38_no_negative_int_anywhere", "R45",
+         chk_L38_no_negative_int_anywhere),
+    ],
+    4: [
+        ("L38_sell_price_int", "R31", chk_L38_sell_price_int),
+        ("L38_level_min_int_ge_1", "R31",
+         chk_L38_level_min_int_ge_1),
+    ],
+    5: [
+        ("L38_max_stack_int", "R31", chk_L38_max_stack_int),
+        ("L38_jsonl_size_record", "R50",
+         chk_L38_jsonl_size_record),
+    ],
+    6: [
+        ("L38_template_id_max_bound", "R50",
+         chk_L38_template_id_max_bound),
+        ("L38_heal_amount_int", "R31", chk_L38_heal_amount_int),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -8237,6 +8384,8 @@ def main():
             active_checks.extend(ROUND_L36_CHECKS[r])
         if r in ROUND_L37_CHECKS:
             active_checks.extend(ROUND_L37_CHECKS[r])
+        if r in ROUND_L38_CHECKS:
+            active_checks.extend(ROUND_L38_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
