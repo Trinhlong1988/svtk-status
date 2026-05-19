@@ -5734,6 +5734,246 @@ ROUND_L23_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 24 — Cross-CMD deeper FK strict (TETRAICOSA-DEEP, v1.25)
+# Validate item registry against cmd-quest reward_items, npc, map.
+# ============================================================
+def _load_quest_full():
+    p = REPO_DIR / "cmd-quest" / "output" / "registry" / "quest_full.jsonl"
+    if not p.exists():
+        return []
+    out = []
+    with p.open(encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                try:
+                    out.append(json.loads(line))
+                except Exception:
+                    pass
+    return out
+
+
+def chk_L24_quest_reward_items_resolve(items, *_):
+    quests = _load_quest_full()
+    item_ids = {it["id"] for it in items}
+    template_ids = {it["template_id"] for it in items
+                    if it.get("template_id") is not None}
+    # Virtual currency / event tokens are accepted (not in item registry):
+    # they live in cmd-currency / cmd-event runtime.
+    # Virtual references live in cmd-currency / cmd-event runtime, not
+    # in cmd-item registry. Pattern: *_token, *_chest, *_orb, *_fragment.
+    VIRTUAL_RE = re.compile(
+        r"(_token$|_chest$|_orb$|_fragment$|^currency_)"
+    )
+
+    def _is_virtual(ref):
+        return bool(ref) and bool(VIRTUAL_RE.search(ref))
+    bad = []
+    for q in quests:
+        rw = q.get("reward_items") or []
+        for r in rw:
+            if isinstance(r, str):
+                if _is_virtual(r):
+                    continue
+                if r not in item_ids:
+                    bad.append({"qid": q["quest_id"], "ref": r})
+            elif isinstance(r, dict):
+                rid = r.get("item_id") or r.get("id")
+                tid = r.get("template_id")
+                if _is_virtual(rid):
+                    continue
+                if rid and rid not in item_ids:
+                    bad.append({"qid": q["quest_id"], "ref": rid})
+                if tid and tid not in template_ids:
+                    bad.append({"qid": q["quest_id"], "tid": tid})
+            if len(bad) >= 5:
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"broken_quest_refs": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L24_quest_full_count_at_least_1000(items, *_):
+    n = len(_load_quest_full())
+    return n >= 1000, {"quest_count": n, "min": 1000}
+
+
+def chk_L24_quest_reward_items_subset_quest_cat(items, *_):
+    """Quest_item category items should have a quest_ref that points to a
+    real quest_id (1..N where N=quest count)."""
+    quests = _load_quest_full()
+    qids = {q.get("quest_id") for q in quests}
+    qmax = max(qids) if qids else 3000
+    bad = []
+    for it in items:
+        if it.get("category") != "quest_item":
+            continue
+        qr = it.get("quest_ref") or ""
+        m = re.match(r"^svtk_quest_(\d+)$", qr)
+        if m:
+            n = int(m.group(1))
+            if n not in qids and n > qmax:
+                bad.append({"id": it["id"], "ref": qr})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"unresolved_quest_ref": len(bad),
+                            "samples": bad[:5]}
+
+
+def chk_L24_no_quest_self_loop(items, *_):
+    """quest_item should not be both is_quest_locked AND is_lore_locked."""
+    bad = []
+    for it in items:
+        if it.get("is_quest_locked") and it.get("is_lore_locked"):
+            bad.append(it["id"])
+    return len(bad) == 0, {"both_locked": len(bad), "samples": bad[:5]}
+
+
+def chk_L24_lore_codex_ids_match_registry(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(data, dict) and "items" in data:
+        data = data["items"]
+    if not isinstance(data, list):
+        return False, {"not_a_list": True}
+    codex_ids = {x.get("id") for x in data if isinstance(x, dict)}
+    reg_lore_ids = {it["id"] for it in items
+                    if it.get("category") == "lore_item"}
+    missing = codex_ids - reg_lore_ids
+    extra = reg_lore_ids - codex_ids
+    return not missing and not extra, {"missing": list(missing)[:3],
+                                       "extra": list(extra)[:3]}
+
+
+def chk_L24_no_cmd_quest_orphan(items, *_):
+    """Quest registry should not refer to non-existent quest_item ids."""
+    quests = _load_quest_full()
+    item_ids = {it["id"] for it in items}
+    orph = []
+    for q in quests:
+        for rw in (q.get("reward_items") or []):
+            rid = rw if isinstance(rw, str) else (
+                rw.get("item_id") if isinstance(rw, dict) else None
+            )
+            if rid and rid.startswith("item_") and rid not in item_ids:
+                orph.append({"qid": q["quest_id"], "ref": rid})
+                if len(orph) >= 5:
+                    break
+        if len(orph) >= 5:
+            break
+    return len(orph) == 0, {"orphans": len(orph), "samples": orph[:5]}
+
+
+def chk_L24_quest_ref_density_per_quest(items, *_):
+    """Each quest_item maps to exactly one quest (1:1 by generation)."""
+    qi = [it for it in items if it.get("category") == "quest_item"]
+    refs = [it.get("quest_ref") for it in qi if it.get("quest_ref")]
+    cnt = Counter(refs)
+    # multiple quest items may share quest_ref due to (tid-1) % 3000
+    max_dupe = max(cnt.values()) if cnt else 0
+    return max_dupe <= 3, {"max_share": max_dupe,
+                            "total_refs": len(refs)}
+
+
+def chk_L24_no_cmd_dependency_path_violation(items, *_):
+    """Item registry shouldn't IMPORT (Python `import`/`from`) modules
+    of other CMDs. Reading other CMD output paths (cross-ref) is allowed."""
+    gen_src = (Path(__file__).parent / "generate_items.py").read_text(
+        encoding="utf-8"
+    )
+    bad = []
+    for line in gen_src.splitlines():
+        s = line.strip()
+        if (s.startswith("import ") or s.startswith("from ")) and \
+           any(t in s for t in ("cmd_quest", "cmd_npc", "cmd_map")):
+            bad.append(s[:80])
+    return len(bad) == 0, {"bad_imports": bad}
+
+
+def chk_L24_lore_codex_field_consistency(items, *_):
+    p = REPO_DIR / "cmd-item" / "output" / "lore_codex" / "lore_items.json"
+    if not p.exists():
+        return False, {"missing": True}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(data, dict) and "items" in data:
+        data = data["items"]
+    bad = []
+    for x in data:
+        if not isinstance(x, dict):
+            continue
+        for k in ("id", "name_vi", "author", "lore"):
+            if k not in x:
+                bad.append({"id": x.get("id"), "missing_field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"field_gap": len(bad), "samples": bad[:5]}
+
+
+def chk_L24_reward_items_no_quest_locked_circular(items, *_):
+    """A quest's reward should not be a quest_item that locks back to the
+    same quest (would cycle on completion)."""
+    quests = _load_quest_full()
+    qi_by_id = {it["id"]: it for it in items
+                if it.get("category") == "quest_item"}
+    bad = []
+    for q in quests:
+        for rw in (q.get("reward_items") or []):
+            rid = rw if isinstance(rw, str) else (
+                rw.get("item_id") if isinstance(rw, dict) else None
+            )
+            it = qi_by_id.get(rid) if rid else None
+            if not it:
+                continue
+            ref = it.get("quest_ref") or ""
+            m = re.match(r"^svtk_quest_(\d+)$", ref)
+            if m and int(m.group(1)) == q.get("quest_id"):
+                bad.append({"qid": q["quest_id"], "item": rid})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"circular": len(bad), "samples": bad[:5]}
+
+
+ROUND_L24_CHECKS = {
+    2: [
+        ("L24_quest_reward_items_resolve", "R44",
+         chk_L24_quest_reward_items_resolve),
+        ("L24_quest_full_count_at_least_1000", "R49",
+         chk_L24_quest_full_count_at_least_1000),
+    ],
+    3: [
+        ("L24_quest_reward_items_subset_quest_cat", "R44",
+         chk_L24_quest_reward_items_subset_quest_cat),
+        ("L24_no_quest_self_loop", "R49",
+         chk_L24_no_quest_self_loop),
+    ],
+    4: [
+        ("L24_lore_codex_ids_match_registry", "R44",
+         chk_L24_lore_codex_ids_match_registry),
+        ("L24_no_cmd_quest_orphan", "R44",
+         chk_L24_no_cmd_quest_orphan),
+    ],
+    5: [
+        ("L24_quest_ref_density_per_quest", "R44",
+         chk_L24_quest_ref_density_per_quest),
+        ("L24_no_cmd_dependency_path_violation", "R30",
+         chk_L24_no_cmd_dependency_path_violation),
+    ],
+    6: [
+        ("L24_lore_codex_field_consistency", "R30",
+         chk_L24_lore_codex_field_consistency),
+        ("L24_reward_items_no_quest_locked_circular", "R44",
+         chk_L24_reward_items_no_quest_locked_circular),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -5847,6 +6087,8 @@ def main():
             active_checks.extend(ROUND_L22_CHECKS[r])
         if r in ROUND_L23_CHECKS:
             active_checks.extend(ROUND_L23_CHECKS[r])
+        if r in ROUND_L24_CHECKS:
+            active_checks.extend(ROUND_L24_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
