@@ -4430,6 +4430,193 @@ def chk_L14_no_float_bp(items, *_):
     return len(bad) == 0, {"float_bp": len(bad), "samples": bad[:5]}
 
 
+# ============================================================
+# LAYER 15 — Region / era / cultural consistency (PENTADECA-DEEP, v1.16)
+# ============================================================
+ERA_DISPLAY_AUDIT = {"ly": "Lý", "tran": "Trần", "le": "Lê",
+                     "tay_son": "Tây Sơn", "nguyen": "Nguyễn",
+                     "hong_bang": "Hồng Bàng", "au_lac": "Âu Lạc",
+                     "dinh": "Đinh"}
+ERA_REGIONS_AUDIT = {
+    "ly": {"Hoa Lư", "Thăng Long", "Đại La"},
+    "tran": {"Vạn Kiếp", "Bạch Đằng", "Thiên Trường"},
+    "le": {"Lam Sơn", "Đông Quan", "Chi Lăng"},
+    "tay_son": {"Phú Xuân", "Quy Nhơn", "Ngọc Hồi"},
+    "nguyen": {"Huế", "Gia Định", "Quảng Trị"},
+}
+
+
+def chk_L15_era_code_in_set(items, *_):
+    valid = set(ERA_DISPLAY_AUDIT.keys()) | {"_lore"}
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        ec = it.get("era_code")
+        if ec is None:
+            continue
+        if ec not in valid:
+            bad.append({"id": it["id"], "era_code": ec})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"unknown_era_code": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_region_in_era_set(items, *_):
+    bad = []
+    for it in items:
+        if it.get("is_immutable_seed"):
+            continue
+        if it.get("category") in {"lore_item", "consumable", "material"}:
+            continue
+        ec = it.get("era_code")
+        r = it.get("region")
+        if ec in ERA_REGIONS_AUDIT and r not in ERA_REGIONS_AUDIT[ec]:
+            bad.append({"id": it["id"], "era_code": ec, "region": r})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"region_mismatch": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_cultural_tag_lore_legendary(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        if it.get("cultural_tag") != "viet_legendary":
+            bad.append({"id": it["id"],
+                        "tag": it.get("cultural_tag")})
+    return len(bad) == 0, {"bad_lore_tag": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_cultural_tag_in_valid_set(items, *_):
+    valid = VALID_CULTURAL_TAGS
+    bad = []
+    for it in items:
+        t = it.get("cultural_tag")
+        if t and t not in valid:
+            bad.append({"id": it["id"], "tag": t})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"bad_tag": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_quest_item_cultural_pure(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "quest_item":
+            continue
+        if it.get("cultural_tag") != "viet_pure":
+            bad.append({"id": it["id"],
+                        "tag": it.get("cultural_tag")})
+    return len(bad) == 0, {"bad_quest_tag": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_era_display_matches_code(items, *_):
+    bad = []
+    for it in items:
+        ec = it.get("era_code")
+        ed = it.get("era")
+        if ec is None or ed is None:
+            continue
+        expect = ERA_DISPLAY_AUDIT.get(ec)
+        if expect and ed != expect:
+            bad.append({"id": it["id"], "era_code": ec,
+                        "era": ed, "expected": expect})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"display_drift": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L15_no_chinese_chars_anywhere(items, *_):
+    """Stronger than chk_no_cjk_in_strings — search every string field."""
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and CULTURAL_LOCK_RE.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"cjk_present": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_no_tam_quoc_anywhere(items, *_):
+    bad = []
+    for it in items:
+        for k, v in it.items():
+            if isinstance(v, str) and TAM_QUOC_RE.search(v):
+                bad.append({"id": it["id"], "field": k})
+                break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"tam_quoc": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_lore_author_has_year_or_name(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        a = (it.get("author") or "").strip()
+        if not a:
+            bad.append(it["id"])
+            continue
+        # Must have either a year digit or a name (>=2 chars)
+        if len(a) < 2:
+            bad.append(it["id"])
+    return len(bad) == 0, {"weak_author": len(bad), "samples": bad[:5]}
+
+
+def chk_L15_material_culture_pure(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        if it.get("cultural_tag") not in {"viet_pure", "viet_legendary"}:
+            bad.append({"id": it["id"], "tag": it.get("cultural_tag")})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"bad_mat_tag": len(bad), "samples": bad[:5]}
+
+
+ROUND_L15_CHECKS = {
+    2: [
+        ("L15_era_code_in_set", "R30", chk_L15_era_code_in_set),
+        ("L15_region_in_era_set", "R30", chk_L15_region_in_era_set),
+    ],
+    3: [
+        ("L15_cultural_tag_lore_legendary", "R30",
+         chk_L15_cultural_tag_lore_legendary),
+        ("L15_cultural_tag_in_valid_set", "R30",
+         chk_L15_cultural_tag_in_valid_set),
+    ],
+    4: [
+        ("L15_quest_item_cultural_pure", "R30",
+         chk_L15_quest_item_cultural_pure),
+        ("L15_era_display_matches_code", "R30",
+         chk_L15_era_display_matches_code),
+    ],
+    5: [
+        ("L15_no_chinese_chars_anywhere", "R30",
+         chk_L15_no_chinese_chars_anywhere),
+        ("L15_no_tam_quoc_anywhere", "R30",
+         chk_L15_no_tam_quoc_anywhere),
+    ],
+    6: [
+        ("L15_lore_author_has_year_or_name", "R30",
+         chk_L15_lore_author_has_year_or_name),
+        ("L15_material_culture_pure", "R30",
+         chk_L15_material_culture_pure),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -4514,6 +4701,8 @@ def main():
             active_checks.extend(ROUND_L13_CHECKS[r])
         if r in ROUND_L14_CHECKS:
             active_checks.extend(ROUND_L14_CHECKS[r])
+        if r in ROUND_L15_CHECKS:
+            active_checks.extend(ROUND_L15_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
