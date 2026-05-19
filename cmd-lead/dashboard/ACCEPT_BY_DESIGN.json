@@ -1,0 +1,9 @@
+{
+  "_doc": "Issues accepted as known design constraint — LEAD suppresses counter increment + escalation for these issue_ids.",
+  "issued_at": "20260519-134726",
+  "accepted_issues": {
+    "npc_existing_scene_id_orphan_R75": "R71.1 immutable NPC data — Mr.Long locked 14/5. sceneId orphans expected.",
+    "npc_existing_systemic_hp_anomaly_R78": "R71.1 immutable NPC data. HP distribution by design.",
+    "npc_existing_uuid_null_R74A": "R71.1 immutable legacy NPC seeds (Phase 7). UUID null acceptable for non-runtime entries."
+  }
+}

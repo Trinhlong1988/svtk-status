@@ -11,3 +11,6 @@ build/
 *.tsbuildinfo
 tsconfig.cmd2.json
 .pg-test/
+
+# Auto-generated artifacts (cmd-event noise from script runs - LEAD cycle 92)
+cmd-event/output/status.json.sha256

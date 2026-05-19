@@ -1,0 +1,13 @@
+{
+  "sim_days": 360,
+  "total_event_fires": 7703,
+  "npc_collision_days_before": 26,
+  "npc_collisions_fixed": 18,
+  "map_collision_days_before": 81,
+  "map_collisions_fixed": 1,
+  "overload_days": 0,
+  "gold_total_year": 18238500,
+  "gold_max_per_day": 93800,
+  "exp_total_year": 59746500,
+  "exp_max_per_day": 313700
+}

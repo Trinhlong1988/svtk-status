@@ -2494,7 +2494,7 @@
       "event_id": 197,
       "name": "Tập kích quân Nguyễn Ánh tại Sài Côn",
       "category": "raid",
-      "era": "tay_son",
+      "era": "nguyen",
       "condition": {
         "weekday": "saturday",
         "hour_start": 19,
@@ -3144,7 +3144,7 @@
       "event_id": 247,
       "name": "Tập kích quân Nguyễn Ánh tại Sài Côn (chu kỳ 2)",
       "category": "raid",
-      "era": "tay_son",
+      "era": "nguyen",
       "condition": {
         "weekday": "saturday",
         "hour_start": 20,
@@ -4457,7 +4457,7 @@
       "event_id": 545,
       "name": "Tây Sơn Sụp Đổ Nguyễn Ánh Khôi Phục",
       "category": "lore",
-      "era": "tay_son",
+      "era": "nguyen",
       "condition": {
         "requires_quest_chain": "SVTK_CHAIN_TIENLY_B",
         "recurrence": "one_off_per_account",
@@ -5107,7 +5107,7 @@
       "event_id": 595,
       "name": "Tây Sơn Sụp Đổ Nguyễn Ánh Khôi Phục hồi 2",
       "category": "lore",
-      "era": "tay_son",
+      "era": "nguyen",
       "condition": {
         "requires_quest_chain": "SVTK_CHAIN_TIENLY_A",
         "recurrence": "one_off_per_account",

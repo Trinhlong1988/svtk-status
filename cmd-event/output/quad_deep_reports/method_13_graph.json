@@ -1,0 +1,10 @@
+{
+  "total_nodes": 6233,
+  "total_edges": 6268,
+  "dangling_edges": 0,
+  "dangling_fixed": 0,
+  "cycles_detected": 0,
+  "connected_components": 66,
+  "largest_component_size": 511,
+  "isolated_events": 47
+}
