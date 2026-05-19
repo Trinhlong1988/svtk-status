@@ -1,0 +1,357 @@
+{
+  "version": "cross_22_v1",
+  "total": 22,
+  "pass": 22,
+  "fail": 0,
+  "high_severity_fail": 0,
+  "results": [
+    {
+      "round": 1,
+      "name": "NPC sceneId range ⊆ [1, 7047] (cross-ref MAP)",
+      "status": "PASS",
+      "severity": "INFO",
+      "evidence": {
+        "npc_total": 10000,
+        "min": 1,
+        "max": 9990,
+        "out_of_range_count": 0,
+        "sample_out": []
+      }
+    },
+    {
+      "round": 2,
+      "name": "NPC sceneId orphan check (no NPC pointing to non-existent map)",
+      "status": "PASS",
+      "severity": "HIGH",
+      "evidence": {
+        "orphan_total": 0,
+        "unique_orphan_sceneIds": 0,
+        "top_orphan_sceneIds": []
+      }
+    },
+    {
+      "round": 3,
+      "name": "Each MAP era has ≥1 NPC era match",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "map_eras": [
+          "le",
+          "ly",
+          "nguyen",
+          "tay_son",
+          "tran"
+        ],
+        "npc_eras": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5",
+          "g1",
+          "le",
+          "ly",
+          "nguyen",
+          "tay_son",
+          "tran"
+        ],
+        "missing_in_npc": []
+      }
+    },
+    {
+      "round": 4,
+      "name": "NPC spawn_x/y is integer",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 5,
+      "name": "era enum strict (NPC ⊆ ERAS∪F1-5∪G1, MAP ⊆ 5 ERAS)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_npc_unique": [],
+        "bad_map_unique": []
+      }
+    },
+    {
+      "round": 6,
+      "name": "MAP coverage by NPC (info only, no strict threshold)",
+      "status": "PASS",
+      "severity": "INFO",
+      "evidence": {
+        "maps_with_npc": 5702,
+        "total_maps": 10000,
+        "coverage_pct": 57.02
+      }
+    },
+    {
+      "round": 7,
+      "name": "A1 MUTATION map: flip 1 byte detected via dup check",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "hash_changed": true,
+        "dup_detected_post_mut": true,
+        "first_dup_count": 1
+      }
+    },
+    {
+      "round": 8,
+      "name": "A1' MUTATION NPC (in-memory): hash changes detected",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "hash_changed": true
+      }
+    },
+    {
+      "round": 9,
+      "name": "A2 REPLAY map: 2 rebuilds → same hash (R68.6)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "exit": 0,
+        "diffs": {}
+      }
+    },
+    {
+      "round": 10,
+      "name": "A3 SNAPSHOT: baseline created (first run)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "baseline_files": 4
+      }
+    },
+    {
+      "round": 11,
+      "name": "A4 SQL JOIN map × npc by sceneId (sample 200 map / 300 npc)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "top_5_maps_with_npc": [
+          [
+            16,
+            "Rừng Yên Tử Bắc (#0016)",
+            4
+          ],
+          [
+            26,
+            "Rừng Yên Tử Hạ (#0026)",
+            4
+          ],
+          [
+            30,
+            "Rừng Phù Lãng Hạ (#0030)",
+            4
+          ],
+          [
+            69,
+            "Rừng Tản Viên Đông 2 (#0069)",
+            4
+          ],
+          [
+            148,
+            "Rừng Sóc Sơn Bắc 3 (#0148)",
+            4
+          ]
+        ]
+      }
+    },
+    {
+      "round": 12,
+      "name": "FUZZ malformed shard_config detected by type check",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "total_maps_type": "str"
+      }
+    },
+    {
+      "round": 13,
+      "name": "map names NFC-normalized (no NFD)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 14,
+      "name": "NPC names NFC-normalized (sample 1000)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_count": 0,
+        "sample": []
+      }
+    },
+    {
+      "round": 15,
+      "name": "ASCII-stripped name still unique (suffix #NNNN guards)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "collision_count": 0,
+        "sample": {}
+      }
+    },
+    {
+      "round": 16,
+      "name": "no control chars (\\x00-\\x1f) in any string field",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    },
+    {
+      "round": 17,
+      "name": "JSONL line count = target (map 7047 / region 64)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "map_lines": 10000,
+        "region_lines": 64
+      }
+    },
+    {
+      "round": 18,
+      "name": "era_id distribution chronological (ly<tran<le<tay_son<nguyen)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "order_by_min_id": [
+          "ly",
+          "tran",
+          "le",
+          "tay_son",
+          "nguyen"
+        ],
+        "expected": [
+          "ly",
+          "tran",
+          "le",
+          "tay_son",
+          "nguyen"
+        ],
+        "chronology_check": true,
+        "ranges": {
+          "ly": [
+            1,
+            2000
+          ],
+          "tran": [
+            2001,
+            4000
+          ],
+          "le": [
+            4001,
+            6000
+          ],
+          "tay_son": [
+            6001,
+            8000
+          ],
+          "nguyen": [
+            8001,
+            10000
+          ]
+        }
+      }
+    },
+    {
+      "round": 19,
+      "name": "uuid RFC 4122 valid for MAP all + NPC sample 1000",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_map": [],
+        "bad_npc": []
+      }
+    },
+    {
+      "round": 20,
+      "name": "NPC era vs MAP era at sceneId (INFO — soft consistency)",
+      "status": "PASS",
+      "severity": "INFO",
+      "evidence": {
+        "soft_mismatch_count": 3302,
+        "sample": [
+          {
+            "npc_idx": 80,
+            "npc_era": "ly",
+            "sid": 4347,
+            "map_era": "le"
+          },
+          {
+            "npc_idx": 81,
+            "npc_era": "ly",
+            "sid": 4348,
+            "map_era": "le"
+          },
+          {
+            "npc_idx": 82,
+            "npc_era": "tran",
+            "sid": 4349,
+            "map_era": "le"
+          },
+          {
+            "npc_idx": 84,
+            "npc_era": "ly",
+            "sid": 8991,
+            "map_era": "nguyen"
+          },
+          {
+            "npc_idx": 86,
+            "npc_era": "ly",
+            "sid": 4350,
+            "map_era": "le"
+          }
+        ]
+      }
+    },
+    {
+      "round": 21,
+      "name": "every map entry has identical key set (schema strictness)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad_count": 0,
+        "canonical_keys": [
+          "biome",
+          "biome_label",
+          "coord_x",
+          "coord_y",
+          "era",
+          "era_label",
+          "f_prefix",
+          "map_id",
+          "name",
+          "natural_key",
+          "shard_code",
+          "shard_id",
+          "tags",
+          "tsonline_cross_ref",
+          "uuid"
+        ],
+        "sample": []
+      }
+    },
+    {
+      "round": 22,
+      "name": "no YYYY-MM-DD date leak in registry (determinism)",
+      "status": "PASS",
+      "severity": "ERROR",
+      "evidence": {
+        "bad": []
+      }
+    }
+  ]
+}

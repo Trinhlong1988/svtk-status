@@ -19,7 +19,7 @@ BUILDER = Path(r"C:\Users\Administrator\Desktop\CMD_PLACE_WORK\build_place.py")
 
 ERAS = ["ly", "tran", "le", "tay_son", "nguyen"]
 BIOMES = ["forest", "mountain", "river", "plain", "sea", "capital", "village"]
-TARGET_MAPS = 7047
+TARGET_MAPS = 10000
 TARGET_SHARDS = 64
 F_PREFIX_VALID = {"f1", "f2", "f3", "f4", "f5", "g1"}
 
@@ -196,7 +196,7 @@ def r18_sha256_companion():
 def r19_schema_unique_constraints():
     sql = (SCHEMA / "place_table.sql").read_text(encoding="utf-8")
     needed = ["UNIQUE(map_id)", "UNIQUE(natural_key)", "UNIQUE(uuid)",
-              "CHECK (map_id BETWEEN 1 AND 7047)",
+              "CHECK (map_id BETWEEN 1 AND 10000)",
               "CHECK (era IN ('ly','tran','le','tay_son','nguyen'))",
               "CHECK (biome IN ('forest','mountain','river','plain','sea','capital','village'))",
               "CHECK (shard_id BETWEEN 0 AND 63)",

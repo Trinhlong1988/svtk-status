@@ -24,7 +24,7 @@ FOUNDATION_FILE = ROOT / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
 FOUNDATION_HASH_EXPECTED = "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467"
 FOUNDATION_HASH_CANONICAL_CRLF = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
 
-TARGET_MAP_COUNT = 7047
+TARGET_MAP_COUNT = 10000  # extended from 7047 to cover full NPC sceneId space [1,9990] — orphan fix v1.0.1
 TARGET_REGION_SHARDS = 64
 TARGET_ERAS = 5
 
@@ -249,7 +249,7 @@ def build_registry():
     write_json(shard_path, shard_config)
 
     schema_sql = """-- CMD_PLACE v1.0 schema
--- R8.3 UNIQUE constraints / R45 anti-dupe / R50 schema-strict 1..7047
+-- R8.3 UNIQUE constraints / R45 anti-dupe / R50 schema-strict 1..10000 (extended from 7047 — orphan fix v1.0.1)
 CREATE TABLE IF NOT EXISTS place_items (
     id INT PRIMARY KEY,
     map_id INT NOT NULL,
@@ -265,7 +265,7 @@ CREATE TABLE IF NOT EXISTS place_items (
     UNIQUE(map_id),
     UNIQUE(natural_key),
     UNIQUE(uuid),
-    CHECK (map_id BETWEEN 1 AND 7047),
+    CHECK (map_id BETWEEN 1 AND 10000),
     CHECK (era IN ('ly','tran','le','tay_son','nguyen')),
     CHECK (biome IN ('forest','mountain','river','plain','sea','capital','village')),
     CHECK (shard_id BETWEEN 0 AND 63)
@@ -303,7 +303,7 @@ REG = ROOT / "registry"
 
 ERAS = ["ly", "tran", "le", "tay_son", "nguyen"]
 BIOMES = ["forest", "mountain", "river", "plain", "sea", "capital", "village"]
-TARGET_MAPS = 7047
+TARGET_MAPS = 10000
 TARGET_SHARDS = 64
 
 CULTURAL_LOCK_REGEX = re.compile(r"[\\u4E00-\\u9FFF\\u3040-\\u309F\\u30A0-\\u30FF]")
@@ -494,7 +494,7 @@ def self_validate(stats):
         {"name": "schema_sql_exists", "pass": (OUTPUT_DIR / "schema" / "place_table.sql").exists()},
         {"name": "tests_dir_exists", "pass": (OUTPUT_DIR / "tests" / "place_tests.py").exists()},
         {"name": "region_count_64", "pass": stats["region_count"] == TARGET_REGION_SHARDS},
-        {"name": "map_count_7047", "pass": stats["map_count"] == TARGET_MAP_COUNT},
+        {"name": "map_count_10000", "pass": stats["map_count"] == TARGET_MAP_COUNT},
         {"name": "shard_balance_le_2", "pass": stats["shard_balance_delta"] <= 2},
         {"name": "cultural_lock_active", "pass": True},
         {"name": "tsonline_cross_ref_present", "pass": True},
