@@ -231,59 +231,88 @@ QUEST_TEMPLATES = [
     "Mãnh hổ rừng sâu vẫn còn, ngài trừ tận gốc.",
 ]
 
+# LORE/STORY templates are era-tagged: (era_code | None, text).
+# era=None means era-agnostic (general history reference); fits ANY dialog era.
 LORE_TEMPLATES = [
-    "Năm xưa Lý Công Uẩn dời đô về Thăng Long...",
-    "Trần Hưng Đạo ba lần đánh tan quân Nguyên Mông...",
-    "Bình Ngô đại cáo của Nguyễn Trãi mãi vang vọng...",
-    "Quang Trung phá quân Thanh trong một đêm xuân...",
-    "Vua Lê đại định mở mang bờ cõi...",
-    "Câu chuyện về thanh gươm Thuận Thiên...",
-    "Cha ông ta đánh giặc giữ nước biết bao đời...",
-    "Hai Bà Trưng dấy binh đánh đuổi Tô Định...",
-    "Lý Thái Tổ chọn Thăng Long làm đế đô vạn năm...",
-    "Trần Quốc Toản bóp nát quả cam phẫn chí...",
-    "Lê Lợi nhận gươm thần ở hồ Lục Thủy...",
-    "Nguyễn Huệ thần tốc kéo quân ra Bắc...",
-    "Vua Đinh Tiên Hoàng dẹp loạn 12 sứ quân...",
-    "Phật giáo Lý-Trần hưng thịnh khắp non sông...",
-    "Bà Triệu cưỡi voi đánh giặc Đông Ngô...",
-    "Trận Bạch Đằng ba lần phá thuyền địch...",
-    "Trần Nhật Duật thông tiếng Mán Mường, phá kế giặc.",
-    "Đào sông Tô Lịch năm Lý Nhân Tông.",
-    "Chiêm Thành xưa nay mấy lần thông hảo.",
-    "Phố Hiến từng là cảng sầm uất nhất Đại Việt.",
-    "Lý Thường Kiệt phát Nam quốc sơn hà giữa sông Như Nguyệt.",
-    "Hùng Vương dựng nước Văn Lang mười tám đời.",
-    "Lạc Long Quân và Âu Cơ sinh trăm con bọc.",
-    "Sơn Tinh Thủy Tinh tranh Mỵ Nương kể bao đời.",
-    "An Dương Vương xây Cổ Loa thành chín vòng.",
-    "Mỵ Châu Trọng Thủy bi tình thiên cổ.",
-    "Lê Hoàn lên ngôi thay nhà Đinh dẹp Tống bình Chiêm.",
-    "Lý Bí lập nước Vạn Xuân giành tự chủ.",
-    "Mai Hắc Đế nổi binh chống quân Đường.",
-    "Phùng Hưng được tôn Bố Cái Đại Vương.",
-    "Khúc Thừa Dụ mở đầu thời tự chủ.",
-    "Ngô Quyền đại phá quân Nam Hán trên sông Bạch Đằng.",
-    "Đinh Bộ Lĩnh thuở nhỏ cờ lau tập trận.",
-    "Trần Bình Trọng thà chết không hàng quân Bắc.",
-    "Bùi Thị Xuân nữ tướng Tây Sơn dũng mãnh.",
-    "Quang Trung mất sớm, đế nghiệp bỏ ngỏ.",
-    "Lý Nhân Tông mở khoa thi tam giáo lần đầu.",
-    "Trần Thái Tông kết hôn với hai chị em.",
-    "Sông Hồng đỏ vào mùa nước, gọi là sông Cái.",
-    "Văn Miếu Quốc Tử Giám lập đời Lý.",
-    "Chùa Một Cột giấc mộng Lý Thái Tông.",
-    "Yết Kiêu đục thuyền giặc trên sông Bạch Đằng.",
-    "Dã Tượng cõng Trần Hưng Đạo qua sông trong loạn.",
-    "Sao Khuê Nguyễn Trãi sáng mãi giữa đời.",
-    "Phan Bội Châu khởi phong trào Đông Du.",
-    "Thái sư Trần Thủ Độ đặt nền móng vương triều.",
-    "Bà Đinh Phương Đan bày trận đánh giặc.",
-    "Trần Khánh Dư bán than làm tướng.",
-    "Hoài Văn Hầu phá tan đại quân Toa Đô.",
-    "Phạm Ngũ Lão ngồi đan sọt giữa đường lo việc nước.",
-    "Tướng Lý Phục Man trấn ải biên cương.",
-    "Thiền sư Vạn Hạnh tiên đoán nhà Lý mở vận.",
+    ("ly",      "Năm xưa Lý Công Uẩn dời đô về Thăng Long..."),
+    ("tran",    "Trần Hưng Đạo ba lần đánh tan quân Nguyên Mông..."),
+    ("le",      "Bình Ngô đại cáo của Nguyễn Trãi mãi vang vọng..."),
+    ("tay_son", "Quang Trung phá quân Thanh trong một đêm xuân..."),
+    ("le",      "Vua Lê đại định mở mang bờ cõi..."),
+    ("le",      "Câu chuyện về thanh gươm Thuận Thiên..."),
+    (None,      "Cha ông ta đánh giặc giữ nước biết bao đời..."),
+    ("f3",      "Hai Bà Trưng dấy binh đánh đuổi Tô Định..."),
+    ("ly",      "Lý Thái Tổ chọn Thăng Long làm đế đô vạn năm..."),
+    ("tran",    "Trần Quốc Toản bóp nát quả cam phẫn chí..."),
+    ("le",      "Lê Lợi nhận gươm thần ở hồ Lục Thủy..."),
+    ("tay_son", "Nguyễn Huệ thần tốc kéo quân ra Bắc..."),
+    ("f4",      "Vua Đinh Tiên Hoàng dẹp loạn 12 sứ quân..."),
+    (None,      "Phật giáo Lý-Trần hưng thịnh khắp non sông..."),
+    ("f3",      "Bà Triệu cưỡi voi đánh giặc Đông Ngô..."),
+    (None,      "Trận Bạch Đằng ba lần phá thuyền địch..."),
+    ("tran",    "Trần Nhật Duật thông tiếng Mán Mường, phá kế giặc."),
+    ("ly",      "Đào sông Tô Lịch năm Lý Nhân Tông."),
+    (None,      "Chiêm Thành xưa nay mấy lần thông hảo."),
+    (None,      "Phố Hiến từng là cảng sầm uất nhất Đại Việt."),
+    ("ly",      "Lý Thường Kiệt phát Nam quốc sơn hà giữa sông Như Nguyệt."),
+    ("f1",      "Hùng Vương dựng nước Văn Lang mười tám đời."),
+    ("f1",      "Lạc Long Quân và Âu Cơ sinh trăm con bọc."),
+    ("f1",      "Sơn Tinh Thủy Tinh tranh Mỵ Nương kể bao đời."),
+    ("f2",      "An Dương Vương xây Cổ Loa thành chín vòng."),
+    ("f2",      "Mỵ Châu Trọng Thủy bi tình thiên cổ."),
+    ("f4",      "Lê Hoàn lên ngôi thay nhà Đinh dẹp Tống bình Chiêm."),
+    ("f5",      "Lý Bí lập nước Vạn Xuân giành tự chủ."),
+    ("f3",      "Mai Hắc Đế nổi binh chống quân Đường."),
+    ("f3",      "Phùng Hưng được tôn Bố Cái Đại Vương."),
+    ("f3",      "Khúc Thừa Dụ mở đầu thời tự chủ."),
+    ("f3",      "Ngô Quyền đại phá quân Nam Hán trên sông Bạch Đằng."),
+    ("f4",      "Đinh Bộ Lĩnh thuở nhỏ cờ lau tập trận."),
+    ("tran",    "Trần Bình Trọng thà chết không hàng quân Bắc."),
+    ("tay_son", "Bùi Thị Xuân nữ tướng Tây Sơn dũng mãnh."),
+    ("tay_son", "Quang Trung mất sớm, đế nghiệp bỏ ngỏ."),
+    ("ly",      "Lý Nhân Tông mở khoa thi tam giáo lần đầu."),
+    ("tran",    "Trần Thái Tông kết hôn với hai chị em."),
+    (None,      "Sông Hồng đỏ vào mùa nước, gọi là sông Cái."),
+    ("ly",      "Văn Miếu Quốc Tử Giám lập đời Lý."),
+    ("ly",      "Chùa Một Cột giấc mộng Lý Thái Tông."),
+    ("tran",    "Yết Kiêu đục thuyền giặc trên sông Bạch Đằng."),
+    ("tran",    "Dã Tượng cõng Trần Hưng Đạo qua sông trong loạn."),
+    ("le",      "Sao Khuê Nguyễn Trãi sáng mãi giữa đời."),
+    ("nguyen",  "Phan Bội Châu khởi phong trào Đông Du."),
+    ("tran",    "Thái sư Trần Thủ Độ đặt nền móng vương triều."),
+    ("tran",    "Bà Đinh Phương Đan bày trận đánh giặc."),
+    ("tran",    "Trần Khánh Dư bán than làm tướng."),
+    ("tran",    "Hoài Văn Hầu phá tan đại quân Toa Đô."),
+    ("tran",    "Phạm Ngũ Lão ngồi đan sọt giữa đường lo việc nước."),
+    ("ly",      "Tướng Lý Phục Man trấn ải biên cương."),
+    ("ly",      "Thiền sư Vạn Hạnh tiên đoán nhà Lý mở vận."),
+    # Era-agnostic fallbacks (ensures every era has at least 5+ matches)
+    (None,      "Sử sách còn ghi chép biết bao tấm gương trung nghĩa."),
+    (None,      "Quê hương ta núi sông gấm vóc, ngàn năm chưa phai."),
+    (None,      "Người xưa nói trung quân ái quốc là đạo của kẻ làm trai."),
+    (None,      "Mỗi tấc đất là máu xương cha ông để lại."),
+    (None,      "Dòng giống Lạc Hồng, con cháu Tiên Rồng."),
+    (None,      "Trống đồng Đông Sơn còn vọng tiếng cha ông."),
+    (None,      "Đất Việt bốn ngàn năm văn hiến."),
+    (None,      "Tinh thần Đại Việt đời đời bất diệt."),
+    # G1 modern lore
+    ("g1",      "Bảo tàng Lịch sử Việt Nam hiện đại lưu giữ ngàn năm quá vãng."),
+    ("g1",      "Đường Hà Nội nay vẫn còn tên phố cổ."),
+    ("g1",      "Phố sách Đinh Lễ vẫn nhộn nhịp khách qua."),
+    ("g1",      "Sách giáo khoa lịch sử dạy con cháu nhớ về cội nguồn."),
+    # Extra Nguyễn-era lore (was thin)
+    ("nguyen",  "Triều Nguyễn đặt kinh đô tại Huế, mở thời đại mới."),
+    ("nguyen",  "Vua Gia Long thống nhất sơn hà sau loạn lạc."),
+    ("nguyen",  "Minh Mạng cải cách triều chính sâu rộng."),
+    # Extra Lê lore
+    ("le",      "Lê Thánh Tông soạn bộ luật Hồng Đức nổi tiếng."),
+    ("le",      "Lê Trung Hưng nối lại quốc thống sau biến loạn."),
+    # Extra Tây Sơn
+    ("tay_son", "Tây Sơn thần tốc Bắc tiến, làm nên Đống Đa lừng lẫy."),
+    ("tay_son", "Trần Quang Diệu, Bùi Thị Xuân là cặp tướng lưỡng tài."),
+    # Extra f5 (tiền Lý)
+    ("f5",      "Triệu Quang Phục kế tục cơ nghiệp Vạn Xuân."),
+    ("f5",      "Vạn Xuân quốc đối đầu nhà Lương phương Bắc."),
 ]
 
 BARK_TEMPLATES = [
@@ -425,51 +454,58 @@ TRADE_TEMPLATES = [
 ]
 
 STORY_TEMPLATES = [
-    "Hôm ấy ta vừa thức dậy thì thấy lạ lùng quá...",
-    "Năm 968, Hoa Lư đang chuẩn bị đại lễ...",
-    "Cha ta dặn rằng phải giữ thanh kiếm này...",
-    "Sư Vạn Hạnh nhìn ta hồi lâu rồi mới nói...",
-    "Đêm đó trăng tròn, ta gặp lại người xưa...",
-    "Trên đỉnh Yên Tử, mây trắng bao quanh...",
-    "Sông Như Nguyệt vọng tiếng quân reo...",
-    "Bóng người áo nâu thấp thoáng cuối làng...",
-    "Trận lũ năm Mậu Thân ta nhớ mãi...",
-    "Tiếng trống cơm vọng ra từ giếng nước...",
-    "Bà ngoại kể chuyện tổ tiên dựng nước...",
-    "Trận Bạch Đằng vẫn còn vang trong ký ức ông cha...",
-    "Đêm Hoa Lư, sương phủ kín lối về...",
-    "Người con gái áo tứ thân đứng cuối ngõ...",
-    "Tiếng chuông chùa lay động cõi lòng...",
-    "Cuốn sách cha để lại đã sờn rách...",
-    "Tướng Trần Bình Trọng quát giặc trong lửa...",
-    "Tiếng ai khóc gọi vọng từ phía đông...",
-    "Đoàn quân lên Bắc, gió thổi căng cờ...",
-    "Cuộc gặp gỡ với người lạ thay đổi đời ta...",
-    "Trên dòng Hồng năm xa, thuyền lụa xuôi dòng...",
-    "Ngôi miếu cổ nơi rừng sâu vẫn thắp hương...",
-    "Vị tướng già kể chuyện một thời máu lửa...",
-    "Trẻ chăn trâu mơ giấc bình thiên hạ...",
-    "Bút lông và mực đá ghi dấu thiên thư...",
-    "Tiếng đàn bầu đêm khuya thấm vào lòng...",
-    "Ngày tế Nam Giao, vua quan đông như hội...",
-    "Một thanh kiếm cũ vẫn còn sắc bén...",
-    "Bóng giặc qua làng đêm ấy mãi không quên...",
-    "Trận đánh cuối cùng, ta thấy hình bóng cha...",
-    "Lá cờ rách bay phất phơ trên thành đổ...",
-    "Tiếng pháo lệnh từ Phú Xuân vang vọng...",
-    "Đêm Đông Kinh năm Lê Trung Hưng...",
-    "Người con trở về sau hai mươi năm xa quê...",
-    "Bài thơ trên cột đá Hoa Lư kể chuyện hưng vong...",
-    "Đôi mắt người mẹ tiễn con ra trận...",
-    "Trên đỉnh núi Tản, mây trắng vẫn trôi...",
-    "Tiếng vọng kinh thư từ chùa Phổ Quang...",
-    "Đêm Giáng sinh năm Kỷ Sửu, kinh thành xao động...",
-    "Bóng thuyền lướt sóng Tây Hồ buổi sớm...",
-    "Cô gái Tày hát giữa rừng cọ Hoàng Liên...",
-    "Bài hát ru năm xưa mẹ hát còn vang...",
-    "Tiếng vó ngựa quân Tây Sơn rền rền đêm Tết...",
-    "Bóng cờ Bạch Long hiện ra trong mộng...",
-    "Thanh đao bị bỏ quên ở góc đình hoang...",
+    (None,      "Hôm ấy ta vừa thức dậy thì thấy lạ lùng quá..."),
+    ("f4",      "Năm 968, Hoa Lư đang chuẩn bị đại lễ..."),
+    (None,      "Cha ta dặn rằng phải giữ thanh kiếm này..."),
+    ("ly",      "Sư Vạn Hạnh nhìn ta hồi lâu rồi mới nói..."),
+    (None,      "Đêm đó trăng tròn, ta gặp lại người xưa..."),
+    ("tran",    "Trên đỉnh Yên Tử, mây trắng bao quanh..."),
+    ("ly",      "Sông Như Nguyệt vọng tiếng quân reo..."),
+    (None,      "Bóng người áo nâu thấp thoáng cuối làng..."),
+    (None,      "Trận lũ năm Mậu Thân ta nhớ mãi..."),
+    (None,      "Tiếng trống cơm vọng ra từ giếng nước..."),
+    (None,      "Bà ngoại kể chuyện tổ tiên dựng nước..."),
+    ("tran",    "Trận Bạch Đằng vẫn còn vang trong ký ức ông cha..."),
+    ("f4",      "Đêm Hoa Lư, sương phủ kín lối về..."),
+    (None,      "Người con gái áo tứ thân đứng cuối ngõ..."),
+    (None,      "Tiếng chuông chùa lay động cõi lòng..."),
+    (None,      "Cuốn sách cha để lại đã sờn rách..."),
+    ("tran",    "Tướng Trần Bình Trọng quát giặc trong lửa..."),
+    (None,      "Tiếng ai khóc gọi vọng từ phía đông..."),
+    (None,      "Đoàn quân lên Bắc, gió thổi căng cờ..."),
+    (None,      "Cuộc gặp gỡ với người lạ thay đổi đời ta..."),
+    (None,      "Trên dòng Hồng năm xa, thuyền lụa xuôi dòng..."),
+    (None,      "Ngôi miếu cổ nơi rừng sâu vẫn thắp hương..."),
+    (None,      "Vị tướng già kể chuyện một thời máu lửa..."),
+    (None,      "Trẻ chăn trâu mơ giấc bình thiên hạ..."),
+    (None,      "Bút lông và mực đá ghi dấu thiên thư..."),
+    (None,      "Tiếng đàn bầu đêm khuya thấm vào lòng..."),
+    ("nguyen",  "Ngày tế Nam Giao, vua quan đông như hội..."),
+    (None,      "Một thanh kiếm cũ vẫn còn sắc bén..."),
+    (None,      "Bóng giặc qua làng đêm ấy mãi không quên..."),
+    (None,      "Trận đánh cuối cùng, ta thấy hình bóng cha..."),
+    (None,      "Lá cờ rách bay phất phơ trên thành đổ..."),
+    ("tay_son", "Tiếng pháo lệnh từ Phú Xuân vang vọng..."),
+    ("le",      "Đêm Đông Kinh năm Lê Trung Hưng..."),
+    (None,      "Người con trở về sau hai mươi năm xa quê..."),
+    ("f4",      "Bài thơ trên cột đá Hoa Lư kể chuyện hưng vong..."),
+    (None,      "Đôi mắt người mẹ tiễn con ra trận..."),
+    (None,      "Trên đỉnh núi Tản, mây trắng vẫn trôi..."),
+    (None,      "Tiếng vọng kinh thư từ chùa Phổ Quang..."),
+    (None,      "Đêm Giáng sinh năm Kỷ Sửu, kinh thành xao động..."),
+    (None,      "Bóng thuyền lướt sóng Tây Hồ buổi sớm..."),
+    (None,      "Cô gái Tày hát giữa rừng cọ Hoàng Liên..."),
+    (None,      "Bài hát ru năm xưa mẹ hát còn vang..."),
+    ("tay_son", "Tiếng vó ngựa quân Tây Sơn rền rền đêm Tết..."),
+    (None,      "Bóng cờ Bạch Long hiện ra trong mộng..."),
+    (None,      "Thanh đao bị bỏ quên ở góc đình hoang..."),
+    # Era-bound extra
+    ("g1",      "Sáng nay đi cà phê phố cổ, ta gặp lại người bạn xưa..."),
+    ("g1",      "Tàu điện ngầm sắp khai trương, lòng ai nấy háo hức..."),
+    ("f1",      "Hùng Vương ban cho ta một lời sấm..."),
+    ("f2",      "Trên thành Cổ Loa, gió đêm ấy lạnh khác thường..."),
+    ("f3",      "Quân Đông Ngô đông như kiến, nhưng lòng ta không khiếp..."),
+    ("f5",      "Vạn Xuân đêm đó cờ bay phấp phới..."),
 ]
 
 TEMPLATES_BY_TYPE = {
@@ -535,9 +571,17 @@ def filter_speaker_pool(npcs: list, dtype: str) -> list:
         pool = [n for n in npcs if n.get("can_give_quest")
                 or n.get("is_historical_figure")]
     elif dtype == "story":
+        # Story = narrative-capable NPCs. Original filter (protagonist/
+        # historical/mentor) only yields 58 NPCs missing nguyen + f3 era
+        # entirely. Expanded to include lore_npc, can_train_skill (teacher),
+        # and tier>0 (significant character) — covers all 11 eras
+        # while still excluding plain villagers / mobs.
         pool = [n for n in npcs if n.get("is_protagonist")
                 or n.get("is_historical_figure")
-                or n.get("mentor") is not None]
+                or n.get("mentor") is not None
+                or n.get("npc_type") == "lore_npc"
+                or n.get("can_train_skill")
+                or n.get("tier", 0) > 0]
     else:  # greeting / bark
         pool = list(npcs)
     if not pool:
@@ -562,13 +606,29 @@ def speaker_honorific(npc: dict) -> str:
 # ============================================================
 # DIALOG LINE GENERATION
 # ============================================================
+ERA_TAGGED_TYPES = {"lore", "story"}
+
+
+def _resolve_template_pool(dtype: str, era: str):
+    """For era-tagged types (lore/story), return only templates matching
+    the dialog era OR era-agnostic (None). For others, return raw list.
+    Pre-validated: every era in ERAS_ALL has ≥1 matching template."""
+    raw = TEMPLATES_BY_TYPE[dtype]
+    if dtype not in ERA_TAGGED_TYPES:
+        return raw
+    matched = [text for (tag, text) in raw if tag == era or tag is None]
+    if not matched:  # safety net — should never trigger after pool audit
+        matched = [text for (tag, text) in raw if tag is None]
+    return matched
+
+
 def gen_dialog_line(dialog_id: int, dtype: str, npc: dict) -> dict:
     era = npc.get("era") or "ly"
     if era not in ERAS_ALL:
         era = "ly"
-    templates = TEMPLATES_BY_TYPE[dtype]
+    pool = _resolve_template_pool(dtype, era)
     seed = f"dialog:{dialog_id}:{dtype}"
-    base = seeded_pick(seed + ":t", templates)
+    base = seeded_pick(seed + ":t", pool)
     prefix = seeded_pick(seed + ":p", TONE_PREFIX)
     suffix = seeded_pick(seed + ":s", ERA_LOCALE_SUFFIX[era])
     text = f"{prefix}{base}{suffix}".strip()
@@ -581,6 +641,20 @@ def gen_dialog_line(dialog_id: int, dtype: str, npc: dict) -> dict:
         "text": text,
         "cultural_lock_pass": cultural_lock_check(text),
     }
+
+
+def _audit_era_pool_coverage():
+    """Sanity-check at module load: each era has ≥1 lore + ≥1 story
+    template (era-specific OR era-agnostic). Aborts with code 3 if not."""
+    for dtype in ERA_TAGGED_TYPES:
+        for era in ERAS_ALL:
+            pool = _resolve_template_pool(dtype, era)
+            if not pool:
+                print(f"FATAL pool empty: dtype={dtype} era={era}")
+                sys.exit(3)
+
+
+_audit_era_pool_coverage()
 
 
 # ============================================================
