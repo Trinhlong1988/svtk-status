@@ -1,0 +1,369 @@
+{
+  "version": "1.0",
+  "tso_baseline": 200,
+  "vstk_target": 300,
+  "sample_size": 60,
+  "honest_note": "Sampled deterministic mapping; real TSO PKT cross-ref pending CMD_QA verify.",
+  "mapping": {
+    "1": {
+      "tso_skill_id": 1,
+      "vstk_skill_id": 1,
+      "vstk_name": "Trảm Đao",
+      "vstk_element": "kim"
+    },
+    "10": {
+      "tso_skill_id": 10,
+      "vstk_skill_id": 2,
+      "vstk_name": "Trói Sắt",
+      "vstk_element": "kim"
+    },
+    "12": {
+      "tso_skill_id": 12,
+      "vstk_skill_id": 3,
+      "vstk_name": "Đoạt Mệnh",
+      "vstk_element": "kim"
+    },
+    "15": {
+      "tso_skill_id": 15,
+      "vstk_skill_id": 4,
+      "vstk_name": "Loạn Đao",
+      "vstk_element": "kim"
+    },
+    "17": {
+      "tso_skill_id": 17,
+      "vstk_skill_id": 5,
+      "vstk_name": "Quân Khí",
+      "vstk_element": "kim"
+    },
+    "33": {
+      "tso_skill_id": 33,
+      "vstk_skill_id": 6,
+      "vstk_name": "Phá Hàng Đao",
+      "vstk_element": "kim"
+    },
+    "37": {
+      "tso_skill_id": 37,
+      "vstk_skill_id": 7,
+      "vstk_name": "Vạn Đao Trận",
+      "vstk_element": "kim"
+    },
+    "40": {
+      "tso_skill_id": 40,
+      "vstk_skill_id": 8,
+      "vstk_name": "Cường Nỏ Liên Châu",
+      "vstk_element": "kim"
+    },
+    "43": {
+      "tso_skill_id": 43,
+      "vstk_skill_id": 9,
+      "vstk_name": "Đại Trận Lam Sơn",
+      "vstk_element": "kim"
+    },
+    "44": {
+      "tso_skill_id": 44,
+      "vstk_skill_id": 10,
+      "vstk_name": "Đại Việt Bình Ngô",
+      "vstk_element": "kim"
+    },
+    "46": {
+      "tso_skill_id": 46,
+      "vstk_skill_id": 11,
+      "vstk_name": "Khí Đông Sơn",
+      "vstk_element": "kim"
+    },
+    "47": {
+      "tso_skill_id": 47,
+      "vstk_skill_id": 12,
+      "vstk_name": "Trảm Phép",
+      "vstk_element": "kim"
+    },
+    "53": {
+      "tso_skill_id": 53,
+      "vstk_skill_id": 13,
+      "vstk_name": "Binh Phù Triệu",
+      "vstk_element": "kim"
+    },
+    "55": {
+      "tso_skill_id": 55,
+      "vstk_skill_id": 14,
+      "vstk_name": "Trận Đông A",
+      "vstk_element": "kim"
+    },
+    "58": {
+      "tso_skill_id": 58,
+      "vstk_skill_id": 15,
+      "vstk_name": "Quân Khí Trận",
+      "vstk_element": "kim"
+    },
+    "61": {
+      "tso_skill_id": 61,
+      "vstk_skill_id": 16,
+      "vstk_name": "Trảm Tướng Đông A",
+      "vstk_element": "kim"
+    },
+    "62": {
+      "tso_skill_id": 62,
+      "vstk_skill_id": 17,
+      "vstk_name": "Kiếm Khí Lam Sơn",
+      "vstk_element": "kim"
+    },
+    "66": {
+      "tso_skill_id": 66,
+      "vstk_skill_id": 18,
+      "vstk_name": "Sát Khí 6 Tướng",
+      "vstk_element": "kim"
+    },
+    "67": {
+      "tso_skill_id": 67,
+      "vstk_skill_id": 19,
+      "vstk_name": "Đại Trận Đông A",
+      "vstk_element": "kim"
+    },
+    "73": {
+      "tso_skill_id": 73,
+      "vstk_skill_id": 20,
+      "vstk_name": "Quốc Trụ Bất Khả Phá",
+      "vstk_element": "kim"
+    },
+    "76": {
+      "tso_skill_id": 76,
+      "vstk_skill_id": 21,
+      "vstk_name": "Châm Độc",
+      "vstk_element": "mộc"
+    },
+    "85": {
+      "tso_skill_id": 85,
+      "vstk_skill_id": 22,
+      "vstk_name": "Rễ Trói",
+      "vstk_element": "mộc"
+    },
+    "86": {
+      "tso_skill_id": 86,
+      "vstk_skill_id": 23,
+      "vstk_name": "Mã Tiền Tán",
+      "vstk_element": "mộc"
+    },
+    "87": {
+      "tso_skill_id": 87,
+      "vstk_skill_id": 24,
+      "vstk_name": "Sương Độc Mán",
+      "vstk_element": "mộc"
+    },
+    "89": {
+      "tso_skill_id": 89,
+      "vstk_skill_id": 25,
+      "vstk_name": "Sinh Khí Rừng",
+      "vstk_element": "mộc"
+    },
+    "92": {
+      "tso_skill_id": 92,
+      "vstk_skill_id": 26,
+      "vstk_name": "Vây Cây",
+      "vstk_element": "mộc"
+    },
+    "93": {
+      "tso_skill_id": 93,
+      "vstk_skill_id": 27,
+      "vstk_name": "Bùa Mán Trận",
+      "vstk_element": "mộc"
+    },
+    "95": {
+      "tso_skill_id": 95,
+      "vstk_skill_id": 28,
+      "vstk_name": "Ngải Mán Trận",
+      "vstk_element": "mộc"
+    },
+    "97": {
+      "tso_skill_id": 97,
+      "vstk_skill_id": 29,
+      "vstk_name": "Trường Sơn Phẫn Nộ",
+      "vstk_element": "mộc"
+    },
+    "98": {
+      "tso_skill_id": 98,
+      "vstk_skill_id": 30,
+      "vstk_name": "Cây Tổ Hồng Bàng",
+      "vstk_element": "mộc"
+    },
+    "99": {
+      "tso_skill_id": 99,
+      "vstk_skill_id": 31,
+      "vstk_name": "Cây Thuốc Nam",
+      "vstk_element": "mộc"
+    },
+    "105": {
+      "tso_skill_id": 105,
+      "vstk_skill_id": 32,
+      "vstk_name": "Khắc Phép",
+      "vstk_element": "mộc"
+    },
+    "109": {
+      "tso_skill_id": 109,
+      "vstk_skill_id": 33,
+      "vstk_name": "Hồi Sinh Thuốc",
+      "vstk_element": "mộc"
+    },
+    "113": {
+      "tso_skill_id": 113,
+      "vstk_skill_id": 34,
+      "vstk_name": "Du Kích Sinh Mệnh",
+      "vstk_element": "mộc"
+    },
+    "118": {
+      "tso_skill_id": 118,
+      "vstk_skill_id": 35,
+      "vstk_name": "Triệu Mộc Tinh",
+      "vstk_element": "mộc"
+    },
+    "121": {
+      "tso_skill_id": 121,
+      "vstk_skill_id": 36,
+      "vstk_name": "Vạn Diệp Trói",
+      "vstk_element": "mộc"
+    },
+    "123": {
+      "tso_skill_id": 123,
+      "vstk_skill_id": 37,
+      "vstk_name": "Bùa Hồn Lạc Việt",
+      "vstk_element": "mộc"
+    },
+    "132": {
+      "tso_skill_id": 132,
+      "vstk_skill_id": 38,
+      "vstk_name": "Sinh Khí 6 Tướng",
+      "vstk_element": "mộc"
+    },
+    "137": {
+      "tso_skill_id": 137,
+      "vstk_skill_id": 39,
+      "vstk_name": "Vạn Diệp Hộ Quốc",
+      "vstk_element": "mộc"
+    },
+    "140": {
+      "tso_skill_id": 140,
+      "vstk_skill_id": 40,
+      "vstk_name": "Tổ Mẫu Âu Cơ",
+      "vstk_element": "mộc"
+    },
+    "141": {
+      "tso_skill_id": 141,
+      "vstk_skill_id": 41,
+      "vstk_name": "Băng Sa",
+      "vstk_element": "thủy"
+    },
+    "143": {
+      "tso_skill_id": 143,
+      "vstk_skill_id": 42,
+      "vstk_name": "Cọc Băng",
+      "vstk_element": "thủy"
+    },
+    "151": {
+      "tso_skill_id": 151,
+      "vstk_skill_id": 43,
+      "vstk_name": "Cọc Gỗ Bạch Đằng",
+      "vstk_element": "thủy"
+    },
+    "152": {
+      "tso_skill_id": 152,
+      "vstk_skill_id": 44,
+      "vstk_name": "Sương Tam Điệp",
+      "vstk_element": "thủy"
+    },
+    "155": {
+      "tso_skill_id": 155,
+      "vstk_skill_id": 45,
+      "vstk_name": "Hồi Khí Suối",
+      "vstk_element": "thủy"
+    },
+    "158": {
+      "tso_skill_id": 158,
+      "vstk_skill_id": 46,
+      "vstk_name": "Lũ Cuốn Trận",
+      "vstk_element": "thủy"
+    },
+    "159": {
+      "tso_skill_id": 159,
+      "vstk_skill_id": 47,
+      "vstk_name": "Băng Phá Thuyền",
+      "vstk_element": "thủy"
+    },
+    "169": {
+      "tso_skill_id": 169,
+      "vstk_skill_id": 48,
+      "vstk_name": "Lũ Cửu Long Trận",
+      "vstk_element": "thủy"
+    },
+    "171": {
+      "tso_skill_id": 171,
+      "vstk_skill_id": 49,
+      "vstk_name": "Bạch Đằng Hắc Long Trận",
+      "vstk_element": "thủy"
+    },
+    "172": {
+      "tso_skill_id": 172,
+      "vstk_skill_id": 50,
+      "vstk_name": "Long Vương Đại Triều",
+      "vstk_element": "thủy"
+    },
+    "175": {
+      "tso_skill_id": 175,
+      "vstk_skill_id": 51,
+      "vstk_name": "Khí Sông",
+      "vstk_element": "thủy"
+    },
+    "178": {
+      "tso_skill_id": 178,
+      "vstk_skill_id": 52,
+      "vstk_name": "Ngậm Nước",
+      "vstk_element": "thủy"
+    },
+    "180": {
+      "tso_skill_id": 180,
+      "vstk_skill_id": 53,
+      "vstk_name": "Sương Mù Lam Sơn",
+      "vstk_element": "thủy"
+    },
+    "182": {
+      "tso_skill_id": 182,
+      "vstk_skill_id": 54,
+      "vstk_name": "Sương Khóa Trận",
+      "vstk_element": "thủy"
+    },
+    "183": {
+      "tso_skill_id": 183,
+      "vstk_skill_id": 55,
+      "vstk_name": "Triệu Thủy Linh",
+      "vstk_element": "thủy"
+    },
+    "184": {
+      "tso_skill_id": 184,
+      "vstk_skill_id": 56,
+      "vstk_name": "Khóa Mạch Sông",
+      "vstk_element": "thủy"
+    },
+    "185": {
+      "tso_skill_id": 185,
+      "vstk_skill_id": 57,
+      "vstk_name": "Đảo Triều Cửu Long",
+      "vstk_element": "thủy"
+    },
+    "192": {
+      "tso_skill_id": 192,
+      "vstk_skill_id": 58,
+      "vstk_name": "Khóa Sông 6 Tướng",
+      "vstk_element": "thủy"
+    },
+    "195": {
+      "tso_skill_id": 195,
+      "vstk_skill_id": 59,
+      "vstk_name": "Bạch Đằng Đại Trận",
+      "vstk_element": "thủy"
+    },
+    "198": {
+      "tso_skill_id": 198,
+      "vstk_skill_id": 60,
+      "vstk_name": "Hồng Hà Hồng Thủy",
+      "vstk_element": "thủy"
+    }
+  }
+}
