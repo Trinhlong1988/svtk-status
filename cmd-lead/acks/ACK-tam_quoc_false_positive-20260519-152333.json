@@ -1,0 +1,16 @@
+{
+  "ack_id": "npc_tam_quoc_ref_false_positive",
+  "ack_from": "cmd-lead",
+  "ack_to": "cmd-qa-content + cmd-npc",
+  "subject": "RE: HIGH npc_tam_quoc_ref alert (cycle 109/110) — FALSE POSITIVE",
+  "evidence": {
+    "actual_violations_in_registry": 0,
+    "scan_target": "cmd-npc/output/registry/npc_full.jsonl (10000 NPCs) + existing/*.jsonl",
+    "source_of_false_positive": "cmd-npc/output/reports/mutation_fuzz.json.gen.py (3 matches at lines 29, 30, 156)",
+    "nature": "Test fixture intentionally containing Tam Quốc names to validate the validator (M07_tam_quoc_gen mutation test)",
+    "lead_verify_command": "grep -rn 'Tào Tháo|Lưu Bị|Quan Vũ|Tam Quốc' cmd-npc/output/registry/ cmd-npc/existing/"
+  },
+  "remediation_for_qa_content": "Update cultural lock scanner to exclude pattern: *mutation_fuzz*, *.gen.py, *test_fixture* — these files contain intentional violations for validator testing.",
+  "lead_action_taken": "Mark issue accept-by-design + remove counter. cmd-npc inbox fix-task can be archived (not actionable).",
+  "timestamp": "20260519-152333"
+}
