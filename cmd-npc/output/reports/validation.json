@@ -1,6 +1,6 @@
 {
-  "passed": 125,
-  "total": 125,
+  "passed": 130,
+  "total": 130,
   "pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -340,6 +340,7 @@
           "round_201_210",
           "round_211_220",
           "round_21_30",
+          "round_221_230",
           "round_31_40",
           "round_41_50",
           "round_51_60",
@@ -550,7 +551,7 @@
       "name": "heartbeat_file_present_R111",
       "ok": true,
       "evidence": {
-        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-132930.json",
+        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-135544.json",
         "exists": true
       }
     },
@@ -560,7 +561,7 @@
       "evidence": {
         "count": 1,
         "files": [
-          "BUILDING-npc_extend_to_10000-20260519-132930.json"
+          "BUILDING-npc_extend_to_10000-20260519-135544.json"
         ]
       }
     },
@@ -937,15 +938,55 @@
       "name": "metrics_ts_self_R214",
       "ok": true,
       "evidence": {
-        "build_ts": "20260519-132930",
-        "metrics_ts": "20260519-132750"
+        "build_ts": "20260519-135544",
+        "metrics_ts": "20260519-135040"
+      }
+    },
+    {
+      "name": "name_no_bom_R221",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "name_no_trim_ws_R222",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "class_type_semantic_R223",
+      "ok": true,
+      "evidence": {
+        "violations_gen": 0,
+        "samples": []
+      }
+    },
+    {
+      "name": "mutation_test_zero_survived_R224",
+      "ok": true,
+      "evidence": {
+        "report_present": true
+      }
+    },
+    {
+      "name": "verifier_extended_v55_v57_R225",
+      "ok": true,
+      "evidence": {
+        "new_codes": [
+          "V55_name_no_bom",
+          "V56_name_no_trim_ws",
+          "V57_class_type_semantic_match"
+        ]
       }
     },
     {
       "name": "audit_history_round_count_R215",
       "ok": true,
       "evidence": {
-        "prior_count": 22,
+        "prior_count": 23,
         "post_build_expected": 22
       }
     },

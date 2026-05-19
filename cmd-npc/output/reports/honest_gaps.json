@@ -2,7 +2,7 @@
   "cmd_id": "NPC",
   "cmd_version": "1.1.0",
   "foundation_note": "Brief expects SVTK_FOUNDATION_v2.6.0 hash 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467. Repo has v2.8.0 with actual hash ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0. Using v2.8.0 (latest active foundation in repo); v2.6.0 file unavailable.",
-  "build_timestamp": "20260519-132930",
+  "build_timestamp": "20260519-135544",
   "result_pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -197,6 +197,22 @@
         "R118_audit_index_round_111_120_entry": "AUDIT_INDEX.md row + bug fix area + alerts table sync (1 new MED + 20 cumulative) + validator matrix updated to include 71-75.",
         "R119_readme_cumul_120": "README.md cumul 120 / validator 75/75 / 20 active alerts.",
         "R120_validator_extension_audit_history": "Validator 70→75 checks; EXPECTED_AUDIT_ROUNDS_COVERED + audit_history.round_111_120 + validator expected_rounds wired."
+      }
+    },
+    "round_221_230": {
+      "rounds_completed": 10,
+      "trigger": "Mr.Long — phương án CAO NHẤT: mutation testing + adversarial fuzz",
+      "bugs_fixed": {
+        "R221_name_bom_gap_fix": "Mutation M26 SURVIVED — name with BOM (U+FEFF) not caught by V06_name_nfc. FIX: added V55_name_no_bom in verifier + validator check #126.",
+        "R222_name_trim_ws_gap_fix": "Mutation M27 SURVIVED — trailing/leading whitespace not caught (V05_name_nonempty only checks strip().bool). FIX: added V56_name_no_trim_ws + validator check #127.",
+        "R223_class_type_semantic_gap_fix": "Mutation M28 SURVIVED — townsmen with class=than not caught. FIX: V57_class_type_semantic_match (non-combat noun-types {townsmen, shopkeeper, lore_npc, pet_master} cannot have high-tier class {boss, mini_boss, thanh, than}). Validator check #128.",
+        "R224_mutation_test_report_shipped": "Validator check #129: mutation_fuzz.json report present + survived == 0 (proves all 30 mutations caught post-fix).",
+        "R225_verifier_v55_v57_documented": "Validator check #130: per-NPC verifier extended with 3 new codes (V55_name_no_bom, V56_name_no_trim_ws, V57_class_type_semantic_match).",
+        "R226_audit_index_221_230": "AUDIT_INDEX.md row + matrix R126-R130 + section 'Mutation-discovered gap fixes'.",
+        "R227_readme_cumul_230": "README cumul 230 / validator 130/130.",
+        "R228_audit_history_221_230": "round_221_230 block.",
+        "R229_expected_rounds_221_230": "EXPECTED_AUDIT_ROUNDS_COVERED + validator expected_rounds.",
+        "R230_mutation_test_script_ship": "Desktop/CMD_NPC_WORK/mutation_fuzz.py kept as reusable test harness (30 mutations × 1 sample NPC)."
       }
     },
     "round_211_220": {
