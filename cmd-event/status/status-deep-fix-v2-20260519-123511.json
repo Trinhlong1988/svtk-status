@@ -1,0 +1,385 @@
+{
+  "cmd": "EVENT",
+  "version": "1.0",
+  "timestamp": "20260519-101826",
+  "foundation_hash": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+  "foundation_file": "SVTK_FOUNDATION_v2.8.0.md",
+  "total_events": 600,
+  "existing_count": 10,
+  "new_count": 590,
+  "counts_by_type": {
+    "festival": 150,
+    "raid": 100,
+    "world_boss": 50,
+    "season": 100,
+    "limited": 100,
+    "lore": 100
+  },
+  "eras_covered": [
+    "le",
+    "ly",
+    "nguyen",
+    "tay_son",
+    "tran"
+  ],
+  "issues": [],
+  "tests_count": 17,
+  "hardening_round": "20_round_deep_audit_v1.0.1",
+  "hardening_timestamp": "20260519-112852",
+  "cumulative_fixes_20_round": 58,
+  "rounds": [
+    {
+      "round": 1,
+      "name": "R01 SHA256 companion regen",
+      "before": 5,
+      "after": 0,
+      "detail": "Δ=5"
+    },
+    {
+      "round": 2,
+      "name": "R02 trigger_type vocabulary",
+      "before": 4,
+      "after": 0,
+      "detail": "Δ=4"
+    },
+    {
+      "round": 3,
+      "name": "R03 tier_1 coverage",
+      "before": 1,
+      "after": 0,
+      "detail": "Δ=1"
+    },
+    {
+      "round": 4,
+      "name": "R04 reward monotone per category",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 5,
+      "name": "R05 description uniqueness",
+      "before": 23,
+      "after": 0,
+      "detail": "Δ=23"
+    },
+    {
+      "round": 6,
+      "name": "R06 cross_ref.map_era == era",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 7,
+      "name": "R07 lore dialog_tree_ref + unlocks_codex",
+      "before": 2,
+      "after": 0,
+      "detail": "Δ=2"
+    },
+    {
+      "round": 8,
+      "name": "R08 world_boss boss_hp_billion > 0",
+      "before": 2,
+      "after": 0,
+      "detail": "Δ=2"
+    },
+    {
+      "round": 9,
+      "name": "R09 raid min_party_size + max_participants",
+      "before": 4,
+      "after": 0,
+      "detail": "Δ=4"
+    },
+    {
+      "round": 10,
+      "name": "R10 season season_tag valid",
+      "before": 2,
+      "after": 0,
+      "detail": "Δ=2"
+    },
+    {
+      "round": 11,
+      "name": "R11 limited leaderboard True",
+      "before": 1,
+      "after": 0,
+      "detail": "Δ=1"
+    },
+    {
+      "round": 12,
+      "name": "R12 festival lunar_month/day sanity",
+      "before": 4,
+      "after": 0,
+      "detail": "Δ=4"
+    },
+    {
+      "round": 13,
+      "name": "R13 name whitespace + length",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 14,
+      "name": "R14 event_id density 1..600",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 15,
+      "name": "R15 reward_items non-empty tier_3+",
+      "before": 10,
+      "after": 0,
+      "detail": "Δ=10"
+    },
+    {
+      "round": 16,
+      "name": "R16 trigger_condition.recurrence",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 17,
+      "name": "R17 min_level 1..120",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 18,
+      "name": "R18 cross_ref is dict",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 19,
+      "name": "R19 duration_min sanity 5..43200",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 20,
+      "name": "R20 final dedup + save + sha256",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    }
+  ],
+  "counts_by_era": {
+    "ly": 124,
+    "tran": 124,
+    "tay_son": 117,
+    "le": 121,
+    "nguyen": 114
+  },
+  "counts_by_tier": {
+    "tier_3": 196,
+    "tier_1": 10,
+    "tier_4": 184,
+    "tier_2": 64,
+    "tier_5": 146
+  },
+  "counts_by_trigger": {
+    "calendar": 152,
+    "weekly": 100,
+    "server_time": 51,
+    "quest_completion": 100,
+    "monthly": 98,
+    "limited_time": 99
+  },
+  "cross_validation_round": "15_round_cross_validation_v1.0.2",
+  "cross_validation_timestamp": "20260519-113927",
+  "cross_validation_fixes": 2437,
+  "cross_validation_rounds": [
+    {
+      "round": 1,
+      "name": "R01 reward_items placeholder → real item_id",
+      "before": 1292,
+      "after": 950,
+      "detail": "Δ=342"
+    },
+    {
+      "round": 2,
+      "name": "R02 lore dialog_tree_ref → real dialog_id",
+      "before": 100,
+      "after": 0,
+      "detail": "Δ=100"
+    },
+    {
+      "round": 3,
+      "name": "R03 cross_ref.links_quest_chain → real chain_id",
+      "before": 295,
+      "after": 0,
+      "detail": "Δ=295"
+    },
+    {
+      "round": 4,
+      "name": "R04 giver_npc_id assign (lore/raid/wb/festival)",
+      "before": 600,
+      "after": 0,
+      "detail": "Δ=600"
+    },
+    {
+      "round": 5,
+      "name": "R05 giver_npc_id exists in NPC registry",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 6,
+      "name": "R06 world_boss boss_npc_id assign",
+      "before": 50,
+      "after": 0,
+      "detail": "Δ=50"
+    },
+    {
+      "round": 7,
+      "name": "R07 reward_items dedup per event",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 8,
+      "name": "R08 reward_items ALL exist in item registry",
+      "before": 950,
+      "after": 0,
+      "detail": "Δ=950"
+    },
+    {
+      "round": 9,
+      "name": "R09 reward_items minimum 1 entry",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 10,
+      "name": "R10 cross_ref schema complete (map_era + codex_slug)",
+      "before": 1,
+      "after": 0,
+      "detail": "Δ=1"
+    },
+    {
+      "round": 11,
+      "name": "R11 era consistency event vs NPC",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 12,
+      "name": "R12 lore unlocks_codex flag",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 13,
+      "name": "R13 trigger_condition.requires_quest_chain real",
+      "before": 99,
+      "after": 0,
+      "detail": "Δ=99"
+    },
+    {
+      "round": 14,
+      "name": "R14 cross_ref _cross_validated annotation",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    },
+    {
+      "round": 15,
+      "name": "R15 save + regen SHA256",
+      "before": 0,
+      "after": 0,
+      "detail": "Δ=0"
+    }
+  ],
+  "cross_validation_against": {
+    "npc_full": 10000,
+    "dialog_tree": 3000,
+    "item_full": 4006,
+    "quest_chains": 34
+  },
+  "per_event_verify_round": "10_round_per_event_v1.0.3",
+  "per_event_verify_timestamp": "20260519-115219",
+  "per_event_verify_fixes": 0,
+  "per_event_verify_rounds": [
+    {
+      "round": 1,
+      "name": "R01 giver_npc_id exists in NPC registry",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 2,
+      "name": "R02 NPC era + category eligibility strict",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 3,
+      "name": "R03 event_map_id assigned with era+biome strict",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 4,
+      "name": "R04 NPC sceneId sync to event.giver_scene_id",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 5,
+      "name": "R05 reward_items category strict per event type",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 6,
+      "name": "R06 lore dialog_tree_ref exists + era match",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 7,
+      "name": "R07 world_boss boss_npc tier>=5 + class strict",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 8,
+      "name": "R08 reward_items count matches tier rule",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 9,
+      "name": "R09 trigger_condition required fields per category",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    },
+    {
+      "round": 10,
+      "name": "R10 final consistency + per-event JSON + save",
+      "bugs_detected": 0,
+      "fixed": 0,
+      "detail": ""
+    }
+  ]
+}
