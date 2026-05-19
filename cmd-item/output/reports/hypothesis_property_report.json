@@ -1,0 +1,51 @@
+{
+  "tool": "hypothesis",
+  "total_properties": 8,
+  "passed": 8,
+  "failed": 0,
+  "results": [
+    {
+      "property": "required_fields",
+      "passed": true,
+      "error": null
+    },
+    {
+      "property": "id_pattern",
+      "passed": true,
+      "error": null
+    },
+    {
+      "property": "rarity_in_enum",
+      "passed": true,
+      "error": null
+    },
+    {
+      "property": "category_in_enum",
+      "passed": true,
+      "error": null
+    },
+    {
+      "property": "stats_dict_or_missing",
+      "passed": true,
+      "error": null
+    },
+    {
+      "property": "quest_item_has_quest_ref",
+      "passed": true,
+      "error": null
+    },
+    {
+      "property": "lore_item_has_author",
+      "passed": true,
+      "error": null
+    },
+    {
+      "property": "max_stack_positive",
+      "passed": true,
+      "error": null
+    }
+  ],
+  "items_audited": 4006,
+  "examples_per_property": 400,
+  "timestamp": "2026-05-19 15:11:38"
+}
