@@ -5314,6 +5314,137 @@ ROUND_L20_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 21 — sets.json + itemization_constants (HENICOSA-DEEP, v1.22)
+# ============================================================
+def _load_sets():
+    p = REPO_DIR / "cmd-item" / "data" / "sets.json"
+    if not p.exists():
+        return []
+    return json.loads(p.read_text(encoding="utf-8")).get("sets", [])
+
+
+def _load_const():
+    p = REPO_DIR / "cmd-item" / "data" / "itemization_constants.json"
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def chk_L21_sets_present(items, *_):
+    s = _load_sets()
+    return len(s) >= 1, {"set_count": len(s)}
+
+
+def chk_L21_set_id_unique(items, *_):
+    s = _load_sets()
+    ids = [x.get("set_id") for x in s]
+    dupes = [k for k, c in Counter(ids).items() if c > 1]
+    return len(dupes) == 0, {"dupe_set_ids": dupes}
+
+
+def chk_L21_set_conflict_policy_valid(items, *_):
+    valid = {"strongest_only", "additive",
+             "exclusive_group", "diminishing_return"}
+    bad = []
+    for x in _load_sets():
+        cp = x.get("conflict_policy")
+        if cp not in valid:
+            bad.append({"set_id": x.get("set_id"), "policy": cp})
+    return len(bad) == 0, {"bad_policy": len(bad), "samples": bad[:5]}
+
+
+def chk_L21_set_bonus_pieces_positive(items, *_):
+    bad = []
+    for x in _load_sets():
+        for b in x.get("bonuses", []):
+            p = b.get("pieces")
+            if not isinstance(p, int) or p < 2 or p > 9:
+                bad.append({"set_id": x.get("set_id"), "pieces": p})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"bad_pieces": len(bad), "samples": bad[:5]}
+
+
+def chk_L21_set_piece_refs_existing(items, *_):
+    out_ids = {it["id"] for it in items}
+    bad = []
+    for x in _load_sets():
+        for pid in x.get("pieces", []):
+            if pid and pid not in out_ids:
+                bad.append({"set_id": x.get("set_id"), "missing_piece": pid})
+                if len(bad) >= 5:
+                    break
+    return len(bad) == 0, {"missing_piece_refs": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L21_const_formula_version(items, *_):
+    c = _load_const()
+    fv = c.get("formula_version", "")
+    return bool(fv) and "v" in fv.lower(), {"formula_version": fv}
+
+
+def chk_L21_const_recursion_max_depth(items, *_):
+    c = _load_const().get("modifier_recursion", {})
+    md = c.get("max_depth", 0)
+    return 1 <= md <= 32, {"max_depth": md}
+
+
+def chk_L21_const_perf_budget_max_aggregation(items, *_):
+    c = _load_const().get("perf_budget", {})
+    m = c.get("max_aggregation_us", 0)
+    return 0 < m <= 1000, {"max_aggregation_us": m}
+
+
+def chk_L21_const_bao_kich_cap_5000(items, *_):
+    c = _load_const()
+    bk = c.get("bao_kich_global_cap_bp", 0)
+    return bk == 5000, {"bao_kich_global_cap_bp": bk}
+
+
+def chk_L21_const_stat_weight_keys_present(items, *_):
+    c = _load_const().get("stat_weight", {})
+    required = ["hp", "sat_luc", "phap_luc", "defense"]
+    missing = [k for k in required if k not in c]
+    return len(missing) == 0, {"missing": missing}
+
+
+ROUND_L21_CHECKS = {
+    2: [
+        ("L21_sets_present", "R49", chk_L21_sets_present),
+        ("L21_set_id_unique", "R71", chk_L21_set_id_unique),
+    ],
+    3: [
+        ("L21_set_conflict_policy_valid", "R45",
+         chk_L21_set_conflict_policy_valid),
+        ("L21_set_bonus_pieces_positive", "R45",
+         chk_L21_set_bonus_pieces_positive),
+    ],
+    4: [
+        ("L21_set_piece_refs_existing", "R44",
+         chk_L21_set_piece_refs_existing),
+        ("L21_const_formula_version", "R49",
+         chk_L21_const_formula_version),
+    ],
+    5: [
+        ("L21_const_recursion_max_depth", "R45",
+         chk_L21_const_recursion_max_depth),
+        ("L21_const_perf_budget_max_aggregation", "R45",
+         chk_L21_const_perf_budget_max_aggregation),
+    ],
+    6: [
+        ("L21_const_bao_kich_cap_5000", "R45",
+         chk_L21_const_bao_kich_cap_5000),
+        ("L21_const_stat_weight_keys_present", "R49",
+         chk_L21_const_stat_weight_keys_present),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -5421,6 +5552,8 @@ def main():
             active_checks.extend(ROUND_L19_CHECKS[r])
         if r in ROUND_L20_CHECKS:
             active_checks.extend(ROUND_L20_CHECKS[r])
+        if r in ROUND_L21_CHECKS:
+            active_checks.extend(ROUND_L21_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
