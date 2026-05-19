@@ -1,0 +1,48 @@
+{
+  "fix_id": "map_ship_session_20260519T010616",
+  "fixed_by": "map",
+  "result": "PASS",
+  "timestamp": "20260519-030614",
+  "session_origin_ts": "20260519-010616",
+  "session_audit_ts": "20260519-010708",
+  "merge_commits": [
+    "fa817c0",
+    "950a58d",
+    "c54daf7",
+    "053b315"
+  ],
+  "evidence": {
+    "manifest_count": 8500,
+    "manifest_sha256": "2237ece2efa52401e703916fb232e7afe7abb414f7fcc6b4b2291ee088770b0c",
+    "state_checksum_sha256": "d2e21d2e03048b799b30d7030fe53830f435163a06ef9694c9477222458838ef",
+    "validation_score": 1.0,
+    "bugs_detected": 0,
+    "rounds_audit_10": "PASS 10/10",
+    "rounds_audit_cross_cmd_11_20": "PASS 10/10",
+    "alerts_high": 0,
+    "alerts_med_total": 1,
+    "alerts_low_total": 1,
+    "cross_ref_maps_with_npc": 5373,
+    "cross_ref_maps_with_quest": 22,
+    "cross_ref_orphan_npc": 0,
+    "cross_ref_orphan_quest": 0,
+    "era_lý_pct": 30.54,
+    "era_f_combined_pct": 14.22,
+    "biome_village_plain_pct": 43.3,
+    "biome_capital_inner_pct": 0.87,
+    "elements_verified": 6,
+    "exit_code": 0
+  },
+  "honest_gaps": [
+    "map_image_actual_jpg_gen_offline_lora_controlnet_pending_phase2",
+    "biome_transition_smoothing_not_implemented_phase2",
+    "fog_of_war_dynamic_lighting_not_implemented_phase2",
+    "tile_based_map_not_supported_flat_image_only_phase2",
+    "desktop_brief_hash_2e6e8c2_stale_vs_repo_4e9a6d7a"
+  ],
+  "post_session_observations": [
+    "completion_file_was_not_pushed_during_original_session_disconnect_at_01h06_recovered_03h06",
+    "foundation_v2_8_0_hash_drift_detected_disk_ab1b4eb2_vs_index_4e9a6d7a_separate_HIGH_alert_filed"
+  ],
+  "next_action": "HOLD standby per Mr.Long lệnh tuần tự"
+}

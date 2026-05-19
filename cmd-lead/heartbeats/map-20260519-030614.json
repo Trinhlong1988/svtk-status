@@ -1,0 +1,10 @@
+{
+  "worker": "map",
+  "timestamp": "20260519-030614",
+  "alive": true,
+  "mode": "RESUMED_AFTER_DISCONNECT",
+  "previous_session_end_ts": "20260519-010708",
+  "gap_minutes": 119,
+  "current_phase": "STANDBY_HOLD",
+  "note": "Phiên 01:06 ship c54daf7 + 053b315 đã merged. Resume sau ngắt 119 phút theo lệnh Mr.Long tuần tự — chỉ ship completion + alert + HOLD, KHÔNG loop poll inbox."
+}

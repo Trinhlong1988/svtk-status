@@ -1,0 +1,44 @@
+{
+  "severity": "HIGH",
+  "issue_id": "foundation_hash_drift_disk_vs_index",
+  "cmd_origin": "MAP",
+  "timestamp": "20260519-030614",
+  "summary": "INDEX.sha256 + 19 cmd.md hardcoded hash KHÔNG khớp file foundation/SVTK_FOUNDATION_v2.8.0.md trên disk. Bất cứ CMD nào chạy verify_foundation() bây giờ đều exit 99.",
+  "evidence": {
+    "expected_hash_index_sha256_line22": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+    "expected_hash_brief_cmd_map_v1_1": "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b",
+    "actual_hash_disk_lf_27415bytes": "ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0",
+    "file_path": "foundation/SVTK_FOUNDATION_v2.8.0.md",
+    "file_size_bytes": 27415,
+    "file_eol": "LF (0 CR, 862 LF) — eol=lf in .gitattributes",
+    "file_bom": "none (starts with bytes 23 20 f0 9f 8f 9b ef b8 = '# 🏛')",
+    "git_blob_sha1": "a3aa6cb940bfee3fad68a366ed519fdd5be8bf72",
+    "git_blob_unchanged_since_commit": "c220446"
+  },
+  "scope": "Tất cả CMD verify_foundation() flow theo brief (CMD_MAP / CMD_ITEM / CMD_NPC / CMD_QUEST / CMD_SKILL / CMD_DIALOG / CMD_BOSS / CMD_PLACE / CMD_EVENT / CMD_SPRITE / CMD_ICON / CMD_AUDIO + 7 QA/PROMPT) — 19 module fail verify khi rebuild.",
+  "lead_context": "LEAD cycle 56 (fc3880d) đã ghi nhận pending_fixes.foundation_hash_three_way_mismatch=2. Đây là alert thứ 3 + lần đầu kèm evidence byte-level từ CMD MAP.",
+  "proposed_fix_options": [
+    {
+      "option": "A_update_index",
+      "description": "Rewrite INDEX.sha256 line 22 + 19 cmd.md với hash thực tế ab1b4eb2a5… (giữ nội dung file foundation hiện tại).",
+      "blast_radius": "20 file (INDEX + 19 cmd.md). Không sửa nội dung foundation. Cheapest.",
+      "risk": "Nếu hash 4e9a6d7adc là canonical đã ship CMD1 Phase 14 → mất tính traceable lịch sử."
+    },
+    {
+      "option": "B_revert_foundation_content",
+      "description": "Tìm commit có hash 4e9a6d7adc, revert foundation file về nội dung đó.",
+      "blast_radius": "1 file (foundation). Nhưng có thể mất nội dung mới LEAD thêm vào v2.8.0.",
+      "risk": "Mất change post-c220446 nếu có. Cần git bisect để tìm commit canonical."
+    },
+    {
+      "option": "C_dual_hash_register",
+      "description": "Cập nhật INDEX.sha256 thêm cột 'canonical_hash' vs 'current_hash', tất cả CMD verify chuyển sang đọc INDEX thay vì hardcode.",
+      "blast_radius": "INDEX + verify_foundation() function trong 19 brief.",
+      "risk": "Phải sửa brief — Mr.Long phải approve."
+    }
+  ],
+  "recommendation": "Option A — fastest unblock toàn bộ Phase 14 worker. Schedule LEAD cycle tiếp theo apply bulk update.",
+  "blocker_now": false,
+  "blocker_next_cycle": true,
+  "exit_code": 0
+}
