@@ -1,0 +1,130 @@
+{
+  "event_id": 503,
+  "name": "Trần Hưng Đạo Ba Lần Phá Nguyên",
+  "category": "lore",
+  "era": "tran",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 8019,
+      "npc_name": "Liễu Quỳnh"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "tran",
+      "event_era": "tran",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 5637,
+      "map_name": "lang_bac_bo_tran_05637",
+      "biome": "village"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 1558
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_quest_1916",
+          "category": "quest_item",
+          "result": "pass"
+        },
+        {
+          "token": "item_quest_1902",
+          "category": "quest_item",
+          "result": "pass"
+        },
+        {
+          "token": "item_quest_1884",
+          "category": "quest_item",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_exists_and_era_match",
+      "result": "pass",
+      "dialog_era": "tran"
+    },
+    "R07": {
+      "check": "world_boss_npc_strict",
+      "result": "skip_non_wb"
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_5",
+      "expected": 3,
+      "actual_before": 3,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 503,
+    "name": "Trần Hưng Đạo Ba Lần Phá Nguyên",
+    "category": "lore",
+    "era": "tran",
+    "trigger_type": "quest_completion",
+    "trigger_condition": {
+      "requires_quest_chain": "SVTK_CHAIN_NGODINHLE_B",
+      "recurrence": "one_off_per_account",
+      "_legacy_requires_quest_chain": "SVTK_CHAIN_LORE_TRAN_1"
+    },
+    "duration_min": 45,
+    "reward_tier": "tier_5",
+    "reward_gold": 1000,
+    "reward_exp": 5000,
+    "reward_items": [
+      "item_quest_1916",
+      "item_quest_1902",
+      "item_quest_1884"
+    ],
+    "reward_reputation": 150,
+    "min_level": 35,
+    "max_participants": 1,
+    "cross_ref": {
+      "map_era": "tran",
+      "codex_slug": "tran_hung_dao_ba_lan",
+      "unlocks_codex": true,
+      "links_quest_chain": "SVTK_CHAIN_NGODINHLE_B",
+      "dialog_tree_ref": "DLG_Q_00164",
+      "_legacy_dialog_tree_ref": "DLG_SVTK_LORE_TRAN_HUNG_DAO_BA_LAN",
+      "_legacy_links_quest_chain": "SVTK_CHAIN_LORE_TRAN_1",
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 5637,
+      "event_map_name": "lang_bac_bo_tran_05637",
+      "event_map_biome": "village",
+      "event_map_region": "bac_bo",
+      "event_map_era": "tran",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "Lore sử Việt thời TRAN — Trần Hưng Đạo Ba Lần Phá Nguyên. Solo experience, mở khóa codex, không lặp lại.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 8019,
+    "giver_npc_name": "Liễu Quỳnh",
+    "giver_scene_id": 1558
+  }
+}

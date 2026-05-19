@@ -1,0 +1,123 @@
+{
+  "event_id": 307,
+  "name": "Xuân Lam Kinh Quật Khởi",
+  "category": "season",
+  "era": "le",
+  "rounds": {
+    "R01": {
+      "check": "giver_npc_id_exists_in_registry",
+      "result": "pass",
+      "npc_id": 782,
+      "npc_name": "Duy Phong"
+    },
+    "R02": {
+      "check": "npc_era_and_category_eligibility",
+      "npc_era": "le",
+      "event_era": "le",
+      "result": "pass"
+    },
+    "R03": {
+      "check": "event_map_id_assigned",
+      "result": "pass",
+      "map_id": 4286,
+      "map_name": "lang_trung_bo_f5_04286",
+      "biome": "village"
+    },
+    "R04": {
+      "check": "giver_scene_id_sync_with_npc",
+      "result": "synced",
+      "scene_id": 5630
+    },
+    "R05": {
+      "check": "reward_items_category_strict",
+      "per_item": [
+        {
+          "token": "item_mat_4223",
+          "category": "material",
+          "result": "pass"
+        },
+        {
+          "token": "item_mat_4337",
+          "category": "material",
+          "result": "pass"
+        }
+      ]
+    },
+    "R06": {
+      "check": "lore_dialog_era",
+      "result": "skip_non_lore"
+    },
+    "R07": {
+      "check": "world_boss_npc_strict",
+      "result": "skip_non_wb"
+    },
+    "R08": {
+      "check": "reward_items_count_by_tier",
+      "tier": "tier_3",
+      "expected": 2,
+      "actual_before": 2,
+      "result": "pass"
+    },
+    "R09": {
+      "check": "trigger_condition_required_fields",
+      "expected": [
+        "recurrence"
+      ],
+      "missing_before": [],
+      "result": "pass"
+    }
+  },
+  "final_status": "pass",
+  "event_data": {
+    "event_id": 307,
+    "name": "Xuân Lam Kinh Quật Khởi",
+    "category": "season",
+    "era": "le",
+    "trigger_type": "monthly",
+    "trigger_condition": {
+      "season_tag": "spring",
+      "lunar_month_range": [
+        1,
+        3
+      ],
+      "recurrence": "seasonal"
+    },
+    "duration_min": 43200,
+    "reward_tier": "tier_3",
+    "reward_gold": 3000,
+    "reward_exp": 9000,
+    "reward_items": [
+      "item_mat_4223",
+      "item_mat_4337"
+    ],
+    "reward_reputation": 150,
+    "min_level": 10,
+    "max_participants": 0,
+    "cross_ref": {
+      "map_era": "le",
+      "season_tag": "spring",
+      "links_quest_chain": "SVTK_CHAIN_TIENLY_A",
+      "_legacy_links_quest_chain": "SVTK_CHAIN_SEASON_LE_SPRING",
+      "_cross_validated": true,
+      "_cross_validated_against": [
+        "npc_full",
+        "dialog_tree",
+        "item_full",
+        "quest_chains"
+      ],
+      "_cross_validated_at": "20260519-113927",
+      "event_map_id": 4286,
+      "event_map_name": "lang_trung_bo_f5_04286",
+      "event_map_biome": "village",
+      "event_map_region": "trung_bo",
+      "event_map_era": "f5",
+      "event_map_is_biome_fallback": false
+    },
+    "description": "Mùa spring thời LE — Xuân Lam Kinh Quật Khởi. Buff exp/drop toàn map, season pass mở khóa nhiệm vụ.",
+    "_source": "generated_v1",
+    "_seed_origin": "cmd_event_build_v1_20260519",
+    "giver_npc_id": 782,
+    "giver_npc_name": "Duy Phong",
+    "giver_scene_id": 5630
+  }
+}
