@@ -1,6 +1,6 @@
 {
-  "passed": 95,
-  "total": 95,
+  "passed": 110,
+  "total": 110,
   "pass_rate": 1.0,
   "existing_count": 438,
   "new_count": 9562,
@@ -332,6 +332,9 @@
           "round_131_140",
           "round_141_150",
           "round_151_160",
+          "round_161_170",
+          "round_171_180",
+          "round_181_190",
           "round_1_10",
           "round_21_30",
           "round_31_40",
@@ -544,7 +547,7 @@
       "name": "heartbeat_file_present_R111",
       "ok": true,
       "evidence": {
-        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-125841.json",
+        "path": "cmd-lead\\heartbeats\\cmd-npc-20260519-130507.json",
         "exists": true
       }
     },
@@ -554,7 +557,7 @@
       "evidence": {
         "count": 1,
         "files": [
-          "BUILDING-npc_extend_to_10000-20260519-125841.json"
+          "BUILDING-npc_extend_to_10000-20260519-130507.json"
         ]
       }
     },
@@ -726,6 +729,118 @@
       "evidence": {
         "unique_surnames": 50,
         "threshold": 30
+      }
+    },
+    {
+      "name": "tx_log_schema_R161",
+      "ok": true,
+      "evidence": {
+        "active_count": 3
+      }
+    },
+    {
+      "name": "completion_result_valid_R162",
+      "ok": true,
+      "evidence": {
+        "invalid": []
+      }
+    },
+    {
+      "name": "heartbeat_alive_R163",
+      "ok": true,
+      "evidence": {
+        "file_exists": true
+      }
+    },
+    {
+      "name": "protagonist_sceneId_7715_R164",
+      "ok": true,
+      "evidence": {
+        "actual_sceneId": 7715,
+        "expected": 7715
+      }
+    },
+    {
+      "name": "protagonist_mentor_idx_84_R165",
+      "ok": true,
+      "evidence": {
+        "actual_mentor_idx": 84,
+        "expected": 84
+      }
+    },
+    {
+      "name": "type_tier_allowed_gen_R171",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "boss_tier_min_5_R172",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "protagonist_not_historical_R173",
+      "ok": true,
+      "evidence": {
+        "actual_flag": false
+      }
+    },
+    {
+      "name": "tier9_type_restricted_R174",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "trainer_tier_range_R175",
+      "ok": true,
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "name": "cmd_md_immutable_R181",
+      "ok": true,
+      "evidence": {
+        "exists": true,
+        "lines": 2130
+      }
+    },
+    {
+      "name": "existing_source_hash_baseline_R182",
+      "ok": true,
+      "evidence": {
+        "actual_prefix": "39e750cb13146a95",
+        "baseline_prefix": "39e750cb13146a95"
+      }
+    },
+    {
+      "name": "target_npc_constant_R183",
+      "ok": true,
+      "evidence": {
+        "constant": 10000,
+        "expected": 10000
+      }
+    },
+    {
+      "name": "svtk_target_consistent_R184",
+      "ok": true,
+      "evidence": {
+        "SVTK_TARGET": 10000,
+        "TARGET_NPC": 10000
+      }
+    },
+    {
+      "name": "skill_165_count_R185",
+      "ok": true,
+      "evidence": {
+        "actual": 165,
+        "expected": 165
       }
     },
     {

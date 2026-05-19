@@ -25,9 +25,12 @@ Master index of all deep audit rounds executed on CMD NPC v1.1.0 output.
 | 121-130 | 2026-05-19 | 75→80 | 10 | [AUDIT_REPORT_ROUND_121_130_20260519-122748.md](status/AUDIT_REPORT_ROUND_121_130_20260519-122748.md) |
 | 131-140 | 2026-05-19 | 80→85 | 10 | [AUDIT_REPORT_ROUND_131_140_20260519-124844.md](status/AUDIT_REPORT_ROUND_131_140_20260519-124844.md) |
 | 141-150 | 2026-05-19 | 85→90 | 10 | [AUDIT_REPORT_ROUND_141_150_20260519-125841.md](status/AUDIT_REPORT_ROUND_141_150_20260519-125841.md) |
-| **151-160** | **2026-05-19** | **90→95** | **10** | [AUDIT_REPORT_ROUND_151_160_20260519-125841.md](status/AUDIT_REPORT_ROUND_151_160_20260519-125841.md) |
+| 151-160 | 2026-05-19 | 90→95 | 10 | [AUDIT_REPORT_ROUND_151_160_20260519-125841.md](status/AUDIT_REPORT_ROUND_151_160_20260519-125841.md) |
+| 161-170 | 2026-05-19 | 95→100 | 10 | [AUDIT_REPORT_ROUND_161_170_20260519-130507.md](status/AUDIT_REPORT_ROUND_161_170_20260519-130507.md) |
+| 171-180 | 2026-05-19 | 100→105 | 10 | [AUDIT_REPORT_ROUND_171_180_20260519-130507.md](status/AUDIT_REPORT_ROUND_171_180_20260519-130507.md) |
+| **181-190** | **2026-05-19** | **105→110** | **10** | [AUDIT_REPORT_ROUND_181_190_20260519-130507.md](status/AUDIT_REPORT_ROUND_181_190_20260519-130507.md) |
 
-**Cumulative total: 160 hidden bugs fixed.**
+**Cumulative total: 190 hidden bugs fixed.**
 **Per-NPC deep verification: 540,000 individual checks PASS** (10000 NPCs × 54 schema checks + 5 cross-CMD invariants).
 
 ---
@@ -124,6 +127,9 @@ Trigger Mr.Long — verify từng NPC chi tiết cross-ref MAP/ITEM/QUEST/EVENT 
 | File format hygiene (newline/BOM/sha256 format/era schema/HB cap) | 81-85 | R131-R140 |
 | Registry/report schema (line counts/era_count/metrics/status/honest_gaps) | 86-90 | R141-R150 |
 | Statistical invariants (element/era coverage/boss/surname diversity) | 91-95 | R151-R160 |
+| Pipeline determinism (tx/completion/heartbeat/protagonist sceneId/mentor) | 96-100 | R161-R170 |
+| Tier × type cross-checks (TYPE_TIER_ALLOWED/boss/trainer/tier9) | 101-105 | R171-R180 |
+| Foundation + constants (cmd.md/source hash/TARGET_NPC/SKILL count) | 106-110 | R181-R190 |
 
 ---
 
