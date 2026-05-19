@@ -112,5 +112,5 @@
     "remediation": "R71.1 source IMMUTABLE. Systemic source-side bug. Recommend regenerate existing/NPC_438.jsonl with R78 formula compliance OR document R78 as derived formula not enforced in registry."
   },
   "cmd_origin": "cmd-npc",
-  "timestamp": "20260519-100252"
+  "timestamp": "20260519-105507"
 }

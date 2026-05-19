@@ -80,5 +80,5 @@
     "remediation": "R71.1 source immutable. Mythic figures (Hùng Vương, Lạc Long Quân) have ceremonial level overrides. Generated NPCs respect NPC_TIER_RANGE 100%. Document as data quirk."
   },
   "cmd_origin": "cmd-npc",
-  "timestamp": "20260519-100252"
+  "timestamp": "20260519-105507"
 }

@@ -22,5 +22,5 @@
     "remediation": "No element boost coded — skew is statistical (seed=42 + tier/type correlation). Designer may add element-balanced tier-weighted assignment or accept variance ≤15%."
   },
   "cmd_origin": "cmd-npc",
-  "timestamp": "20260519-100252"
+  "timestamp": "20260519-105507"
 }
