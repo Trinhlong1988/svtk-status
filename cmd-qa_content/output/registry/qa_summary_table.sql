@@ -12,6 +12,6 @@ INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('npc'
 INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('quest','PASS',3000,2262);
 INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('item','FAIL',4006,1000);
 INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('dialog','FAIL',50000,42297);
-INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('boss','FAIL',13,1200);
-INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('skill','PASS',306,300);
+INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('boss','PASS',1200,1200);
+INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('skill','PASS',300,300);
 INSERT INTO qa_content_items (natural_key, verdict, count, target) VALUES ('event','PASS',600,600);

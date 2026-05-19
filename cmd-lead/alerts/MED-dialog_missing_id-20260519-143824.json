@@ -1,0 +1,12 @@
+{
+  "severity": "MED",
+  "issue_id": "dialog_missing_id",
+  "evidence": {
+    "type": "missing_id",
+    "index": 0,
+    "worker": "dialog"
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-143824",
+  "target_worker": "dialog"
+}

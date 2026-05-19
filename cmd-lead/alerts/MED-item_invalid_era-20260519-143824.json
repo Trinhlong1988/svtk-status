@@ -1,0 +1,13 @@
+{
+  "severity": "MED",
+  "issue_id": "item_invalid_era",
+  "evidence": {
+    "type": "invalid_era",
+    "index": 0,
+    "era": "Hùng Vương",
+    "worker": "item"
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-143824",
+  "target_worker": "item"
+}
