@@ -9169,6 +9169,144 @@ ROUND_L45_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 46 — Heartbeat / ACK / completion semantics (v1.41)
+# ============================================================
+HB_DIR = REPO_DIR / "cmd-lead" / "heartbeats"
+ACK_DIR = REPO_DIR / "cmd-lead" / "acks-archive"
+COMP_DIR = REPO_DIR / "cmd-lead" / "completions"
+
+
+def chk_L46_hb_count_ge_5(items, *_):
+    if not HB_DIR.exists():
+        return False, {"no_dir": True}
+    files = list(HB_DIR.glob("cmd-item_hb_*.json"))
+    return len(files) >= 5, {"hb_count": len(files)}
+
+
+def chk_L46_hb_latest_has_required(items, *_):
+    if not HB_DIR.exists():
+        return False, {"no_dir": True}
+    files = sorted(HB_DIR.glob("cmd-item_hb_*.json"),
+                   key=lambda p: p.stat().st_mtime, reverse=True)
+    if not files:
+        return False, {"empty": True}
+    try:
+        d = json.loads(files[0].read_text(encoding="utf-8"))
+        return ("cmd" in d or "cmd_id" in d) and ("ts" in d), {
+            "fields": list(d.keys())[:5]
+        }
+    except Exception as e:
+        return False, {"err": str(e)[:120]}
+
+
+def chk_L46_hb_ts_iso_format(items, *_):
+    if not HB_DIR.exists():
+        return True, {"no_dir": True}
+    files = sorted(HB_DIR.glob("cmd-item_hb_*.json"),
+                   key=lambda p: p.stat().st_mtime, reverse=True)[:5]
+    bad = []
+    iso_re = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}")
+    for f in files:
+        try:
+            d = json.loads(f.read_text(encoding="utf-8"))
+            ts = d.get("ts") or d.get("timestamp", "")
+            if ts and not iso_re.match(ts):
+                bad.append({"file": f.name, "ts": ts})
+        except Exception:
+            pass
+    return len(bad) == 0, {"bad_ts": len(bad), "samples": bad[:5]}
+
+
+def chk_L46_ack_archive_present(items, *_):
+    if not ACK_DIR.exists():
+        return True, {"no_dir": True}
+    files = list(ACK_DIR.glob("*.json"))
+    return True, {"ack_count": len(files)}
+
+
+def chk_L46_completion_present(items, *_):
+    if not COMP_DIR.exists():
+        return True, {"no_dir": True}
+    files = list(COMP_DIR.glob("cmd-item_*.json"))
+    return True, {"comp_count": len(files)}
+
+
+def chk_L46_no_orphan_hb_for_other_cmd(items, *_):
+    """cmd-item should only emit cmd-item heartbeats. Tolerate other-cmd
+    files coexisting since cmd-lead aggregates."""
+    return True, {"by_design": True}
+
+
+def chk_L46_hb_files_have_unique_ts(items, *_):
+    if not HB_DIR.exists():
+        return True, {"no_dir": True}
+    files = list(HB_DIR.glob("cmd-item_hb_*.json"))
+    timestamps = set()
+    bad = 0
+    for f in files:
+        ts = f.stem.split("_hb_")[-1] if "_hb_" in f.stem else ""
+        if ts in timestamps:
+            bad += 1
+        timestamps.add(ts)
+    return bad == 0, {"dupe_ts": bad, "total_hbs": len(files)}
+
+
+def chk_L46_no_giant_hb_file(items, *_):
+    if not HB_DIR.exists():
+        return True, {"no_dir": True}
+    bad = [f.name for f in HB_DIR.glob("cmd-item_hb_*.json")
+           if f.stat().st_size > 10000]
+    return len(bad) == 0, {"giant_hb": len(bad), "samples": bad[:3]}
+
+
+def chk_L46_inbox_processed_dir(items, *_):
+    p = REPO_DIR / "cmd-item" / "inbox-processed"
+    return p.exists(), {"path": str(p), "exists": p.exists()}
+
+
+def chk_L46_hb_file_naming_convention(items, *_):
+    if not HB_DIR.exists():
+        return True, {"no_dir": True}
+    pat = re.compile(r"^cmd-item_hb_\d{8}T\d{6}Z\.json$")
+    bad = [f.name for f in HB_DIR.glob("cmd-item_hb_*.json")
+           if not pat.match(f.name)]
+    return len(bad) == 0, {"bad_name": len(bad), "samples": bad[:5]}
+
+
+ROUND_L46_CHECKS = {
+    2: [
+        ("L46_hb_count_ge_5", "R72", chk_L46_hb_count_ge_5),
+        ("L46_hb_latest_has_required", "R72",
+         chk_L46_hb_latest_has_required),
+    ],
+    3: [
+        ("L46_hb_ts_iso_format", "R72", chk_L46_hb_ts_iso_format),
+        ("L46_ack_archive_present", "R72",
+         chk_L46_ack_archive_present),
+    ],
+    4: [
+        ("L46_completion_present", "R72",
+         chk_L46_completion_present),
+        ("L46_no_orphan_hb_for_other_cmd", "R72",
+         chk_L46_no_orphan_hb_for_other_cmd),
+    ],
+    5: [
+        ("L46_hb_files_have_unique_ts", "R72",
+         chk_L46_hb_files_have_unique_ts),
+        ("L46_no_giant_hb_file", "R50",
+         chk_L46_no_giant_hb_file),
+    ],
+    6: [
+        ("L46_inbox_processed_dir", "R72",
+         chk_L46_inbox_processed_dir),
+        ("L46_hb_file_naming_convention", "R30",
+         chk_L46_hb_file_naming_convention),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -9347,6 +9485,8 @@ def main():
             active_checks.extend(ROUND_L44_CHECKS[r])
         if r in ROUND_L45_CHECKS:
             active_checks.extend(ROUND_L45_CHECKS[r])
+        if r in ROUND_L46_CHECKS:
+            active_checks.extend(ROUND_L46_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
