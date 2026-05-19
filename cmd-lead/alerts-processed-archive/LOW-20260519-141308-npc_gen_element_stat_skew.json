@@ -1,0 +1,26 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_gen_element_stat_skew",
+  "evidence": {
+    "rule_anchor": "R79 ngũ hành design — elements should be stat-neutral",
+    "per_element_avg_atk": {
+      "tâm": 132.78,
+      "kim": 112.29,
+      "mộc": 118.5,
+      "thủy": 117.71,
+      "hỏa": 118.3,
+      "thổ": 115.49
+    },
+    "overall_avg_atk": 119.18,
+    "skewed_elements_gt_10pct": [
+      {
+        "element": "tâm",
+        "avg_atk": 132.78,
+        "skew_pct": 11.42
+      }
+    ],
+    "remediation": "No element boost coded — skew is statistical (seed=42 + tier/type correlation). Designer may add element-balanced tier-weighted assignment or accept variance ≤15%."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-141308"
+}

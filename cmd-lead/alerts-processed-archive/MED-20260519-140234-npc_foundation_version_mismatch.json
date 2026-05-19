@@ -1,0 +1,14 @@
+{
+  "severity": "MED",
+  "issue_id": "npc_foundation_version_mismatch",
+  "evidence": {
+    "rule_anchor": "Brief locks SVTK_FOUNDATION_v2.6.0 hash, repo ships v2.8.0",
+    "brief_expected_version": "SVTK_FOUNDATION_v2.6.0",
+    "brief_expected_hash": "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467",
+    "repo_actual_version": "SVTK_FOUNDATION_v2.8.0",
+    "repo_actual_hash": "ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0",
+    "remediation": "Build accepts v2.8.0 (latest active) and documents the drift in status.foundation. Adjacent CMDs (CMD_DB/BOSS/QUEST etc.) may have same expectation. LEAD reconciles canonical foundation version across CMDs OR re-issues briefs with v2.8.0 hash."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-140234"
+}

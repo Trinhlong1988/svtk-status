@@ -1,0 +1,40 @@
+{
+  "severity": "LOW",
+  "issue_id": "npc_main_era_gender_gap",
+  "evidence": {
+    "rule_anchor": "content diversity — female historical representation per era",
+    "per_era": {
+      "ly": {
+        "male": 5,
+        "female": 2,
+        "total": 7
+      },
+      "tran": {
+        "male": 7,
+        "female": 0,
+        "total": 7
+      },
+      "le": {
+        "male": 5,
+        "female": 1,
+        "total": 6
+      },
+      "tay_son": {
+        "male": 5,
+        "female": 1,
+        "total": 6
+      },
+      "nguyen": {
+        "male": 0,
+        "female": 0,
+        "total": 0
+      }
+    },
+    "eras_with_zero_female_historical": [
+      "tran"
+    ],
+    "remediation": "Enrich ERA_MAIN key_figures with female historical figures (e.g., Trần: An Tư Công Chúa, Nguyên Phi Ỷ Lan; Nguyễn: Hồ Xuân Hương, Đoàn Thị Điểm). Content owner decision, defer to next content round."
+  },
+  "cmd_origin": "cmd-npc",
+  "timestamp": "20260519-140148"
+}

@@ -87,6 +87,53 @@ CREATE INDEX IF NOT EXISTS idx_npc_era ON npc_templates(era);
 CREATE INDEX IF NOT EXISTS idx_npc_type ON npc_templates(npc_type);
 CREATE INDEX IF NOT EXISTS idx_npc_tier ON npc_templates(tier);
 CREATE INDEX IF NOT EXISTS idx_npc_scene ON npc_templates(scene_id);
+
+-- R231 fix Round 231-240: JSON→SQL adapter VIEW (Phương án 6 + 7 found naming
+-- mismatch: JSON uses _index/sceneId, SQL uses npc_index/scene_id by convention).
+-- Downstream CMD_DB/QUEST/BOSS consumers can SELECT from this view using JSON-key
+-- names directly (PostgreSQL quoted identifiers preserve case).
+CREATE OR REPLACE VIEW npc_templates_json_view AS
+SELECT
+    npc_index   AS "_index",
+    uuid,
+    name,
+    era,
+    npc_type,
+    class_hierarchy,
+    dmg_taken_multi,
+    scene_id    AS "sceneId",
+    spawn_x,
+    spawn_y,
+    tier,
+    level,
+    element,
+    hp, sp, atk, def_, int_, mdef, agi, luck, hit, dodge, crit,
+    skill_ids,
+    ai_behavior,
+    aggro_range,
+    pettable,
+    rebirthable,
+    can_give_quest,
+    can_train_skill,
+    can_farm,
+    can_event,
+    sprite_template_id,
+    palette_seed,
+    recolor_index,
+    is_raid_extreme,
+    pet_base_hp, pet_base_atk, pet_loyalty_init, pet_evolution_path,
+    pet_evolution_path_note,
+    mentor, mentor_npc_idx,
+    background, starting_class, is_player, is_protagonist,
+    is_historical_figure, era_start_year,
+    gender, cultural_tag, created_at
+FROM npc_templates;
+
+-- JSON↔SQL field mapping documentation:
+-- JSON `_index`     ↔ SQL `npc_index`     (PRIMARY KEY)
+-- JSON `sceneId`    ↔ SQL `scene_id`      (CMD_MAP cross-ref)
+-- (other 51 fields match 1:1 between JSON keys and SQL columns)
+-- Audit-only JSON fields (skip in SQL): _gender_inferred, _uuid_backfilled, _historical_flag_inferred
 CREATE INDEX IF NOT EXISTS idx_npc_questgiver ON npc_templates(can_give_quest)
     WHERE can_give_quest = TRUE;
 
