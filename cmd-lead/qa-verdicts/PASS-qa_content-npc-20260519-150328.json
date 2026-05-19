@@ -1,0 +1,10 @@
+{
+  "qa": "qa_content",
+  "target": "npc",
+  "verdict": "PASS",
+  "evidence": {
+    "count": 10000,
+    "registry": "cmd-npc\\output\\registry\\npc_full.jsonl"
+  },
+  "timestamp": "20260519-150328"
+}
