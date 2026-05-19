@@ -4757,6 +4757,110 @@ ROUND_L16_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 17 — SQL DDL strict (HEPTADECA-DEEP, v1.18)
+# Validate generated SQL schema for shape/constraint completeness.
+# ============================================================
+def _load_sql():
+    p = REPO_DIR / "cmd-item" / "output" / "schema" / "item_table.sql"
+    return p.read_text(encoding="utf-8") if p.exists() else ""
+
+
+def chk_L17_create_table_present(items, *_):
+    sql = _load_sql()
+    return "CREATE TABLE" in sql, {"len": len(sql)}
+
+
+def chk_L17_primary_key_template_id(items, *_):
+    sql = _load_sql()
+    return "template_id" in sql and "PRIMARY KEY" in sql, {"present": True}
+
+
+def chk_L17_id_unique_constraint(items, *_):
+    sql = _load_sql()
+    return ("id" in sql and "UNIQUE" in sql), {"present": True}
+
+
+def chk_L17_check_category_enum(items, *_):
+    sql = _load_sql()
+    required = ["'weapon'", "'armor'", "'consumable'",
+                "'material'", "'quest_item'", "'lore_item'"]
+    missing = [c for c in required if c not in sql]
+    return len(missing) == 0, {"missing_cat_enum": missing}
+
+
+def chk_L17_check_rarity_enum(items, *_):
+    sql = _load_sql()
+    required = ["'common'", "'uncommon'", "'rare'",
+                "'epic'", "'legendary'", "'mythic'"]
+    missing = [r for r in required if r not in sql]
+    return len(missing) == 0, {"missing_rarity_enum": missing}
+
+
+def chk_L17_check_element_enum(items, *_):
+    sql = _load_sql()
+    required = ["'KIM'", "'MOC'", "'THUY'", "'HOA'", "'THO'", "'TAM'"]
+    missing = [e for e in required if e not in sql]
+    return len(missing) == 0, {"missing_elem_enum": missing}
+
+
+def chk_L17_no_drop_statement(items, *_):
+    sql = _load_sql()
+    bad = re.findall(r"\bDROP\s+(TABLE|INDEX|SCHEMA)\b", sql, re.IGNORECASE)
+    return len(bad) == 0, {"drop_stmts": bad[:5]}
+
+
+def chk_L17_index_on_category(items, *_):
+    sql = _load_sql()
+    return "INDEX" in sql and "category" in sql, {"present": True}
+
+
+def chk_L17_instances_table_has_fk(items, *_):
+    sql = _load_sql()
+    has_fk = ("REFERENCES item_templates" in sql)
+    return has_fk, {"fk_present": has_fk}
+
+
+def chk_L17_quantity_check_positive(items, *_):
+    sql = _load_sql()
+    return "CHECK (quantity > 0)" in sql or "CHECK(quantity > 0)" in sql, {"present": True}
+
+
+ROUND_L17_CHECKS = {
+    2: [
+        ("L17_create_table_present", "R50",
+         chk_L17_create_table_present),
+        ("L17_primary_key_template_id", "R50",
+         chk_L17_primary_key_template_id),
+    ],
+    3: [
+        ("L17_id_unique_constraint", "R50",
+         chk_L17_id_unique_constraint),
+        ("L17_check_category_enum", "R50",
+         chk_L17_check_category_enum),
+    ],
+    4: [
+        ("L17_check_rarity_enum", "R50",
+         chk_L17_check_rarity_enum),
+        ("L17_check_element_enum", "R79",
+         chk_L17_check_element_enum),
+    ],
+    5: [
+        ("L17_no_drop_statement", "R50",
+         chk_L17_no_drop_statement),
+        ("L17_index_on_category", "R74",
+         chk_L17_index_on_category),
+    ],
+    6: [
+        ("L17_instances_table_has_fk", "R44",
+         chk_L17_instances_table_has_fk),
+        ("L17_quantity_check_positive", "R45",
+         chk_L17_quantity_check_positive),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -4845,6 +4949,8 @@ def main():
             active_checks.extend(ROUND_L15_CHECKS[r])
         if r in ROUND_L16_CHECKS:
             active_checks.extend(ROUND_L16_CHECKS[r])
+        if r in ROUND_L17_CHECKS:
+            active_checks.extend(ROUND_L17_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
