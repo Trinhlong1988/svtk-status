@@ -4,7 +4,7 @@
   "dangling_edges": 0,
   "dangling_fixed": 0,
   "cycles_detected": 0,
-  "connected_components": 66,
-  "largest_component_size": 511,
-  "isolated_events": 47
+  "connected_components": 63,
+  "largest_component_size": 514,
+  "isolated_events": 44
 }
