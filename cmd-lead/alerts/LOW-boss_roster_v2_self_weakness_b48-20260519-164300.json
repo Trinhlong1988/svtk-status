@@ -1,0 +1,16 @@
+{
+  "severity": "LOW",
+  "issue_id": "roster_v2_self_weakness_b48",
+  "from": "boss",
+  "to": "lead",
+  "timestamp": "20260519-164300",
+  "evidence": {
+    "boss_id": 48,
+    "name": "Sầm Nghi Đống",
+    "element": "HOA",
+    "weakness_in_roster_v2": "HOA",
+    "issue": "self-weak invalid game logic — boss có element X cannot have weakness X",
+    "build_time_workaround": "Sanitize: weakness HOA → THUY (element wheel counter: hỏa weak to thủy = water extinguishes fire). Original kept in _roster_weakness_original.",
+    "recommend": "Roster v3 fix: weakness = THUY (per ngũ hành element wheel) OR weakness = BACH (per R87 Quang Ám Đấu, Sầm Nghi Đống is HAC path enemy from Thanh dynasty, BẠCH chính nghĩa counter HẮC)."
+  }
+}
