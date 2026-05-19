@@ -1,0 +1,9 @@
+{
+  "issue_id": "item_anti_snowball_r10_8_violation",
+  "description": "QA_CONTENT detect R10.8 anti-snowball stat cap violation. ANTI_SNOWBALL_STAT_CAP = 2.5 from CMD5_LEAD spec. Check items có stat > cap = 2.5x baseline.",
+  "severity": "HIGH",
+  "priority": 1,
+  "foundation_rule": "R10.8 anti-snowball",
+  "assigned_by": "LEAD",
+  "ts": "20260519-151846"
+}
