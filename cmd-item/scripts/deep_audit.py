@@ -4861,6 +4861,178 @@ ROUND_L17_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 18 — Consumable & material domain deep (OCTADECA-DEEP, v1.19)
+# ============================================================
+def chk_L18_consumable_heal_positive_strict(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        st = it.get("stats") or {}
+        h = st.get("heal_amount", it.get("heal_amount"))
+        if h is None or h <= 0:
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"no_heal": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_stackable_true(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        if not it.get("stackable"):
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"unstack_mat": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_max_stack_ge_10(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        ms = it.get("max_stack", 0)
+        if ms < 10:
+            bad.append({"id": it["id"], "max_stack": ms})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"small_stack": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_element_null(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        e = it.get("element")
+        if e is not None and e != "":
+            bad.append({"id": it["id"], "element": e})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"mat_with_element": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_consumable_element_null(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        e = it.get("element")
+        if e is not None and e != "":
+            bad.append({"id": it["id"], "element": e})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"cons_with_element": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_consumable_level_min_ge_1(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        lm = it.get("level_min", 0)
+        if lm < 1:
+            bad.append({"id": it["id"], "level_min": lm})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"low_lm": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_lore_item_not_stackable(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "lore_item":
+            continue
+        if it.get("stackable"):
+            bad.append(it["id"])
+    return len(bad) == 0, {"stackable_lore": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_quest_item_not_stackable(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "quest_item":
+            continue
+        if it.get("stackable"):
+            bad.append(it["id"])
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"stackable_quest": len(bad),
+                           "samples": bad[:5]}
+
+
+def chk_L18_consumable_max_stack_ge_2(items, *_):
+    bad = []
+    for it in items:
+        if it.get("category") != "consumable":
+            continue
+        ms = it.get("max_stack", 0)
+        if ms < 2:
+            bad.append({"id": it["id"], "max_stack": ms})
+            if len(bad) >= 5:
+                break
+    return len(bad) == 0, {"tiny_stack": len(bad), "samples": bad[:5]}
+
+
+def chk_L18_material_sell_price_zero(items, *_):
+    """Raw materials should not be sold via vendor (sell_price = 0)."""
+    bad = []
+    for it in items:
+        if it.get("category") != "material":
+            continue
+        sp = it.get("sell_price_gold", 0)
+        if sp != 0:
+            bad.append({"id": it["id"], "sell": sp})
+            if len(bad) >= 5:
+                break
+    # Loose check: allow modest sell up to 20
+    threshold_violation = [b for b in bad if b["sell"] > 20]
+    return len(threshold_violation) == 0, {"overpriced_mat": len(threshold_violation),
+                                            "samples": threshold_violation[:5]}
+
+
+ROUND_L18_CHECKS = {
+    2: [
+        ("L18_consumable_heal_positive_strict", "R45",
+         chk_L18_consumable_heal_positive_strict),
+        ("L18_material_stackable_true", "R49",
+         chk_L18_material_stackable_true),
+    ],
+    3: [
+        ("L18_material_max_stack_ge_10", "R49",
+         chk_L18_material_max_stack_ge_10),
+        ("L18_material_element_null", "R79",
+         chk_L18_material_element_null),
+    ],
+    4: [
+        ("L18_consumable_element_null", "R79",
+         chk_L18_consumable_element_null),
+        ("L18_consumable_level_min_ge_1", "R45",
+         chk_L18_consumable_level_min_ge_1),
+    ],
+    5: [
+        ("L18_lore_item_not_stackable", "R49",
+         chk_L18_lore_item_not_stackable),
+        ("L18_quest_item_not_stackable", "R49",
+         chk_L18_quest_item_not_stackable),
+    ],
+    6: [
+        ("L18_consumable_max_stack_ge_2", "R49",
+         chk_L18_consumable_max_stack_ge_2),
+        ("L18_material_sell_price_zero", "R45",
+         chk_L18_material_sell_price_zero),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -4951,6 +5123,8 @@ def main():
             active_checks.extend(ROUND_L16_CHECKS[r])
         if r in ROUND_L17_CHECKS:
             active_checks.extend(ROUND_L17_CHECKS[r])
+        if r in ROUND_L18_CHECKS:
+            active_checks.extend(ROUND_L18_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
