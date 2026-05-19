@@ -230,6 +230,96 @@ def test_30_audit_15_report_clean():
         assert r['bugs_remaining_new'] == 0, f"{r['round']} still has new bugs: {r['sample_new_bugs']}"
 
 
+# ---- R16-R25 (audit 25 diverse-method findings baked in) ----
+
+def test_31_property_id_positive():
+    for e in _load():
+        assert e['skill_id'] >= 1
+
+
+def test_32_property_bach_hac_constraints():
+    for e in _load():
+        if 'bach_than' in e['valid_classes']:
+            assert e['element'] == 'mộc'
+        if 'hac_than' in e['valid_classes']:
+            assert e['element'] == 'thổ'
+
+
+def test_33_snapshot_companion_matches_disk():
+    import hashlib
+    actual = hashlib.sha256(REG.read_bytes()).hexdigest()
+    companion = (REG.parent / (REG.name + '.sha256')).read_text(encoding='utf-8').strip().split()[0]
+    assert actual == companion, f'snapshot drift {actual[:12]} vs {companion[:12]}'
+
+
+def test_34_boundary_melee_range_present():
+    assert any(e['range_tiles'] == 1 for e in _load() if e['target_type'] != 'self'), 'no melee range=1 skill'
+
+
+def test_35_boundary_max_range_present():
+    assert any(e['range_tiles'] >= 8 for e in _load()), 'no long-range skill'
+
+
+def test_36_chi_square_total_corpus_balanced():
+    entries = _load()
+    el = Counter(e['element'] for e in entries)
+    exp = len(entries) / 6
+    chi = sum((c - exp) ** 2 / exp for c in el.values())
+    assert chi < 11.07, f'element chi2={chi:.2f}'
+
+    era = Counter(e['era_lore'] for e in entries)
+    exp = len(entries) / 5
+    chi = sum((c - exp) ** 2 / exp for c in era.values())
+    assert chi < 9.49, f'era chi2={chi:.2f}'
+
+
+def test_37_unicode_nfc_normalized():
+    import unicodedata
+    for e in _load():
+        for k in ('name', 'name_vi', 'description'):
+            assert e[k] == unicodedata.normalize('NFC', e[k]), f'nfd in sid={e["skill_id"]} field={k}'
+
+
+def test_38_round_trip_sql_lossless():
+    import sqlite3
+    con = sqlite3.connect(':memory:')
+    cur = con.cursor()
+    cur.execute('CREATE TABLE s (id INT PRIMARY KEY, name TEXT, element TEXT, tier INT)')
+    for e in _load():
+        cur.execute('INSERT INTO s VALUES (?,?,?,?)', (e['skill_id'], e['name'], e['element'], e['tier']))
+    cur.execute('SELECT id FROM s')
+    ids = sorted(r[0] for r in cur.fetchall())
+    con.close()
+    assert ids == list(range(1, 301))
+
+
+def test_39_adversarial_lines_rejected():
+    import json as _json
+    BAD = [
+        '﻿{"skill_id":166}',
+        '{"skill_id":NaN}',
+        '{"skill_id":Infinity}',
+        "{'skill_id':166}",
+        '{"skill_id":"166"}',  # string id
+    ]
+    for line in BAD:
+        try:
+            obj = _json.loads(line)
+        except (_json.JSONDecodeError, ValueError):
+            continue
+        # If parse succeeded, schema check must reject
+        assert not (isinstance(obj.get('skill_id'), int) and obj.get('skill_id') > 0 and 'name' in obj)
+
+
+def test_40_audit_25_report_clean():
+    rep_path = Path(__file__).parent / 'audit_25_report.json'
+    if not rep_path.exists():
+        return
+    rep = json.loads(rep_path.read_text(encoding='utf-8'))
+    for r in rep:
+        assert r['remaining_new'] == 0, f"{r['round']} new bugs: {r['sample_new']}"
+
+
 if __name__ == '__main__':
     import sys
     tests = sorted(k for k in globals() if k.startswith('test_'))

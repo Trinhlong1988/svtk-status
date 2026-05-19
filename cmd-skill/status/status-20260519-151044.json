@@ -1,0 +1,38 @@
+{
+  "cmd": "SKILL",
+  "version": "1.0.2-audit25",
+  "timestamp": "20260519-151044",
+  "audit_rounds": 25,
+  "audit_rounds_pass": 25,
+  "audit15_pass": 15,
+  "audit25_pass": 10,
+  "audit_idempotent": true,
+  "existing_count": 165,
+  "new_count": 135,
+  "total_count": 300,
+  "audit25_methodologies": [
+    "R16 property_based (500 fuel + invariant per-skill)",
+    "R17 snapshot_golden (sha256 disk↔companion)",
+    "R18 boundary_values (13 boundary cases incl. melee range=1)",
+    "R19 chi_square_distrib (full 300 corpus df=5/4/3)",
+    "R20 round_trip_sql (JSONL↔SQLite lossless)",
+    "R21 unicode_nfc (Vietnamese tone marks NFC)",
+    "R22 determinism_stress (50 iterations identical)",
+    "R23 cross_cmd_integrity (140 files scanned, 165 refs, 0 orphans)",
+    "R24 adversarial_parse (10 malformed inputs rejected)",
+    "R25 validator_meta (15 crafted mutants caught, 0 dead clauses)"
+  ],
+  "audit25_fixes": {
+    "R18_melee_range": 3
+  },
+  "test_count": 40,
+  "test_pass": 40,
+  "validation_score": 1.0,
+  "honest_gaps_remaining": [
+    "Skill animation hint = name only",
+    "TS migration sample 60/200 (full PKT pending CMD_QA)",
+    "No combo chains v1.0",
+    "Cooldown not playtested"
+  ],
+  "exit_code": 0
+}
