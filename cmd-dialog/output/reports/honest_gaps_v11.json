@@ -6,7 +6,7 @@
     {
       "severity": "MED",
       "item": "Template-based dialog repetition",
-      "reason": "50000 lines synthesized from ~353 base templates × tone prefix × era locale suffix. Lore depth low; mass categories (bark, combat, trade) recycle short templates.",
+      "reason": "50000 lines synthesized from ~363 base templates × tone prefix × era locale suffix. Lore depth low; mass categories (bark, combat, trade) recycle short templates.",
       "mitigation": "Phase 14 Week 4 enrichment — feed NPC personality/era richer suffix pools, consider LLM-augmented enrichment pass on subset."
     },
     {
@@ -26,6 +26,12 @@
       "item": "No audio/voice acting hints",
       "reason": "audio_id mapping not populated — CMD AUDIO (Phase 15) will build.",
       "mitigation": "Defer to CMD AUDIO; dialog schema already has room for audio_id."
+    },
+    {
+      "severity": "LOW",
+      "item": "NPC names not 1:1 with speaker_id (upstream cmd-npc data property)",
+      "reason": "cmd-npc/output/registry/npc_full.jsonl contains 2062 duplicate names across 10000 NPCs (e.g. 'Hoàng Nam' appears 6 times with distinct _index/uuid). Speaker_name in dialog output reflects this duplication. Not a cmd-dialog defect — upstream registry design intentionally allows reuse of common Vietnamese names.",
+      "mitigation": "Out of cmd-dialog scope. If 1:1 mapping needed, raise with cmd-npc owner to enforce unique name OR add disambiguator (e.g. era suffix) at name generation."
     }
   ],
   "resolves_alerts": [
