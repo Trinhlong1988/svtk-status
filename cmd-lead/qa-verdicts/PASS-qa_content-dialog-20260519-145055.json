@@ -1,0 +1,10 @@
+{
+  "qa": "qa_content",
+  "target": "dialog",
+  "verdict": "PASS",
+  "evidence": {
+    "count": 50000,
+    "registry": "cmd-dialog\\output\\registry\\dialog_full.jsonl"
+  },
+  "timestamp": "20260519-145055"
+}

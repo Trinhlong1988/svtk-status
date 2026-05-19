@@ -1,0 +1,18 @@
+{
+  "cmd": "QA_CONTENT",
+  "version": "1.0",
+  "timestamp": "20260519-145055",
+  "validation_score": 1.0,
+  "honest_gaps": [],
+  "qa_summary": {
+    "npc": "PASS",
+    "quest": "PASS",
+    "item": "PASS",
+    "dialog": "PASS",
+    "boss": "PASS",
+    "skill": "PASS",
+    "event": "PASS"
+  },
+  "issues_total": 0,
+  "exit_code": 0
+}
