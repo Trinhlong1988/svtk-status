@@ -9307,6 +9307,119 @@ ROUND_L46_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 47 — Affix pool depth & stat coverage (v1.42)
+# ============================================================
+def chk_L47_pool_vu_khi_ge_5(items, *_):
+    p = _load_affix_pool().get("vu_khi") or []
+    return len(p) >= 5, {"vu_khi_pool_size": len(p)}
+
+
+def chk_L47_pool_ao_ge_3(items, *_):
+    p = _load_affix_pool().get("ao") or []
+    return len(p) >= 3, {"ao_pool_size": len(p)}
+
+
+def chk_L47_pool_mu_ge_3(items, *_):
+    p = _load_affix_pool().get("mu") or []
+    return len(p) >= 3, {"mu_pool_size": len(p)}
+
+
+def chk_L47_pool_quan_ge_2(items, *_):
+    p = _load_affix_pool().get("quan") or []
+    return len(p) >= 2, {"quan_pool_size": len(p)}
+
+
+def chk_L47_pool_giay_ge_2(items, *_):
+    p = _load_affix_pool().get("giay") or []
+    return len(p) >= 2, {"giay_pool_size": len(p)}
+
+
+def chk_L47_pool_total_affix_count_ge_20(items, *_):
+    pools = _load_affix_pool()
+    total = sum(len(v) for v in pools.values())
+    return total >= 20, {"total_affix": total}
+
+
+def chk_L47_pool_distinct_stat_types_ge_6(items, *_):
+    pools = _load_affix_pool()
+    types = set()
+    for lst in pools.values():
+        for a in lst:
+            if a.get("type"):
+                types.add(a["type"])
+    return len(types) >= 6, {"stat_types": sorted(types)[:10]}
+
+
+def chk_L47_pool_no_dupe_within_slot(items, *_):
+    pools = _load_affix_pool()
+    bad = []
+    for slot, lst in pools.items():
+        ids = [a.get("id") for a in lst]
+        if len(ids) != len(set(ids)):
+            bad.append(slot)
+    return len(bad) == 0, {"dupes_within_slot": bad}
+
+
+def chk_L47_pool_value_range_positive(items, *_):
+    pools = _load_affix_pool()
+    bad = []
+    for slot, lst in pools.items():
+        for a in lst:
+            if (a.get("min") or 0) > (a.get("max") or 0):
+                bad.append({"slot": slot, "id": a.get("id")})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"min_gt_max": len(bad), "samples": bad[:5]}
+
+
+def chk_L47_pool_id_prefix_affix(items, *_):
+    pools = _load_affix_pool()
+    bad = []
+    for slot, lst in pools.items():
+        for a in lst:
+            aid = a.get("id") or ""
+            if not aid.startswith("affix_"):
+                bad.append({"slot": slot, "id": aid})
+                if len(bad) >= 5:
+                    break
+        if len(bad) >= 5:
+            break
+    return len(bad) == 0, {"bad_prefix": len(bad), "samples": bad[:5]}
+
+
+ROUND_L47_CHECKS = {
+    2: [
+        ("L47_pool_vu_khi_ge_5", "R49", chk_L47_pool_vu_khi_ge_5),
+        ("L47_pool_ao_ge_3", "R49", chk_L47_pool_ao_ge_3),
+    ],
+    3: [
+        ("L47_pool_mu_ge_3", "R49", chk_L47_pool_mu_ge_3),
+        ("L47_pool_quan_ge_2", "R49", chk_L47_pool_quan_ge_2),
+    ],
+    4: [
+        ("L47_pool_giay_ge_2", "R49", chk_L47_pool_giay_ge_2),
+        ("L47_pool_total_affix_count_ge_20", "R49",
+         chk_L47_pool_total_affix_count_ge_20),
+    ],
+    5: [
+        ("L47_pool_distinct_stat_types_ge_6", "R49",
+         chk_L47_pool_distinct_stat_types_ge_6),
+        ("L47_pool_no_dupe_within_slot", "R71",
+         chk_L47_pool_no_dupe_within_slot),
+    ],
+    6: [
+        ("L47_pool_value_range_positive", "R45",
+         chk_L47_pool_value_range_positive),
+        ("L47_pool_id_prefix_affix", "R30",
+         chk_L47_pool_id_prefix_affix),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -9487,6 +9600,8 @@ def main():
             active_checks.extend(ROUND_L45_CHECKS[r])
         if r in ROUND_L46_CHECKS:
             active_checks.extend(ROUND_L46_CHECKS[r])
+        if r in ROUND_L47_CHECKS:
+            active_checks.extend(ROUND_L47_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
