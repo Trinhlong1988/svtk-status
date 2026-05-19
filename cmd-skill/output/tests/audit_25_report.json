@@ -1,0 +1,142 @@
+[
+  {
+    "round": "R16 property_based",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {},
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R17 snapshot_golden",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "snapshot_sha256": "23cd39d63efe950189dc402ed9e478eae909e47d562d3c75f91e49d90b4b4112",
+      "companion_sha256": "23cd39d63efe950189dc402ed9e478eae909e47d562d3c75f91e49d90b4b4112"
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R18 boundary_values",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "tier_basic_present": true,
+      "tier_ultimate_present": true,
+      "self_target_present": true,
+      "aoe_target_present": true,
+      "single_target_present": true,
+      "physical_present": true,
+      "magic_present": true,
+      "all_5_eras_present": true,
+      "all_6_elements_present": true,
+      "bach_than_class_used": true,
+      "hac_than_class_used": true,
+      "range_min_1_melee": true,
+      "range_max_8_or_more": true
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R19 chi_square_distrib",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "element_chi2": 0.0,
+      "era_chi2": 0.0,
+      "tier_label_chi2": 0.0,
+      "era_chi2_new_only_advisory": 11.1852
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R20 round_trip_sql",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "row_count": 300
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R21 unicode_nfc",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "fixes_applied": 0
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R22 determinism_stress",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "iterations": 50,
+      "canonical_sha256": "930e8881ee95fb0fcc0c01fca31edce8f2cb6fe629a1ad54cca5f0285ffdec14"
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R23 cross_cmd_integrity",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "scanned_files": 140,
+      "referenced_count": 165,
+      "orphan_count": 0
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R24 adversarial_parse",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "adversarial_total": 10,
+      "rejected": 10
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  },
+  {
+    "round": "R25 validator_meta",
+    "bugs_initial": 0,
+    "fixed": 0,
+    "remaining_new": 0,
+    "advisory_existing": 0,
+    "meta": {
+      "crafted_count": 15,
+      "all_caught": true,
+      "dead_clauses": []
+    },
+    "sample_new": [],
+    "sample_advisory": []
+  }
+]

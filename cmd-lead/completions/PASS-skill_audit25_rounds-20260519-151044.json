@@ -1,0 +1,20 @@
+{
+  "fix_id": "skill_audit25_rounds",
+  "fixed_by": "skill",
+  "result": "PASS",
+  "evidence": {
+    "audit_rounds_total": "25/25",
+    "audit25_methodologies": 10,
+    "idempotent_second_pass": "0 init / 0 fix",
+    "tests": "40/40",
+    "fixes_audit25": {
+      "R18_melee_range": 3
+    },
+    "cross_cmd_files_scanned": 140,
+    "orphan_skill_refs": 0,
+    "adversarial_rejected": "10/10",
+    "meta_mutants_caught": "15/15",
+    "dead_validator_clauses": 0
+  },
+  "timestamp": "20260519-151044"
+}
