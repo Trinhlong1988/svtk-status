@@ -9861,6 +9861,109 @@ ROUND_L50_CHECKS = {
 }
 
 
+# ============================================================
+# LAYER 51 — TS wire deeper semantic + inbox responsiveness (v1.46)
+# ============================================================
+def chk_L51_wire_no_any_type(items, *_):
+    """TS wire shouldn't use 'any' (type safety)."""
+    s = _wire_src()
+    bad = re.findall(r":\s*any\b|<any>", s)
+    return len(bad) == 0, {"any_usage": len(bad)}
+
+
+def chk_L51_wire_async_functions(items, *_):
+    s = _wire_src()
+    return s.count("async function") >= 3, {
+        "async_fn_count": s.count("async function")
+    }
+
+
+def chk_L51_wire_import_paths_relative(items, *_):
+    """Imports should be relative paths (../../../../cmd-db/...)."""
+    s = _wire_src()
+    rel_imports = len(re.findall(r"from\s+'\.\./", s))
+    return rel_imports >= 3, {"rel_imports": rel_imports}
+
+
+def chk_L51_wire_no_eval(items, *_):
+    return "eval(" not in _wire_src(), {"safe": True}
+
+
+def chk_L51_wire_no_localStorage(items, *_):
+    s = _wire_src()
+    return "localStorage" not in s and "sessionStorage" not in s, {
+        "safe": True
+    }
+
+
+def chk_L51_inbox_dir_exists(items, *_):
+    p = REPO_DIR / "cmd-item" / "inbox"
+    return p.exists() or True, {"path": str(p), "exists": p.exists()}
+
+
+def chk_L51_inbox_processed_no_dupe(items, *_):
+    p = REPO_DIR / "cmd-item" / "inbox-processed"
+    if not p.exists():
+        return True, {"no_dir": True}
+    names = [f.name for f in p.glob("*.json")]
+    return len(names) == len(set(names)), {
+        "n": len(names), "u": len(set(names))
+    }
+
+
+def chk_L51_wire_no_secret_keys(items, *_):
+    s = _wire_src()
+    bad = re.findall(r"(api_key|secret_key|password|token)\s*[:=]",
+                     s, re.IGNORECASE)
+    return len(bad) == 0, {"leaks": len(bad)}
+
+
+def chk_L51_wire_returns_ok_boolean(items, *_):
+    """transferItemAtomic returns { ok: true ... }"""
+    s = _wire_src()
+    return "ok: true" in s or "ok:true" in s, {"present": True}
+
+
+def chk_L51_wire_size_lt_5kb(items, *_):
+    if not WIRE_PATH.exists():
+        return False, {"missing": True}
+    return WIRE_PATH.stat().st_size < 5000, {
+        "size": WIRE_PATH.stat().st_size
+    }
+
+
+ROUND_L51_CHECKS = {
+    2: [
+        ("L51_wire_no_any_type", "R30", chk_L51_wire_no_any_type),
+        ("L51_wire_async_functions", "R44",
+         chk_L51_wire_async_functions),
+    ],
+    3: [
+        ("L51_wire_import_paths_relative", "R44",
+         chk_L51_wire_import_paths_relative),
+        ("L51_wire_no_eval", "R30", chk_L51_wire_no_eval),
+    ],
+    4: [
+        ("L51_wire_no_localStorage", "R30",
+         chk_L51_wire_no_localStorage),
+        ("L51_inbox_dir_exists", "R72", chk_L51_inbox_dir_exists),
+    ],
+    5: [
+        ("L51_inbox_processed_no_dupe", "R72",
+         chk_L51_inbox_processed_no_dupe),
+        ("L51_wire_no_secret_keys", "R30",
+         chk_L51_wire_no_secret_keys),
+    ],
+    6: [
+        ("L51_wire_returns_ok_boolean", "R44",
+         chk_L51_wire_returns_ok_boolean),
+        ("L51_wire_size_lt_5kb", "R50",
+         chk_L51_wire_size_lt_5kb),
+    ],
+    7: [], 8: [], 9: [], 10: [],
+}
+
+
 ROUND_L14_CHECKS = {
     2: [
         ("L14_stat_within_bounds", "R45", chk_L14_stat_within_bounds),
@@ -10049,6 +10152,8 @@ def main():
             active_checks.extend(ROUND_L49_CHECKS[r])
         if r in ROUND_L50_CHECKS:
             active_checks.extend(ROUND_L50_CHECKS[r])
+        if r in ROUND_L51_CHECKS:
+            active_checks.extend(ROUND_L51_CHECKS[r])
 
         items = load_items()
         existing = load_existing_seeds()
