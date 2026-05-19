@@ -1,0 +1,76 @@
+{
+  "severity": "HIGH",
+  "issue_id": "quest_cross_name_quest_giver_npc_mismatch",
+  "evidence": {
+    "type": "cross_name_quest_giver_npc_mismatch",
+    "placeholder_count": 2548,
+    "real_mismatch_count": 0,
+    "total_mismatch": 2548,
+    "sample": [
+      {
+        "quest_id": 175,
+        "giver_id": 7323,
+        "quest_name": "NPC_7323",
+        "npc_name": "An Đức"
+      },
+      {
+        "quest_id": 176,
+        "giver_id": 7359,
+        "quest_name": "NPC_7359",
+        "npc_name": "Phạm Đức Tâm"
+      },
+      {
+        "quest_id": 177,
+        "giver_id": 7410,
+        "quest_name": "NPC_7410",
+        "npc_name": "Lạc Thư"
+      },
+      {
+        "quest_id": 178,
+        "giver_id": 7455,
+        "quest_name": "NPC_7455",
+        "npc_name": "Trịnh Quang Vinh"
+      },
+      {
+        "quest_id": 179,
+        "giver_id": 7593,
+        "quest_name": "NPC_7593",
+        "npc_name": "Tô Hữu Vinh"
+      },
+      {
+        "quest_id": 180,
+        "giver_id": 7594,
+        "quest_name": "NPC_7594",
+        "npc_name": "Trương Tuấn"
+      },
+      {
+        "quest_id": 182,
+        "giver_id": 9912,
+        "quest_name": "NPC_9912",
+        "npc_name": "Đặng Quang Hùng"
+      },
+      {
+        "quest_id": 183,
+        "giver_id": 7939,
+        "quest_name": "NPC_7939",
+        "npc_name": "Mạc Quang Thắng"
+      },
+      {
+        "quest_id": 184,
+        "giver_id": 4624,
+        "quest_name": "NPC_4624",
+        "npc_name": "Hàm Hữu Bảo"
+      },
+      {
+        "quest_id": 185,
+        "giver_id": 1376,
+        "quest_name": "NPC_1376",
+        "npc_name": "Đặng Hà"
+      }
+    ],
+    "worker": "quest"
+  },
+  "cmd_origin": "QA_CONTENT",
+  "timestamp": "20260519-154618",
+  "target_worker": "quest"
+}

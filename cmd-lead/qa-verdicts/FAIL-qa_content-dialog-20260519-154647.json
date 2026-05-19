@@ -1,0 +1,80 @@
+{
+  "qa": "qa_content",
+  "target": "dialog",
+  "verdict": "FAIL",
+  "evidence": {
+    "issues": [
+      {
+        "type": "cross_name_dialog_speaker_mismatch",
+        "mismatch_count": 46225,
+        "total_scanned": 50000,
+        "percent": 92.5,
+        "sample": [
+          {
+            "dialog_i": 1,
+            "speaker_id": 6275,
+            "dialog_name": "Triệu Bích Hồng",
+            "npc_name": "Hà Văn Khải"
+          },
+          {
+            "dialog_i": 2,
+            "speaker_id": 7473,
+            "dialog_name": "Giác Minh Tuấn",
+            "npc_name": "Đàm Hoa"
+          },
+          {
+            "dialog_i": 3,
+            "speaker_id": 4244,
+            "dialog_name": "Đinh Khoa",
+            "npc_name": "Dương Anh"
+          },
+          {
+            "dialog_i": 5,
+            "speaker_id": 8525,
+            "dialog_name": "Đinh Bích Trâm",
+            "npc_name": "Ngô Thúy"
+          },
+          {
+            "dialog_i": 6,
+            "speaker_id": 6154,
+            "dialog_name": "Huyền Hữu Tâm",
+            "npc_name": "Chử Đức Bảo"
+          },
+          {
+            "dialog_i": 7,
+            "speaker_id": 3419,
+            "dialog_name": "Vương Thành",
+            "npc_name": "Vạn Hà"
+          },
+          {
+            "dialog_i": 8,
+            "speaker_id": 7804,
+            "dialog_name": "Lý Đạt",
+            "npc_name": "Hồ Trí"
+          },
+          {
+            "dialog_i": 9,
+            "speaker_id": 9576,
+            "dialog_name": "Mai Quân",
+            "npc_name": "Lạc Quang Long"
+          },
+          {
+            "dialog_i": 11,
+            "speaker_id": 3195,
+            "dialog_name": "An Trí",
+            "npc_name": "Chu Hải"
+          },
+          {
+            "dialog_i": 12,
+            "speaker_id": 567,
+            "dialog_name": "Thái Phúc",
+            "npc_name": "Dương Quang Hùng"
+          }
+        ],
+        "worker": "dialog"
+      }
+    ],
+    "count": 50000
+  },
+  "timestamp": "20260519-154647"
+}

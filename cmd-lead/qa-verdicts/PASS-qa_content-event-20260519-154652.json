@@ -1,0 +1,10 @@
+{
+  "qa": "qa_content",
+  "target": "event",
+  "verdict": "PASS",
+  "evidence": {
+    "count": 600,
+    "registry": "cmd-event\\output\\registry\\event_full.jsonl"
+  },
+  "timestamp": "20260519-154652"
+}
