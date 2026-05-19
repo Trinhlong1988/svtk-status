@@ -1,0 +1,37 @@
+{
+  "fix_id": "map_PA9_15round_R196_R210_semantic_lore",
+  "fixed_by": "map",
+  "result": "PASS",
+  "timestamp": "20260519-064408",
+  "trigger": "Mr.Long lệnh tiếp PA9 sau PA6+PA7+PA8",
+  "rounds_executed": 15,
+  "rounds_range": "R196..R210",
+  "manifest_sha256_unchanged": "cda4cc9d6a1a35bd6d6b1bfc2aad00da9a3c7d06c50ef583879b6812533c465d",
+  "fixed_total": 0,
+  "all_rounds_pass": true,
+  "pa9_semantic_lore_breakdown": {
+    "R196_name_vietnamese_safe_chars": "PASS 0 violation",
+    "R197_no_post_era_forbidden_references": "PASS 0 anachronism (Tam Quốc, Cách mạng, Hồ Chí Minh, Pháp, Mỹ, Liên Xô, Đảng all absent in non-g1 maps)",
+    "R198_g1_era_pct_le_15": "PASS 4.12%",
+    "R199_f_era_combined_le_30": "PASS 14.21%",
+    "R200_capital_biome_per_era": "PASS — all 5 eras (ly/tran/le/tay_son/nguyen) có capital biome",
+    "R201_name_length_4_100": "PASS 0 too short / 0 too long",
+    "R202_region_canonical_3_values": "PASS — bac_bo=2791, trung_bo=2861, nam_bo=2848 (well-balanced)",
+    "R203_npc_name_vietnamese_2000sample": "PASS 0 violation (regex relaxed: / + , : # & valid in compound names)",
+    "R204_sea_biome_region_distribution": "PASS — sea present in trung_bo+nam_bo",
+    "R205_mountain_biome_region_distribution": "PASS",
+    "R206_all_11_eras_represented": "PASS — ly/tran/le/tay_son/nguyen/f1-f5/g1 all present",
+    "R207_g1_era_count_50_to_1500": "PASS — 350 maps",
+    "R208_f1_to_f5_each_ge_50": "PASS — f1=246 f2=225 f3=236 f4=254 f5=247",
+    "R209_extended_forbidden_term_scan": "PASS 0 hits (Tam Quốc, Three Kingdoms, Confucius, Socrates etc. all absent)",
+    "R210_core_4_fields_non_null_all_8500": "PASS 8500/8500 complete (image_id, biome, era, region)"
+  },
+  "evidence": {
+    "era_distribution": {"ly": 2596, "nguyen": 872, "le": 1237, "g1": 350,
+                         "tay_son": 709, "f2": 225, "tran": 1528, "f3": 236,
+                         "f4": 254, "f5": 247, "f1": 246},
+    "region_distribution": {"trung_bo": 2861, "bac_bo": 2791, "nam_bo": 2848},
+    "capital_per_era": {"ly": 49, "tran": 26, "le": 22, "tay_son": 12, "nguyen": 17}
+  },
+  "exit_code": 0
+}
