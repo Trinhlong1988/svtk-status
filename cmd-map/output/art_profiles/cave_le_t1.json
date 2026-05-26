@@ -1,0 +1,13 @@
+{
+ "art_group": "cave_le_t1",
+ "art_prompt": "SVTK style, ancient Vietnamese hang dong, era le, isometric 2D MMORPG map, readable paths, soft cel shading, tier 1 difficulty",
+ "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese, chinese",
+ "lora_tags": [
+  "svtk_style",
+  "viet_ancient",
+  "cave",
+  "isometric_2d",
+  "mmo_map",
+  "era_le"
+ ]
+}

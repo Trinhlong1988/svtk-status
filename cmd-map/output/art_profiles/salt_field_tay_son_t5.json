@@ -1,0 +1,13 @@
+{
+ "art_group": "salt_field_tay_son_t5",
+ "art_prompt": "SVTK style, ancient Vietnamese dong muoi, era tay_son, isometric 2D MMORPG map, readable paths, soft cel shading, tier 5 difficulty",
+ "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese, chinese",
+ "lora_tags": [
+  "svtk_style",
+  "viet_ancient",
+  "salt_field",
+  "isometric_2d",
+  "mmo_map",
+  "era_tay_son"
+ ]
+}

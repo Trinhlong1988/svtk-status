@@ -1,0 +1,13 @@
+{
+ "art_group": "sea_tran_t5",
+ "art_prompt": "SVTK style, ancient Vietnamese bien ca, era tran, isometric 2D MMORPG map, readable paths, soft cel shading, tier 5 difficulty",
+ "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese, chinese",
+ "lora_tags": [
+  "svtk_style",
+  "viet_ancient",
+  "sea",
+  "isometric_2d",
+  "mmo_map",
+  "era_tran"
+ ]
+}

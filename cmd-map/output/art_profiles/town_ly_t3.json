@@ -1,0 +1,13 @@
+{
+ "art_group": "town_ly_t3",
+ "art_prompt": "SVTK style, ancient Vietnamese thi tran, era ly, isometric 2D MMORPG map, readable paths, soft cel shading, tier 3 difficulty",
+ "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese, chinese",
+ "lora_tags": [
+  "svtk_style",
+  "viet_ancient",
+  "town",
+  "isometric_2d",
+  "mmo_map",
+  "era_ly"
+ ]
+}
