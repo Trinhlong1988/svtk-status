@@ -173,6 +173,18 @@ def test_21_lf_line_endings():
             raw = fp.read_bytes()
             assert crlf not in raw, f"CRLF leaked: {fp}"
 
+def test_22_clip_token_safe():
+    """B6 v1.2.1: moi positive_prompt uoc <= 75 token CLIP (han ngach SD 77).
+    Uoc: word_count * 1.3. Vuot -> silent truncate khi train LoRA -> mat
+    "no characters, no UI" cuoi prompt -> nguy co dataset poisoning."""
+    bad = []
+    for s in _specs():
+        wc = len(s["positive_prompt"].split())
+        est = int(wc * 1.3)
+        if est > 75:
+            bad.append((s["art_group"], wc, est))
+    assert not bad, f"CLIP token overflow >75: {bad}"
+
 if __name__ == "__main__":
     _tests = sorted(n for n in dir() if n.startswith("test_"))
     _p = _f = 0
