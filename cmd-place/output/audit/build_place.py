@@ -18,7 +18,8 @@ from pathlib import Path
 from collections import Counter, defaultdict
 
 CMD_NAME = "PLACE"
-ROOT = Path(r"C:\Users\Administrator\Desktop\CMD_PLACE_WORK\svtk-status")
+HERE = Path(__file__).resolve()
+ROOT = HERE.parents[3]  # cmd-place/output/audit -> repo root
 OUTPUT_DIR = ROOT / "cmd-place" / "output"
 FOUNDATION_FILE = ROOT / "foundation" / "SVTK_FOUNDATION_v2.10.0.md"
 FOUNDATION_HASH_EXPECTED = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
