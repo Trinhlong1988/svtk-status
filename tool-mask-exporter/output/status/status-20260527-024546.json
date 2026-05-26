@@ -1,0 +1,12 @@
+{
+  "tool": "MASK_EXPORTER",
+  "tool_version": "1.0.3",
+  "schema_version": "mask-export-v1.0.3",
+  "timestamp": "20260527-024546",
+  "mode": "sample",
+  "map_count": 64,
+  "validation_score": 1.0,
+  "honest_gaps": [],
+  "output_sha256": "043546ac08b02ecfec0565e1e3c7e9cdc50c4f2b6112e0dc05636fa75bc8e01d",
+  "exit_code": 0
+}
