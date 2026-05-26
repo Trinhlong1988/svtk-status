@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""CMD_ART_SPEC v1.1 — sinh đặc tả vẽ map background cho LoRA/ControlNet.
+"""CMD_ART_SPEC v1.2.0 — sinh đặc tả vẽ map background cho LoRA/ControlNet.
 Đọc output CMD_MAP. KHÔNG sinh ảnh, KHÔNG sprite, KHÔNG train LoRA.
+
+v1.2.0 (2026-05-26): hỗ trợ CMD_MAP v1.1.0 — 10102 map, thêm 14 biome
+(12 sub-realm cõi Tiên Giới/Âm Phủ + 2 map start) + 3 era đặc biệt.
 
 v1.1 hardening (deep audit 20 round):
 - B1 fix: validate art_group regex chống path traversal
@@ -9,22 +12,33 @@ v1.1 hardening (deep audit 20 round):
 - B4 fix: thêm test defense-in-depth (mask/required/validator/foundation)
 - B5 fix: honest_gap note 3 upstream field bị bỏ qua
 """
-import os, sys, json, re, time, hashlib, hmac, subprocess, logging
+import os, sys, json, re, time, hashlib, hmac, subprocess, logging, shutil
 from pathlib import Path
 
 # ── 1 NGUỒN — version sửa đúng 1 chỗ ──
-CMD_VERSION = "1.1.0"
+CMD_VERSION = "1.2.0"
+# v1.2.0 (2026-05-26): hỗ trợ CMD_MAP v1.1.0 — đọc 10102 map
+# (10000 thường + 100 cõi Tiên Giới/Âm Phủ + 2 map start). Thêm 14
+# biome mới (12 sub-realm cõi + 2 map start) + 3 era đặc biệt
+# (than_thoai/hien_dai/dinh) + mô tả prompt LoRA cho từng biome.
 CMD_NAME = "ART_SPEC"
 SCHEMA_VERSION = f'art-spec-v{CMD_VERSION}'
 SPEC_VERSION = 1
+# ── HARD CHECK input CMD_MAP — cross-CMD contract ──
+# CMD_MAP v1.1.0 sinh đúng 10102 map (10000 thường + 100 cõi + 2
+# start). ART_SPEC từ chối output CMD_MAP cũ (số map khác / version
+# thấp) để không build spec từ data lệch.
+EXPECT_MAP_COUNT = 10102
+MIN_MAP_CMD_VERSION = (1, 1, 0)   # CMD_MAP tối thiểu v1.1.0
 
 # ── Foundation (v2.10.0 — kế thừa R1-R83, +R84-R87) ──
 FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 FOUNDATION_FILE = "SVTK_FOUNDATION_v2.10.0.md"
 FOUNDATION_VERIFIED = False
 
-REPO_URL = "https://github.com/Trinhlong1988/svtk-status.git"
-REPO_DIR = Path('/tmp/svtk-status-artspec')
+REPO_URL = os.getenv('SVTK_REPO_URL',
+                     'https://github.com/Trinhlong1988/svtk-status.git')
+REPO_DIR = Path(os.getenv('SVTK_REPO_DIR', '/tmp/svtk-status-artspec'))
 OUTPUT_DIR = Path('/tmp/cmd-art-spec-out')
 SCORE_THRESHOLD = 0.95
 LOOP_INTERVAL_SEC = 60
@@ -42,16 +56,28 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s [ART_SPEC] %(message)s')
 log = logging.getLogger(CMD_NAME)
 
-# ── 22 BIOME — đồng bộ CMD_MAP/CMD_PLACE ──
+# ── 22 BIOME thường — đồng bộ CMD_MAP/CMD_PLACE ──
 BIOMES = ['forest', 'mountain', 'river', 'plain', 'sea', 'swamp',
           'craft_village', 'rice_field', 'fishing_village', 'salt_field',
           'plantation', 'wharf', 'capital', 'capital_inner', 'town',
           'village', 'citadel', 'frontier_pass', 'battlefield', 'cave',
           'scenic', 'garden']
+# ── 12 BIOME CÕI (6 Tiên Giới + 6 Âm Phủ) — CMD_PLACE v2.4.0 ──
+REALM_BIOMES = ['thien_mon', 'coi_troi', 'dong_tien',
+                'tan_vien_linh_son', 'long_cung', 'thien_dai',
+                'quy_mon_quan', 'hoang_tuyen', 'u_minh_lo',
+                'dia_phu_dien', 'me_cung_u_minh', 'vong_hon_dai']
+# ── 2 BIOME MAP START cốt truyện ──
+START_BIOMES = ['bao_tang', 'co_do_hoa_lu']
+# đầy đủ — dùng cho schema enum + validate
+ALL_BIOMES = BIOMES + REALM_BIOMES + START_BIOMES
 
-# ── 10 ERA — đồng bộ ──
+# ── 10 ERA thường — đồng bộ ──
 ERAS = ['ly', 'tran', 'le', 'tay_son', 'nguyen',
         'f1', 'f2', 'f3', 'f4', 'f5']
+# ── 3 ERA đặc biệt — than_thoai (cõi) / hien_dai (bảo tàng) / dinh ──
+SPECIAL_ERAS = ['than_thoai', 'hien_dai', 'dinh']
+ALL_ERAS = ERAS + SPECIAL_ERAS
 
 # ── MÔ TẢ BIOME (tiếng Anh, cho prompt) ──
 BIOME_EN = {
@@ -77,6 +103,37 @@ BIOME_EN = {
     'cave': 'dark cave dungeon, stalactites, underground stream',
     'scenic': 'famous scenic landmark, pavilions, calm water',
     'garden': 'ornamental garden, ponds, bonsai, stone path',
+    # ── 12 biome cõi — Tiên Giới (sáng, mây, vàng-ngọc) ──
+    'thien_mon': 'celestial gate of Vietnamese heaven, vast cloud '
+                 'archway, jade pillars, soft golden light',
+    'coi_troi': 'Vietnamese celestial realm, floating cloud halls, '
+                'ornate golden roofs, auspicious five-color mist',
+    'dong_tien': 'hidden immortal grotto, glowing stalactites, '
+                 'peach blossom, jade spring, serene mystic cave',
+    'tan_vien_linh_son': 'sacred Tan Vien mountain, towering misty '
+                         'peaks, ancient shrines, spirit forest',
+    'long_cung': 'undersea dragon palace, coral and pearl halls, '
+                 'shimmering blue water, sea-spirit architecture',
+    'thien_dai': 'high celestial altar, sky platform above clouds, '
+                 'sacred terrace, radiant divine light',
+    # ── 12 biome cõi — Âm Phủ (tối, sương, xám-đen-đỏ) ──
+    'quy_mon_quan': 'ghost gate of the Vietnamese underworld, dark '
+                    'stone gateway, gray fog, dim red lanterns',
+    'hoang_tuyen': 'Yellow Springs bank, river of the dead, three '
+                   'stone bridges, pale somber water',
+    'u_minh_lo': 'dim underworld road, withered trees, faint red '
+                 'lantern path, drifting cold mist',
+    'dia_phu_dien': 'underworld judgment hall, solemn dark courts, '
+                    'stone pillars, grave and austere atmosphere',
+    'me_cung_u_minh': 'dark underworld labyrinth, twisting stone '
+                      'corridors, narrow gloomy maze passages',
+    'vong_hon_dai': 'soul-gazing terrace, somber stone platform, '
+                    'spirit fog, last view of the living world',
+    # ── 2 biome map start ──
+    'bao_tang': 'Vietnamese history museum interior, exhibition '
+                'halls, glass cases, antique bookshelves, calm bright',
+    'co_do_hoa_lu': 'ancient capital Hoa Lu of the Dinh dynasty, '
+                    '10th century citadel, stone gates, old kingdom',
 }
 
 # ── ERA — phong cách kiến trúc/màu (cho prompt) ──
@@ -91,6 +148,13 @@ ERA_STYLE = {
     'f3': 'legendary myth era, ethereal mist, muted ancient palette',
     'f4': 'legendary myth era, ethereal mist, muted ancient palette',
     'f5': 'legendary myth era, ethereal mist, muted ancient palette',
+    # ── 3 era đặc biệt ──
+    'than_thoai': 'Vietnamese mythological realm, otherworldly and '
+                  'sacred, neither historical nor modern',
+    'hien_dai': 'present-day 2026 museum setting, clean and quiet, '
+                'no neon, no sci-fi, ordinary modern interior',
+    'dinh': 'Dinh dynasty 10th century, early Dai Co Viet kingdom, '
+            'rugged stone citadel, austere ancient tones',
 }
 
 # ── FORBIDDEN STYLE — chống lạc văn hoá/thời đại (điều 7) ──
@@ -130,7 +194,10 @@ def _write_text_lf(path: Path, text: str):
 def _compute_build_rule_hash():
     """Hash mọi hằng quyết định output — đổi hằng thì hash đổi."""
     blob = json.dumps({
-        'biomes': BIOMES, 'eras': ERAS, 'biome_en': BIOME_EN,
+        'biomes': BIOMES, 'realm_biomes': REALM_BIOMES,
+        'start_biomes': START_BIOMES,
+        'eras': ERAS, 'special_eras': SPECIAL_ERAS,
+        'biome_en': BIOME_EN,
         'era_style': ERA_STYLE, 'forbidden_style': FORBIDDEN_STYLE,
         'mask_colors': MASK_COLORS, 'spec_version': SPEC_VERSION,
         'schema_version': SCHEMA_VERSION,
@@ -141,11 +208,42 @@ def _compute_build_rule_hash():
 BUILD_RULE_HASH = _compute_build_rule_hash()
 
 
+def _sync_repo():
+    """Đồng bộ REPO_DIR với origin/main trước khi verify.
+    - chưa tồn tại -> git clone --depth=1 REPO_URL REPO_DIR
+    - đã tồn tại   -> git fetch origin + git reset --hard origin/main
+    Lỗi git (CalledProcessError/TimeoutExpired/OSError) -> log sạch,
+    trả False. KHÔNG crash."""
+    try:
+        if not REPO_DIR.exists():
+            log.info(f"Repo chưa có — clone {REPO_URL}")
+            subprocess.run(['git', 'clone', '--depth=1', REPO_URL,
+                            str(REPO_DIR)],
+                           check=True, capture_output=True,
+                           text=True, timeout=120)
+        else:
+            subprocess.run(['git', 'fetch', 'origin'],
+                           cwd=str(REPO_DIR), check=True,
+                           capture_output=True, text=True, timeout=120)
+            subprocess.run(['git', 'reset', '--hard', 'origin/main'],
+                           cwd=str(REPO_DIR), check=True,
+                           capture_output=True, text=True, timeout=120)
+        return True
+    except subprocess.CalledProcessError as e:
+        log.error(f"git lỗi (exit {e.returncode}): "
+                  f"{(e.stderr or '').strip()[:200]}")
+        return False
+    except (subprocess.TimeoutExpired, OSError) as e:
+        log.error(f"git thao tác repo lỗi: {e}")
+        return False
+
+
 def verify_foundation():
-    """Verify foundation hash. Mismatch -> exit 99 (điều 13)."""
-    if not REPO_DIR.exists():
-        subprocess.run(['git', 'clone', '--depth=1', REPO_URL,
-                        str(REPO_DIR)], check=True, timeout=120)
+    """Đồng bộ repo (clone/fetch/reset) RỒI verify foundation hash.
+    Sync lỗi -> exit 99. Hash mismatch -> exit 99 (điều 13)."""
+    if not _sync_repo():
+        print("REPO_SYNC_FAILED")
+        sys.exit(99)
     fp = REPO_DIR / 'foundation' / FOUNDATION_FILE
     if not fp.exists():
         print(f"FOUNDATION_NOT_FOUND: {fp}")
@@ -203,6 +301,17 @@ def load_map_output():
     # (c) đúng là output của CMD_MAP
     if manifest.get('cmd') != 'MAP':
         log.error(f"manifest.cmd = {manifest.get('cmd')} != 'MAP' — DỪNG")
+        return None
+    # (c2) CMD_MAP phải >= v1.1.0 — bản cũ chưa hỗ trợ 10102 map.
+    cv = manifest.get('cmd_version', '')
+    try:
+        cv_tuple = tuple(int(x) for x in str(cv).split('.')[:3])
+    except (ValueError, AttributeError):
+        cv_tuple = (0, 0, 0)
+    if cv_tuple < MIN_MAP_CMD_VERSION:
+        log.error(f"CMD_MAP cmd_version {cv!r} < "
+                  f"{'.'.join(map(str, MIN_MAP_CMD_VERSION))} — "
+                  f"PHẢI rerun CMD_MAP bản mới — DỪNG")
         return None
     # (d) foundation KHỚP — KHÔNG relax. Lệch -> phải rerun CMD_MAP.
     if manifest.get('foundation_hash') != FOUNDATION_HASH:
@@ -292,10 +401,17 @@ def load_map_output():
         s['portal_total'] += len(l.get('portal_points', []))
         s['anchor_total'] += len(l.get('anchor_points', []))
         s['spawn_total'] += len(l.get('spawn_zones', []))
-    # (j) đủ map_count
+    # (j) HARD CHECK số map — phải đúng 10102 (CMD_MAP v1.1.0).
+    # Chốt cứng con số, KHÔNG chỉ so với chính manifest — manifest sai
+    # từ đầu vẫn phải bắt.
     expect_mc = manifest.get('map_count')
-    if expect_mc is not None and layout_count != expect_mc:
-        log.error(f"layout {layout_count} != manifest map_count {expect_mc}")
+    if expect_mc != EXPECT_MAP_COUNT:
+        log.error(f"CMD_MAP manifest.map_count {expect_mc} "
+                  f"!= {EXPECT_MAP_COUNT} — DỪNG")
+        return None
+    if layout_count != EXPECT_MAP_COUNT:
+        log.error(f"CMD_MAP có {layout_count} layout "
+                  f"!= {EXPECT_MAP_COUNT} — DỪNG")
         return None
     # BUG 2 FIX: verify output_sha256 THẬT — recompute từ layout đã đọc.
     # Artifact CMD_MAP bị sửa tay -> hash lệch -> DỪNG.
@@ -436,8 +552,8 @@ def build_schema():
         'properties': {
             'art_group': {'type': 'string', 'minLength': 3},
             'spec_version': {'type': 'integer', 'const': SPEC_VERSION},
-            'biome': {'type': 'string', 'enum': BIOMES},
-            'era': {'type': 'string', 'enum': ERAS},
+            'biome': {'type': 'string', 'enum': ALL_BIOMES},
+            'era': {'type': 'string', 'enum': ALL_ERAS},
             'tier': {'type': 'integer', 'minimum': 1, 'maximum': 5},
             'map_count': {'type': 'integer', 'minimum': 1},
             'safe_zone_group': {'type': 'boolean'},
@@ -574,9 +690,9 @@ def self_validate(specs, art_profiles, mask_conv, schema):
             fail['negative_has_forbidden'] = True
         if not s.get('caption_tokens'):
             fail['caption_tokens_present'] = True
-        if s.get('biome') not in BIOMES:
+        if s.get('biome') not in ALL_BIOMES:
             fail['biome_valid'] = True
-        if s.get('era') not in ERAS:
+        if s.get('era') not in ALL_ERAS:
             fail['era_valid'] = True
         tv = s.get('tier')
         if not isinstance(tv, int) or isinstance(tv, bool) \
@@ -643,8 +759,13 @@ def self_validate(specs, art_profiles, mask_conv, schema):
 
 # ── WRITE OUTPUT ──
 def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
-    """Sinh toàn bộ spec + ghi file. Trả (số spec, score, [fail])."""
+    """Sinh toàn bộ spec + ghi file. Trả (số spec, score, [fail]).
+    CLEAN trước build: xoá sạch out_dir cũ rồi tạo lại 7 sub-dir —
+    tránh art_group / spec / mask / schema của lần build trước còn
+    sót lại bị hash + push theo."""
     out = Path(out_dir)
+    if out.exists():
+        shutil.rmtree(out)        # xoá sạch output cũ — chống stale
     for sub in ('art_groups', 'prompts', 'captions', 'masks',
                 'schema', 'tests', 'status'):
         (out / sub).mkdir(parents=True, exist_ok=True)
@@ -747,7 +868,7 @@ def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
 
 
 # ── TEST_CODE — file test ngoài (CI) ──
-TEST_CODE = '''# CMD_ART_SPEC v1.0 — test ngoai (doc art_groups/ + masks/)
+TEST_CODE = '''# CMD_ART_SPEC v1.2.0 — test ngoai (doc art_groups/ + masks/)
 import json, sys
 from pathlib import Path
 OUT = Path(__file__).parent.parent
@@ -943,7 +1064,8 @@ def _git(args, cwd):
         r = subprocess.run(['git'] + args, cwd=str(cwd),
                            capture_output=True, text=True, timeout=120)
         return r.returncode == 0, r.stdout + r.stderr
-    except (subprocess.TimeoutExpired, OSError) as e:
+    except (subprocess.CalledProcessError,
+            subprocess.TimeoutExpired, OSError) as e:
         return False, str(e)
 
 
@@ -962,9 +1084,7 @@ def push_to_github(out_dir, score, fails):
             _git(['switch', '-C', branch], REPO_DIR)
             dst = REPO_DIR / 'cmd-art-spec' / 'output'
             if dst.exists():
-                import shutil
                 shutil.rmtree(str(dst))
-            import shutil
             shutil.copytree(str(out_dir), str(dst))
             git_email = os.getenv("GIT_EMAIL", "cmd-art-spec-bot@svtk.local")
             git_name = os.getenv("GIT_NAME", "CMD_ART_SPEC_BOT")
