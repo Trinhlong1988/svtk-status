@@ -3,16 +3,14 @@
   "cmd_version": "1.1.0",
   "schema_version": "art-spec-v1.1.0",
   "foundation_hash": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
-  "build_rule_hash": "4ca07a40751d93a542bad1019daa92840f5c569c34fc3338914cd18690efff32",
+  "build_rule_hash": "e62ccda10a4a0b7a637376d28e66a35440280dde57820d20e4fdcff15849bb94",
   "spec_version": 1,
   "source_map_foundation": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
   "source_map_count": 10000,
   "art_group_count": 942,
-  "validation_score": 0.95,
-  "honest_gaps": [
-    "mask_rgb_distinct"
-  ],
-  "output_sha256": "6da109e8ab922f54e1f29bd7123ae4dbc87a98de74df13d121e9fb7883a47e1c",
+  "validation_score": 1.0,
+  "honest_gaps": [],
+  "output_sha256": "6ba16babd3d1e52c6fec75949a27819beee86a563d49c56fc6774e3c6551242a",
   "dropped_upstream_fields": [
     "art_prompt",
     "negative_prompt",
