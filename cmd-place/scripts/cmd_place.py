@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""CMD_PLACE v2.3.1 — autonomous builder. 10000 map + 64 shard.
+"""CMD_PLACE v2.4.0 — autonomous builder. 10102 map + 64 shard.
+
+v2.4.0 (2026-05-26): thêm 100 map cõi đặc biệt + 2 map start cốt
+truyện. 10000 map thường GIỮ NGUYÊN — realm + start sinh nhánh riêng.
+- Tiên Giới 50 map (6 sub-realm) + Âm Phủ 50 map (6 sub-realm),
+  era 'than_thoai', trường realm_group/map_role/realm_access.
+- 2 map start: Bảo tàng Lịch sử VN (2026) -> Hoa Lư 968, is_start_map.
+- portal realm: liên thông nội bộ theo realm_group (gate->hub->
+  combat->boss), KHÔNG nối map thường.
 
 v2.3.1 (2026-05-26): fix 4 bug ẩn từ 18-round audit:
 - BugA: ensure_place_lib() race condition (Lock + unique tmp per thread/pid)
@@ -22,7 +30,9 @@ def _write_text_lf(path, content):
     Path(path).write_bytes(content.encode('utf-8'))
 
 CMD_NAME = "PLACE"
-CMD_VERSION = "2.3.1"   # 1 nguồn — version đổi sửa ĐÚNG 1 chỗ này
+CMD_VERSION = "2.4.0"   # 1 nguồn — version đổi sửa ĐÚNG 1 chỗ này
+# v2.4.0: thêm 100 map cõi đặc biệt (Tiên Giới 50 + Âm Phủ 50). 10000
+# map thường giữ NGUYÊN — realm sinh nhánh riêng, map_id 10001-10100.
 FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 FOUNDATION_FILE = "SVTK_FOUNDATION_v2.10.0.md"
 # REPO_URL: ưu tiên env SVTK_REPO_URL (đổi infra/liveops không cần sửa
@@ -40,8 +50,11 @@ SCORE_THRESHOLD = 0.95
 LOOP_INTERVAL_SEC = 60
 
 # CMD-specific constants — 10000 map, 10 era (g1 KHÔNG phải era), 22 biome
-TARGET_MAP_COUNT = 10000
+TARGET_MAP_COUNT = 10000        # map THƯỜNG (lịch sử trần gian) — KHÔNG đổi
 TARGET_REGION_SHARDS = 64
+# TOTAL_MAP_COUNT = map thường (10000) + map cõi (100) + map start (2)
+# = 10102. Tính cuối khối START_* — REALM_MAP_COUNT/START_MAP_COUNT
+# định nghĩa bên dưới.
 # TOPOLOGY_VERSION — khóa CẤU TRÚC BẤT BIẾN (map_id, coord, shard,
 # natural_key). Topology đã sinh thì KHÔNG đổi: NPC save / quest /
 # portal / replay đều neo vào đây. CHỈ tăng version này khi buộc phải
@@ -319,6 +332,193 @@ ZONE_REGION_COUNT = {'bac_bo': 24, 'trung_bo': 22, 'nam_bo': 18}
 # Long, Phong Châu, Hoa Lư) đúng cái nôi sử Việt.
 TIER_PLAN = [1]*8 + [2]*14 + [3]*20 + [4]*14 + [5]*8
 
+# ════════════════════════════════════════════════════════════════════
+# ── KHỐI REALM — 100 MAP CÕI ĐẶC BIỆT (Tiên Giới 50 + Âm Phủ 50) ──
+# Special realm: cõi thần thoại VIỆT phục vụ chuyển sinh / event mùa /
+# boss / phó bản cao cấp / quest linh hồn. KHÔNG thay map lịch sử trần
+# gian. Sinh NHÁNH RIÊNG: map_id 10001-10100, era 'than_thoai'.
+# Bám thần thoại Việt (Ngọc Hoàng, Tản Viên Sơn Thánh, vua Thủy Tề,
+# Quỷ Môn Quan, Cầu Nại Hà) — KHÔNG tiên hiệp Trung, KHÔNG copy TS.
+#
+# DNA TS Online (readability — học cảm giác, KHÔNG copy content):
+# mỗi sub-realm có nhịp "cổng -> đường -> NPC -> quái -> boss". 12
+# sub-realm chia theo map_role: hub/gate (an toàn, không quái),
+# combat (vùng train), boss (cuối tuyến).
+# ════════════════════════════════════════════════════════════════════
+REALM_FIRST_MAP_ID = 10001          # map realm bắt đầu sau 10000 map thường
+REALM_ERA = 'than_thoai'            # era riêng — tách 10 era lịch sử
+REALM_ERA_LABEL = 'Thần Thoại'
+
+# 12 biome cõi = 6 Tiên Giới + 6 Âm Phủ (mỗi cõi 6 sub-realm)
+REALM_BIOMES = [
+    # ── Tiên Giới (celestial) ──
+    'thien_mon', 'coi_troi', 'dong_tien',
+    'tan_vien_linh_son', 'long_cung', 'thien_dai',
+    # ── Âm Phủ (underworld) ──
+    'quy_mon_quan', 'hoang_tuyen', 'u_minh_lo',
+    'dia_phu_dien', 'me_cung_u_minh', 'vong_hon_dai',
+]
+# realm_group — 2 nhóm cõi lớn
+REALM_GROUP = {
+    'thien_mon': 'celestial', 'coi_troi': 'celestial',
+    'dong_tien': 'celestial', 'tan_vien_linh_son': 'celestial',
+    'long_cung': 'celestial', 'thien_dai': 'celestial',
+    'quy_mon_quan': 'underworld', 'hoang_tuyen': 'underworld',
+    'u_minh_lo': 'underworld', 'dia_phu_dien': 'underworld',
+    'me_cung_u_minh': 'underworld', 'vong_hon_dai': 'underworld',
+}
+# zone cõi — tien_gioi / am_phu
+REALM_ZONE = {b: ('tien_gioi' if g == 'celestial' else 'am_phu')
+              for b, g in REALM_GROUP.items()}
+# Số map mỗi sub-realm — tổng 100 (Tiên Giới 50 + Âm Phủ 50)
+REALM_QUOTA = {
+    # Tiên Giới 50: cổng 5 / cõi trời 10 / động tiên 10 /
+    #               tản viên 10 / long cung 10 / thiên đài 5
+    'thien_mon': 5, 'coi_troi': 10, 'dong_tien': 10,
+    'tan_vien_linh_son': 10, 'long_cung': 10, 'thien_dai': 5,
+    # Âm Phủ 50: quỷ môn 5 / hoàng tuyền 10 / u minh lộ 10 /
+    #            địa phủ điện 10 / mê cung 10 / vọng hồn đài 5
+    'quy_mon_quan': 5, 'hoang_tuyen': 10, 'u_minh_lo': 10,
+    'dia_phu_dien': 10, 'me_cung_u_minh': 10, 'vong_hon_dai': 5,
+}
+# Nhãn tiếng Việt 12 sub-realm
+REALM_BIOME_LABEL_VI = {
+    'thien_mon': 'Cổng Thiên Môn', 'coi_troi': 'Cõi Trời',
+    'dong_tien': 'Động Tiên', 'tan_vien_linh_son': 'Tản Viên Linh Sơn',
+    'long_cung': 'Long Cung', 'thien_dai': 'Thiên Đài',
+    'quy_mon_quan': 'Quỷ Môn Quan', 'hoang_tuyen': 'Bến Hoàng Tuyền',
+    'u_minh_lo': 'U Minh Lộ', 'dia_phu_dien': 'Địa Phủ Điện',
+    'me_cung_u_minh': 'Mê Cung U Minh', 'vong_hon_dai': 'Vọng Hồn Đài',
+}
+# map_role — vai trò gameplay (DNA TS Online): hub/gate an toàn không
+# quái, combat vùng train, boss cuối tuyến.
+REALM_MAP_ROLE = {
+    'thien_mon': 'gate',       'coi_troi': 'hub',
+    'dong_tien': 'combat',     'tan_vien_linh_son': 'combat',
+    'long_cung': 'combat',     'thien_dai': 'boss',
+    'quy_mon_quan': 'gate',    'hoang_tuyen': 'combat',
+    'u_minh_lo': 'combat',     'dia_phu_dien': 'hub',
+    'me_cung_u_minh': 'dungeon', 'vong_hon_dai': 'boss',
+}
+# realm_access — điều kiện mở cõi (map thường = 'open'):
+# reborn = chuyển sinh; event = event mùa; quest = quest linh hồn/tiên duyên.
+VALID_REALM_ACCESS = {'open', 'reborn', 'event', 'quest'}
+REALM_ACCESS = {
+    'thien_mon': 'reborn', 'coi_troi': 'reborn', 'dong_tien': 'quest',
+    'tan_vien_linh_son': 'quest', 'long_cung': 'event',
+    'thien_dai': 'reborn',
+    'quy_mon_quan': 'reborn', 'hoang_tuyen': 'reborn',
+    'u_minh_lo': 'quest', 'dia_phu_dien': 'reborn',
+    'me_cung_u_minh': 'event', 'vong_hon_dai': 'reborn',
+}
+# tier cõi — đều end-game. gate/hub thấp hơn (4), combat/boss cao (5).
+REALM_TIER = {
+    'thien_mon': 4, 'coi_troi': 4, 'dong_tien': 4,
+    'tan_vien_linh_son': 5, 'long_cung': 5, 'thien_dai': 5,
+    'quy_mon_quan': 4, 'hoang_tuyen': 4, 'u_minh_lo': 5,
+    'dia_phu_dien': 4, 'me_cung_u_minh': 5, 'vong_hon_dai': 5,
+}
+# spawn_policy cõi — (allow, profile, density_hint, zone_count_hint).
+# map_role gate/hub -> KHÔNG quái (an toàn, NPC chuyển sinh/event).
+# combat/dungeon -> có quái. boss -> 1 vùng boss.
+REALM_SPAWN_PROFILE = {
+    # gate / hub — không quái
+    'thien_mon':         (False, 'none', 'none', 0),
+    'coi_troi':          (False, 'none', 'none', 0),
+    'quy_mon_quan':      (False, 'none', 'none', 0),
+    'dia_phu_dien':      (False, 'none', 'none', 0),
+    # combat — vùng train cõi
+    'dong_tien':         (True, 'celestial_spirit', 'medium', 3),
+    'tan_vien_linh_son': (True, 'mountain_spirit', 'medium', 4),
+    'long_cung':         (True, 'dragon_palace_guard', 'medium', 4),
+    'hoang_tuyen':       (True, 'wandering_soul', 'low', 3),
+    'u_minh_lo':         (True, 'underworld_spirit', 'medium', 4),
+    # dungeon — quái dày
+    'me_cung_u_minh':    (True, 'ghost_guard', 'high', 5),
+    # boss — 1 vùng boss cuối tuyến
+    'thien_dai':         (True, 'sacred_beast', 'low', 2),
+    'vong_hon_dai':      (True, 'underworld_spirit', 'low', 2),
+}
+# purpose cõi — dùng VALID_PURPOSES có sẵn (combat/lore/exploration/social).
+REALM_PURPOSE = {
+    'thien_mon':         ['social', 'lore', 'exploration'],
+    'coi_troi':          ['social', 'lore', 'exploration'],
+    'dong_tien':         ['combat', 'lore', 'exploration'],
+    'tan_vien_linh_son': ['combat', 'lore', 'exploration'],
+    'long_cung':         ['combat', 'exploration', 'lore'],
+    'thien_dai':         ['combat', 'lore'],
+    'quy_mon_quan':      ['social', 'lore', 'exploration'],
+    'hoang_tuyen':       ['combat', 'lore', 'exploration'],
+    'u_minh_lo':         ['combat', 'lore'],
+    'dia_phu_dien':      ['social', 'lore', 'exploration'],
+    'me_cung_u_minh':    ['combat', 'exploration'],
+    'vong_hon_dai':      ['combat', 'lore'],
+}
+# terrain cõi — elevation/water_ratio/roughness.
+REALM_TERRAIN = {
+    'thien_mon':         {'elevation': 80, 'water_ratio': 5,  'roughness': 20},
+    'coi_troi':          {'elevation': 95, 'water_ratio': 5,  'roughness': 25},
+    'dong_tien':         {'elevation': 70, 'water_ratio': 15, 'roughness': 55},
+    'tan_vien_linh_son': {'elevation': 85, 'water_ratio': 10, 'roughness': 65},
+    'long_cung':         {'elevation': 10, 'water_ratio': 90, 'roughness': 25},
+    'thien_dai':         {'elevation': 90, 'water_ratio': 5,  'roughness': 30},
+    'quy_mon_quan':      {'elevation': 35, 'water_ratio': 10, 'roughness': 50},
+    'hoang_tuyen':       {'elevation': 20, 'water_ratio': 55, 'roughness': 45},
+    'u_minh_lo':         {'elevation': 20, 'water_ratio': 30, 'roughness': 60},
+    'dia_phu_dien':      {'elevation': 30, 'water_ratio': 10, 'roughness': 40},
+    'me_cung_u_minh':    {'elevation': 15, 'water_ratio': 25, 'roughness': 70},
+    'vong_hon_dai':      {'elevation': 45, 'water_ratio': 15, 'roughness': 50},
+}
+# style cõi — CMD_ART/AUDIO bám. 2 nhóm: Tiên Giới sáng / Âm Phủ tối.
+REALM_STYLE_BY_GROUP = {
+    'celestial': {'visual': 'tien_gioi_viet',
+                  'architecture': 'kien_truc_tien_gioi_viet',
+                  'audio': 'nhac_tien_gioi'},
+    'underworld': {'visual': 'am_phu_viet',
+                   'architecture': 'kien_truc_am_phu_viet',
+                   'audio': 'nhac_am_phu'},
+}
+# Tổng map realm — verify khớp REALM_QUOTA
+REALM_MAP_COUNT = sum(REALM_QUOTA.values())   # = 100
+
+# ════════════════════════════════════════════════════════════════════
+# ── KHỐI MAP START — 2 MAP CỐT TRUYỆN MỞ ĐẦU ──
+# Game xuyên không: player spawn ở Bảo tàng Lịch sử VN (2026) -> đi
+# tới kệ sách cổ -> cổng dịch chuyển thời không -> Hoa Lư 968 gặp Sư
+# Vạn Hạnh. 2 map đặc biệt, NHÁNH RIÊNG, map_id 10101-10102. KHÔNG
+# đụng 10000 map thường + 100 map cõi.
+# ════════════════════════════════════════════════════════════════════
+START_FIRST_MAP_ID = TARGET_MAP_COUNT + REALM_MAP_COUNT + 1  # = 10101
+START_MAP_COUNT = 2
+
+# 2 era đặc biệt cho map start — tách khỏi 10 era thường + than_thoai.
+# hien_dai = bối cảnh 2026 (bảo tàng); dinh = nhà Đinh, Hoa Lư 968.
+START_ERAS = {
+    'museum': 'hien_dai',     # Bảo tàng Lịch sử VN — năm 2026
+    'hoa_lu': 'dinh',         # Hoa Lư — kinh đô nhà Đinh, 968
+}
+START_ERA_LABEL = {'hien_dai': 'Hiện Đại', 'dinh': 'Đinh'}
+
+# 2 biome đặc biệt cho map start
+START_BIOMES = ['bao_tang', 'co_do_hoa_lu']
+START_BIOME_LABEL_VI = {
+    'bao_tang': 'Bảo Tàng Lịch Sử',
+    'co_do_hoa_lu': 'Cố Đô Hoa Lư',
+}
+# style 2 map start
+START_STYLE = {
+    'bao_tang': {'visual': 'bao_tang_hien_dai',
+                 'architecture': 'kien_truc_bao_tang',
+                 'audio': 'nhac_nen_tinh_lang'},
+    'co_do_hoa_lu': {'visual': 'thoi_dinh',
+                     'architecture': 'kien_truc_dinh_le',
+                     'audio': 'nha_nhac_co'},
+}
+# TỔNG map toàn game = thường (10000) + cõi (100) + start (2) = 10102.
+# Dùng cho load-check, SQL map_id range, test tổng.
+TOTAL_MAP_COUNT = (TARGET_MAP_COUNT + REALM_MAP_COUNT
+                   + START_MAP_COUNT)   # = 10102
+
 log = logging.getLogger(CMD_NAME)
 logging.basicConfig(level=logging.INFO, format='[%(name)s] %(message)s')
 
@@ -528,6 +728,32 @@ def _compute_build_rule_hash():
         'target_map_count': TARGET_MAP_COUNT,
         'target_region_shards': TARGET_REGION_SHARDS,
         'uuid_ns': str(UUID_NS),
+        # ── REALM — 100 map cõi đặc biệt. Đổi bất kỳ bảng realm nào
+        # mà quên bump version -> hash đổi -> cache cũ bị từ chối.
+        'realm_biomes': REALM_BIOMES,
+        'realm_group': REALM_GROUP,
+        'realm_zone': REALM_ZONE,
+        'realm_quota': REALM_QUOTA,
+        'realm_biome_label_vi': REALM_BIOME_LABEL_VI,
+        'realm_map_role': REALM_MAP_ROLE,
+        'realm_access': REALM_ACCESS,
+        'realm_tier': REALM_TIER,
+        'realm_spawn_profile': {k: list(v)
+            for k, v in REALM_SPAWN_PROFILE.items()},
+        'realm_purpose': REALM_PURPOSE,
+        'realm_terrain': REALM_TERRAIN,
+        'realm_style_by_group': REALM_STYLE_BY_GROUP,
+        'realm_era': REALM_ERA,
+        'realm_first_map_id': REALM_FIRST_MAP_ID,
+        # ── START — 2 map cốt truyện mở đầu ──
+        'start_eras': START_ERAS,
+        'start_era_label': START_ERA_LABEL,
+        'start_biomes': START_BIOMES,
+        'start_biome_label_vi': START_BIOME_LABEL_VI,
+        'start_style': START_STYLE,
+        'start_first_map_id': START_FIRST_MAP_ID,
+        'start_map_count': START_MAP_COUNT,
+        'total_map_count': TOTAL_MAP_COUNT,
         # phân bổ zone/tier — đổi thì zone/quota/tier của region đổi
         'zone_plan': ZONE_PLAN,
         'zone_map_total': ZONE_MAP_TOTAL,
@@ -595,7 +821,7 @@ def load_existing_maps():
         rows = [json.loads(l) for l in fp.read_text(encoding='utf-8').splitlines() if l.strip()]
     except (json.JSONDecodeError, UnicodeDecodeError) as e:
         log.warning(f"map_registry.jsonl hỏng ({e}) → sinh mới"); return None
-    if len(rows) != TARGET_MAP_COUNT:
+    if len(rows) != TOTAL_MAP_COUNT:
         return None
     try:
         meta = json.loads(sidecar.read_text())
@@ -681,15 +907,18 @@ def build_regions(force_regen=False):
         })
     return regions
 
-def build_anchors(seed, biome, tier, map_id):
+def build_anchors(seed, biome, tier, map_id, purposes=None):
     """Sinh anchor registry cho 1 map — deterministic theo seed.
     CMD_PLACE chỉ sinh CHỖ NEO (id + tọa độ tương đối + loại), KHÔNG
     spawn nội dung. CMD khác đọc anchor rồi fill.
     Density theo TIER × BIOME × PURPOSE: loại anchor nào được nhiều
     purpose của biome dẫn về thì sinh nhiều hơn (vd capital có
     social+trade+exploration đều -> activity_anchor -> nhiều activity;
-    battlefield combat-heavy -> nhiều npc_anchor). KHÔNG vượt ANCHOR_CAP."""
-    purposes = BIOME_PURPOSE.get(biome, [])
+    battlefield combat-heavy -> nhiều npc_anchor). KHÔNG vượt ANCHOR_CAP.
+    purposes: nếu truyền (map realm) -> dùng trực tiếp; None -> tra
+    BIOME_PURPOSE theo biome (map thường)."""
+    if purposes is None:
+        purposes = BIOME_PURPOSE.get(biome, [])
     # đếm: mỗi loại anchor được BAO NHIÊU purpose của biome này dẫn về.
     # purpose_weight càng cao -> loại anchor đó là "đặc trưng" của biome.
     purpose_weight = {}
@@ -891,6 +1120,12 @@ def build_maps(regions, build_stage=None):
                 # TẠM: chưa có bảng mapping TS scene chính thức -> khi có
                 # cần thay bằng bucket era/biome/purpose -> TS scene thật.
                 'tsonline_cross_ref': seeded_int(f'ts:{era}:{biome}', 1, 7047),
+                # realm_access: map thường LUÔN 'open' (vào tự do).
+                # Chỉ map cõi đặc biệt mới reborn/event/quest.
+                'realm_access': 'open',
+                'is_start_map': False,   # map thường KHÔNG phải map spawn
+                'realm_group': 'none',   # map thường không thuộc cõi
+                'map_role': 'normal',    # map thường — vai trò chuẩn
             })
             map_id += 1
         r['actual_map_count'] = n
@@ -933,6 +1168,248 @@ def build_maps(regions, build_stage=None):
             _add_edge(chain[0], by_shard[sid + 1][0])
     return maps
 
+
+# ── BUILD: sinh 100 MAP CÕI ĐẶC BIỆT (Tiên Giới 50 + Âm Phủ 50) ──
+def build_realm_maps():
+    """Sinh 100 map cõi đặc biệt — NHÁNH RIÊNG, map_id 10001-10100.
+    KHÔNG đụng 10000 map thường. Mỗi map cõi có cấu trúc record GIỐNG
+    map thường (đủ trường) + thêm 'realm_access'. era='than_thoai',
+    zone='tien_gioi'/'am_phu', shard_id=0 (cõi không thuộc shard địa
+    lý — gán 0 cho qua check shard_id_valid; portal cõi nối nội bộ
+    theo biome, KHÔNG nối map thường). Deterministic theo seed."""
+    realm_maps = []
+    map_id = REALM_FIRST_MAP_ID
+    # coord cõi: đặt vào KHE giữa cột map thường (offset +15, bội 30
+    # của map thường nên +15 chắc chắn không trùng), vẫn trong range
+    # [0, _coord_max]. Mỗi cõi 1 hàng riêng -> coord không trùng nhau.
+    _cx_max = ((SHARD_GRID_WIDTH - 1) * SHARD_CELL_SIZE
+               + (MAP_GRID_WIDTH - 1) * MAP_CELL_SIZE)
+    for bi, biome in enumerate(REALM_BIOMES):
+        n = REALM_QUOTA[biome]
+        zone = REALM_ZONE[biome]
+        group = REALM_GROUP[biome]            # celestial / underworld
+        role = REALM_MAP_ROLE[biome]          # gate/hub/combat/dungeon/boss
+        tier = REALM_TIER[biome]
+        access = REALM_ACCESS[biome]
+        biome_vi = REALM_BIOME_LABEL_VI[biome]
+        purpose = list(REALM_PURPOSE[biome])
+        _sp = list(REALM_SPAWN_PROFILE[biome])
+        spawn_policy = dict(zip(
+            ('allow_monster_spawn', 'spawn_profile',
+             'density_hint', 'zone_count_hint'), _sp))
+        terrain = dict(REALM_TERRAIN[biome])
+        style = dict(REALM_STYLE_BY_GROUP[group])
+        # safe_zone: gate/hub = an toàn (NPC chuyển sinh/event, không
+        # quái). combat/dungeon/boss = không an toàn.
+        is_safe = role in ('gate', 'hub')
+        for k in range(n):
+            seed = f'place:realm:{map_id}'
+            name = f'{biome_vi} (#{map_id:05d})'
+            if not cultural_lock_ok(name):
+                name = f'Cõi {map_id:05d}'
+            g1_pass, g1_note = g1_check(name)
+            # coord: hàng theo biome index, cột theo k — +15 lệch khỏi
+            # lưới map thường (bội 30). Clamp trong range hợp lệ.
+            cx = min(15 + (k % MAP_GRID_WIDTH) * MAP_CELL_SIZE, _cx_max)
+            cy = min(15 + bi * MAP_CELL_SIZE
+                     + (k // MAP_GRID_WIDTH) * MAP_CELL_SIZE, _cx_max)
+            realm_maps.append({
+                'uuid': str(uuid.uuid5(
+                    UUID_NS, f'svtk_realm_{biome}_{map_id:05d}')),
+                'map_id': map_id,
+                'natural_key': f'svtk_realm_{biome}_{map_id:05d}',
+                'topology_version': TOPOLOGY_VERSION,
+                'name': name,
+                'era': REALM_ERA,
+                'era_label': REALM_ERA_LABEL,
+                'era_display': REALM_ERA_LABEL,
+                'biome': biome,
+                'biome_label': biome_vi,
+                'biome_group': group,        # celestial / underworld
+                'is_important': True,        # cõi đặc biệt = quan trọng
+                'purpose': purpose,
+                'style': style,
+                'zone': zone,                # tien_gioi / am_phu
+                'tier': tier,
+                'shard_id': 0,               # cõi không thuộc shard địa lý
+                'shard_code': 'SH00',
+                'f_prefix': 'none',
+                'g1_pass': g1_pass,
+                'g1_note': g1_note,
+                'coord_x': cx,
+                'coord_y': cy,
+                'chunk_x': cx // (MAP_CELL_SIZE * 8),
+                'chunk_y': cy // (MAP_CELL_SIZE * 8),
+                'safe_zone': is_safe,        # gate/hub an toàn
+                'combat_zone': 'combat' in purpose,
+                'spawn_policy': spawn_policy,
+                'nav_region': f'nav_realm_{zone}',
+                'terrain': terrain,
+                'anchors': build_anchors(seed, biome, tier, map_id,
+                                         purposes=purpose),
+                'tags': [REALM_ERA_LABEL, biome, group, zone,
+                         f'tier{tier}', access, role],
+                'tsonline_cross_ref': seeded_int(
+                    f'ts:realm:{biome}', 1, 7047),
+                'realm_access': access,      # reborn/event/quest
+                'is_start_map': False,       # map cõi KHÔNG phải map spawn
+                'realm_group': group,        # celestial / underworld
+                'map_role': role,            # gate/hub/combat/dungeon/boss
+            })
+            map_id += 1
+
+    # ── PORTAL GRAPH cõi — 2 lớp:
+    # (1) nội bộ từng sub-realm: nối các map cùng biome liền nhau.
+    # (2) liên sub-realm theo realm_group: cổng -> hub -> combat ->
+    #     boss, để mỗi nhóm cõi (celestial/underworld) LIÊN THÔNG.
+    # Cõi KHÔNG nối map thường: vào bằng chuyển sinh/event/quest.
+    by_biome = {}
+    for mp in realm_maps:
+        mp['portal_graph'] = []
+        by_biome.setdefault(mp['biome'], []).append(mp['map_id'])
+    by_id = {mp['map_id']: mp for mp in realm_maps}
+
+    def _add_edge(a, b):
+        if a == b:
+            return
+        ga, gb = by_id[a]['portal_graph'], by_id[b]['portal_graph']
+        if any(lk['to_map'] == b for lk in ga):
+            return
+        ga.append({'from_map': a, 'to_map': b, 'bidirectional': True})
+        gb.append({'from_map': b, 'to_map': a, 'bidirectional': True})
+
+    # (1) nội bộ từng sub-realm — chain các map cùng biome
+    for biome, chain in by_biome.items():
+        for i in range(len(chain) - 1):
+            _add_edge(chain[i], chain[i + 1])
+
+    # (2) tuyến liên sub-realm — nối map ĐẦU sub-realm này sang map
+    # ĐẦU sub-realm kia. Tuyến theo nhịp gameplay: cổng -> hub ->
+    # combat -> boss. CHỈ nối trong cùng realm_group.
+    REALM_LINKS = [
+        # ── Tiên Giới (celestial) ──
+        ('thien_mon', 'coi_troi'),
+        ('coi_troi', 'dong_tien'),
+        ('coi_troi', 'tan_vien_linh_son'),
+        ('coi_troi', 'long_cung'),
+        ('dong_tien', 'thien_dai'),
+        ('tan_vien_linh_son', 'thien_dai'),
+        ('long_cung', 'thien_dai'),
+        # ── Âm Phủ (underworld) ──
+        ('quy_mon_quan', 'hoang_tuyen'),
+        ('hoang_tuyen', 'u_minh_lo'),
+        ('u_minh_lo', 'dia_phu_dien'),
+        ('dia_phu_dien', 'me_cung_u_minh'),
+        ('me_cung_u_minh', 'vong_hon_dai'),
+    ]
+    for src, dst in REALM_LINKS:
+        # an toàn: 2 đầu phải cùng realm_group (chống nối nhầm cõi)
+        if REALM_GROUP[src] != REALM_GROUP[dst]:
+            continue
+        if by_biome.get(src) and by_biome.get(dst):
+            _add_edge(by_biome[src][0], by_biome[dst][0])
+    return realm_maps
+
+
+# ── BUILD: 2 MAP START CỐT TRUYỆN (Bảo tàng 2026 -> Hoa Lư 968) ──
+def build_start_maps():
+    """Sinh 2 map mở đầu cốt truyện — map_id 10101-10102.
+    10101 = Bảo tàng Lịch sử VN (2026): player spawn ở đây, is_start_map
+            =True. Có kệ sách cổ = cổng dịch chuyển thời không.
+    10102 = Cố Đô Hoa Lư (968): đến sau khi xuyên không, gặp Sư Vạn
+            Hạnh (mentor). Nối ra map thường tier 1 để bắt đầu chơi.
+    Cổng 10101->10102 là cổng XUYÊN KHÔNG (1 chiều, không quay lại
+    bảo tàng). Cổng 10102->map thường để vào thế giới."""
+    keys = ['museum', 'hoa_lu']
+    biomes = START_BIOMES               # ['bao_tang','co_do_hoa_lu']
+    rows = []
+    for i, (key, biome) in enumerate(zip(keys, biomes)):
+        map_id = START_FIRST_MAP_ID + i
+        era = START_ERAS[key]
+        era_label = START_ERA_LABEL[era]
+        biome_vi = START_BIOME_LABEL_VI[biome]
+        is_start = (key == 'museum')    # CHỈ bảo tàng là điểm spawn
+        if key == 'museum':
+            name = 'Bảo Tàng Lịch Sử Việt Nam'
+            purpose = ['social', 'lore', 'exploration']
+        else:
+            name = 'Cố Đô Hoa Lư'
+            purpose = ['lore', 'social', 'exploration']
+        if not cultural_lock_ok(name):
+            name = f'Map Khởi Đầu {map_id:05d}'
+        g1_pass, g1_note = g1_check(name)
+        seed = f'place:start:{map_id}'
+        # coord start: đặt ở khe riêng (offset +7, lệch lưới map thường
+        # bội 30 + map cõi offset 15). Clamp trong range hợp lệ.
+        _cx_max = ((SHARD_GRID_WIDTH - 1) * SHARD_CELL_SIZE
+                   + (MAP_GRID_WIDTH - 1) * MAP_CELL_SIZE)
+        cx = min(7 + i * MAP_CELL_SIZE, _cx_max)
+        cy = 7
+        rows.append({
+            'uuid': str(uuid.uuid5(UUID_NS, f'svtk_start_{key}_{map_id:05d}')),
+            'map_id': map_id,
+            'natural_key': f'svtk_start_{key}_{map_id:05d}',
+            'topology_version': TOPOLOGY_VERSION,
+            'name': name,
+            'era': era,                  # hien_dai / dinh
+            'era_label': era_label,
+            'era_display': era_label,
+            'biome': biome,
+            'biome_label': biome_vi,
+            'biome_group': 'start',
+            'is_important': True,
+            'purpose': purpose,
+            'style': dict(START_STYLE[biome]),
+            'zone': 'khoi_dau',          # zone riêng cho map cốt truyện
+            'tier': 1,                   # map mở đầu — an toàn nhất
+            'shard_id': 0,
+            'shard_code': 'SH00',
+            'f_prefix': 'none',
+            'g1_pass': g1_pass,
+            'g1_note': g1_note,
+            'coord_x': cx,
+            'coord_y': cy,
+            'chunk_x': cx // (MAP_CELL_SIZE * 8),
+            'chunk_y': cy // (MAP_CELL_SIZE * 8),
+            'safe_zone': True,           # 2 map mở đầu LUÔN an toàn
+            'combat_zone': False,
+            'spawn_policy': {'allow_monster_spawn': False,
+                             'spawn_profile': 'none',
+                             'density_hint': 'none',
+                             'zone_count_hint': 0},
+            'nav_region': 'nav_start',
+            'terrain': {'elevation': 20, 'water_ratio': 5, 'roughness': 10},
+            'anchors': build_anchors(seed, biome, 1, map_id,
+                                     purposes=purpose),
+            'tags': [era_label, biome, 'start', 'khoi_dau', 'tier1'],
+            'tsonline_cross_ref': seeded_int(f'ts:start:{key}', 1, 7047),
+            'realm_access': 'open',      # map start vào tự do
+            'is_start_map': is_start,    # TRƯỜNG MỚI — chỉ bảo tàng True
+            'realm_group': 'none',       # map start không thuộc cõi
+            'map_role': 'start',         # vai trò: map cốt truyện mở đầu
+        })
+    # ── PORTAL: Bảo tàng -> Hoa Lư (cổng xuyên không, 1 chiều).
+    # KHÔNG bidirectional — xuyên không rồi không quay lại 2026 được.
+    mid_museum = START_FIRST_MAP_ID
+    mid_hoalu = START_FIRST_MAP_ID + 1
+    rows[0]['portal_graph'] = [{
+        'from_map': mid_museum, 'to_map': mid_hoalu,
+        'bidirectional': False, 'portal_type': 'time_warp',
+        'note': 'Kệ sách cổ — cổng dịch chuyển thời không 2026->968',
+    }]
+    # Hoa Lư: cổng xuyên không là 1 CHIỀU (rows[0] đã khai). Hoa Lư
+    # nối ra map thường tier 1 (map_id 1) để player vào thế giới —
+    # cũng 1 CHIỀU: KHÔNG bidirectional vì map thường (map 1) thuộc
+    # 10000 map cũ, KHÔNG được thêm link ngược vào đó. Player quay
+    # lại Hoa Lư bằng cơ chế khác (quest/teleport) — việc CMD_ENGINE.
+    rows[1]['portal_graph'] = [
+        {'from_map': mid_hoalu, 'to_map': 1,
+         'bidirectional': False, 'portal_type': 'normal',
+         'note': 'Hoa Lư -> thế giới (vùng tân thủ)'},
+    ]
+    return rows
+
+
 # ── SCHEMA SQL: place_items 20 cột, CHECK 10000 map/10 era/22 biome ──
 def _sql_columns(sql, table):
     """Trích tên cột của 1 table từ SQL CREATE TABLE.
@@ -953,10 +1430,14 @@ def _db_contract_ok(maps):
     return json_fields.issubset(sql_cols)
 
 def build_schema_sql():
-    """Sinh SQL động từ ERAS/BIOMES/TARGET_MAP_COUNT — 1 nguồn, không hardcode."""
-    era_list = ','.join(f"'{e}'" for e in ERAS)
-    biome_list = ','.join(f"'{b}'" for b in BIOMES)
-    return f"""-- CMD_PLACE v2.3.0 schema — auto từ ERAS/BIOMES/TARGET
+    """Sinh SQL động từ ERAS/BIOMES/TOTAL_MAP_COUNT — 1 nguồn, không hardcode.
+    era/biome CHECK gồm CẢ realm (than_thoai + 8 biome cõi) — nếu không
+    100 map cõi vi phạm constraint."""
+    all_eras = list(ERAS) + [REALM_ERA] + list(START_ERA_LABEL.keys())
+    all_biomes = list(BIOMES) + list(REALM_BIOMES) + list(START_BIOMES)
+    era_list = ','.join(f"'{e}'" for e in all_eras)
+    biome_list = ','.join(f"'{b}'" for b in all_biomes)
+    return f"""-- CMD_PLACE v2.4.0 schema — auto từ ERAS/BIOMES/TARGET
 CREATE TABLE IF NOT EXISTS place_items (
     id INT PRIMARY KEY,
     map_id INT NOT NULL,
@@ -964,9 +1445,9 @@ CREATE TABLE IF NOT EXISTS place_items (
     natural_key VARCHAR(64) NOT NULL,
     topology_version INT NOT NULL,
     name VARCHAR(128) NOT NULL,
-    era VARCHAR(16) NOT NULL,
-    biome VARCHAR(16) NOT NULL,
-    zone VARCHAR(16) NOT NULL,
+    era VARCHAR(32) NOT NULL,
+    biome VARCHAR(32) NOT NULL,
+    zone VARCHAR(32) NOT NULL,
     tier INT NOT NULL,
     is_important BOOLEAN NOT NULL,
     shard_id INT NOT NULL,
@@ -983,7 +1464,7 @@ CREATE TABLE IF NOT EXISTS place_items (
     safe_zone BOOLEAN NOT NULL,
     combat_zone BOOLEAN NOT NULL,
     spawn_policy TEXT NOT NULL,    -- JSON: gợi ý vùng quái cho CMD_MAP
-    nav_region VARCHAR(16) NOT NULL,
+    nav_region VARCHAR(32) NOT NULL,
     terrain TEXT NOT NULL,        -- JSON object elevation/water_ratio/roughness
     portal_graph TEXT NOT NULL,   -- JSON array các liên kết portal
     era_label VARCHAR(32) NOT NULL,
@@ -993,10 +1474,14 @@ CREATE TABLE IF NOT EXISTS place_items (
     shard_code VARCHAR(8) NOT NULL,
     tags TEXT NOT NULL,           -- JSON array tag
     tsonline_cross_ref INT NOT NULL,
+    realm_access VARCHAR(16) NOT NULL DEFAULT 'open',  -- open/reborn/event/quest
+    is_start_map BOOLEAN NOT NULL DEFAULT 0,          -- map spawn cốt truyện
+    realm_group VARCHAR(16) NOT NULL DEFAULT 'none',  -- none/celestial/underworld
+    map_role VARCHAR(16) NOT NULL DEFAULT 'normal',   -- normal/start/gate/hub/combat/dungeon/boss
     UNIQUE(map_id),
     UNIQUE(natural_key),
     UNIQUE(uuid),
-    CHECK (map_id BETWEEN 1 AND {TARGET_MAP_COUNT}),
+    CHECK (map_id BETWEEN 1 AND {TOTAL_MAP_COUNT}),
     CHECK (era IN ({era_list})),
     CHECK (biome IN ({biome_list})),
     CHECK (tier BETWEEN 1 AND 5),
@@ -1016,10 +1501,10 @@ CREATE TABLE IF NOT EXISTS place_region (
     shard_id INT PRIMARY KEY,
     shard_code VARCHAR(8) NOT NULL,
     name VARCHAR(64) NOT NULL,
-    zone VARCHAR(16) NOT NULL,
+    zone VARCHAR(32) NOT NULL,
     tier INT NOT NULL,
-    primary_era VARCHAR(16) NOT NULL,
-    biome_focus VARCHAR(16) NOT NULL,
+    primary_era VARCHAR(32) NOT NULL,
+    biome_focus VARCHAR(32) NOT NULL,
     expected_map_count INT NOT NULL,
     actual_map_count INT NOT NULL,
     natural_key VARCHAR(64) NOT NULL,
@@ -1072,6 +1557,9 @@ def verify_determinism(mode='full', maps=None):
     def _build_sha():
         regions = build_regions(force_regen=True)
         ms = build_maps(regions)
+        # realm + start: append — cùng nội dung như build thật, để SHA
+        # so khớp với maps (đã gồm realm + start) ở caller.
+        ms = ms + build_realm_maps() + build_start_maps()
         return _sha_of(ms), ms
 
     if mode == 'sampling':
@@ -1182,15 +1670,32 @@ def _run_full_build_inner(build_stage=None):
     if _region_was_reused:
         maps = load_existing_maps()
         if maps is not None:
-            log.info(f"Incremental: reuse {len(maps)} map có sẵn")
-            # build_maps có cập nhật actual_map_count cho region — khi
-            # reuse map phải khôi phục lại con số đó từ map đã load.
+            # map cũ có thể đã gồm map cõi (era=than_thoai) + map start
+            # (era hien_dai/dinh) — LỌC RA, chỉ giữ map thường để tính
+            # actual_map_count đúng. Realm + start luôn sinh fresh.
+            _special_eras = {REALM_ERA} | set(START_ERA_LABEL.keys())
+            maps = [m for m in maps if m.get('era') not in _special_eras]
+            log.info(f"Incremental: reuse {len(maps)} map thường có sẵn")
             from collections import Counter as _C
             _cnt = _C(m['shard_id'] for m in maps)
             for r in regions:
                 r['actual_map_count'] = _cnt.get(r['shard_id'], 0)
     if maps is None:
         maps = build_maps(regions, build_stage)
+
+    # ── REALM: luôn append 100 map cõi đặc biệt (sinh fresh, nhánh
+    # riêng). map thường ở trên giữ NGUYÊN. Tổng = 10000 + 100 = 10100.
+    _stage('build_realm')
+    realm = build_realm_maps()
+    maps = maps + realm
+    log.info(f"Realm: +{len(realm)} map cõi -> tổng {len(maps)} map")
+
+    # ── START: append 2 map cốt truyện mở đầu (Bảo tàng -> Hoa Lư).
+    # Tổng cuối = 10000 + 100 + 2 = 10102.
+    _stage('build_start')
+    start = build_start_maps()
+    maps = maps + start
+    log.info(f"Start: +{len(start)} map cốt truyện -> tổng {len(maps)} map")
 
     _stage('write_files')
     region_fp = OUTPUT_DIR / 'registry' / 'region.jsonl'
@@ -1269,6 +1774,17 @@ def self_validate(regions, maps, det_mode='full'):
     # verify); 'sampling' build ×1 so SHA (runtime daemon, nhẹ CPU).
     map_ids = [m['map_id'] for m in maps]
     uuids = [m['uuid'] for m in maps]
+    # ── tách map THƯỜNG vs map CÕI (realm) — check cũ áp world_maps,
+    # check realm áp realm_maps. Phân biệt bằng era == REALM_ERA.
+    # ── tách 3 nhóm map: THƯỜNG / CÕI (realm) / START (cốt truyện).
+    # check cũ áp world_maps; check realm áp realm_maps; check start
+    # áp start_maps. Phân biệt bằng era.
+    _start_eras = set(START_ERA_LABEL.keys())   # {hien_dai, dinh}
+    realm_maps = [m for m in maps if m.get('era') == REALM_ERA]
+    start_maps = [m for m in maps if m.get('era') in _start_eras]
+    world_maps = [m for m in maps
+                  if m.get('era') != REALM_ERA
+                  and m.get('era') not in _start_eras]
     # ── đếm phân bổ thực tế để verify quota (bug ẩn: chỉ kiểm "đủ mặt"
     # biome thì forest=1/mountain=9000 vẫn lọt) ──
     from collections import Counter as _Counter
@@ -1291,20 +1807,67 @@ def self_validate(regions, maps, det_mode='full'):
     # _safe() bắt exception → FAIL gap thay vì crash toàn bộ self_validate.
     checks = [
         ('foundation_verified', lambda: FOUNDATION_VERIFIED),
-        ('map_count_10000', lambda: len(maps) == TARGET_MAP_COUNT),
+        ('map_count_total', lambda: len(maps) == TOTAL_MAP_COUNT),
         ('region_count_64', lambda: len(regions) == TARGET_REGION_SHARDS),
         ('map_id_unique', lambda: len(map_ids) == len(set(map_ids))),
-        ('map_id_range_1_10000', lambda: bool(map_ids)
-            and min(map_ids) == 1 and max(map_ids) == TARGET_MAP_COUNT),
+        ('map_id_range_full', lambda: bool(map_ids)
+            and min(map_ids) == 1 and max(map_ids) == TOTAL_MAP_COUNT),
         ('uuid_unique', lambda: len(uuids) == len(set(uuids))),
-        ('all_era_valid', lambda: all(m['era'] in ERAS for m in maps)),
-        ('all_biome_valid', lambda: all(m['biome'] in BIOMES for m in maps)),
-        ('era_10_covered', lambda: len(set(m['era'] for m in maps)) == len(ERAS)),
-        ('all_22_biomes_covered', lambda: len(set(m['biome'] for m in maps)) == len(BIOMES)),
+        ('all_era_valid', lambda: all(
+            m['era'] in ERAS or m['era'] == REALM_ERA
+            or m['era'] in _start_eras for m in maps)),
+        ('all_biome_valid', lambda: all(
+            m['biome'] in BIOMES or m['biome'] in REALM_BIOMES
+            or m['biome'] in START_BIOMES for m in maps)),
+        ('era_10_covered', lambda: len(set(m['era']
+            for m in world_maps)) == len(ERAS)),
+        ('all_22_biomes_covered', lambda: len(set(m['biome']
+            for m in world_maps)) == len(BIOMES)),
+        # ── realm checks — 100 map cõi đặc biệt (12 sub-realm) ──
+        ('realm_count_100', lambda: len(realm_maps) == REALM_MAP_COUNT),
+        ('realm_12_subrealms_covered', lambda: len(set(m['biome']
+            for m in realm_maps)) == len(REALM_BIOMES)),
+        ('realm_quota_exact', lambda: all(
+            sum(1 for m in realm_maps if m['biome'] == b) == q
+            for b, q in REALM_QUOTA.items())),
+        ('realm_tien_gioi_50', lambda: sum(
+            1 for m in realm_maps
+            if m.get('realm_group') == 'celestial') == 50),
+        ('realm_am_phu_50', lambda: sum(
+            1 for m in realm_maps
+            if m.get('realm_group') == 'underworld') == 50),
+        ('realm_group_valid', lambda: all(
+            m.get('realm_group') in ('none', 'celestial', 'underworld')
+            for m in maps)),
+        ('realm_map_role_valid', lambda: all(
+            m.get('map_role') in ('normal', 'start', 'gate', 'hub',
+                                  'combat', 'dungeon', 'boss')
+            for m in maps)),
+        ('realm_gate_hub_no_spawn', lambda: all(
+            not m['spawn_policy']['allow_monster_spawn']
+            for m in realm_maps
+            if m.get('map_role') in ('gate', 'hub'))),
+        ('realm_access_valid', lambda: all(
+            m.get('realm_access') in VALID_REALM_ACCESS for m in maps)),
+        ('world_maps_open_access', lambda: all(
+            m.get('realm_access') == 'open' for m in world_maps)),
+        ('world_count_unchanged', lambda:
+            len(world_maps) == TARGET_MAP_COUNT),
+        # ── start map checks — 2 map cốt truyện mở đầu ──
+        ('start_count_2', lambda: len(start_maps) == START_MAP_COUNT),
+        ('start_has_one_spawn', lambda: sum(
+            1 for m in start_maps if m.get('is_start_map')) == 1),
+        ('start_is_safe', lambda: all(
+            m.get('safe_zone') for m in start_maps)),
+        ('is_start_map_field_present', lambda: all(
+            'is_start_map' in m for m in maps)),
+        ('only_museum_is_start', lambda: all(
+            not m.get('is_start_map') for m in maps
+            if m.get('biome') != 'bao_tang')),
         ('cultural_lock_pass', lambda: all(cultural_lock_ok(m['name']) for m in maps)),
         ('natural_key_unique', lambda: len(set(m['natural_key'] for m in maps)) == len(maps)),
         ('shard_id_valid', lambda: all(0 <= m['shard_id'] < 64 for m in maps)),
-        ('region_map_count_sum', lambda: sum(r['actual_map_count'] for r in regions) == len(maps)),
+        ('region_map_count_sum', lambda: sum(r['actual_map_count'] for r in regions) == len(world_maps)),
         ('github_url_correct', lambda:
          REPO_URL.startswith('https://github.com/')
          and REPO_URL.endswith('/svtk-status.git')),
@@ -1345,7 +1908,9 @@ def self_validate(regions, maps, det_mode='full'):
             for m in maps)),
         ('all_have_terrain', lambda: all(m.get('terrain') for m in maps)),
         ('portal_graph_valid', lambda: _portal_graph_valid(maps)),
-        ('world_connected', lambda: _world_connected(maps)),
+        ('world_connected', lambda: _world_connected(world_maps)),
+        ('realm_portal_intra_group', lambda:
+            _realm_portal_intra_group(realm_maps)),
         ('g1_recomputed_ok', lambda: all(
             (m.get('g1_pass'), m.get('g1_note')) == g1_check(m.get('name', ''))
             for m in maps)),
@@ -1428,6 +1993,46 @@ def _world_connected(maps):
     return (len(_reach(fwd, start)) == len(maps)
             and len(_reach(rev, start)) == len(maps))
 
+
+def _realm_portal_intra_group(realm_maps):
+    """Map cõi: portal CHỈ nối map cõi CÙNG realm_group (celestial nối
+    celestial, underworld nối underworld — KHÔNG nối chéo cõi, KHÔNG
+    nối ra map thường), VÀ mỗi realm_group phải LIÊN THÔNG nội bộ
+    (từ 1 map đi tới được mọi map cùng group). Rỗng -> True."""
+    if not realm_maps:
+        return True
+    by_id = {m['map_id']: m for m in realm_maps}
+    by_group = {}
+    for m in realm_maps:
+        by_group.setdefault(m.get('realm_group'), []).append(m['map_id'])
+    # (a) mọi cạnh portal chỉ nối map cõi cùng realm_group
+    for m in realm_maps:
+        for lk in m.get('portal_graph', []):
+            to_map = lk.get('to_map')
+            if to_map not in by_id:          # trỏ ra ngoài realm
+                return False
+            if by_id[to_map].get('realm_group') != m.get('realm_group'):
+                return False                 # nối chéo cõi
+    # (b) mỗi realm_group liên thông nội bộ (BFS theo cạnh xuôi)
+    for group, ids in by_group.items():
+        if not ids:
+            continue
+        adj = {i: [] for i in ids}
+        for i in ids:
+            for lk in by_id[i].get('portal_graph', []):
+                adj[i].append(lk['to_map'])
+        seen = {ids[0]}
+        stack = [ids[0]]
+        while stack:
+            cur = stack.pop()
+            for nxt in adj.get(cur, []):
+                if nxt not in seen:
+                    seen.add(nxt)
+                    stack.append(nxt)
+        if len(seen) != len(ids):
+            return False
+    return True
+
 def _spawn_policy_ok(m):
     """spawn_policy hợp lệ: đủ 4 trường gợi ý, KHÔNG chứa gameplay
     (monster_id/level/drop là việc CMD_NPC). allow=False thì
@@ -1451,7 +2056,12 @@ def _spawn_policy_ok(m):
 
 def _style_forbidden_ok(m):
     """True nếu style của map KHÔNG chứa token phong cách bị cấm
-    (cyberpunk/neon/sci-fi...) — chống lạc thời đại."""
+    (cyberpunk/neon/sci-fi...) — chống lạc thời đại.
+    NGOẠI LỆ: map start Bảo tàng (era hien_dai) CỐ Ý là bối cảnh 2026
+    — điểm xuất phát truyện xuyên không, được duyệt. Miễn trừ check
+    này cho map start, KHÔNG nới lỏng cho map thường."""
+    if m.get('era') in START_ERA_LABEL:        # hien_dai / dinh
+        return True
     blob = json.dumps(m.get('style', {}), ensure_ascii=False).lower()
     return not any(tok in blob for tok in FORBIDDEN_STYLE)
 
@@ -1468,7 +2078,7 @@ def _anchor_matches_purpose(m):
         allowed.add('boss_anchor')
     return all(at in allowed for at in m.get('anchors', {}))
 
-TEST_CODE = '''# CMD_PLACE v2.3.0 — 28 tests (determinism kiểm trong self_validate)
+TEST_CODE = '''# CMD_PLACE v2.4.0 — 28 tests (determinism kiểm trong self_validate)
 import json
 from pathlib import Path
 REG = Path(__file__).parent.parent / 'registry'
@@ -1476,21 +2086,41 @@ REG = Path(__file__).parent.parent / 'registry'
 def _maps():
     return [json.loads(l) for l in (REG/'map_registry.jsonl').read_text(encoding='utf-8').splitlines() if l.strip()]
 
-def test_01_map_count(): assert len(_maps()) == 10000
+# map THƯỜNG (loại realm than_thoai + start hien_dai/dinh)
+_SPECIAL_ERAS = {'than_thoai', 'hien_dai', 'dinh'}
+def _world_maps():
+    return [m for m in _maps() if m.get('era') not in _SPECIAL_ERAS]
+def _realm_maps():
+    return [m for m in _maps() if m.get('era') == 'than_thoai']
+def _start_maps():
+    return [m for m in _maps() if m.get('era') in ('hien_dai', 'dinh')]
+
+def test_01_map_count():
+    # tổng = 10000 thường + 100 cõi + 2 start = 10102
+    assert len(_maps()) == 10102
+    assert len(_world_maps()) == 10000
+    assert len(_realm_maps()) == 100
+    assert len(_start_maps()) == 2
 def test_02_map_id_unique():
     ids=[m['map_id'] for m in _maps()]; assert len(ids)==len(set(ids))
 def test_03_map_id_range():
-    ids=[m['map_id'] for m in _maps()]; assert min(ids)==1 and max(ids)==10000
+    ids=[m['map_id'] for m in _maps()]; assert min(ids)==1 and max(ids)==10102
 def test_04_uuid_unique():
     u=[m['uuid'] for m in _maps()]; assert len(u)==len(set(u))
 def test_05_era_valid():
     import sys; sys.path.insert(0, str(Path(__file__).parent))
     from place_lib import ERAS
-    assert all(m['era'] in ERAS for m in _maps())
+    valid = set(ERAS) | _SPECIAL_ERAS
+    assert all(m['era'] in valid for m in _maps())
 def test_06_biome_valid():
     import sys; sys.path.insert(0, str(Path(__file__).parent))
     from place_lib import BIOMES
-    assert all(m['biome'] in BIOMES for m in _maps())
+    realm_b = {'thien_mon','coi_troi','dong_tien','tan_vien_linh_son',
+               'long_cung','thien_dai','quy_mon_quan','hoang_tuyen',
+               'u_minh_lo','dia_phu_dien','me_cung_u_minh','vong_hon_dai'}
+    start_b = {'bao_tang','co_do_hoa_lu'}
+    valid = set(BIOMES) | realm_b | start_b
+    assert all(m['biome'] in valid for m in _maps())
 def test_07_natural_key_unique():
     k=[m['natural_key'] for m in _maps()]; assert len(k)==len(set(k))
 def test_08_cultural_lock():
@@ -1572,14 +2202,19 @@ def test_23_portal_graph_valid():
                 assert any(b.get('to_map') == m['map_id'] for b in back), \
                     f"bidirectional giả: {m['map_id']}->{to_map}"
 def test_24_world_connected():
-    # strongly-connected: forward BFS VÀ reverse BFS đều phủ đủ map
-    maps = _maps()
+    # strongly-connected: CHỈ map thường (realm + start tách rời, vào
+    # bằng chuyển sinh/cốt truyện — không có cổng địa lý liên thông).
+    maps = _world_maps()
+    world_ids = set(m['map_id'] for m in maps)
     fwd = {m['map_id']: [] for m in maps}
     rev = {m['map_id']: [] for m in maps}
     for m in maps:
         for lk in m.get('portal_graph', []):
-            fwd[m['map_id']].append(lk['to_map'])
-            rev[lk['to_map']].append(m['map_id'])
+            to = lk['to_map']
+            if to not in world_ids:      # bỏ cạnh trỏ ra realm/start
+                continue
+            fwd[m['map_id']].append(to)
+            rev[to].append(m['map_id'])
     def _reach(adj, start):
         seen = {start}; stack = [start]
         while stack:
