@@ -1,4 +1,4 @@
-# CMD_PLACE v2.3.0 — 28 tests (determinism kiểm trong self_validate)
+# CMD_PLACE v2.4.0 — 28 tests (determinism kiểm trong self_validate)
 import json
 from pathlib import Path
 REG = Path(__file__).parent.parent / 'registry'
@@ -6,21 +6,41 @@ REG = Path(__file__).parent.parent / 'registry'
 def _maps():
     return [json.loads(l) for l in (REG/'map_registry.jsonl').read_text(encoding='utf-8').splitlines() if l.strip()]
 
-def test_01_map_count(): assert len(_maps()) == 10000
+# map THƯỜNG (loại realm than_thoai + start hien_dai/dinh)
+_SPECIAL_ERAS = {'than_thoai', 'hien_dai', 'dinh'}
+def _world_maps():
+    return [m for m in _maps() if m.get('era') not in _SPECIAL_ERAS]
+def _realm_maps():
+    return [m for m in _maps() if m.get('era') == 'than_thoai']
+def _start_maps():
+    return [m for m in _maps() if m.get('era') in ('hien_dai', 'dinh')]
+
+def test_01_map_count():
+    # tổng = 10000 thường + 100 cõi + 2 start = 10102
+    assert len(_maps()) == 10102
+    assert len(_world_maps()) == 10000
+    assert len(_realm_maps()) == 100
+    assert len(_start_maps()) == 2
 def test_02_map_id_unique():
     ids=[m['map_id'] for m in _maps()]; assert len(ids)==len(set(ids))
 def test_03_map_id_range():
-    ids=[m['map_id'] for m in _maps()]; assert min(ids)==1 and max(ids)==10000
+    ids=[m['map_id'] for m in _maps()]; assert min(ids)==1 and max(ids)==10102
 def test_04_uuid_unique():
     u=[m['uuid'] for m in _maps()]; assert len(u)==len(set(u))
 def test_05_era_valid():
     import sys; sys.path.insert(0, str(Path(__file__).parent))
     from place_lib import ERAS
-    assert all(m['era'] in ERAS for m in _maps())
+    valid = set(ERAS) | _SPECIAL_ERAS
+    assert all(m['era'] in valid for m in _maps())
 def test_06_biome_valid():
     import sys; sys.path.insert(0, str(Path(__file__).parent))
     from place_lib import BIOMES
-    assert all(m['biome'] in BIOMES for m in _maps())
+    realm_b = {'thien_mon','coi_troi','dong_tien','tan_vien_linh_son',
+               'long_cung','thien_dai','quy_mon_quan','hoang_tuyen',
+               'u_minh_lo','dia_phu_dien','me_cung_u_minh','vong_hon_dai'}
+    start_b = {'bao_tang','co_do_hoa_lu'}
+    valid = set(BIOMES) | realm_b | start_b
+    assert all(m['biome'] in valid for m in _maps())
 def test_07_natural_key_unique():
     k=[m['natural_key'] for m in _maps()]; assert len(k)==len(set(k))
 def test_08_cultural_lock():
@@ -101,14 +121,19 @@ def test_23_portal_graph_valid():
                 back = by_id[to_map].get('portal_graph', [])
                 assert any(b.get('to_map') == m['map_id'] for b in back),                     f"bidirectional giả: {m['map_id']}->{to_map}"
 def test_24_world_connected():
-    # strongly-connected: forward BFS VÀ reverse BFS đều phủ đủ map
-    maps = _maps()
+    # strongly-connected: CHỈ map thường (realm + start tách rời, vào
+    # bằng chuyển sinh/cốt truyện — không có cổng địa lý liên thông).
+    maps = _world_maps()
+    world_ids = set(m['map_id'] for m in maps)
     fwd = {m['map_id']: [] for m in maps}
     rev = {m['map_id']: [] for m in maps}
     for m in maps:
         for lk in m.get('portal_graph', []):
-            fwd[m['map_id']].append(lk['to_map'])
-            rev[lk['to_map']].append(m['map_id'])
+            to = lk['to_map']
+            if to not in world_ids:      # bỏ cạnh trỏ ra realm/start
+                continue
+            fwd[m['map_id']].append(to)
+            rev[to].append(m['map_id'])
     def _reach(adj, start):
         seen = {start}; stack = [start]
         while stack:
