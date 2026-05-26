@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
-"""TOOL_MASK_EXPORTER v1.0 — render dữ liệu mask CMD_MAP thành PNG.
+"""TOOL_MASK_EXPORTER v1.0.3 — render dữ liệu mask CMD_MAP thành PNG.
 Tool phụ trợ ART pipeline. KHÔNG sinh map background, KHÔNG sprite,
-KHÔNG train LoRA, KHÔNG sửa CMD_MAP."""
+KHÔNG train LoRA, KHÔNG sửa CMD_MAP.
+
+v1.0.3 (2026-05-27): sửa output_sha256 — hướng B. Bản cũ hash pixel
+PNG qua Pillow -> phụ thuộc Pillow version, hash lệch giữa máy render
+và máy verify. Nay output_sha256 CHỈ hash text deterministic:
+mask_meta.json + source CMD_MAP/ART_SPEC hash + export_rule_hash.
+PNG validate riêng (đủ 11 file/map, mở được, kích thước đúng) —
+không vào contract hash. mask_meta thêm 4 field truy vết nguồn.
+"""
 import os, sys, re, json, time, hashlib, subprocess, logging
 from pathlib import Path
 
-CMD_VERSION = "1.0.2"
+CMD_VERSION = "1.0.3"
 TOOL_NAME = "MASK_EXPORTER"
 SCHEMA_VERSION = f'mask-export-v{CMD_VERSION}'
 
@@ -161,7 +169,7 @@ def load_mask_colors(allow_default=False):
     if not fp.exists():
         if allow_default:
             log.warning("[TEST] Chưa có ART_SPEC convention — DEFAULT_COLORS")
-            return dict(DEFAULT_COLORS), False
+            return dict(DEFAULT_COLORS), False, None
         log.error("Thiếu cmd-art-spec mask_color_convention.json — "
                   "chạy CMD_ART_SPEC trước — DỪNG")
         return None
@@ -232,7 +240,10 @@ def load_mask_colors(allow_default=False):
             return None
         out[k] = rgb
     log.info("Dùng màu từ ART_SPEC convention (verified)")
-    return out, True
+    # as_actual: output_sha256 của CMD_ART_SPEC (đã recompute ở nhánh
+    # not allow_default). allow_default=True (test) -> chưa tính ->
+    # None. Dùng nhúng vào mask_meta + output_sha256 contract.
+    return out, True, locals().get('as_actual')
 
 
 def _walk_mask_valid(layout):
@@ -799,16 +810,21 @@ def render_debug_overlay(layout, colors):
 
 def _save_png(img, path):
     """Lưu PNG với tham số cố định — giảm phụ thuộc môi trường.
-    optimize=False + không metadata -> byte ổn định nhất có thể.
-    (output_sha256 vẫn hash theo pixel data để chắc deterministic.)"""
+    optimize=False + không metadata.
+    (v1.0.3: output_sha256 KHÔNG hash pixel PNG nữa — chỉ hash text
+    deterministic. PNG validate riêng: đủ 11 file/map, mở được,
+    kích thước đúng. Xem _compute_output_sha256.)"""
     img.save(path, format='PNG', optimize=False)
 
 
 # ── EXPORT 1 MAP ──
-def export_one_map(layout, colors, out_dir):
+def export_one_map(layout, colors, out_dir,
+                   source_map_sha, art_spec_sha):
     """Render PNG + meta cho 1 map. Trả dict thông tin.
     - Bản 1920×1080 letterbox (pad đen 2 bên) — cho debug/Unity.
-    - Bản content (không pad, đúng tỉ lệ map) — cho AI/ControlNet."""
+    - Bản content (không pad, đúng tỉ lệ map) — cho AI/ControlNet.
+    source_map_sha / art_spec_sha: hash nguồn nhúng vào mask_meta để
+    truy vết — verify mask render từ đúng CMD_MAP / CMD_ART_SPEC."""
     mid = layout['map_id']
     gw, gh = layout['grid_w'], layout['grid_h']
     mdir = out_dir / 'maps' / f"map_{mid:05d}"
@@ -860,6 +876,11 @@ def export_one_map(layout, colors, out_dir):
         'portal_count': len(layout.get('portal_points', [])),
         'anchor_count': len(layout.get('anchor_points', [])),
         'spawn_zone_count': len(layout.get('spawn_zones', [])),
+        # ── truy vết nguồn (hướng B) ──
+        'tool_version': CMD_VERSION,
+        'export_rule_hash': BUILD_RULE_HASH,
+        'source_map_output_sha256': source_map_sha,
+        'source_art_spec_output_sha256': art_spec_sha,
     }
     (mdir / 'mask_meta.json').write_text(
         json.dumps(meta, indent=2, ensure_ascii=False), encoding='utf-8')
@@ -872,7 +893,7 @@ def self_validate(metas, out_dir):
     fail = {
         'has_output': False, 'all_png': False,
         'png_size_correct': False, 'content_png_correct': False,
-        'meta_present': False,
+        'meta_present': False, 'png_all_openable': False,
         'canvas_size_valid': False, 'aspect_not_distorted': False,
         'mode_not_full_commit': False,
     }
@@ -893,6 +914,13 @@ def self_validate(metas, out_dir):
         for p in pngs + pngs_content:
             if not (mdir / p).exists():
                 fail['all_png'] = True
+            else:
+                # PNG phải MỞ ĐƯỢC + không hỏng (verify integrity).
+                try:
+                    with Image.open(mdir / p) as _im:
+                        _im.verify()
+                except Exception:
+                    fail['png_all_openable'] = True
         if not (mdir / 'mask_meta.json').exists():
             fail['meta_present'] = True
         # PNG letterbox đúng canvas 1920×1080
@@ -932,37 +960,52 @@ def self_validate(metas, out_dir):
 
 
 # ── HASH OUTPUT (dùng chung 2 chỗ: ghi manifest + self-verify sau copy) ──
-def _compute_output_sha256(out_dir):
-    """Hash NỘI DUNG output (pixel data + tên file + .json text).
-    Deterministic giữa các máy — KHÔNG phụ thuộc Pillow/zlib version.
-    Duyệt map theo tên folder (đã 0-pad map_NNNNN -> lexicographic ==
-    numeric), file theo tên cố định. Dùng cả khi ghi manifest VÀ khi
-    self-verify sau copy sang repo (điều phòng hờ v1.0.1)."""
-    from PIL import Image as _Img
+def _compute_output_sha256(out_dir, source_map_sha, art_spec_sha):
+    """Hash CONTRACT của output — chỉ dữ liệu DETERMINISTIC TEXT.
+    HƯỚNG B (chốt): KHÔNG hash pixel PNG (phụ thuộc Pillow version)
+    cũng KHÔNG hash raw byte PNG (file PNG do Pillow ghi vẫn có thể
+    đổi byte giữa các version). Hash:
+      1. toàn bộ mask_meta.json (text) theo map_id tăng dần
+      2. source CMD_MAP output_sha256
+      3. source CMD_ART_SPEC output_sha256
+      4. BUILD_RULE_HASH (export_rule_hash)
+    -> mọi máy chạy ra CÙNG hash. PNG được validate riêng (đủ 11
+    file/map, mở được, kích thước đúng) — KHÔNG vào contract hash.
+    build_manifest.json / status/*.json KHÔNG tự hash vào (tránh tự
+    tham chiếu vòng).
+    Duyệt map theo tên folder (0-pad map_NNNNN -> lexicographic ==
+    numeric). Dùng cả khi ghi manifest VÀ self-verify."""
     out = Path(out_dir)
     maps_dir = out / 'maps'
     map_dirs = sorted(d for d in maps_dir.iterdir()
                       if d.is_dir() and d.name.startswith('map_'))
     agg = hashlib.sha256()
+    # 1) mask_meta.json text — theo map_id tăng dần (tên đã 0-pad)
     for mdir in map_dirs:
-        for fn in sorted(p.name for p in mdir.iterdir() if p.is_file()):
-            fp = mdir / fn
-            agg.update(fn.encode('utf-8'))    # tên file vào hash
-            if fn.endswith('.png'):
-                with _Img.open(fp) as im:
-                    # pixel data thô — deterministic, không phụ thuộc
-                    # Pillow nén/ghi PNG.
-                    agg.update(im.convert('RGB').tobytes())
-            else:
-                agg.update(fp.read_bytes())
+        agg.update(mdir.name.encode('utf-8'))
+        meta_fp = mdir / 'mask_meta.json'
+        agg.update(meta_fp.read_text(encoding='utf-8').encode('utf-8'))
+    # 2-4) hash nguồn + export rule — None -> chuỗi rỗng (ổn định)
+    agg.update(b'|source_map|')
+    agg.update((source_map_sha or '').encode('utf-8'))
+    agg.update(b'|source_art_spec|')
+    agg.update((art_spec_sha or '').encode('utf-8'))
+    agg.update(b'|export_rule|')
+    agg.update(BUILD_RULE_HASH.encode('utf-8'))
     return agg.hexdigest()
 
 
 # ── WRITE OUTPUT ──
 def write_outputs(layouts, colors, color_from_artspec, map_manifest,
-                  out_dir):
-    """Render mọi map + manifest + status. Trả (n, score, fails)."""
+                  art_spec_sha, out_dir):
+    """Render mọi map + manifest + status. Trả (n, score, fails).
+    art_spec_sha: output_sha256 của CMD_ART_SPEC (None nếu dùng
+    DEFAULT_COLORS — chỉ ở chế độ test)."""
     out = Path(out_dir)
+    # nguồn CMD_MAP output_sha256 (đã verify ở load_map_layouts)
+    _osha = map_manifest.get('output_sha256')
+    source_map_sha = (_osha.get('map_layouts')
+                      if isinstance(_osha, dict) else _osha)
     # CLEAN triệt để — xóa TOÀN BỘ out_dir cũ rồi tạo lại. Không để
     # bất kỳ stale file/folder nào (map cũ, file lạ) còn sót.
     import shutil as _sh
@@ -973,11 +1016,17 @@ def write_outputs(layouts, colors, color_from_artspec, map_manifest,
 
     metas = []
     for l in layouts:
-        metas.append(export_one_map(l, colors, out))
+        metas.append(export_one_map(l, colors, out,
+                                    source_map_sha, art_spec_sha))
 
     score, fails = self_validate(metas, out)
 
-    output_sha256 = _compute_output_sha256(out)
+    # output_sha256 — hash DETERMINISTIC TEXT (hướng B): KHÔNG hash
+    # pixel PNG (phụ thuộc Pillow version). Hash mask_meta.json text
+    # + 3 hash nguồn + export_rule_hash. build_manifest/status KHÔNG
+    # tự hash vào (tránh tự tham chiếu).
+    output_sha256 = _compute_output_sha256(out, source_map_sha,
+                                           art_spec_sha)
 
     manifest = {
         'tool': TOOL_NAME, 'tool_version': CMD_VERSION,
@@ -1056,7 +1105,21 @@ def push_to_github(out_dir, score):
                           f"— DỪNG, KHÔNG push")
                 return False
             declared = mfj.get('output_sha256')
-            actual = _compute_output_sha256(dst)
+            # recompute cần source_map_sha + art_spec_sha — đọc lại
+            # từ mask_meta.json bất kỳ map (mọi map ghi cùng giá trị).
+            _md = sorted((dst / 'maps').glob('map_*'))
+            if not _md:
+                log.error("Self-verify: không có map dir — DỪNG")
+                return False
+            try:
+                _m0 = json.loads(
+                    (_md[0] / 'mask_meta.json').read_text(encoding='utf-8'))
+            except (json.JSONDecodeError, OSError) as e:
+                log.error(f"Self-verify đọc mask_meta lỗi: {e} — DỪNG")
+                return False
+            actual = _compute_output_sha256(
+                dst, _m0.get('source_map_output_sha256'),
+                _m0.get('source_art_spec_output_sha256'))
             if declared != actual:
                 log.error(f"SELF-VERIFY FAIL — manifest.output_sha256="
                           f"{declared} nhưng file thực tế hash="
@@ -1097,14 +1160,15 @@ def main():
     if cres is None:
         log.error("Đọc màu ART_SPEC fail — DỪNG")
         return 1
-    colors, from_artspec = cres
+    colors, from_artspec, art_spec_sha = cres
     loaded = load_map_layouts()
     if loaded is None:
         log.error("Đọc CMD_MAP fail — DỪNG")
         return 1
     layouts, map_manifest = loaded
     n, score, fails = write_outputs(layouts, colors, from_artspec,
-                                    map_manifest, OUTPUT_DIR)
+                                    map_manifest, art_spec_sha,
+                                    OUTPUT_DIR)
     log.info(f"Render {n} map — score {score:.3f} — "
              f"gaps: {fails or 'KHÔNG'}")
     if score < SCORE_THRESHOLD:
