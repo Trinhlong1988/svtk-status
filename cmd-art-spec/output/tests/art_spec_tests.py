@@ -102,6 +102,73 @@ def test_15_manifest_output_sha():
     assert mf.get("output_sha256"), "manifest thieu output_sha256"
     assert len(mf["output_sha256"]) == 64, "output_sha256 sai do dai"
 
+# ── B4 — 4 test defense-in-depth (audit 20 round) ──
+def test_16_mask_colors_exact():
+    """B4 M08 catch: mask color RGB phai khop hard-coded expected."""
+    mc = json.loads((OUT / "masks" / "mask_color_convention.json")
+                    .read_text(encoding="utf-8"))
+    expected = {
+        "free":   "#3CB043",
+        "block":  "#4A4A4A",
+        "water":  "#2E6FB0",
+        "slope":  "#C9A227",
+        "portal": "#E03C3C",
+        "anchor": "#B040C0",
+        "spawn":  "#FF5722",
+    }
+    actual = {k: v["rgb"] for k, v in mc["colors"].items()}
+    assert actual == expected, f"mask color drift: {actual} vs {expected}"
+
+def test_17_schema_required_intact():
+    """B4 M10 catch: schema required phai chua field cot loi."""
+    sc = json.loads((OUT / "schema" / "art_spec.schema.json")
+                    .read_text(encoding="utf-8"))
+    core = {"art_group", "spec_version", "biome", "era", "tier",
+            "positive_prompt", "negative_prompt",
+            "caption_tokens", "mask_requirements", "forbidden"}
+    assert core <= set(sc.get("required", [])),         f"schema required thieu core: {core - set(sc.get('required',[]))}"
+
+def test_18_art_group_safe_regex():
+    """B4 B1 catch: moi art_group phai khop ^[a-z][a-z0-9_]{2,63}$."""
+    import re
+    safe = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
+    for s in _specs():
+        assert safe.match(s["art_group"]), f"art_group lan path: {s['art_group']!r}"
+
+def test_19_mask_rgb_distinct():
+    """B4 B3 catch: 7 mau Euclidean RGB >= 80 doi cap."""
+    import math
+    mc = json.loads((OUT / "masks" / "mask_color_convention.json")
+                    .read_text(encoding="utf-8"))
+    def rgb(h):
+        h = h.lstrip("#")
+        return int(h[:2],16), int(h[2:4],16), int(h[4:6],16)
+    colors = [(k, rgb(v["rgb"])) for k, v in mc["colors"].items()]
+    bad = []
+    for i in range(len(colors)):
+        for j in range(i+1, len(colors)):
+            d = math.sqrt(sum((x-y)**2 for x,y in zip(colors[i][1], colors[j][1])))
+            if d < 80:
+                bad.append((colors[i][0], colors[j][0], round(d,1)))
+    assert not bad, f"mask color too close: {bad}"
+
+def test_20_manifest_honest_gap_upstream():
+    """B5: manifest must honest-report 3 dropped upstream fields."""
+    mf = json.loads((OUT / "build_manifest.json").read_text(encoding="utf-8"))
+    drops = mf.get("dropped_upstream_fields", [])
+    assert set(drops) >= {"art_prompt", "negative_prompt", "lora_tags"},         f"manifest thieu honest report dropped_upstream_fields: {drops}"
+    assert mf.get("dropped_upstream_reason"), "thieu dropped_upstream_reason"
+
+def test_21_lf_line_endings():
+    """B2: moi JSON/JSONL output phai LF, khong CRLF (deterministic cross-OS)."""
+    for sub, ext in (("art_groups","*.json"), ("prompts","*.jsonl"),
+                     ("captions","*.jsonl"), ("masks","*.json"),
+                     ("schema","*.json")):
+        for fp in (OUT/sub).glob(ext):
+            raw = fp.read_bytes()
+            assert b"
+" not in raw, f"CRLF leaked: {fp}"
+
 if __name__ == "__main__":
     _tests = sorted(n for n in dir() if n.startswith("test_"))
     _p = _f = 0

@@ -1,14 +1,22 @@
 {
   "cmd": "ART_SPEC",
-  "cmd_version": "1.0.0",
-  "schema_version": "art-spec-v1.0.0",
+  "cmd_version": "1.1.0",
+  "schema_version": "art-spec-v1.1.0",
   "foundation_hash": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
-  "build_rule_hash": "f7d4e85eab6e1a6b10b9fa8ca3337fd7e3f4bc9391df98b6553c5c1d55af1ff1",
+  "build_rule_hash": "4ca07a40751d93a542bad1019daa92840f5c569c34fc3338914cd18690efff32",
   "spec_version": 1,
   "source_map_foundation": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
   "source_map_count": 10000,
   "art_group_count": 942,
-  "validation_score": 1.0,
-  "honest_gaps": [],
-  "output_sha256": "082f4753511710878ec3fe668dacb3a8e4c628e6332f2fdc90b2cd88008e7d58"
+  "validation_score": 0.95,
+  "honest_gaps": [
+    "mask_rgb_distinct"
+  ],
+  "output_sha256": "6da109e8ab922f54e1f29bd7123ae4dbc87a98de74df13d121e9fb7883a47e1c",
+  "dropped_upstream_fields": [
+    "art_prompt",
+    "negative_prompt",
+    "lora_tags"
+  ],
+  "dropped_upstream_reason": "CMD_MAP placeholder art_prompt/negative_prompt/lora_tags ngắn (median ~127/83 char, 6 tag). ART_SPEC sinh template chi tiết hơn (~321/170 char, 9 tag) bám sử Việt theo điều 7. Quyết định ghi đè, không merge."
 }
