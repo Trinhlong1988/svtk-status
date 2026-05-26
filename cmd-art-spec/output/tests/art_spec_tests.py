@@ -1,4 +1,4 @@
-# CMD_ART_SPEC v1.0 — test ngoai (doc art_groups/ + masks/)
+# CMD_ART_SPEC v1.2.0 — test ngoai (doc art_groups/ + masks/)
 import json, sys
 from pathlib import Path
 OUT = Path(__file__).parent.parent

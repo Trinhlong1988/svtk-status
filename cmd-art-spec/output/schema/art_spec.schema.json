@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "schema_version": "art-spec-v1.1.0",
+  "schema_version": "art-spec-v1.2.0",
   "title": "SVTK art_group spec",
   "type": "object",
   "additionalProperties": false,
@@ -53,7 +53,21 @@
         "battlefield",
         "cave",
         "scenic",
-        "garden"
+        "garden",
+        "thien_mon",
+        "coi_troi",
+        "dong_tien",
+        "tan_vien_linh_son",
+        "long_cung",
+        "thien_dai",
+        "quy_mon_quan",
+        "hoang_tuyen",
+        "u_minh_lo",
+        "dia_phu_dien",
+        "me_cung_u_minh",
+        "vong_hon_dai",
+        "bao_tang",
+        "co_do_hoa_lu"
       ]
     },
     "era": {
@@ -68,7 +82,10 @@
         "f2",
         "f3",
         "f4",
-        "f5"
+        "f5",
+        "than_thoai",
+        "hien_dai",
+        "dinh"
       ]
     },
     "tier": {
