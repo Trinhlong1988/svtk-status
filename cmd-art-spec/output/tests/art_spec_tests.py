@@ -114,7 +114,7 @@ def test_16_mask_colors_exact():
         "slope":  "#C9A227",
         "portal": "#E03C3C",
         "anchor": "#B040C0",
-        "spawn":  "#FF5722",
+        "spawn":  "#76FF03",
     }
     actual = {k: v["rgb"] for k, v in mc["colors"].items()}
     assert actual == expected, f"mask color drift: {actual} vs {expected}"
