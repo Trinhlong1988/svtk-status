@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+# ============================================================================
+# HISTORICAL REFERENCE ONLY - DO NOT RE-EXECUTE
+# ----------------------------------------------------------------------------
+# Targets foundation/SVTK_FOUNDATION_v2.8.0.md (retired 2026-05-26 by LEAD #124).
+# Current foundation: SVTK_FOUNDATION_v2.10.0.md
+# sha256 cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb
+# Re-execute = FileNotFoundError. Kept for audit trail of shipped artifacts.
+# ============================================================================
 """CMD QUEST v1.2 — Foundation v2.8.0 compliant Quest Generator.
 
 Fix bug v1.1 audit:
