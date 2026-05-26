@@ -1,0 +1,20 @@
+{
+  "cmd": "MAP",
+  "cmd_version": "1.0.0",
+  "schema_version": "map-v1.0.0",
+  "foundation_hash": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
+  "build_rule_hash": "a7a3db6f68d1991d94a1a5810fd8150d15d354dbe9a8fd515a5540d0cd25d6c9",
+  "layout_version": 1,
+  "source_place_schema": "place-v2.3.1",
+  "source_place_hash": "8c24e1f808951e702ca67443687a48d705073bef541483b98aaa854dcc0c394c",
+  "source_build_rule_hash": "9a6a7f63d350dfd63656334a21d21ffe3ee2613681e42e4d9412b92e8946d06f",
+  "source_topology_version": 1,
+  "map_count": 10000,
+  "art_profile_count": 942,
+  "spawn_zone_count": 12278,
+  "validation_score": 1.0,
+  "honest_gaps": [],
+  "output_sha256": "45fa2e4268f6cb3e28daabe1fc3f47450ff0b166ca633ebc938b41224a64ff61",
+  "external_tests": "24/24 PASS",
+  "is_retry": false
+}
