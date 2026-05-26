@@ -94,8 +94,12 @@ def test_14_status_file():
     assert len(fps) >= 1, "thieu status file"
     st = json.loads(fps[-1].read_text(encoding="utf-8"))
     for k in ("cmd", "cmd_version", "schema_version", "timestamp",
-              "validation_score", "honest_gaps", "exit_code"):
+              "timestamp_utc", "validation_score", "honest_gaps", "exit_code"):
         assert k in st, f"status thieu {k}"
+    # O1: timestamp_utc phai dang ISO-8601 UTC
+    import re as _re
+    assert _re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$",
+                     st["timestamp_utc"]), f"timestamp_utc sai dinh dang: {st['timestamp_utc']}"
 
 def test_15_manifest_output_sha():
     mf = json.loads((OUT / "build_manifest.json").read_text(encoding="utf-8"))
