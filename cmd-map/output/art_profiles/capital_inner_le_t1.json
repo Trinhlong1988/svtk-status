@@ -1,0 +1,13 @@
+{
+ "art_group": "capital_inner_le_t1",
+ "art_prompt": "SVTK style, ancient Vietnamese noi thanh, era le, isometric 2D MMORPG map, readable paths, soft cel shading, tier 1 difficulty",
+ "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese, chinese",
+ "lora_tags": [
+  "svtk_style",
+  "viet_ancient",
+  "capital_inner",
+  "isometric_2d",
+  "mmo_map",
+  "era_le"
+ ]
+}

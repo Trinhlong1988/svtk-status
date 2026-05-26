@@ -1,0 +1,13 @@
+{
+ "art_group": "plain_f2_t4",
+ "art_prompt": "SVTK style, ancient Vietnamese dong bang, era f2, isometric 2D MMORPG map, readable paths, soft cel shading, tier 4 difficulty",
+ "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese, chinese",
+ "lora_tags": [
+  "svtk_style",
+  "viet_ancient",
+  "plain",
+  "isometric_2d",
+  "mmo_map",
+  "era_f2"
+ ]
+}

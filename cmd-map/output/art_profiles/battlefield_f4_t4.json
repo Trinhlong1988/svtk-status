@@ -1,0 +1,13 @@
+{
+ "art_group": "battlefield_f4_t4",
+ "art_prompt": "SVTK style, ancient Vietnamese chien truong, era f4, isometric 2D MMORPG map, readable paths, soft cel shading, tier 4 difficulty",
+ "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese, chinese",
+ "lora_tags": [
+  "svtk_style",
+  "viet_ancient",
+  "battlefield",
+  "isometric_2d",
+  "mmo_map",
+  "era_f4"
+ ]
+}
