@@ -4,7 +4,7 @@
 
 **Team:** TEAM CONTENT — Quest tree + objectives + chains
 **Version:** 1.1.0 — 2026-05-18
-**Foundation:** v2.8.0 hash `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b`
+**Foundation:** v2.8.0 hash `cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb`
 
 ---
 
@@ -97,7 +97,7 @@ except ImportError:
 
 CMD_NAME = "cmd-quest"
 CMD_VERSION = "1.0.0"
-EXPECTED_FOUNDATION_HASH = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
+EXPECTED_FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 REPO_URL = "https://github.com/Trinhlong1988/svtk-status.git"
 REPO_DIR = Path("./svtk-status")
 
@@ -119,10 +119,10 @@ def setup():
 
     set_correlation_context(cmd_id='QUEST', cycle_id=str(uuid.uuid4()),
                             trace_id=str(uuid.uuid4()), attempt=0,
-                            foundation_version='v2.8.0')
+                            foundation_version='v2.10.0')
     log.configure(CMD_NAME)
 
-    fp = Path('foundation/SVTK_FOUNDATION_v2.8.0.md')
+    fp = Path('foundation/SVTK_FOUNDATION_v2.10.0.md')
     if not fp.exists() or hashlib.sha256(fp.read_bytes()).hexdigest() != EXPECTED_FOUNDATION_HASH:
         log.critical('foundation_verify_failed')
         sys.exit(99)

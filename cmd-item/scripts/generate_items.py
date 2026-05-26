@@ -77,7 +77,7 @@ OUT_REG = REPO_DIR / "cmd-item" / "output" / "registry"
 OUT_LORE = REPO_DIR / "cmd-item" / "output" / "lore_codex"
 OUT_SCHEMA = REPO_DIR / "cmd-item" / "output" / "schema"
 OUT_REPORTS = REPO_DIR / "cmd-item" / "output" / "reports"
-FOUNDATION_FILE = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
+FOUNDATION_FILE = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.10.0.md"
 EXISTING_SEEDS = REPO_DIR / "cmd-item" / "data" / "items.json"
 QUEST_FULL = REPO_DIR / "cmd-quest" / "output" / "registry" / "quest_full.jsonl"
 

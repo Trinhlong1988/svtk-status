@@ -29,7 +29,7 @@ ERAS = ['ly', 'tran', 'le', 'tay_son', 'nguyen']
 OBJECTIVE_TYPES = ['kill', 'collect', 'deliver', 'escort', 'talk', 'explore']
 
 # Foundation v2.8.0 actual hash on main (post-rotation 2026-05-19, cycle 50)
-EXPECTED_FOUNDATION_HASH = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
+EXPECTED_FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 
 CYCLE_START = time.time()
 
@@ -69,7 +69,7 @@ def setup():
         (OUTPUT_DIR / sub).mkdir(parents=True, exist_ok=True)
     (CMD_DIR / 'existing').mkdir(parents=True, exist_ok=True)
 
-    fp = ROOT / 'foundation' / 'SVTK_FOUNDATION_v2.8.0.md'
+    fp = ROOT / 'foundation' / 'SVTK_FOUNDATION_v2.10.0.md'
     if not fp.exists():
         log.critical('foundation_file_missing')
         sys.exit(99)
@@ -647,7 +647,7 @@ def chain_integrity_report(quests, chains):
 # HONEST GAPS
 # ============================================================
 def write_honest_gaps():
-    fp = ROOT / 'foundation' / 'SVTK_FOUNDATION_v2.8.0.md'
+    fp = ROOT / 'foundation' / 'SVTK_FOUNDATION_v2.10.0.md'
     actual_hash = hashlib.sha256(fp.read_bytes()).hexdigest() if fp.exists() else 'missing'
 
     gaps = {
@@ -658,7 +658,7 @@ def write_honest_gaps():
             {'severity': 'MED',
              'item': 'Foundation hash drift',
              'reason': f'Brief expects {EXPECTED_FOUNDATION_HASH[:16]}... but '
-                       f'repo SVTK_FOUNDATION_v2.8.0.md has actual hash '
+                       f'repo SVTK_FOUNDATION_v2.10.0.md has actual hash '
                        f'{actual_hash[:16]}... (likely git line-ending normalization). '
                        'Did NOT exit 99 because foundation file IS present and is v2.8.0.',
              'mitigation': 'CMD LEAD verify hash table in brief vs INDEX.sha256 + actual disk hash'},

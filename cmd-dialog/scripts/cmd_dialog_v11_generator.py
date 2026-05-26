@@ -17,14 +17,14 @@ from pathlib import Path
 CMD_NAME = "DIALOG"
 CMD_VERSION = "1.1.0"
 FOUNDATION_HASH = (
-    "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
+    "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 )
 
 ROOT = Path(__file__).resolve().parents[2]
 CMD_DIR = ROOT / "cmd-dialog"
 OUTPUT_DIR = CMD_DIR / "output"
 NPC_REGISTRY = ROOT / "cmd-npc" / "output" / "registry" / "npc_full.jsonl"
-FOUNDATION_FILE = ROOT / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
+FOUNDATION_FILE = ROOT / "foundation" / "SVTK_FOUNDATION_v2.10.0.md"
 
 TARGET_FULL = 50000
 TARGET_BY_TYPE = {
