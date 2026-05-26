@@ -1,17 +1,17 @@
 {
   "cmd": "MAP",
-  "cmd_version": "1.0.0",
-  "schema_version": "map-v1.0.0",
+  "cmd_version": "1.1.0",
+  "schema_version": "map-v1.1.0",
   "foundation_hash": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
-  "build_rule_hash": "a7a3db6f68d1991d94a1a5810fd8150d15d354dbe9a8fd515a5540d0cd25d6c9",
+  "build_rule_hash": "77fefdcbc6b25d5283151be1bb13eae3f082997e49457e585462cddab0520f63",
   "layout_version": 1,
-  "source_place_hash": "8c24e1f808951e702ca67443687a48d705073bef541483b98aaa854dcc0c394c",
-  "source_build_rule_hash": "9a6a7f63d350dfd63656334a21d21ffe3ee2613681e42e4d9412b92e8946d06f",
+  "source_place_hash": "355708d0ab8e792170d27308dfb986b833d5769eb7dd57d05d114c0377b0cbc3",
+  "source_build_rule_hash": "1aa244dd6bc90a238ef7341b5bd0bc580e5cb4f66ccf8637c583dd4405c3d138",
   "source_topology_version": 1,
-  "map_count": 10000,
-  "art_profile_count": 942,
-  "spawn_zone_count": 12278,
+  "map_count": 10102,
+  "art_profile_count": 956,
+  "spawn_zone_count": 14032,
   "validation_score": 1.0,
   "honest_gaps": [],
-  "output_sha256": "45fa2e4268f6cb3e28daabe1fc3f47450ff0b166ca633ebc938b41224a64ff61"
+  "output_sha256": "72249ddf714f09d877b42c714bcbce1acc1576f9e1fd0de81277b8235bb1dabd"
 }
