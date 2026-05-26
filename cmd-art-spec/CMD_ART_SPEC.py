@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
-"""CMD_ART_SPEC v1.0 — sinh đặc tả vẽ map background cho LoRA/ControlNet.
-Đọc output CMD_MAP. KHÔNG sinh ảnh, KHÔNG sprite, KHÔNG train LoRA."""
-import os, sys, json, time, hashlib, subprocess, logging
+"""CMD_ART_SPEC v1.1 — sinh đặc tả vẽ map background cho LoRA/ControlNet.
+Đọc output CMD_MAP. KHÔNG sinh ảnh, KHÔNG sprite, KHÔNG train LoRA.
+
+v1.1 hardening (deep audit 20 round):
+- B1 fix: validate art_group regex chống path traversal
+- B2 fix: ép LF line ending để output_sha256 deterministic cross-OS
+- B3 fix: đổi spawn mask color đủ contrast với slope
+- B4 fix: thêm test defense-in-depth (mask/required/validator/foundation)
+- B5 fix: honest_gap note 3 upstream field bị bỏ qua
+"""
+import os, sys, json, re, time, hashlib, subprocess, logging
 from pathlib import Path
 
 # ── 1 NGUỒN — version sửa đúng 1 chỗ ──
-CMD_VERSION = "1.0.0"
+CMD_VERSION = "1.1.0"
 CMD_NAME = "ART_SPEC"
 SCHEMA_VERSION = f'art-spec-v{CMD_VERSION}'
 SPEC_VERSION = 1
@@ -22,6 +30,13 @@ SCORE_THRESHOLD = 0.95
 LOOP_INTERVAL_SEC = 60
 MAX_PUSH_ATTEMPTS = 3
 RETRY_DELAY_SEC = 10
+
+# B1: art_group regex — chỉ a-z, 0-9, _, độ dài ≥ 3, khởi đầu chữ.
+# Chặn path traversal (../), absolute (/x, C:\), unicode, null byte.
+ART_GROUP_RE = re.compile(r'^[a-z][a-z0-9_]{2,63}$')
+
+# B5: 3 field upstream CMD_MAP ART_SPEC chủ động bỏ qua (template đầy đủ hơn).
+DROPPED_UPSTREAM_FIELDS = ['art_prompt', 'negative_prompt', 'lora_tags']
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s [ART_SPEC] %(message)s')
@@ -94,8 +109,22 @@ MASK_COLORS = {
     'slope':  {'code': 3, 'rgb': '#C9A227', 'meaning': 'doc'},
     'portal': {'code': -1, 'rgb': '#E03C3C', 'meaning': 'cua di chuyen'},
     'anchor': {'code': -2, 'rgb': '#B040C0', 'meaning': 'cho NPC dung'},
-    'spawn':  {'code': -3, 'rgb': '#E0902C', 'meaning': 'vung quai'},
+    # B3 fix: đổi #E0902C → #76FF03 (electric lime). Verified Euclidean RGB
+    # min pair-distance = 117 (≥80) — không đụng portal/slope/anchor/water.
+    'spawn':  {'code': -3, 'rgb': '#76FF03', 'meaning': 'vung quai'},
 }
+
+
+def _write_json_lf(path: Path, obj):
+    """B2: serialize JSON + ghi nhị phân với LF line ending — deterministic cross-OS."""
+    data = json.dumps(obj, indent=2, ensure_ascii=False).encode('utf-8')
+    path.write_bytes(data)
+
+
+def _write_text_lf(path: Path, text: str):
+    """B2: chuẩn hoá CRLF→LF rồi ghi nhị phân."""
+    norm = text.replace('\r\n', '\n').replace('\r', '\n')
+    path.write_bytes(norm.encode('utf-8'))
 
 
 def _compute_build_rule_hash():
@@ -128,6 +157,7 @@ def verify_foundation():
     global FOUNDATION_VERIFIED
     FOUNDATION_VERIFIED = True
     log.info("Foundation v2.10.0 verified")
+    return True
 
 
 # ── CROSS-CMD CONTRACT — đọc + verify output CMD_MAP (điều 3, 11) ──
@@ -206,12 +236,17 @@ def load_map_output():
     if not manifest.get('output_sha256'):
         log.error("CMD_MAP manifest thiếu output_sha256 — DỪNG")
         return None
-    # đọc art_profiles
+    # đọc art_profiles + B1 validate art_group regex (chống path traversal)
     art_profiles = {}
     for fp in sorted(ap_dir.glob('*.json')):
         try:
             prof = json.loads(fp.read_text(encoding='utf-8'))
-            art_profiles[prof['art_group']] = prof
+            g = prof['art_group']
+            if not isinstance(g, str) or not ART_GROUP_RE.match(g):
+                log.error(f"art_group không hợp lệ (B1 traversal guard): "
+                          f"{fp.name} g={g!r} — DỪNG")
+                return None
+            art_profiles[g] = prof
         except (json.JSONDecodeError, KeyError, OSError) as e:
             log.error(f"art_profile {fp.name} lỗi: {e}")
             return None
@@ -504,7 +539,8 @@ def _schema_check(obj, schema, path='root'):
 
 
 def self_validate(specs, art_profiles, mask_conv, schema):
-    """Verify spec — trả (score, [check fail])."""
+    """Verify spec — trả (score, [check fail]).
+    B4 hardening: thêm 4 check defense-in-depth phát hiện bởi mutation test."""
     fail = {
         'spec_count_match': False, 'all_have_prompt': False,
         'prompt_not_empty': False, 'negative_has_forbidden': False,
@@ -514,6 +550,11 @@ def self_validate(specs, art_profiles, mask_conv, schema):
         'forbidden_complete': False, 'art_group_match_map': False,
         'mask_colors_complete': False, 'schema_present': False,
         'spec_match_schema': False,
+        # B4 mới
+        'mask_colors_exact': False,        # M08 catch
+        'schema_required_intact': False,   # M10 catch
+        'art_group_regex_safe': False,     # B1 catch
+        'mask_rgb_distinct': False,        # B3 catch (Euclidean ≥ 80)
     }
     map_groups = set(art_profiles.keys())
     spec_groups = set(s['art_group'] for s in specs)
@@ -551,11 +592,41 @@ def self_validate(specs, art_profiles, mask_conv, schema):
     # mask convention đủ 7 màu
     if set(mask_conv.get('colors', {}).keys()) != set(MASK_COLORS.keys()):
         fail['mask_colors_complete'] = True
+    # B4 M08 catch: mask color RGB phải khớp chính xác MASK_COLORS
+    expected_rgb = {k: v['rgb'] for k, v in MASK_COLORS.items()}
+    actual_rgb = {k: v.get('rgb') for k, v in mask_conv.get('colors', {}).items()}
+    if expected_rgb != actual_rgb:
+        fail['mask_colors_exact'] = True
+    # B4 B3 catch: 7 màu phải distinct Euclidean ≥ 80
+    def _rgb(h):
+        h = h.lstrip('#')
+        return int(h[:2],16), int(h[2:4],16), int(h[4:6],16)
+    import math
+    colors = list(MASK_COLORS.values())
+    min_d = math.inf
+    for i in range(len(colors)):
+        for j in range(i+1, len(colors)):
+            a, b = _rgb(colors[i]['rgb']), _rgb(colors[j]['rgb'])
+            d = math.sqrt(sum((x-y)**2 for x,y in zip(a,b)))
+            if d < min_d: min_d = d
+    if min_d < 80:
+        fail['mask_rgb_distinct'] = True
+    # B4 B1 catch: mọi art_group phải khớp ART_GROUP_RE (defense-in-depth)
+    for s in specs:
+        if not ART_GROUP_RE.match(s.get('art_group', '')):
+            fail['art_group_regex_safe'] = True
+            break
     if not schema or schema.get('type') != 'object' \
             or 'properties' not in schema \
             or schema.get('additionalProperties') is not False:
         fail['schema_present'] = True
     else:
+        # B4 M10 catch: required list phải chứa các field cốt lõi
+        REQUIRED_CORE = {'art_group', 'spec_version', 'biome', 'era', 'tier',
+                         'positive_prompt', 'negative_prompt',
+                         'caption_tokens', 'mask_requirements', 'forbidden'}
+        if not REQUIRED_CORE <= set(schema.get('required', [])):
+            fail['schema_required_intact'] = True
         # validate THẬT từng spec theo strict JSON Schema (sâu)
         for s in specs:
             if _schema_check(s, schema):
@@ -577,53 +648,50 @@ def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
                 'schema', 'tests', 'status'):
         (out / sub).mkdir(parents=True, exist_ok=True)
 
-    # sinh spec từng art_group
+    # sinh spec từng art_group — B1 RE-VALIDATE trước khi mở handle
     specs = []
     for g in sorted(art_profiles.keys()):
+        if not ART_GROUP_RE.match(g):
+            raise ValueError(f"B1 art_group không hợp lệ tại write: {g!r}")
         spec = build_art_group_spec(g, group_stats[g])
         specs.append(spec)
-        (out / 'art_groups' / f'{g}.json').write_text(
-            json.dumps(spec, indent=2, ensure_ascii=False),
-            encoding='utf-8')
+        # B2 LF deterministic
+        _write_json_lf(out / 'art_groups' / f'{g}.json', spec)
 
-    # prompts jsonl — 1 dòng / nhóm
-    with open(out / 'prompts' / 'map_background_prompts.jsonl', 'w',
-              encoding='utf-8') as f:
-        for s in specs:
-            f.write(json.dumps({
-                'art_group': s['art_group'],
-                'positive_prompt': s['positive_prompt'],
-                'negative_prompt': s['negative_prompt'],
-            }, ensure_ascii=False) + '\n')
+    # prompts jsonl — 1 dòng / nhóm (B2 LF)
+    lines = []
+    for s in specs:
+        lines.append(json.dumps({
+            'art_group': s['art_group'],
+            'positive_prompt': s['positive_prompt'],
+            'negative_prompt': s['negative_prompt'],
+        }, ensure_ascii=False))
+    _write_text_lf(out / 'prompts' / 'map_background_prompts.jsonl',
+                   '\n'.join(lines) + '\n')
 
-    # captions jsonl — LoRA dataset
-    with open(out / 'captions' / 'lora_caption_profiles.jsonl', 'w',
-              encoding='utf-8') as f:
-        for s in specs:
-            f.write(json.dumps({
-                'art_group': s['art_group'],
-                'caption': ', '.join(s['caption_tokens']),
-                'caption_tokens': s['caption_tokens'],
-            }, ensure_ascii=False) + '\n')
+    # captions jsonl — LoRA dataset (B2 LF)
+    lines = []
+    for s in specs:
+        lines.append(json.dumps({
+            'art_group': s['art_group'],
+            'caption': ', '.join(s['caption_tokens']),
+            'caption_tokens': s['caption_tokens'],
+        }, ensure_ascii=False))
+    _write_text_lf(out / 'captions' / 'lora_caption_profiles.jsonl',
+                   '\n'.join(lines) + '\n')
 
-    # masks
+    # masks (B2 LF)
     mask_conv = build_mask_convention()
-    (out / 'masks' / 'mask_color_convention.json').write_text(
-        json.dumps(mask_conv, indent=2, ensure_ascii=False),
-        encoding='utf-8')
-    (out / 'masks' / 'controlnet_mask_guide.json').write_text(
-        json.dumps(build_controlnet_guide(), indent=2, ensure_ascii=False),
-        encoding='utf-8')
+    _write_json_lf(out / 'masks' / 'mask_color_convention.json', mask_conv)
+    _write_json_lf(out / 'masks' / 'controlnet_mask_guide.json',
+                   build_controlnet_guide())
 
-    # schema
+    # schema (B2 LF)
     schema = build_schema()
-    (out / 'schema' / 'art_spec.schema.json').write_text(
-        json.dumps(schema, indent=2, ensure_ascii=False),
-        encoding='utf-8')
+    _write_json_lf(out / 'schema' / 'art_spec.schema.json', schema)
 
-    # test ngoài
-    (out / 'tests' / 'art_spec_tests.py').write_text(
-        TEST_CODE, encoding='utf-8')
+    # test ngoài (B2 LF)
+    _write_text_lf(out / 'tests' / 'art_spec_tests.py', TEST_CODE)
 
     # validate
     score, fails = self_validate(specs, art_profiles, mask_conv, schema)
@@ -637,7 +705,7 @@ def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
                 _agg.update(fp.read_bytes())
     output_sha256 = _agg.hexdigest()
 
-    # build_manifest
+    # build_manifest (B5: honest report 3 upstream field bỏ qua)
     manifest = {
         'cmd': CMD_NAME, 'cmd_version': CMD_VERSION,
         'schema_version': SCHEMA_VERSION,
@@ -650,10 +718,15 @@ def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
         'validation_score': score,
         'honest_gaps': fails,
         'output_sha256': output_sha256,
+        'dropped_upstream_fields': DROPPED_UPSTREAM_FIELDS,
+        'dropped_upstream_reason': (
+            'CMD_MAP placeholder art_prompt/negative_prompt/lora_tags ngắn '
+            '(median ~127/83 char, 6 tag). ART_SPEC sinh template chi tiết '
+            'hơn (~321/170 char, 9 tag) bám sử Việt theo điều 7. '
+            'Quyết định ghi đè, không merge.'
+        ),
     }
-    (out / 'build_manifest.json').write_text(
-        json.dumps(manifest, indent=2, ensure_ascii=False),
-        encoding='utf-8')
+    _write_json_lf(out / 'build_manifest.json', manifest)
     # status file — forensic, LEAD đọc duyệt (constitution điều output)
     ts = time.strftime('%Y%m%d-%H%M%S')
     status = {
@@ -662,9 +735,7 @@ def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
         'validation_score': score, 'honest_gaps': fails,
         'exit_code': 0 if score >= SCORE_THRESHOLD else 1,
     }
-    (out / 'status' / f'status-{ts}.json').write_text(
-        json.dumps(status, indent=2, ensure_ascii=False),
-        encoding='utf-8')
+    _write_json_lf(out / 'status' / f'status-{ts}.json', status)
     return len(specs), score, fails
 
 
@@ -772,6 +843,75 @@ def test_15_manifest_output_sha():
     mf = json.loads((OUT / "build_manifest.json").read_text(encoding="utf-8"))
     assert mf.get("output_sha256"), "manifest thieu output_sha256"
     assert len(mf["output_sha256"]) == 64, "output_sha256 sai do dai"
+
+# ── B4 — 4 test defense-in-depth (audit 20 round) ──
+def test_16_mask_colors_exact():
+    """B4 M08 catch: mask color RGB phai khop hard-coded expected."""
+    mc = json.loads((OUT / "masks" / "mask_color_convention.json")
+                    .read_text(encoding="utf-8"))
+    expected = {
+        "free":   "#3CB043",
+        "block":  "#4A4A4A",
+        "water":  "#2E6FB0",
+        "slope":  "#C9A227",
+        "portal": "#E03C3C",
+        "anchor": "#B040C0",
+        "spawn":  "#76FF03",
+    }
+    actual = {k: v["rgb"] for k, v in mc["colors"].items()}
+    assert actual == expected, f"mask color drift: {actual} vs {expected}"
+
+def test_17_schema_required_intact():
+    """B4 M10 catch: schema required phai chua field cot loi."""
+    sc = json.loads((OUT / "schema" / "art_spec.schema.json")
+                    .read_text(encoding="utf-8"))
+    core = {"art_group", "spec_version", "biome", "era", "tier",
+            "positive_prompt", "negative_prompt",
+            "caption_tokens", "mask_requirements", "forbidden"}
+    assert core <= set(sc.get("required", [])), \
+        f"schema required thieu core: {core - set(sc.get('required',[]))}"
+
+def test_18_art_group_safe_regex():
+    """B4 B1 catch: moi art_group phai khop ^[a-z][a-z0-9_]{2,63}$."""
+    import re
+    safe = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
+    for s in _specs():
+        assert safe.match(s["art_group"]), f"art_group lan path: {s['art_group']!r}"
+
+def test_19_mask_rgb_distinct():
+    """B4 B3 catch: 7 mau Euclidean RGB >= 80 doi cap."""
+    import math
+    mc = json.loads((OUT / "masks" / "mask_color_convention.json")
+                    .read_text(encoding="utf-8"))
+    def rgb(h):
+        h = h.lstrip("#")
+        return int(h[:2],16), int(h[2:4],16), int(h[4:6],16)
+    colors = [(k, rgb(v["rgb"])) for k, v in mc["colors"].items()]
+    bad = []
+    for i in range(len(colors)):
+        for j in range(i+1, len(colors)):
+            d = math.sqrt(sum((x-y)**2 for x,y in zip(colors[i][1], colors[j][1])))
+            if d < 80:
+                bad.append((colors[i][0], colors[j][0], round(d,1)))
+    assert not bad, f"mask color too close: {bad}"
+
+def test_20_manifest_honest_gap_upstream():
+    """B5: manifest must honest-report 3 dropped upstream fields."""
+    mf = json.loads((OUT / "build_manifest.json").read_text(encoding="utf-8"))
+    drops = mf.get("dropped_upstream_fields", [])
+    assert set(drops) >= {"art_prompt", "negative_prompt", "lora_tags"}, \
+        f"manifest thieu honest report dropped_upstream_fields: {drops}"
+    assert mf.get("dropped_upstream_reason"), "thieu dropped_upstream_reason"
+
+def test_21_lf_line_endings():
+    """B2: moi JSON/JSONL output phai LF, khong CRLF (deterministic cross-OS)."""
+    crlf = bytes([13, 10])
+    for sub, ext in (("art_groups","*.json"), ("prompts","*.jsonl"),
+                     ("captions","*.jsonl"), ("masks","*.json"),
+                     ("schema","*.json")):
+        for fp in (OUT/sub).glob(ext):
+            raw = fp.read_bytes()
+            assert crlf not in raw, f"CRLF leaked: {fp}"
 
 if __name__ == "__main__":
     _tests = sorted(n for n in dir() if n.startswith("test_"))
