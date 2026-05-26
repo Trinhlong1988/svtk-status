@@ -1,9 +1,9 @@
 {
   "tool": "MASK_EXPORTER",
-  "tool_version": "1.0.2",
-  "schema_version": "mask-export-v1.0.2",
+  "tool_version": "1.0.3",
+  "schema_version": "mask-export-v1.0.3",
   "foundation_hash": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
-  "build_rule_hash": "24374fe8866811e30b3b0191544e4257737732514df5eef5312c0c5a4e808242",
+  "build_rule_hash": "6dda0ba1a81f774d0baf7fe5f84912c152686d5cc9aa643ffc9ceae6eeff63a9",
   "mode": "sample",
   "canvas": [
     1920,
@@ -14,6 +14,6 @@
   "source_map_foundation": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
   "validation_score": 1.0,
   "honest_gaps": [],
-  "output_sha256": "e3507ec2c7955eabbdf8fd0c10aa59a16689bfe4d0f16f4fa5a003b2f52d629d",
+  "output_sha256": "043546ac08b02ecfec0565e1e3c7e9cdc50c4f2b6112e0dc05636fa75bc8e01d",
   "note": "sample/batch — commit OK"
 }
