@@ -1,15 +1,7 @@
 #!/usr/bin/env python3
-# ============================================================================
-# HISTORICAL REFERENCE ONLY - DO NOT RE-EXECUTE
-# ----------------------------------------------------------------------------
-# Targets foundation/SVTK_FOUNDATION_v2.8.0.md (retired 2026-05-26 by LEAD #124).
-# Current foundation: SVTK_FOUNDATION_v2.10.0.md
-# sha256 cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb
-# Re-execute = FileNotFoundError. Kept for audit trail of shipped artifacts.
-# ============================================================================
 """CMD ITEM Deep Audit — 10-round rule-compliance verification.
 
-Verify item registry against Foundation v2.8.0 rules. NO speculation.
+Verify item registry against Foundation v2.10.0 rules. NO speculation.
 Each check has a Rule reference + concrete data evidence.
 
 Bugs found per round are LOGGED. Generator re-run between rounds if changes needed.
@@ -6864,19 +6856,20 @@ def chk_L30_map_element_normalized(items, *_):
 
 
 def chk_L30_foundation_v28_present(items, *_):
-    p = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
+    # Renamed scope post LEAD cycle 124: v2.8.0 retired, check v2.10.0 presence.
+    p = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.10.0.md"
     return p.exists() and p.stat().st_size > 1000, {
         "size": p.stat().st_size if p.exists() else 0
     }
 
 
 def chk_L30_foundation_hash_calc(items, *_):
-    """Calculate foundation hash; loose-pass if matches known prefix."""
-    p = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
+    """Calculate foundation hash; loose-pass if matches v2.10.0 prefix."""
+    p = REPO_DIR / "foundation" / "SVTK_FOUNDATION_v2.10.0.md"
     if not p.exists():
         return False, {"missing": True}
     h = hashlib.sha256(p.read_bytes()).hexdigest()
-    return h.startswith("ab1b4eb2"), {"hash_prefix": h[:12]}
+    return h.startswith("cc194e6c"), {"hash_prefix": h[:12]}
 
 
 def chk_L30_existing_seeds_immutable(items, *_):
