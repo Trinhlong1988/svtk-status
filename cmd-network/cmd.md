@@ -1,9 +1,9 @@
 # 🌐 CMD_NETWORK v1.0 — R69 PACKET ORDERING + R66 PARTIAL AUTH
 
-> **CMD4 SVTK Phase 14 v2.8.0** · NEW CMD (no grace period — R66-R69 mandatory)
+> **CMD4 SVTK Phase 14 v2.10.0** · NEW CMD (no grace period — R66-R69 mandatory)
 > Owner: combat_network_adapter + network/* legacy port + R69 packet seq + dedup + reconnect
 > Author: cmd-parse + cmd-network + cmd-qa-core (CMD4 split per CMD_ROLE_BINDING_v2.8.0)
-> Foundation: v2.8.0 hash `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b`
+> Foundation: v2.10.0 hash `cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb`
 > Runtime: svtk_runtime v2.6.5
 
 ---
