@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve()
 SCRIPTS_DIR = HERE.parent
 REPO_DIR = SCRIPTS_DIR.parents[1]
-SOURCE = SCRIPTS_DIR / "cmd_place_v2.3.1.py"
+SOURCE = SCRIPTS_DIR / "cmd_place.py"
 LOG_DIR = REPO_DIR / "cmd-place" / "logs"
 OUTPUT_DIR = REPO_DIR / "cmd-place" / "output"
 

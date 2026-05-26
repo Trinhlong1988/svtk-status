@@ -1,0 +1,44 @@
+{
+  "E1": {
+    "pass": 10000,
+    "fail_maps": 0,
+    "total_errors": 0,
+    "sample_errors": []
+  },
+  "E2": {
+    "inserted": 10000,
+    "integrity_errors": 0,
+    "sample_errors": [],
+    "select_count": 10000
+  },
+  "E3": {
+    "maps_compared": 10000,
+    "total_field_compared": 340000,
+    "field_diff_count": 0,
+    "diff_by_field": {}
+  },
+  "E4": {
+    "rows_compared": 10000,
+    "roundtrip_diff_count": 0,
+    "diff_by_col": {}
+  },
+  "E5": {
+    "functions_scanned": 41,
+    "excluded": [
+      "_heartbeat",
+      "_retry_dead_letters",
+      "_run_full_build_inner",
+      "_save_dead_letter",
+      "get_default_branch",
+      "handle_sigterm",
+      "load_existing_maps",
+      "load_existing_regions",
+      "main_loop",
+      "push_to_github",
+      "run_full_build",
+      "safe_main",
+      "verify_determinism"
+    ],
+    "violations": []
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "summary": {
+    "PASS": 22
+  },
+  "findings": [
+    {
+      "round": "R19",
+      "name": "coord_unique_per_zone",
+      "status": "PASS",
+      "detail": "3 zone đều coord unique nội bộ"
+    },
+    {
+      "round": "R20",
+      "name": "anchor_density_invariant",
+      "status": "PASS",
+      "detail": "1000 sample đều ≤ CAP, biome có purpose có anchor"
+    },
+    {
+      "round": "R21",
+      "name": "cluster_biome_contiguous",
+      "status": "PASS",
+      "detail": "mọi cluster cave/forest/mountain ≤ hi của CLUSTER_BIOMES"
+    },
+    {
+      "round": "R22",
+      "name": "portal_min_outgoing",
+      "status": "PASS",
+      "detail": "all 10000 maps có ≥1 portal edge"
+    },
+    {
+      "round": "R23",
+      "name": "natural_key_deterministic",
+      "status": "PASS",
+      "detail": "500 sample đúng format"
+    },
+    {
+      "round": "R24",
+      "name": "uuid5_deterministic",
+      "status": "PASS",
+      "detail": "500 sample uuid5(NS, natural_key) khớp"
+    },
+    {
+      "round": "R25",
+      "name": "terrain_range_0_100",
+      "status": "PASS",
+      "detail": "1000 sample terrain values OK"
+    },
+    {
+      "round": "R26",
+      "name": "region0_snapshot",
+      "status": "PASS",
+      "detail": "r0 = 163 ✓"
+    },
+    {
+      "round": "R27",
+      "name": "biome_quota_sum",
+      "status": "PASS",
+      "detail": "sum = 10000"
+    },
+    {
+      "round": "R28",
+      "name": "era_label_coverage",
+      "status": "PASS",
+      "detail": "all 10 era có label"
+    },
+    {
+      "round": "R29",
+      "name": "region_names_unique_per_zone",
+      "status": "PASS",
+      "detail": "3 zone đều unique"
+    },
+    {
+      "round": "R30",
+      "name": "purpose_anchor_keys",
+      "status": "PASS",
+      "detail": "10 purposes khớp"
+    },
+    {
+      "round": "R31",
+      "name": "era_distribution_per_zone",
+      "status": "PASS",
+      "detail": "không zone nào bị 1 era dominate > 60%"
+    },
+    {
+      "round": "R32",
+      "name": "tier1_only_bac_bo",
+      "status": "PASS",
+      "detail": "T1 chỉ ở bac_bo ✓"
+    },
+    {
+      "round": "R33",
+      "name": "anchor_total_per_map",
+      "status": "PASS",
+      "detail": "min=2, mean=9.2, max=26, sum CAP=35"
+    },
+    {
+      "round": "R34",
+      "name": "tsref_distribution",
+      "status": "PASS",
+      "detail": "range [9,7025], distinct=214 (seeded by era×biome ≈ 220 buckets)"
+    },
+    {
+      "round": "R35",
+      "name": "portal_degree_distribution",
+      "status": "PASS",
+      "detail": "no isolated, mean degree=2.00, max=3"
+    },
+    {
+      "round": "R36",
+      "name": "mutation_matrix_hash",
+      "status": "PASS",
+      "detail": "5/5 mutation đều đổi BUILD_RULE_HASH"
+    },
+    {
+      "round": "R37",
+      "name": "detect_invalid_era",
+      "status": "PASS",
+      "detail": "detected, score=0.923"
+    },
+    {
+      "round": "R38",
+      "name": "detect_unknown_anchor",
+      "status": "PASS",
+      "detail": "detected via ['anchor_density_ok', 'purpose_anchor_match'], score=0.923"
+    },
+    {
+      "round": "R39",
+      "name": "detect_self_loop",
+      "status": "PASS",
+      "detail": "detected, score=0.949"
+    },
+    {
+      "round": "R40",
+      "name": "empty_maps_no_crash",
+      "status": "PASS",
+      "detail": "không crash, score=0.744, gaps=10 (expected nhiều)"
+    }
+  ]
+}

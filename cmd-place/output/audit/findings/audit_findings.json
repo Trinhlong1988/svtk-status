@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "PASS": 17,
+    "WARN": 1
+  },
+  "findings": [
+    {
+      "round": "R01",
+      "name": "determinism_stress_10x",
+      "status": "PASS",
+      "detail": "SHA=f53bfc219a0defe2..."
+    },
+    {
+      "round": "R02",
+      "name": "coord_uniqueness",
+      "status": "PASS",
+      "detail": "10000 unique coords, math: mgw*mc=960≤cell=1000"
+    },
+    {
+      "round": "R03",
+      "name": "boundary_edges",
+      "status": "PASS",
+      "detail": "shard 0..63, era f1+f5, biome đầu+cuối đều covered"
+    },
+    {
+      "round": "R04",
+      "name": "smallest_quota_capital",
+      "status": "PASS",
+      "detail": "capital=30 đúng, zone dist: {'bac_bo': 17, 'trung_bo': 13}, không có ở nam_bo"
+    },
+    {
+      "round": "R05",
+      "name": "sql_json_contract",
+      "status": "PASS",
+      "detail": "35 SQL cols, 34 JSON keys, full match"
+    },
+    {
+      "round": "R06",
+      "name": "anchor_contract",
+      "status": "PASS",
+      "detail": "6 loại anchor khớp"
+    },
+    {
+      "round": "R07",
+      "name": "mutation_anchor_cap",
+      "status": "PASS",
+      "detail": "before=9a6a7f63d350 after=a5f0882e8b88 (different ✓)"
+    },
+    {
+      "round": "R08",
+      "name": "mutation_biome_quota",
+      "status": "PASS",
+      "detail": "cave 430→440, SHA changed"
+    },
+    {
+      "round": "R09",
+      "name": "fuzz_adversarial_names",
+      "status": "PASS",
+      "detail": "12 edge case không crash, behavior consistent"
+    },
+    {
+      "round": "R10",
+      "name": "g1_case_diacritic_variants",
+      "status": "PASS",
+      "detail": "8 variant đúng expected"
+    },
+    {
+      "round": "R11",
+      "name": "concurrent_build_lock",
+      "status": "PASS",
+      "detail": "1 succeed + 1 locked như expect"
+    },
+    {
+      "round": "R12",
+      "name": "place_lib_concurrent_reload",
+      "status": "PASS",
+      "detail": "5 concurrent reload OK, all return True"
+    },
+    {
+      "round": "R13",
+      "name": "ast_nondeterminism_in_build",
+      "status": "PASS",
+      "detail": "build functions (build_anchors, build_maps, build_regions, seeded_int, seeded_pick) không gọi random/time/uuid4"
+    },
+    {
+      "round": "R14",
+      "name": "pyflakes_lint",
+      "status": "WARN",
+      "detail": "pyflakes not installed"
+    },
+    {
+      "round": "R15",
+      "name": "sql_pglast_parse",
+      "status": "PASS",
+      "detail": "11 statements parse OK"
+    },
+    {
+      "round": "R16",
+      "name": "jsonl_roundtrip_byte_identical",
+      "status": "PASS",
+      "detail": "17586908 bytes identical after read-write"
+    },
+    {
+      "round": "R17",
+      "name": "unicode_nfc_normalized",
+      "status": "PASS",
+      "detail": "500 sample map names all NFC normalized"
+    },
+    {
+      "round": "R18",
+      "name": "meta_audit_detect_corruption",
+      "status": "PASS",
+      "detail": "self_validate detect map_id duplicate, score=0.897, gaps include map_id_unique"
+    }
+  ]
+}

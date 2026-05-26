@@ -1,0 +1,11 @@
+[cosmic-ray]
+module-path = "cmd_place_core.py"
+timeout = 30.0
+excluded-modules = []
+test-command = "python -m pytest mutmut_target/test_core_focused.py -x --tb=no -q"
+
+[cosmic-ray.distributor]
+name = "local"
+
+[cosmic-ray.interceptors]
+enabled = []

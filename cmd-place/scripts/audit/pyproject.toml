@@ -1,0 +1,4 @@
+[tool.mutmut]
+paths_to_mutate = ["cmd_place.py"]
+tests_dir = "mutmut_target"
+runner = "python -m pytest mutmut_target/test_core.py -x --tb=no -q"
