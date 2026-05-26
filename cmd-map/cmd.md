@@ -97,7 +97,7 @@ def verify_foundation():
     if not REPO_DIR.exists():
         subprocess.run(['git', 'clone', '--depth=1', REPO_URL, str(REPO_DIR)],
                       check=True, timeout=60)
-    fp = REPO_DIR / 'foundation' / 'SVTK_FOUNDATION_v2.6.0.md'
+    fp = REPO_DIR / 'foundation' / 'SVTK_FOUNDATION_v2.10.0.md'
     if not fp.exists():
         print(f"FOUNDATION_NOT_FOUND: {fp}")
         sys.exit(99)

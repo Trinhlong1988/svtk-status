@@ -23,10 +23,11 @@ import sys, os, json, time, hashlib, importlib.util, threading, ast, re, unicode
 from pathlib import Path
 from collections import Counter
 
-SCRIPT = Path(__file__).parent / 'cmd_place.py'
-WORKDIR = Path(__file__).parent / 'work'
+HERE = Path(__file__).resolve()
+SCRIPT = HERE.parent.parent / 'cmd_place.py'
+WORKDIR = HERE.parent / 'work'
 WORKDIR.mkdir(exist_ok=True)
-REPO_DIR = Path(r"C:\Users\Administrator\Desktop\22.5\CMD_BOSS_WORK\svtk-status")
+REPO_DIR = HERE.parents[3]  # cmd-place/scripts/audit -> repo root
 
 def load_mod(output_subdir='base'):
     """Load module fresh với OUTPUT_DIR riêng (tránh share state)."""
