@@ -1,0 +1,52 @@
+{
+  "art_group": "sea_nguyen_t1",
+  "spec_version": 1,
+  "biome": "sea",
+  "era": "nguyen",
+  "tier": 1,
+  "map_count": 12,
+  "safe_zone_group": true,
+  "camera": "2D isometric 3/4 top-down MMORPG background",
+  "style": {
+    "project_style": "SVTK Vietnamese historical fantasy",
+    "readability": "TS-style readable walk paths, clear object separation",
+    "rendering": "soft cel shading, hand-painted 2D, clean silhouettes"
+  },
+  "positive_prompt": "2D isometric MMORPG map background, coastal sea, fishing junks, rocky shore, Nguyen dynasty 19th century, ornate citadel, imperial yellow, SVTK Vietnamese historical fantasy style, hand-painted soft cel shading, clean readable walkable paths, clear object separation, tier 1 area, top-down 3/4 view, no characters, no UI",
+  "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese shrine, chinese palace copy, gothic cathedral, skyscraper, text, watermark, UI, signature, logo",
+  "caption_tokens": [
+    "svtk_map",
+    "vietnamese_historical_fantasy",
+    "biome_sea",
+    "era_nguyen",
+    "tier_1",
+    "isometric_2d_background",
+    "clear_walkable_path",
+    "no_characters",
+    "hand_painted"
+  ],
+  "mask_requirements": {
+    "walkable_area_must_match_walk_mask": true,
+    "portal_tiles_must_be_visually_readable": true,
+    "npc_anchor_area_must_remain_clear": true,
+    "spawn_zone_must_be_visually_open": false
+  },
+  "forbidden": [
+    "modern city",
+    "cyberpunk",
+    "neon",
+    "sci-fi",
+    "cars",
+    "guns",
+    "western castle",
+    "japanese shrine",
+    "chinese palace copy",
+    "gothic cathedral",
+    "skyscraper",
+    "text",
+    "watermark",
+    "UI",
+    "signature",
+    "logo"
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": "art-spec-v1.0.0",
+  "title": "SVTK art_group spec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "art_group",
+    "spec_version",
+    "biome",
+    "era",
+    "tier",
+    "map_count",
+    "safe_zone_group",
+    "camera",
+    "style",
+    "positive_prompt",
+    "negative_prompt",
+    "caption_tokens",
+    "mask_requirements",
+    "forbidden"
+  ],
+  "properties": {
+    "art_group": {
+      "type": "string",
+      "minLength": 3
+    },
+    "spec_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "biome": {
+      "type": "string",
+      "enum": [
+        "forest",
+        "mountain",
+        "river",
+        "plain",
+        "sea",
+        "swamp",
+        "craft_village",
+        "rice_field",
+        "fishing_village",
+        "salt_field",
+        "plantation",
+        "wharf",
+        "capital",
+        "capital_inner",
+        "town",
+        "village",
+        "citadel",
+        "frontier_pass",
+        "battlefield",
+        "cave",
+        "scenic",
+        "garden"
+      ]
+    },
+    "era": {
+      "type": "string",
+      "enum": [
+        "ly",
+        "tran",
+        "le",
+        "tay_son",
+        "nguyen",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ]
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "map_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "safe_zone_group": {
+      "type": "boolean"
+    },
+    "camera": {
+      "type": "string",
+      "minLength": 5
+    },
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_style",
+        "readability",
+        "rendering"
+      ],
+      "properties": {
+        "project_style": {
+          "type": "string"
+        },
+        "readability": {
+          "type": "string"
+        },
+        "rendering": {
+          "type": "string"
+        }
+      }
+    },
+    "positive_prompt": {
+      "type": "string",
+      "minLength": 20
+    },
+    "negative_prompt": {
+      "type": "string",
+      "minLength": 10
+    },
+    "caption_tokens": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "string"
+      }
+    },
+    "mask_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "walkable_area_must_match_walk_mask",
+        "portal_tiles_must_be_visually_readable",
+        "npc_anchor_area_must_remain_clear",
+        "spawn_zone_must_be_visually_open"
+      ],
+      "properties": {
+        "walkable_area_must_match_walk_mask": {
+          "type": "boolean"
+        },
+        "portal_tiles_must_be_visually_readable": {
+          "type": "boolean"
+        },
+        "npc_anchor_area_must_remain_clear": {
+          "type": "boolean"
+        },
+        "spawn_zone_must_be_visually_open": {
+          "type": "boolean"
+        }
+      }
+    },
+    "forbidden": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "mask_convention": {
+    "required_colors": [
+      "free",
+      "block",
+      "water",
+      "slope",
+      "portal",
+      "anchor",
+      "spawn"
+    ]
+  }
+}

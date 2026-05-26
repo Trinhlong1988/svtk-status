@@ -1,0 +1,42 @@
+{
+  "spec_version": 1,
+  "description": "Bang mau mask cho walk_mask + portal/anchor/spawn. Moi map dung chung.",
+  "colors": {
+    "free": {
+      "code": 0,
+      "rgb": "#3CB043",
+      "meaning": "o di duoc"
+    },
+    "block": {
+      "code": 1,
+      "rgb": "#4A4A4A",
+      "meaning": "vat can"
+    },
+    "water": {
+      "code": 2,
+      "rgb": "#2E6FB0",
+      "meaning": "nuoc"
+    },
+    "slope": {
+      "code": 3,
+      "rgb": "#C9A227",
+      "meaning": "doc"
+    },
+    "portal": {
+      "code": -1,
+      "rgb": "#E03C3C",
+      "meaning": "cua di chuyen"
+    },
+    "anchor": {
+      "code": -2,
+      "rgb": "#B040C0",
+      "meaning": "cho NPC dung"
+    },
+    "spawn": {
+      "code": -3,
+      "rgb": "#E0902C",
+      "meaning": "vung quai"
+    }
+  },
+  "rule": "Mau mask phai khop walk_mask cua CMD_MAP. Vung FREE/SLOPE = di duoc. Portal/anchor/spawn ve theo mau quy uoc de doc."
+}
