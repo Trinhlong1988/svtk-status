@@ -705,3 +705,26 @@ def notify_qa_recheck(qa_name: str, target_worker: str, fix_id: str):
 
 > Logic verified 400/400 × 5 batches = 2000/2000 stable.
 > Giao thức alert/inbox chuẩn theo R19 + R47.
+
+---
+
+## DEFAULT PATHS (BAT BUOC, LEAD cycle 128)
+
+Theo `cmd-lead/POLICY_NO_DESKTOP.md`:
+
+- **WORKSPACE:** `cmd-<name>/scripts/` (KHONG Desktop/Downloads/home)
+- **OUTPUT:** `cmd-<name>/output/`
+- **LOGS:** `cmd-<name>/logs/` (gitignored *.log)
+- **AUDIT:** `cmd-<name>/scripts/audit/` (mutmut, cosmic-ray, evidence)
+- **FINDINGS:** `cmd-<name>/output/audit/findings/`
+
+Path pattern (Python):
+
+```python
+HERE = Path(__file__).resolve()
+REPO_DIR = HERE.parents[2]                  # cmd-<x>/scripts/file.py -> repo root
+OUTPUT_DIR = REPO_DIR / "cmd-<x>" / "output"
+LOG_DIR = REPO_DIR / "cmd-<x>" / "logs"
+```
+
+**Hard-code Desktop/Downloads path = REJECT** boi pre-commit hook (`.githooks/pre-commit`) + CI workflow (`.github/workflows/no-desktop-paths.yml`).

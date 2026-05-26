@@ -994,3 +994,26 @@ VSTK_ELEMENTS = {
 4. Foundation `SVTK_FOUNDATION_v2.8.0.md` hash drift `ab1b4eb2` vs INDEX `4e9a6d7a` — RESOLVED 2026-05-26: v2.8.0 retired, foundation chốt v2.10.0 `cc194e6c`
 
 CMD_MAP IN-SCOPE = **FIX TRIỆT ĐỂ ✅**.
+
+---
+
+## DEFAULT PATHS (BAT BUOC, LEAD cycle 128)
+
+Theo `cmd-lead/POLICY_NO_DESKTOP.md`:
+
+- **WORKSPACE:** `cmd-<name>/scripts/` (KHONG Desktop/Downloads/home)
+- **OUTPUT:** `cmd-<name>/output/`
+- **LOGS:** `cmd-<name>/logs/` (gitignored *.log)
+- **AUDIT:** `cmd-<name>/scripts/audit/` (mutmut, cosmic-ray, evidence)
+- **FINDINGS:** `cmd-<name>/output/audit/findings/`
+
+Path pattern (Python):
+
+```python
+HERE = Path(__file__).resolve()
+REPO_DIR = HERE.parents[2]                  # cmd-<x>/scripts/file.py -> repo root
+OUTPUT_DIR = REPO_DIR / "cmd-<x>" / "output"
+LOG_DIR = REPO_DIR / "cmd-<x>" / "logs"
+```
+
+**Hard-code Desktop/Downloads path = REJECT** boi pre-commit hook (`.githooks/pre-commit`) + CI workflow (`.github/workflows/no-desktop-paths.yml`).

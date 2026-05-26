@@ -1,0 +1,61 @@
+name: no-desktop-paths
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine diff range
+        id: diff
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "base=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
+            echo "head=${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
+          else
+            echo "base=${{ github.event.before }}" >> $GITHUB_OUTPUT
+            echo "head=${{ github.sha }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Scan changed code/config files for Desktop/Downloads paths
+        run: |
+          set -eu
+          BASE="${{ steps.diff.outputs.base }}"
+          HEAD="${{ steps.diff.outputs.head }}"
+          # Files actually changed in this push/PR (added/modified, excluding deletes)
+          mapfile -t CHANGED < <(git diff --name-only --diff-filter=AM "$BASE..$HEAD" \
+            | grep -E '\.(py|toml|ya?ml|json|ts|mjs|js|sh|ps1)$' \
+            | grep -v -E '^(docs/|cmd-.+/status/|cmd-lead/POLICY_NO_DESKTOP\.md|\.github/workflows/no-desktop-paths\.yml|\.githooks/)' \
+            || true)
+          if [ ${#CHANGED[@]} -eq 0 ]; then
+            echo "No code/config files changed. Pass."
+            exit 0
+          fi
+          PATTERN='(C:[\\/]+Users[\\/]+[^\\/]+[\\/]+(Desktop|Downloads))|([\\/](Desktop|Downloads)[\\/])'
+          FAIL=0
+          for f in "${CHANGED[@]}"; do
+            [ -f "$f" ] || continue
+            if grep -nE "$PATTERN" "$f" > /tmp/hits 2>/dev/null; then
+              echo "::error file=$f::Desktop/Downloads path detected"
+              cat /tmp/hits | sed "s|^|$f:|" | head -20
+              FAIL=1
+            fi
+          done
+          if [ $FAIL -ne 0 ]; then
+            echo ""
+            echo "REJECTED: see cmd-lead/POLICY_NO_DESKTOP.md"
+            echo "Use Path(__file__).resolve().parents[N] or env var instead."
+            exit 1
+          fi
+          echo "OK: no Desktop/Downloads paths in changed code/config files."

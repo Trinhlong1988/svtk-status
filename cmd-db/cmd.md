@@ -625,3 +625,26 @@ export function startStalePendingScheduler(pool: Pool) {
 > 5 P1 fix applied. Self-audit 12/12 + 4 gap admit honest.
 > Score em ước: 9.0/10. Chờ B audit thực.
 > KHÔNG claim 100% perfect. ACCEPTABLE ship theo R49.
+
+---
+
+## DEFAULT PATHS (BAT BUOC, LEAD cycle 128)
+
+Theo `cmd-lead/POLICY_NO_DESKTOP.md`:
+
+- **WORKSPACE:** `cmd-<name>/scripts/` (KHONG Desktop/Downloads/home)
+- **OUTPUT:** `cmd-<name>/output/`
+- **LOGS:** `cmd-<name>/logs/` (gitignored *.log)
+- **AUDIT:** `cmd-<name>/scripts/audit/` (mutmut, cosmic-ray, evidence)
+- **FINDINGS:** `cmd-<name>/output/audit/findings/`
+
+Path pattern (Python):
+
+```python
+HERE = Path(__file__).resolve()
+REPO_DIR = HERE.parents[2]                  # cmd-<x>/scripts/file.py -> repo root
+OUTPUT_DIR = REPO_DIR / "cmd-<x>" / "output"
+LOG_DIR = REPO_DIR / "cmd-<x>" / "logs"
+```
+
+**Hard-code Desktop/Downloads path = REJECT** boi pre-commit hook (`.githooks/pre-commit`) + CI workflow (`.github/workflows/no-desktop-paths.yml`).

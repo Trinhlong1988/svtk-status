@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit — block Desktop/Downloads hard-coded paths in staged code/config.
+# Setup once: git config core.hooksPath .githooks
+# Policy: cmd-lead/POLICY_NO_DESKTOP.md
+set -eu
+
+PATTERN='(C:[\\/]+Users[\\/]+[^\\/]+[\\/]+(Desktop|Downloads))|([\\/](Desktop|Downloads)[\\/])'
+SCAN_EXT='\.(py|toml|ya?ml|json|ts|mjs|js|sh|ps1)$'
+EXEMPT='^(docs/|cmd-.+/status/|cmd-lead/POLICY_NO_DESKTOP\.md|\.github/workflows/no-desktop-paths\.yml|\.githooks/)'
+
+mapfile -t STAGED < <(git diff --cached --name-only --diff-filter=AM \
+  | grep -E "$SCAN_EXT" \
+  | grep -v -E "$EXEMPT" \
+  || true)
+
+if [ ${#STAGED[@]} -eq 0 ]; then
+  exit 0
+fi
+
+FAIL=0
+for f in "${STAGED[@]}"; do
+  [ -f "$f" ] || continue
+  # Scan staged content (not working tree — may diverge)
+  if git show ":$f" | grep -nE "$PATTERN" > /tmp/_predesk_hits 2>/dev/null; then
+    echo "REJECT $f"
+    sed "s|^|  $f:|" /tmp/_predesk_hits | head -10
+    FAIL=1
+  fi
+done
+
+if [ $FAIL -ne 0 ]; then
+  echo ""
+  echo "BLOCKED by pre-commit: Desktop/Downloads paths in staged code/config."
+  echo "Policy: cmd-lead/POLICY_NO_DESKTOP.md"
+  echo "Fix: use Path(__file__).resolve().parents[N] or env var."
+  echo "Bypass (NOT recommended): git commit --no-verify"
+  exit 1
+fi
+
+exit 0
