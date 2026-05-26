@@ -1,11 +1,15 @@
-# 🗺️ CMD_MAP v1.1 — MAP IMAGE GENERATOR
+# 🗺️ CMD_MAP v1.0.0 — MAP LAYOUT
 
 > **PASTE NGUYÊN VÀO CLAUDE CODE.** Autonomous.
 
-**Version:** 1.1.0 — 2026-05-18
-**Team:** TEAM ART — Map image generation JPG Q60-75 832×640
-**Foundation:** v2.8.0 hash `cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb`
+**Version:** 1.0.0 — 2026-05-26 (LAYOUT scope — supersede IMAGE GENERATOR v1.1)
+**Team:** CMD_MAP_BOT — Map layout (walk_mask / portal / anchor / safe_zone / spawn_zone)
+**Foundation:** v2.10.0 hash `cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb`
 **Runtime:** svtk_runtime v2.6.5
+
+> **⚠ SCOPE SHIFT 2026-05-26:** Brief v1.1 IMAGE GENERATOR (8500 JPG 832×640 dùng TEAM ART) đã **SUPERSEDE** bởi LAYOUT v1.0.0 (10000 map_layout.json + 942 art_profiles + schema). Output IMAGE GENERATOR cũ (`registry/`, `audit/`, `tests/`) đã removed cycle 125+ cleanup.
+>
+> Nội dung dưới (R45/R47/R49/R50/R68 + goal/image_count) là brief **HISTORICAL v1.1** giữ làm reference. LAYOUT v1.0.0 dùng schema khác — xem `cmd-map/output/schema/map_layouts.sql` + `build_manifest.json` để biết scope hiện tại. Brief LAYOUT v1.0.0 đầy đủ sẽ rewrite ở LEAD cycle sau.
 
 **Foundation rules applied:**
 - **R45** — Anti-dupe map image_id unique
