@@ -1,4 +1,4 @@
--- CMD_MAP v1.0.0 — schema map_layouts
+-- CMD_MAP v1.1.0 — schema map_layouts
 CREATE TABLE map_layouts (
     map_id INT PRIMARY KEY,
     uuid VARCHAR(36) NOT NULL,      -- copy từ CMD_PLACE
@@ -24,7 +24,7 @@ CREATE TABLE map_layouts (
     UNIQUE(uuid),
     UNIQUE(natural_key),
     UNIQUE(layout_hash),
-    CHECK (map_id BETWEEN 1 AND 10000),
+    CHECK (map_id BETWEEN 1 AND 10102),
     CHECK (tier BETWEEN 1 AND 5)
 );
 CREATE INDEX idx_layout_biome ON map_layouts(biome);

@@ -1,4 +1,4 @@
-# CMD_MAP v1.0 — test file ngoài (đọc maps/ + art_profiles/)
+# CMD_MAP v1.1.0 — test file ngoài (đọc maps/ + art_profiles/)
 import json, sys, hashlib
 from pathlib import Path
 OUT = Path(__file__).parent
@@ -34,7 +34,8 @@ def _is_walk(s):
     return s in (W_FREE, W_SLOPE)
 
 def test_01_layout_count():
-    assert sum(1 for _ in _layouts()) == 10000
+    # 10000 map thường + 100 map cõi + 2 map start = 10102
+    assert sum(1 for _ in _layouts()) == 10102
 
 def test_02_map_id_unique():
     ids = [l["map_id"] for l in _layouts()]
