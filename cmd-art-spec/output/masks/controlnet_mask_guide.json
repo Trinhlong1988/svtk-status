@@ -1,0 +1,14 @@
+{
+  "spec_version": 1,
+  "controlnet_type": "segmentation / color mask",
+  "input": "Mask anh tu walk_mask cua CMD_MAP, to mau theo mask_color_convention.json",
+  "rule": [
+    "Vung mau FREE/SLOPE -> ve duong di, mat dat thoang.",
+    "Vung BLOCK -> ve vat can (tuong/da/cay lon).",
+    "Vung WATER -> ve nuoc.",
+    "O PORTAL -> giu thoang, de nhin thay loi ra/vao.",
+    "O ANCHOR -> giu trong, KHONG ve vat che (cho NPC dung).",
+    "Vung SPAWN -> giu thoang, du cho quai xuat hien."
+  ],
+  "forbidden": "KHONG ve de len o portal/anchor. KHONG lam vung spawn bi chan."
+}
