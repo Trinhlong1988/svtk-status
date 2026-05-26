@@ -1,0 +1,15 @@
+{
+  "severity": "INFO",
+  "issue_id": "foundation_index_v210_hash_typo",
+  "evidence": {
+    "file": "foundation/INDEX.sha256",
+    "line": 23,
+    "index_recorded_hash": "e54341efe284ae197a58116a94793c22c638230dc16e11990ec6f38e0a429d2e",
+    "actual_file_hash_crlf": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
+    "verified_by": "Get-FileHash -Algorithm SHA256 (Windows local checkout, .gitattributes CRLF locked)"
+  },
+  "cmd_origin": "LEAD",
+  "timestamp": "20260526-181601",
+  "resolution": "FIXED_IN_CYCLE_121",
+  "note": "INDEX.sha256 line 23 đã update sang hash thật cc194e6cad22... (matches memory project_svtk_foundation_hash_windows_crlf.md). Mọi worker tương lai sẽ pass integrity check. Memory note cũ ('commit msg e54341... = typo') không đầy đủ — typo cũng đã propagate vào INDEX.sha256, nay đã sửa."
+}

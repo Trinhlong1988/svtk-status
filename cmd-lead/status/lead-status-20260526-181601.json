@@ -1,0 +1,39 @@
+{
+  "cmd": "LEAD",
+  "version": "2.1",
+  "cycle": 121,
+  "timestamp": "20260526-181601",
+  "mode": "NORMAL",
+  "foundation_active": "v2.10.0",
+  "foundation_hash_canonical": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
+  "drained": "0 alerts + 0 completions (quiet cycle)",
+  "actions_taken": [
+    "Foundation INDEX.sha256 v2.10.0 hash typo FIXED (e54341... → cc194e6cad22...)",
+    "Re-flag counter: event_count_below_target removed (CMD_EVENT 600/600 shipped, v1.0.7 merged)",
+    "Dashboard refresh — first cycle reporting v2.10.0 as active foundation",
+    "LEAD-self INFO alert audit-trailed"
+  ],
+  "queue_state": {
+    "alerts_pending": 0,
+    "completions_pending": 0,
+    "acks_archive_retained": 2,
+    "heartbeats_stale_max_age_days": 7
+  },
+  "cumulative": {
+    "cycles_total": 121,
+    "workers_with_status_1_0": 7,
+    "foundation_versions_migrated_to_v210": 1,
+    "foundation_versions_pending_v210_migration": 6
+  },
+  "pending_fixes_re_flag": {
+    "cmd_db_r44_wire_coverage_0pct": 1,
+    "quest_count_below_target": 2,
+    "qa_event_missing": 2,
+    "qa_item_missing": 2,
+    "quest_giver_npc_name_placeholder": 1,
+    "dialog_speaker_npc_name_desync": 1,
+    "item_passive_buff_cap_exceeded": 1
+  },
+  "next_cycle_sleep_sec": 3600,
+  "exit_code": 0
+}
