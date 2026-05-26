@@ -1,0 +1,9 @@
+{
+  "schema_version": "place-v2.3.0",
+  "foundation_hash": "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb",
+  "build_rule_hash": "9a6a7f63d350dfd63656334a21d21ffe3ee2613681e42e4d9412b92e8946d06f",
+  "topology_version": 1,
+  "content_hash": "9b274055deb3178f76be6f9dc1c1136658322bb67fc02352c630d001eabd4504",
+  "target_region_shards": 64,
+  "target_map_count": 10000
+}
