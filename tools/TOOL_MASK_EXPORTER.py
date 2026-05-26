@@ -723,6 +723,13 @@ def render_debug_overlay(layout, colors):
 
 
 
+def _save_png(img, path):
+    """Lưu PNG với tham số cố định — giảm phụ thuộc môi trường.
+    optimize=False + không metadata -> byte ổn định nhất có thể.
+    (output_sha256 vẫn hash theo pixel data để chắc deterministic.)"""
+    img.save(path, format='PNG', optimize=False)
+
+
 # ── EXPORT 1 MAP ──
 def export_one_map(layout, colors, out_dir):
     """Render PNG + meta cho 1 map. Trả dict thông tin.
@@ -734,31 +741,31 @@ def export_one_map(layout, colors, out_dir):
     mdir.mkdir(parents=True, exist_ok=True)
 
     # bản letterbox 1920×1080
-    render_walk_mask(layout, colors).save(mdir / 'walk_mask.png')
-    render_point_mask(layout, layout.get('portal_points', []),
-                      colors['portal']).save(mdir / 'portal_mask.png')
-    render_point_mask(layout, layout.get('anchor_points', []),
-                      colors['anchor']).save(mdir / 'anchor_mask.png')
-    render_spawn_mask(layout, colors['spawn']).save(
-        mdir / 'spawn_zone_mask.png')
-    render_controlnet_mask(layout, colors).save(
-        mdir / 'controlnet_mask.png')
-    render_debug_overlay(layout, colors).save(
-        mdir / 'debug_overlay.png')
+    _save_png(render_walk_mask(layout, colors), mdir / 'walk_mask.png')
+    _save_png(render_point_mask(layout, layout.get('portal_points', []),
+              colors['portal']), mdir / 'portal_mask.png')
+    _save_png(render_point_mask(layout, layout.get('anchor_points', []),
+              colors['anchor']), mdir / 'anchor_mask.png')
+    _save_png(render_spawn_mask(layout, colors['spawn']),
+              mdir / 'spawn_zone_mask.png')
+    _save_png(render_controlnet_mask(layout, colors),
+              mdir / 'controlnet_mask.png')
+    _save_png(render_debug_overlay(layout, colors),
+              mdir / 'debug_overlay.png')
 
     # bản content — KHÔNG pad, đúng tỉ lệ map, cho AI vẽ
-    _content_scaled(_grid_walk(layout, colors), gw, gh).save(
-        mdir / 'walk_mask_content.png')
-    _content_scaled(_compose_grid(layout, colors), gw, gh).save(
-        mdir / 'controlnet_mask_content.png')
-    _content_scaled(_grid_point(layout, layout.get('portal_points', []),
-                    colors['portal']), gw, gh).save(
-        mdir / 'portal_mask_content.png')
-    _content_scaled(_grid_point(layout, layout.get('anchor_points', []),
-                    colors['anchor']), gw, gh).save(
-        mdir / 'anchor_mask_content.png')
-    _content_scaled(_grid_spawn(layout, colors['spawn']), gw, gh).save(
-        mdir / 'spawn_zone_mask_content.png')
+    _save_png(_content_scaled(_grid_walk(layout, colors), gw, gh),
+              mdir / 'walk_mask_content.png')
+    _save_png(_content_scaled(_compose_grid(layout, colors), gw, gh),
+              mdir / 'controlnet_mask_content.png')
+    _save_png(_content_scaled(_grid_point(layout,
+              layout.get('portal_points', []), colors['portal']),
+              gw, gh), mdir / 'portal_mask_content.png')
+    _save_png(_content_scaled(_grid_point(layout,
+              layout.get('anchor_points', []), colors['anchor']),
+              gw, gh), mdir / 'anchor_mask_content.png')
+    _save_png(_content_scaled(_grid_spawn(layout, colors['spawn']),
+              gw, gh), mdir / 'spawn_zone_mask_content.png')
 
     tile_px, cw, ch, cx, cy = content_rect(gw, gh)
     meta = {
@@ -869,13 +876,24 @@ def write_outputs(layouts, colors, color_from_artspec, map_manifest,
 
     score, fails = self_validate(metas, out)
 
-    # output_sha256 — hash gộp toàn bộ PNG + meta (forensic/round-trip).
-    # Duyệt map theo map_id tăng, file theo tên cố định -> deterministic.
+    # output_sha256 — hash NỘI DUNG, không hash byte file.
+    # PNG byte phụ thuộc version Pillow/mức nén -> KHÔNG deterministic
+    # giữa các máy. Pixel data thì deterministic. Với .json hash text.
+    # Duyệt map theo map_id tăng, file theo tên cố định.
+    from PIL import Image as _Img
     _agg = hashlib.sha256()
     for m in sorted(metas, key=lambda x: x['map_id']):
         mdir = out / 'maps' / f"map_{m['map_id']:05d}"
         for fn in sorted(p.name for p in mdir.iterdir() if p.is_file()):
-            _agg.update((mdir / fn).read_bytes())
+            fp = mdir / fn
+            _agg.update(fn.encode('utf-8'))   # tên file vào hash
+            if fn.endswith('.png'):
+                with _Img.open(fp) as _im:
+                    # pixel data thô — deterministic, không phụ thuộc
+                    # cách Pillow nén/ghi PNG.
+                    _agg.update(_im.convert('RGB').tobytes())
+            else:
+                _agg.update(fp.read_bytes())
     output_sha256 = _agg.hexdigest()
 
     manifest = {
