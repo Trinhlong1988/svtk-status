@@ -5,7 +5,7 @@ KHÔNG train LoRA, KHÔNG sửa CMD_MAP."""
 import os, sys, re, json, time, hashlib, subprocess, logging
 from pathlib import Path
 
-CMD_VERSION = "1.0.0"
+CMD_VERSION = "1.0.1"
 TOOL_NAME = "MASK_EXPORTER"
 SCHEMA_VERSION = f'mask-export-v{CMD_VERSION}'
 
@@ -857,6 +857,33 @@ def self_validate(metas, out_dir):
     return passed / len(checks), [c for c, ok in checks if not ok]
 
 
+# ── HASH OUTPUT (dùng chung 2 chỗ: ghi manifest + self-verify sau copy) ──
+def _compute_output_sha256(out_dir):
+    """Hash NỘI DUNG output (pixel data + tên file + .json text).
+    Deterministic giữa các máy — KHÔNG phụ thuộc Pillow/zlib version.
+    Duyệt map theo tên folder (đã 0-pad map_NNNNN -> lexicographic ==
+    numeric), file theo tên cố định. Dùng cả khi ghi manifest VÀ khi
+    self-verify sau copy sang repo (điều phòng hờ v1.0.1)."""
+    from PIL import Image as _Img
+    out = Path(out_dir)
+    maps_dir = out / 'maps'
+    map_dirs = sorted(d for d in maps_dir.iterdir()
+                      if d.is_dir() and d.name.startswith('map_'))
+    agg = hashlib.sha256()
+    for mdir in map_dirs:
+        for fn in sorted(p.name for p in mdir.iterdir() if p.is_file()):
+            fp = mdir / fn
+            agg.update(fn.encode('utf-8'))    # tên file vào hash
+            if fn.endswith('.png'):
+                with _Img.open(fp) as im:
+                    # pixel data thô — deterministic, không phụ thuộc
+                    # Pillow nén/ghi PNG.
+                    agg.update(im.convert('RGB').tobytes())
+            else:
+                agg.update(fp.read_bytes())
+    return agg.hexdigest()
+
+
 # ── WRITE OUTPUT ──
 def write_outputs(layouts, colors, color_from_artspec, map_manifest,
                   out_dir):
@@ -876,25 +903,7 @@ def write_outputs(layouts, colors, color_from_artspec, map_manifest,
 
     score, fails = self_validate(metas, out)
 
-    # output_sha256 — hash NỘI DUNG, không hash byte file.
-    # PNG byte phụ thuộc version Pillow/mức nén -> KHÔNG deterministic
-    # giữa các máy. Pixel data thì deterministic. Với .json hash text.
-    # Duyệt map theo map_id tăng, file theo tên cố định.
-    from PIL import Image as _Img
-    _agg = hashlib.sha256()
-    for m in sorted(metas, key=lambda x: x['map_id']):
-        mdir = out / 'maps' / f"map_{m['map_id']:05d}"
-        for fn in sorted(p.name for p in mdir.iterdir() if p.is_file()):
-            fp = mdir / fn
-            _agg.update(fn.encode('utf-8'))   # tên file vào hash
-            if fn.endswith('.png'):
-                with _Img.open(fp) as _im:
-                    # pixel data thô — deterministic, không phụ thuộc
-                    # cách Pillow nén/ghi PNG.
-                    _agg.update(_im.convert('RGB').tobytes())
-            else:
-                _agg.update(fp.read_bytes())
-    output_sha256 = _agg.hexdigest()
+    output_sha256 = _compute_output_sha256(out)
 
     manifest = {
         'tool': TOOL_NAME, 'tool_version': CMD_VERSION,
@@ -960,6 +969,29 @@ def push_to_github(out_dir, score):
                 shutil.rmtree(str(dst))
             import shutil
             shutil.copytree(str(out_dir), str(dst))
+
+            # ── SELF-VERIFY (v1.0.1) — đọc lại file ĐÃ COPY sang repo,
+            # hash lại, so với output_sha256 trong manifest đích. Lệch
+            # -> DỪNG, KHÔNG commit. Bug manifest-vs-file (race, retry,
+            # human-edit, fs glitch) không bao giờ lọt lên repo. ──
+            mf_dst = dst / 'build_manifest.json'
+            try:
+                mfj = json.loads(mf_dst.read_text(encoding='utf-8'))
+            except (json.JSONDecodeError, OSError) as e:
+                log.error(f"Self-verify đọc manifest đích lỗi: {e} "
+                          f"— DỪNG, KHÔNG push")
+                return False
+            declared = mfj.get('output_sha256')
+            actual = _compute_output_sha256(dst)
+            if declared != actual:
+                log.error(f"SELF-VERIFY FAIL — manifest.output_sha256="
+                          f"{declared} nhưng file thực tế hash="
+                          f"{actual}. Output đã copy KHÔNG khớp "
+                          f"manifest — DỪNG, KHÔNG push.")
+                return False
+            log.info(f"Self-verify OK — output_sha256 khớp "
+                     f"({actual[:16]}...)")
+
             _git(['config', 'user.email',
                   os.getenv('GIT_EMAIL', 'tool-mask-bot@svtk.local')],
                  REPO_DIR)
