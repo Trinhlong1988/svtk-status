@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "schema_version": "art-spec-v1.0.0",
+  "schema_version": "art-spec-v1.1.0",
   "title": "SVTK art_group spec",
   "type": "object",
   "additionalProperties": false,

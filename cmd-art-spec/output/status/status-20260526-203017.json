@@ -1,9 +1,0 @@
-{
-  "cmd": "ART_SPEC",
-  "cmd_version": "1.0.0",
-  "schema_version": "art-spec-v1.0.0",
-  "timestamp": "20260526-203017",
-  "validation_score": 1.0,
-  "honest_gaps": [],
-  "exit_code": 0
-}
