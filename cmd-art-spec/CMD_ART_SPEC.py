@@ -9,7 +9,7 @@ v1.1 hardening (deep audit 20 round):
 - B4 fix: thêm test defense-in-depth (mask/required/validator/foundation)
 - B5 fix: honest_gap note 3 upstream field bị bỏ qua
 """
-import os, sys, json, re, time, hashlib, subprocess, logging
+import os, sys, json, re, time, hashlib, hmac, subprocess, logging
 from pathlib import Path
 
 # ── 1 NGUỒN — version sửa đúng 1 chỗ ──
@@ -151,7 +151,8 @@ def verify_foundation():
         print(f"FOUNDATION_NOT_FOUND: {fp}")
         sys.exit(99)
     actual = hashlib.sha256(fp.read_bytes()).hexdigest()
-    if actual != FOUNDATION_HASH:
+    # O2 fix: dùng hmac.compare_digest (constant-time) chống timing oracle.
+    if not hmac.compare_digest(actual, FOUNDATION_HASH):
         print(f"FOUNDATION_HASH_MISMATCH actual={actual}")
         sys.exit(99)
     global FOUNDATION_VERIFIED
@@ -705,6 +706,10 @@ def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
                 _agg.update(fp.read_bytes())
     output_sha256 = _agg.hexdigest()
 
+    # O1 fix: TZ-aware timestamp — cross-machine không ambiguous.
+    # Format ISO-8601 UTC + giữ local 'YYYYMMDD-HHMMSS' cho filename.
+    ts_utc_iso = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+
     # build_manifest (B5: honest report 3 upstream field bỏ qua)
     manifest = {
         'cmd': CMD_NAME, 'cmd_version': CMD_VERSION,
@@ -731,7 +736,9 @@ def write_outputs(art_profiles, group_stats, map_manifest, out_dir):
     ts = time.strftime('%Y%m%d-%H%M%S')
     status = {
         'cmd': CMD_NAME, 'cmd_version': CMD_VERSION,
-        'schema_version': SCHEMA_VERSION, 'timestamp': ts,
+        'schema_version': SCHEMA_VERSION,
+        'timestamp': ts,              # local format cho filename compat
+        'timestamp_utc': ts_utc_iso,  # O1 fix: TZ-aware UTC ISO-8601
         'validation_score': score, 'honest_gaps': fails,
         'exit_code': 0 if score >= SCORE_THRESHOLD else 1,
     }
@@ -836,8 +843,12 @@ def test_14_status_file():
     assert len(fps) >= 1, "thieu status file"
     st = json.loads(fps[-1].read_text(encoding="utf-8"))
     for k in ("cmd", "cmd_version", "schema_version", "timestamp",
-              "validation_score", "honest_gaps", "exit_code"):
+              "timestamp_utc", "validation_score", "honest_gaps", "exit_code"):
         assert k in st, f"status thieu {k}"
+    # O1: timestamp_utc phai dang ISO-8601 UTC
+    import re as _re
+    assert _re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$",
+                     st["timestamp_utc"]), f"timestamp_utc sai dinh dang: {st['timestamp_utc']}"
 
 def test_15_manifest_output_sha():
     mf = json.loads((OUT / "build_manifest.json").read_text(encoding="utf-8"))
