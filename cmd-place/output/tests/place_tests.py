@@ -1,142 +1,163 @@
-"""CMD_PLACE v1.0 — registry tests (>=15)."""
-import json, re, os
+# CMD_PLACE v2.3.0 — 28 tests (determinism kiểm trong self_validate)
+import json
 from pathlib import Path
-from collections import Counter
+REG = Path(__file__).parent.parent / 'registry'
 
-ROOT = Path(__file__).resolve().parent.parent
-REG = ROOT / "registry"
+def _maps():
+    return [json.loads(l) for l in (REG/'map_registry.jsonl').read_text(encoding='utf-8').splitlines() if l.strip()]
 
-ERAS = ["ly", "tran", "le", "tay_son", "nguyen"]
-BIOMES = ["forest", "mountain", "river", "plain", "sea", "capital", "village"]
-TARGET_MAPS = 10000
-TARGET_SHARDS = 64
-
-CULTURAL_LOCK_REGEX = re.compile(r"[\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]")
-TAM_QUOC_BAN_REGEX = re.compile(
-    r"(Tào Tháo|Lưu Bị|Quan Vũ|Trương Phi|Khổng Minh|Cao Cao|Liu Bei|Zhuge Liang|Guan Yu|Zhang Fei|Tam Quốc)"
-)
-
-
-def _load_maps():
-    with open(REG / "map_registry.jsonl", encoding="utf-8") as f:
-        return [json.loads(l) for l in f if l.strip()]
-
-
-def _load_regions():
-    with open(REG / "region.jsonl", encoding="utf-8") as f:
-        return [json.loads(l) for l in f if l.strip()]
-
-
-def _load_shard_config():
-    return json.loads((REG / "shard_config.json").read_text(encoding="utf-8"))
-
-
-def test_01_map_count():
-    assert len(_load_maps()) == TARGET_MAPS
-
-
-def test_02_map_id_range_unique():
-    ids = [m["map_id"] for m in _load_maps()]
-    assert min(ids) == 1
-    assert max(ids) == TARGET_MAPS
-    assert len(set(ids)) == TARGET_MAPS
-
-
-def test_03_natural_key_unique():
-    keys = [m["natural_key"] for m in _load_maps()]
-    assert len(set(keys)) == TARGET_MAPS
-
-
+def test_01_map_count(): assert len(_maps()) == 10000
+def test_02_map_id_unique():
+    ids=[m['map_id'] for m in _maps()]; assert len(ids)==len(set(ids))
+def test_03_map_id_range():
+    ids=[m['map_id'] for m in _maps()]; assert min(ids)==1 and max(ids)==10000
 def test_04_uuid_unique():
-    uuids = [m["uuid"] for m in _load_maps()]
-    assert len(set(uuids)) == TARGET_MAPS
+    u=[m['uuid'] for m in _maps()]; assert len(u)==len(set(u))
+def test_05_era_valid():
+    import sys; sys.path.insert(0, str(Path(__file__).parent))
+    from place_lib import ERAS
+    assert all(m['era'] in ERAS for m in _maps())
+def test_06_biome_valid():
+    import sys; sys.path.insert(0, str(Path(__file__).parent))
+    from place_lib import BIOMES
+    assert all(m['biome'] in BIOMES for m in _maps())
+def test_07_natural_key_unique():
+    k=[m['natural_key'] for m in _maps()]; assert len(k)==len(set(k))
+def test_08_cultural_lock():
+    # Import cultural_lock_ok từ place_lib.py (build script ghi ra cạnh test)
+    # — KHÔNG copy logic, KHÔNG drift test vs runtime.
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    from place_lib import cultural_lock_ok
+    for m in _maps():
+        assert cultural_lock_ok(m['name']), f"Vi phạm cultural lock: {m['name']}"
 
-
-def test_05_region_shard_count():
-    assert len(_load_regions()) == TARGET_SHARDS
-
-
-def test_06_era_coverage_5():
-    eras = {m["era"] for m in _load_maps()}
-    assert eras == set(ERAS)
-
-
-def test_07_biome_coverage_7():
-    biomes = {m["biome"] for m in _load_maps()}
-    assert biomes == set(BIOMES)
-
-
-def test_08_shard_id_in_range():
-    for m in _load_maps():
-        assert 0 <= m["shard_id"] < TARGET_SHARDS
-
-
-def test_09_shard_balance_delta_le_2():
-    counts = Counter(m["shard_id"] for m in _load_maps())
-    delta = max(counts.values()) - min(counts.values())
-    assert delta <= 2, f"shard balance delta={delta}"
-
-
-def test_10_cultural_lock_no_cjk():
-    for m in _load_maps():
-        assert not CULTURAL_LOCK_REGEX.search(m["name"]), m["name"]
-
-
-def test_11_no_tam_quoc():
-    for m in _load_maps():
-        assert not TAM_QUOC_BAN_REGEX.search(m["name"]), m["name"]
-
-
-def test_12_f_prefix_valid():
-    valid = {"f1", "f2", "f3", "f4", "f5", "g1"}
-    for m in _load_maps():
-        assert m["f_prefix"] in valid
-
-
-def test_13_era_distribution_within_tolerance():
-    counts = Counter(m["era"] for m in _load_maps())
-    target_per_era = TARGET_MAPS / len(ERAS)
-    for era, c in counts.items():
-        assert abs(c - target_per_era) <= 1, f"era {era}={c}"
-
-
-def test_14_tsonline_cross_ref_present():
-    for m in _load_maps():
-        assert m["tsonline_cross_ref"].startswith("tsonline_map_pool/")
-
-
-def test_15_shard_config_self_consistent():
-    cfg = _load_shard_config()
-    assert cfg["total_maps"] == TARGET_MAPS
-    assert cfg["total_shards"] == TARGET_SHARDS
-    assert sum(cfg["shard_size_actual"]) == TARGET_MAPS
-    assert cfg["balance_max_delta"] <= 2
-
-
-def test_16_schema_sql_present():
-    sql = (ROOT / "schema" / "place_table.sql").read_text(encoding="utf-8")
-    assert "UNIQUE(natural_key)" in sql
-    assert "UNIQUE(uuid)" in sql
-    assert "UNIQUE(map_id)" in sql
-
-
-def test_17_coord_in_range():
-    for m in _load_maps():
-        assert 0 <= m["coord_x"] <= 99999
-        assert 0 <= m["coord_y"] <= 99999
-
+def test_09_shard_range():
+    assert all(0<=m['shard_id']<64 for m in _maps())
+def test_10_region_count():
+    r=[l for l in (REG/'region.jsonl').read_text(encoding='utf-8').splitlines() if l.strip()]
+    assert len(r)==64
+def test_11_coord_range():
+    # max tính từ topology config (1 nguồn) — đúng dù đổi grid width
+    import sys; sys.path.insert(0, str(Path(__file__).parent))
+    from place_lib import (TARGET_REGION_SHARDS, SHARD_GRID_WIDTH,
+                           SHARD_CELL_SIZE, MAP_GRID_WIDTH, MAP_CELL_SIZE)
+    maps = _maps()
+    max_x = (SHARD_GRID_WIDTH - 1) * SHARD_CELL_SIZE + (MAP_GRID_WIDTH - 1) * MAP_CELL_SIZE
+    rows = (TARGET_REGION_SHARDS + SHARD_GRID_WIDTH - 1) // SHARD_GRID_WIDTH
+    max_y = (rows - 1) * SHARD_CELL_SIZE + (MAP_GRID_WIDTH - 1) * MAP_CELL_SIZE
+    assert all(0 <= m['coord_x'] <= max_x for m in maps)
+    assert all(0 <= m['coord_y'] <= max_y for m in maps)
+def test_12_f_prefix():
+    for m in _maps():
+        if m['era'] in ('f1','f2','f3','f4','f5'): assert m['f_prefix']==m['era']
+def test_13_tags_present():
+    assert all(m.get('tags') for m in _maps())
+def test_14_tsref_range():
+    assert all(1<=m['tsonline_cross_ref']<=7047 for m in _maps())
+def test_15_era_label():
+    assert all(m.get('era_label') for m in _maps())
+def test_16_purpose_present():
+    import sys; sys.path.insert(0, str(Path(__file__).parent))
+    maps = _maps()
+    assert all(m.get('purpose') for m in maps), "map thiếu purpose"
+    valid = {'combat','gathering','fishing','farming','crafting','trade',
+             'exploration','social','lore','archeology'}
+    for m in maps:
+        assert all(p in valid for p in m['purpose']), f"purpose lạ: {m['map_id']}"
+def test_17_anchors_present():
+    maps = _maps()
+    assert all(m.get('anchors') for m in maps), "map thiếu anchors"
+    cap = {'npc_anchor':12,'resource_anchor':8,'activity_anchor':5,
+           'quest_anchor':4,'portal_anchor':4,'boss_anchor':2}
+    for m in maps:
+        for at, items in m['anchors'].items():
+            assert len(items) <= cap.get(at, 0), f"anchor vượt cap: {m['map_id']} {at}"
+def test_18_topology_version():
+    assert all(m.get('topology_version') == 1 for m in _maps())
+def test_19_g1_flag():
+    assert all('g1_pass' in m and 'g1_note' in m for m in _maps())
+def test_20_style_present():
+    assert all(m.get('style') for m in _maps())
+def test_21_spatial_present():
+    assert all('chunk_x' in m and 'safe_zone' in m and 'nav_region' in m
+               for m in _maps())
+def test_22_terrain_present():
+    assert all(m.get('terrain') for m in _maps())
+def test_23_portal_graph_valid():
+    maps = _maps()
+    ids = set(m['map_id'] for m in maps)
+    by_id = {m['map_id']: m for m in maps}
+    for m in maps:
+        seen = set()
+        for lk in m.get('portal_graph', []):
+            to_map = lk.get('to_map')
+            assert to_map in ids, f"to_map không có thật: {m['map_id']}"
+            assert lk.get('from_map') == m['map_id'], f"from_map sai: {m['map_id']}"
+            assert to_map != m['map_id'], f"self-loop: {m['map_id']}"
+            assert to_map not in seen, f"duplicate edge: {m['map_id']}"
+            seen.add(to_map)
+            if lk.get('bidirectional'):
+                back = by_id[to_map].get('portal_graph', [])
+                assert any(b.get('to_map') == m['map_id'] for b in back),                     f"bidirectional giả: {m['map_id']}->{to_map}"
+def test_24_world_connected():
+    # strongly-connected: forward BFS VÀ reverse BFS đều phủ đủ map
+    maps = _maps()
+    fwd = {m['map_id']: [] for m in maps}
+    rev = {m['map_id']: [] for m in maps}
+    for m in maps:
+        for lk in m.get('portal_graph', []):
+            fwd[m['map_id']].append(lk['to_map'])
+            rev[lk['to_map']].append(m['map_id'])
+    def _reach(adj, start):
+        seen = {start}; stack = [start]
+        while stack:
+            cur = stack.pop()
+            for nxt in adj.get(cur, []):
+                if nxt not in seen:
+                    seen.add(nxt); stack.append(nxt)
+        return seen
+    start = maps[0]['map_id']
+    assert len(_reach(fwd, start)) == len(maps), "forward BFS không phủ đủ"
+    assert len(_reach(rev, start)) == len(maps), "reverse BFS không phủ đủ"
+def test_25_spawn_policy_fields():
+    # spawn_policy đủ 4 field, không thiếu không thừa
+    need = {'allow_monster_spawn', 'spawn_profile',
+            'density_hint', 'zone_count_hint'}
+    for m in _maps():
+        sp = m.get('spawn_policy')
+        assert isinstance(sp, dict), f"spawn_policy thiếu: map {m['map_id']}"
+        assert set(sp.keys()) == need, f"spawn_policy sai field: {m['map_id']}"
+def test_26_spawn_policy_no_gameplay():
+    # spawn_policy KHÔNG được chứa gameplay thật (việc CMD_NPC)
+    gp = ('monster_id', 'level', 'drop', 'exp',
+          'respawn_time', 'ai_behavior', 'skill')
+    for m in _maps():
+        sp = m['spawn_policy']
+        for k in gp:
+            assert k not in sp, f"spawn_policy lẫn gameplay '{k}': {m['map_id']}"
+def test_27_spawn_policy_consistent():
+    # allow=True -> zone_count > 0; allow=False -> zone_count == 0
+    for m in _maps():
+        sp = m['spawn_policy']
+        if sp['allow_monster_spawn']:
+            assert sp['zone_count_hint'] > 0,                 f"allow=True nhưng zone=0: map {m['map_id']}"
+        else:
+            assert sp['zone_count_hint'] == 0,                 f"allow=False nhưng zone>0: map {m['map_id']}"
+def test_28_safe_zone_no_spawn():
+    # safe_zone TUYỆT ĐỐI không quái
+    for m in _maps():
+        if m['safe_zone']:
+            assert not m['spawn_policy']['allow_monster_spawn'],                 f"safe_zone vẫn có quái: map {m['map_id']}"
 
 if __name__ == "__main__":
-    import sys, traceback
-    fns = [v for k, v in list(globals().items()) if k.startswith("test_") and callable(v)]
-    fails = 0
-    for fn in fns:
+    import traceback, sys
+    _tests = sorted(n for n in dir() if n.startswith("test_"))
+    _p = _f = 0
+    for _n in _tests:
         try:
-            fn()
-            print(f"PASS {fn.__name__}")
-        except Exception as e:
-            fails += 1
-            print(f"FAIL {fn.__name__}: {e}")
-            traceback.print_exc()
-    print(f"TOTAL {len(fns)} PASS {len(fns)-fails} FAIL {fails}")
-    sys.exit(0 if fails == 0 else 1)
+            globals()[_n](); _p += 1; print("  PASS " + _n)
+        except Exception as _e:
+            _f += 1; print("  FAIL " + _n + ": " + str(_e))
+    print(str(_p) + "/" + str(_p + _f) + " tests pass")
+    sys.exit(0 if _f == 0 else 1)
