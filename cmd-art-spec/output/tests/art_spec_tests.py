@@ -161,13 +161,13 @@ def test_20_manifest_honest_gap_upstream():
 
 def test_21_lf_line_endings():
     """B2: moi JSON/JSONL output phai LF, khong CRLF (deterministic cross-OS)."""
+    crlf = bytes([13, 10])
     for sub, ext in (("art_groups","*.json"), ("prompts","*.jsonl"),
                      ("captions","*.jsonl"), ("masks","*.json"),
                      ("schema","*.json")):
         for fp in (OUT/sub).glob(ext):
             raw = fp.read_bytes()
-            assert b"
-" not in raw, f"CRLF leaked: {fp}"
+            assert crlf not in raw, f"CRLF leaked: {fp}"
 
 if __name__ == "__main__":
     _tests = sorted(n for n in dir() if n.startswith("test_"))
