@@ -12,7 +12,7 @@
     "readability": "TS-style readable walk paths, clear object separation",
     "rendering": "soft cel shading, hand-painted 2D, clean silhouettes"
   },
-  "positive_prompt": "2D isometric MMORPG map background, dark underworld labyrinth, twisting stone corridors, narrow gloomy maze passages, Vietnamese mythological realm, otherworldly and sacred, neither historical nor modern, SVTK Vietnamese historical fantasy style, hand-painted soft cel shading, clean readable walkable paths, clear object separation, tier 5 area, top-down 3/4 view, no characters, no UI",
+  "positive_prompt": "2D isometric MMORPG map background, dark underworld labyrinth, twisting stone corridors, narrow gloomy maze passages, Vietnamese mythological realm, otherworldly sacred, timeless, SVTK Vietnamese historical fantasy style, hand-painted soft cel shading, clean readable walkable paths, clear object separation, tier 5 area, top-down 3/4 view, no characters, no UI",
   "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese shrine, chinese palace copy, gothic cathedral, skyscraper, text, watermark, UI, signature, logo",
   "caption_tokens": [
     "svtk_map",

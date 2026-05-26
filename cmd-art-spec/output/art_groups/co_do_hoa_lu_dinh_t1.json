@@ -12,7 +12,7 @@
     "readability": "TS-style readable walk paths, clear object separation",
     "rendering": "soft cel shading, hand-painted 2D, clean silhouettes"
   },
-  "positive_prompt": "2D isometric MMORPG map background, ancient capital Hoa Lu of the Dinh dynasty, 10th century citadel, stone gates, old kingdom, Dinh dynasty 10th century, early Dai Co Viet kingdom, rugged stone citadel, austere ancient tones, SVTK Vietnamese historical fantasy style, hand-painted soft cel shading, clean readable walkable paths, clear object separation, tier 1 area, top-down 3/4 view, no characters, no UI",
+  "positive_prompt": "2D isometric MMORPG map background, ancient Hoa Lu citadel, stone gates, old kingdom of Dai Co Viet, Dinh dynasty 10th century, rugged stone citadel, austere ancient tones, SVTK Vietnamese historical fantasy style, hand-painted soft cel shading, clean readable walkable paths, clear object separation, tier 1 area, top-down 3/4 view, no characters, no UI",
   "negative_prompt": "modern city, cyberpunk, neon, sci-fi, cars, guns, western castle, japanese shrine, chinese palace copy, gothic cathedral, skyscraper, text, watermark, UI, signature, logo",
   "caption_tokens": [
     "svtk_map",
