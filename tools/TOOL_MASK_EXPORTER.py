@@ -5,16 +5,23 @@ KHÔNG train LoRA, KHÔNG sửa CMD_MAP."""
 import os, sys, re, json, time, hashlib, subprocess, logging
 from pathlib import Path
 
-CMD_VERSION = "1.0.1"
+CMD_VERSION = "1.0.2"
 TOOL_NAME = "MASK_EXPORTER"
 SCHEMA_VERSION = f'mask-export-v{CMD_VERSION}'
+
+# ── HARD CHECK input CMD_MAP — cross-CMD contract ──
+# CMD_MAP v1.1.0 sinh đúng 10102 map (10000 thường + 100 cõi + 2
+# start). Tool từ chối output CMD_MAP cũ (số map khác / version thấp).
+EXPECT_MAP_COUNT = 10102
+MIN_MAP_CMD_VERSION = (1, 1, 0)   # CMD_MAP tối thiểu v1.1.0
 
 # ── Foundation v2.10.0 ──
 FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 FOUNDATION_FILE = "SVTK_FOUNDATION_v2.10.0.md"
 FOUNDATION_VERIFIED = False
 
-REPO_URL = "https://github.com/Trinhlong1988/svtk-status.git"
+REPO_URL = os.getenv('SVTK_REPO_URL',
+                     'https://github.com/Trinhlong1988/svtk-status.git')
 REPO_DIR = Path('/tmp/svtk-status-maskexp')
 OUTPUT_DIR = Path('/tmp/tool-mask-exporter-out')
 SCORE_THRESHOLD = 0.95
@@ -56,7 +63,9 @@ VALID_GRIDS = {(32, 24), (40, 30), (48, 36), (56, 42), (64, 48)}
 DEFAULT_COLORS = {
     'free':   '#3CB043', 'block':  '#4A4A4A', 'water':  '#2E6FB0',
     'slope':  '#C9A227', 'portal': '#E03C3C', 'anchor': '#B040C0',
-    'spawn':  '#E0902C',
+    # spawn: #76FF03 (electric lime) — khớp ART_SPEC MASK_COLORS,
+    # đủ contrast với slope/portal/anchor/water (B3 fix).
+    'spawn':  '#76FF03',
 }
 
 
@@ -366,6 +375,18 @@ def load_map_layouts():
     if manifest.get('cmd') != 'MAP':
         log.error(f"manifest.cmd != 'MAP' — DỪNG")
         return None
+    # BLOCKER 2: CMD_MAP phải >= v1.1.0 — bản cũ chưa hỗ trợ 10102
+    # map + realm/start.
+    cv = manifest.get('cmd_version', '')
+    try:
+        cv_tuple = tuple(int(x) for x in str(cv).split('.')[:3])
+    except (ValueError, AttributeError):
+        cv_tuple = (0, 0, 0)
+    if cv_tuple < MIN_MAP_CMD_VERSION:
+        log.error(f"CMD_MAP cmd_version {cv!r} < "
+                  f"{'.'.join(map(str, MIN_MAP_CMD_VERSION))} — "
+                  f"PHẢI rerun CMD_MAP bản mới — DỪNG")
+        return None
     if manifest.get('foundation_hash') != FOUNDATION_HASH:
         log.error("CMD_MAP foundation lệch — rerun CMD_MAP — DỪNG")
         return None
@@ -404,12 +425,18 @@ def load_map_layouts():
         if not lf.exists():
             log.error(f"{lf.parent.name} thiếu map_layout.json — DỪNG")
             return None
-    # manifest.map_count phải khớp số file layout thực — artifact thiếu/
-    # thừa map -> manifest stale -> DỪNG.
+    # BLOCKER 1: HARD CHECK số map = 10102 (CMD_MAP v1.1.0).
+    # Chốt cứng CON SỐ — KHÔNG chỉ so manifest.map_count với số file
+    # thực, vì manifest cũ 10000 + 10000 file vẫn tự khớp nhau.
+    # Phải kiểm: manifest.map_count == 10102 VÀ số file thực == 10102.
     mc = manifest.get('map_count')
-    if mc != len(all_layout_files):
-        log.error(f"CMD_MAP map_count={mc} != số file layout thực "
-                  f"{len(all_layout_files)} — artifact stale — DỪNG")
+    if mc != EXPECT_MAP_COUNT:
+        log.error(f"CMD_MAP manifest.map_count={mc} "
+                  f"!= {EXPECT_MAP_COUNT} — DỪNG")
+        return None
+    if len(all_layout_files) != EXPECT_MAP_COUNT:
+        log.error(f"CMD_MAP có {len(all_layout_files)} file layout "
+                  f"!= {EXPECT_MAP_COUNT} — artifact stale — DỪNG")
         return None
     _src_agg = hashlib.sha256()
     for lf in all_layout_files:
@@ -470,7 +497,54 @@ def load_map_layouts():
             log.error(f"MASK_SAMPLE={sc} > map_count={len(map_dirs)} "
                       f"— DỪNG")
             return None
-        pick = map_dirs[:sc]
+        # KHÔNG lấy sc map đầu dãy — map đầu toàn map thường (id 1..),
+        # map cõi (10001-10100) + start (10101-10102) sẽ bị bỏ sót.
+        # Lấy RẢI ĐỀU theo stride -> sample phủ cả map thường + cõi +
+        # start, đúng yêu cầu kiểm Tiên Giới/Âm Phủ/Bảo Tàng/Hoa Lư.
+        n_all = len(map_dirs)
+        step = n_all / sc
+        idx = sorted({min(int(i * step), n_all - 1) for i in range(sc)})
+        pick = [map_dirs[i] for i in idx]
+        # ÉP phủ đủ nhóm: đọc biome từng map, đảm bảo sample có ÍT
+        # NHẤT 1 map mỗi sub-realm cõi (12) + cả 2 map start. Không
+        # để stride trượt mất nhóm nào -> verify đủ Tiên Giới/Âm Phủ.
+        _need_biomes = {
+            'thien_mon', 'coi_troi', 'dong_tien', 'tan_vien_linh_son',
+            'long_cung', 'thien_dai', 'quy_mon_quan', 'hoang_tuyen',
+            'u_minh_lo', 'dia_phu_dien', 'me_cung_u_minh',
+            'vong_hon_dai', 'bao_tang', 'co_do_hoa_lu',
+        }
+
+        def _biome_of(d):
+            try:
+                lj = json.loads(
+                    (d / 'map_layout.json').read_text(encoding='utf-8'))
+                return lj.get('biome')
+            except (json.JSONDecodeError, OSError, KeyError):
+                return None
+
+        picked = set(id(d) for d in pick)
+        covered = {_biome_of(d) for d in pick}
+        for d in map_dirs:
+            missing = _need_biomes - covered
+            if not missing:
+                break
+            b = _biome_of(d)
+            if b in missing and id(d) not in picked:
+                pick.append(d)
+                picked.add(id(d))
+                covered.add(b)
+        # BLOCKER 3: sau khi cố thêm, NẾU vẫn thiếu biome bắt buộc
+        # -> DỪNG. KHÔNG render sample thiếu Tiên Giới/Âm Phủ/Bảo
+        # Tàng/Hoa Lư — verify không phủ hết là verify vô nghĩa.
+        missing = _need_biomes - covered
+        if missing:
+            log.error(f"SAMPLE thiếu biome bắt buộc: "
+                      f"{sorted(missing)} — DỪNG")
+            return None
+        log.info(f"SAMPLE rải đều {len(pick)} map "
+                 f"(id {min(int(d.name[4:]) for d in pick)}.."
+                 f"{max(int(d.name[4:]) for d in pick)})")
     elif MODE == 'batch':
         want = set()
         for x in BATCH_IDS.split(','):
@@ -493,7 +567,7 @@ def load_map_layouts():
         pick = [d for d in map_dirs if int(d.name[4:]) in want]
     elif MODE == 'full':
         pick = map_dirs
-        log.warning("FULL MODE — 10000 PNG. KHÔNG commit repo, "
+        log.warning("FULL MODE — 10102 PNG mask. KHÔNG commit repo, "
                     "chỉ local/artifact (điều 7)")
     else:
         log.error(f"MODE lạ: {MODE} — DỪNG")
