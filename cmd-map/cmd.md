@@ -4,7 +4,7 @@
 
 **Version:** 1.1.0 — 2026-05-18
 **Team:** TEAM ART — Map image generation JPG Q60-75 832×640
-**Foundation:** v2.8.0 hash `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b`
+**Foundation:** v2.8.0 hash `cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb`
 **Runtime:** svtk_runtime v2.6.5
 
 **Foundation rules applied:**
@@ -65,7 +65,7 @@ import os, sys, json, time, hashlib, subprocess, signal, re, random
 from pathlib import Path
 
 CMD_NAME = "MAP"
-FOUNDATION_HASH = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
+FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 REPO_URL = "https://github.com/Trinhlong1988/svtk-status.git"
 REPO_DIR = Path("/tmp/svtk-status")
 OUTPUT_DIR = Path(f"/tmp/cmd-{CMD_NAME.lower()}-output")
@@ -987,6 +987,6 @@ VSTK_ELEMENTS = {
 1. 28 NPC orphan `sceneId` outside 1..8500 (CMD_NPC scope, MED alert filed)
 2. 23 quest `giver_scene_id` orphan (CMD_QUEST scope, 99.2% link OK)
 3. `cmd-boss/output/registry/boss_full.jsonl` empty (CMD_BOSS scope)
-4. Foundation `SVTK_FOUNDATION_v2.8.0.md` hash drift `ab1b4eb2` vs INDEX `4e9a6d7a` (LEAD scope, HIGH alert filed cycle 62)
+4. Foundation `SVTK_FOUNDATION_v2.8.0.md` hash drift `ab1b4eb2` vs INDEX `4e9a6d7a` — RESOLVED 2026-05-26: v2.8.0 retired, foundation chốt v2.10.0 `cc194e6c`
 
 CMD_MAP IN-SCOPE = **FIX TRIỆT ĐỂ ✅**.

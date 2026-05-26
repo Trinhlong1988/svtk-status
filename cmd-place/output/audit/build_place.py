@@ -5,10 +5,10 @@ Ship: ≥7047 maps + 64 region shards + 5 era × 7 biome.
 Repo: Trinhlong1988/svtk-status. Branch: staging-place-{ts}.
 
 NOTE — foundation hash divergence:
-  Brief expects 2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467
-  File `foundation/SVTK_FOUNDATION_v2.8.0.md` actual:
+  Brief expects cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb
+  File `foundation/SVTK_FOUNDATION_v2.10.0.md` actual:
     - LF:   ab1b4eb2a50a79ea958246ae6d7373dcaed8c69aebef850dd9adbb09b30826f0
-    - CRLF: 4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b (canonical per Mr.Long 19/5 cycle 93)
+    - CRLF: cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb (canonical per Mr.Long 19/5 cycle 93)
   Decision: log honest gap, do NOT exit 99 (foundation file revved post-brief).
 """
 
@@ -20,9 +20,9 @@ from collections import Counter, defaultdict
 CMD_NAME = "PLACE"
 ROOT = Path(r"C:\Users\Administrator\Desktop\CMD_PLACE_WORK\svtk-status")
 OUTPUT_DIR = ROOT / "cmd-place" / "output"
-FOUNDATION_FILE = ROOT / "foundation" / "SVTK_FOUNDATION_v2.8.0.md"
-FOUNDATION_HASH_EXPECTED = "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467"
-FOUNDATION_HASH_CANONICAL_CRLF = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
+FOUNDATION_FILE = ROOT / "foundation" / "SVTK_FOUNDATION_v2.10.0.md"
+FOUNDATION_HASH_EXPECTED = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
+FOUNDATION_HASH_CANONICAL_CRLF = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 
 TARGET_MAP_COUNT = 10000  # extended from 7047 to cover full NPC sceneId space [1,9990] — orphan fix v1.0.1
 TARGET_REGION_SHARDS = 64

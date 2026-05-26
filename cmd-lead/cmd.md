@@ -4,7 +4,7 @@
 
 **Version:** 2.1.0 — 2026-05-18
 **Team:** LEAD — điều phối 16 worker CMD (CORE + CONTENT + ART + QA)
-**Foundation:** v2.8.0 hash `4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b`
+**Foundation:** v2.8.0 hash `cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb`
 **Runtime:** svtk_runtime v2.6.5
 
 **Foundation rules applied:**
@@ -70,7 +70,7 @@ import os, sys, json, time, hashlib, subprocess, signal, logging
 from pathlib import Path
 
 CMD_NAME = "LEAD"
-FOUNDATION_HASH = "4e9a6d7adc736ecdb115b337a280c6f150200c022a77ce78714a21f7152b364b"
+FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 REPO_URL = "https://github.com/Trinhlong1988/svtk-status.git"
 REPO_DIR = Path("/tmp/svtk-status")
 
@@ -107,11 +107,11 @@ log.addHandler(handler)
 
 
 def verify_foundation():
-    """Verify Foundation hash v2.8.0. Exit 99 if mismatch."""
+    """Verify Foundation hash v2.10.0. Exit 99 if mismatch."""
     if not REPO_DIR.exists():
         subprocess.run(['git', 'clone', '--depth=1', REPO_URL, str(REPO_DIR)],
                       check=True, timeout=60)
-    fp = REPO_DIR / 'foundation' / 'SVTK_FOUNDATION_v2.8.0.md'
+    fp = REPO_DIR / 'foundation' / 'SVTK_FOUNDATION_v2.10.0.md'
     if not fp.exists():
         log.error(f'FOUNDATION_NOT_FOUND: {fp}')
         sys.exit(99)

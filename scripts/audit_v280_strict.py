@@ -7,7 +7,7 @@ import re, hashlib
 from pathlib import Path
 
 OUTPUT = Path('/mnt/user-data/outputs')
-FOUNDATION_HASH_V280 = '2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467'
+FOUNDATION_HASH_V280 = 'cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb'
 
 LEAD = 'CMD5_LEAD_v2.1.md'
 WORKERS = [
@@ -38,7 +38,7 @@ def r(c, pat, flags=re.IGNORECASE):
 
 def audit_foundation():
     """Audit Foundation v2.8.0 đầy đủ."""
-    p = OUTPUT / 'SVTK_FOUNDATION_v2.8.0.md'
+    p = OUTPUT / 'SVTK_FOUNDATION_v2.10.0.md'
     if not p.exists():
         return {'EXISTS': False}
     c = p.read_text(encoding='utf-8')

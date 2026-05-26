@@ -21,7 +21,7 @@
 import json, re
 from pathlib import Path
 
-FOUNDATION_HASH = "2e6e8c23d8455d9b964744486be11f0a88684113c1cbc6eb77ec371dc266e467"
+FOUNDATION_HASH = "cc194e6cad2225d197c4a5539352deb538c99cdd6a21845a8354260602287bbb"
 
 # 17 worker CMD
 WORKERS = [
